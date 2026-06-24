@@ -1,6 +1,9 @@
 ---
 name: m12-lifecycle
-description: "Use when designing resource lifecycles. Keywords: RAII, Drop, resource lifecycle, connection pool, lazy initialization, connection pool design, resource cleanup patterns, cleanup, scope, OnceCell, Lazy, once_cell, OnceLock, transaction, session management, when is Drop called, cleanup on error, guard pattern, scope guard, 资源生命周期, 连接池, 惰性初始化, 资源清理, RAII 模式"
+description: >-
+  资源生命周期设计与 RAII 模式。需要管理连接池、惰性初始化或资源清理策略时使用。
+  Keywords: 资源生命周期, RAII, Drop, 连接池, 惰性初始化, OnceCell, OnceLock,
+  connection pool, cleanup, lazy initialization, scope guard
 user-invocable: false
 ---
 

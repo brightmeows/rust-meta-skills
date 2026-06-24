@@ -1,6 +1,10 @@
 ---
 name: m14-mental-model
-description: "Use when learning Rust concepts. Keywords: mental model, how to think about ownership, understanding borrow checker, visualizing memory layout, analogy, misconception, explaining ownership, why does Rust, help me understand, confused about, learning Rust, explain like I'm, ELI5, intuition for, coming from Java, coming from Python, 心智模型, 如何理解所有权, 学习 Rust, Rust 入门, 为什么 Rust"
+description: >-
+  Rust 心智模型构建：为抽象概念建立直观理解。学习 Rust 概念、感到困惑、
+  或需要类比解释时使用。
+  Keywords: 心智模型, Rust 入门, 学习 Rust, 如何理解, mental model, borrow checker,
+  analogy, ELI5, coming from Java, coming from Python
 user-invocable: false
 ---
 

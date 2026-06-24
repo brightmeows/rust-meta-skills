@@ -1,13 +1,11 @@
 ---
 name: rust-meta-cognition
 description: >-
-  Rust 元认知技能集包级别入口——三层认知模型（领域→设计→语言机制），
-  输出领域正确的 Rust 方案，而非表面修复。在技能包中导航、将 Rust 问题
-  路由到合适的子技能、或应用项目级 Rust 默认设置（edition 2024、clippy、
-  unsafe 策略）时使用。具体编译错误（E0xxx）和单一概念问题交由内部
-  rust-router 子技能处理。触发词：Rust 元认知, 技能集入口, 问题路由,
-  三层认知模型, meta-cognition, Rust skills, routing, 默认设置,
-  ownership, borrow, lifetime, async, concurrency.
+  Rust 元认知技能集包级别入口——三层认知模型（领域→设计→语言机制）。
+  在技能包中导航、将 Rust 问题路由到合适的子技能、或应用项目级 Rust
+  默认设置（edition 2024、clippy、unsafe 策略）时使用。
+  Keywords: Rust 元认知, 技能集入口, 问题路由, 三层认知模型, meta-cognition,
+  Rust skills, routing, 默认设置, ownership, borrow, lifetime, async, concurrency
 ---
 
 # Rust 元认知技能集

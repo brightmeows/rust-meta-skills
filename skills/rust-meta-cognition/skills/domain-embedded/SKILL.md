@@ -1,6 +1,10 @@
 ---
 name: domain-embedded
-description: "Use when developing embedded/no_std Rust. Keywords: embedded, no_std, microcontroller, MCU, ARM, RISC-V, bare metal, firmware, HAL, PAC, RTIC, embassy, interrupt, DMA, peripheral, GPIO, SPI, I2C, UART, embedded-hal, cortex-m, esp32, stm32, nrf, 嵌入式, 单片机, 固件, 裸机"
+description: >-
+  嵌入式与 no_std Rust 架构指导：资源约束领域到设计决策的映射。开发单片机固件
+  或裸机系统时使用。
+  Keywords: 嵌入式, 单片机, no_std, 固件, 裸机, embedded, MCU, ARM, RISC-V, HAL,
+  RTIC, embassy, cortex-m, esp32, stm32, GPIO, SPI, I2C
 globs: ["**/Cargo.toml", "**/.cargo/config.toml"]
 user-invocable: false
 ---

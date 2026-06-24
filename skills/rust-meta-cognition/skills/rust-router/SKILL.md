@@ -1,19 +1,11 @@
 ---
 name: rust-router
-description: |-
-  CRITICAL: Use for ALL Rust questions including errors, design, and coding.
-  HIGHEST PRIORITY for: 比较, 对比, compare, vs, versus, 区别, difference, 最佳实践, best practice,
-  tokio vs, async-std vs, 比较 tokio, 比较 async,
-  Triggers on: Rust, cargo, rustc, crate, Cargo.toml,
-  意图分析, 问题分析, 语义分析, analyze intent, question analysis,
-  compile error, borrow error, lifetime error, ownership error, type error, trait error,
-  value moved, cannot borrow, does not live long enough, mismatched types, not satisfied,
-  E0382, E0597, E0277, E0308, E0499, E0502, E0596,
-  async, await, Send, Sync, tokio, concurrency, error handling,
-  编译错误, compile error, 所有权, ownership, 借用, borrow, 生命周期, lifetime, 类型错误, type error,
-  异步, async, 并发, concurrency, 错误处理, error handling,
-  问题, problem, question, 怎么用, how to use, 如何, how to, 为什么, why,
-  什么是, what is, 帮我写, help me write, 实现, implement, 解释, explain
+description: >-
+  Rust 问题路由与子技能分发。CRITICAL: 任何 Rust 问题（编译错误/设计/编码）
+  都应先经过此路由。
+  Keywords: Rust 路由, 问题分析, 意图路由, 编译错误, compile error, E0382,
+  E0597, E0277, borrow error, 怎么用, 比较, compare, vs, 最佳实践
+user-invocable: false
 globs: ["**/Cargo.toml", "**/*.rs"]
 ---
 

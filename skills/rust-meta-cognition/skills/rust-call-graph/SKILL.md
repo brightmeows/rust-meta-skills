@@ -1,6 +1,8 @@
 ---
 name: rust-call-graph
-description: "Visualize Rust function call graphs using LSP. Triggers on: /call-graph, call hierarchy, who calls, what calls, 调用图, 调用关系, 谁调用了, 调用了谁"
+description: >-
+  函数调用图可视化：使用 LSP 调用层级分析函数调用关系。触发词：/call-graph, 调用图,
+  调用关系, call hierarchy, 谁调用了, what calls
 argument-hint: "<function_name> [--depth N] [--direction in|out|both]"
 allowed-tools: ["LSP", "Read", "Glob"]
 ---

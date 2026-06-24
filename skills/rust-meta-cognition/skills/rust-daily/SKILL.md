@@ -1,9 +1,9 @@
 ---
 name: rust-daily
-description: |
-  CRITICAL: Use for Rust news and daily/weekly/monthly reports. Triggers on:
-  rust news, rust daily, rust weekly, TWIR, rust blog,
-  Rust 日报, Rust 周报, Rust 新闻, Rust 动态
+description: >-
+  Rust 每日/每周动态与新闻速览。需要了解 Rust 社区动态、TWIR 或博客更新时使用。
+  Keywords: Rust 日报, Rust 周报, Rust 新闻, rust news, rust weekly, TWIR,
+  rust blog, Rust 动态
 argument-hint: "[today|week|month]"
 context: fork
 agent: Explore

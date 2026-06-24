@@ -1,6 +1,8 @@
 ---
 name: rust-symbol-analyzer
-description: "Analyze Rust project structure using LSP symbols. Triggers on: /symbols, project structure, list structs, list traits, list functions, 符号分析, 项目结构, 列出所有, 有哪些struct"
+description: >-
+  项目结构分析：基于 LSP 符号浏览代码结构（struct/trait/fn 一览）。触发词：/symbols,
+  符号分析, 项目结构, 列出 struct/trait, 有哪些 struct
 argument-hint: "[file.rs] [--type struct|trait|fn|mod]"
 allowed-tools: ["LSP", "Read", "Glob"]
 ---

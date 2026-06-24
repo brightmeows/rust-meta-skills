@@ -1,6 +1,10 @@
 ---
 name: m15-anti-pattern
-description: "Use when reviewing code for anti-patterns. Keywords: anti-pattern, common mistake, pitfall, code smell, bad practice, code review, is this an anti-pattern, better way to do this, common mistake to avoid, why is this bad, idiomatic way, beginner mistake, fighting borrow checker, clone everywhere, unwrap in production, should I refactor, 反模式, 常见错误, 代码异味, 最佳实践, 地道写法"
+description: >-
+  Rust 反模式识别与代码审查。需要评估代码是否含有反模式、常见陷阱、
+  或寻找更地道写法时使用。
+  Keywords: 反模式, 代码审查, 常见错误, 代码异味, 地道写法, anti-pattern,
+  code review, code smell, clone everywhere, unwrap in production
 user-invocable: false
 ---
 

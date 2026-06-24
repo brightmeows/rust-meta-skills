@@ -1,6 +1,9 @@
 ---
 name: domain-fintech
-description: "Use when building fintech apps. Keywords: fintech, trading, decimal, currency, financial, money, transaction, ledger, payment, exchange rate, precision, rounding, accounting, 金融, 交易系统, 货币, 支付"
+description: >-
+  金融科技领域 Rust 设计约束与最佳实践。构建交易系统、支付处理或账务服务时使用。
+  Keywords: 金融科技, 交易系统, 支付, 货币, 精度, fintech, trading, decimal,
+  currency, transaction, ledger, payment, 审计, accounting
 user-invocable: false
 ---
 

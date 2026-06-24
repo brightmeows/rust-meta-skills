@@ -1,6 +1,10 @@
 ---
 name: m09-domain
-description: "CRITICAL: Use for domain modeling. Triggers: domain model, DDD, domain-driven design, entity, value object, aggregate, repository pattern, business rules, validation, invariant, 领域模型, 领域驱动设计, 业务规则"
+description: >-
+  领域建模与 DDD 模式在 Rust 中的落地。需要设计领域模型、定义实体/值对象、
+  或封装业务规则时使用。
+  Keywords: 领域模型, 领域驱动设计, DDD, 业务规则, entity, value object, aggregate,
+  repository, 实体, 值对象, 聚合, 领域建模
 user-invocable: false
 ---
 

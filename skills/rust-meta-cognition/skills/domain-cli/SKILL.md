@@ -1,7 +1,10 @@
 ---
 name: domain-cli
-description: "Use when building CLI tools. Keywords: CLI, command line, terminal, clap, structopt, argument parsing, subcommand, interactive, TUI, ratatui, crossterm, indicatif, progress bar, colored output, shell completion, config file, environment variable, 命令行, 终端应用, 参数解析"
-globs: ["**/Cargo.toml"]
+description: >-
+  CLI 工具 Rust 架构指导：命令行领域约束到设计决策的映射。构建命令行工具
+  或终端交互应用时使用。
+  Keywords: 命令行, CLI, 终端, 参数解析, clap, TUI, ratatui, crossterm,
+  进度条, 彩色输出, shell completion, command line, terminal
 user-invocable: false
 ---
 

@@ -1,6 +1,9 @@
 ---
 name: m06-error-handling
-description: "CRITICAL: Use for error handling. Triggers: Result, Option, Error, ?, unwrap, expect, panic, anyhow, thiserror, when to panic vs return Result, custom error, error propagation, 错误处理, Result 用法, 什么时候用 panic"
+description: >-
+  错误处理策略选择与实现。CRITICAL: 需要决定 panic vs Result、或设计自定义错误类型时使用。
+  Keywords: 错误处理, Result, Option, panic, anyhow, thiserror, 自定义错误,
+  error handling, unwrap, expect, 什么时候用 panic
 user-invocable: false
 ---
 

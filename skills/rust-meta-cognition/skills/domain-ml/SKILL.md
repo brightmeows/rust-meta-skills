@@ -1,6 +1,9 @@
 ---
 name: domain-ml
-description: "Use when building ML/AI apps in Rust. Keywords: machine learning, ML, AI, tensor, model, inference, neural network, deep learning, training, prediction, ndarray, tch-rs, burn, candle, 机器学习, 人工智能, 模型推理"
+description: >-
+  机器学习领域 Rust 设计约束与最佳实践。构建模型推理服务或 AI 应用时使用。
+  Keywords: 机器学习, ML, AI, 模型推理, tensor, tch-rs, burn, candle, ndarray,
+  inference, prediction, machine learning, deep learning
 user-invocable: false
 ---
 

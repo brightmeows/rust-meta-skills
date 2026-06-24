@@ -1,6 +1,7 @@
 ---
 name: core-fix-skill-docs
-description: "Internal maintenance support for checking and fixing generated Rust skill documentation references. Use only when explicitly invoked by /fix-skill-docs."
+description: >-
+  内部：技能文档引用检查与修复。仅在 /fix-skill-docs 命令调用时使用。
 disable-model-invocation: true
 argument-hint: "[crate_name] [--check-only]"
 context: fork

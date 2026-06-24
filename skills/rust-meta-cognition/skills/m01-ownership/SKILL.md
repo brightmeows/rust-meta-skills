@@ -1,6 +1,9 @@
 ---
 name: m01-ownership
-description: "CRITICAL: Use for ownership/borrow/lifetime issues. Triggers: E0382, E0597, E0506, E0507, E0515, E0716, E0106, value moved, borrowed value does not live long enough, cannot move out of, use of moved value, ownership, borrow, lifetime, 'a, 'static, move, clone, Copy, 所有权, 借用, 生命周期"
+description: >-
+  所有权与借用规则诊断与修复。CRITICAL: 遇到所有权/借用/生命周期错误时使用。
+  Keywords: 所有权, 借用, 生命周期, ownership, borrow, lifetime, E0382, E0597,
+  E0106, E0506, E0507, value moved, cannot borrow, move, clone, Copy
 user-invocable: false
 ---
 

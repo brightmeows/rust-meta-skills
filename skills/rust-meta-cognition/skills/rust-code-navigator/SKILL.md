@@ -1,6 +1,8 @@
 ---
 name: rust-code-navigator
-description: "Navigate Rust code using LSP. Triggers on: /navigate, go to definition, find references, where is defined, 跳转定义, 查找引用, 定义在哪, 谁用了这个"
+description: >-
+  代码导航：基于 LSP 的符号跳转与引用查找。触发词：/navigate, 跳转定义, 查找引用,
+  go to definition, find references, 定义在哪
 argument-hint: "<symbol> [in file.rs:line]"
 allowed-tools: ["LSP", "Read", "Glob"]
 ---

@@ -1,6 +1,9 @@
 ---
 name: m04-zero-cost
-description: "CRITICAL: Use for generics, traits, zero-cost abstraction. Triggers: E0277, E0308, E0599, generic, trait, impl, dyn, where, monomorphization, static dispatch, dynamic dispatch, impl Trait, trait bound not satisfied, 泛型, 特征, 零成本抽象, 单态化"
+description: >-
+  泛型与零成本抽象决策指导。CRITICAL: 需要选择编译时/运行时多态、或遇到 trait 约束错误时使用。
+  Keywords: 泛型, 特征, 零成本抽象, 单态化, generic, trait, impl, dyn, where,
+  E0277, E0308, E0599, static dispatch, dynamic dispatch, impl Trait
 user-invocable: false
 ---
 

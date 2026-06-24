@@ -1,6 +1,10 @@
 ---
 name: coding-guidelines
-description: "Use when asking about Rust code style or best practices. Keywords: naming, formatting, comment, clippy, rustfmt, lint, code style, best practice, P.NAM, G.FMT, code review, naming convention, variable naming, function naming, type naming, 命名规范, 代码风格, 格式化, 最佳实践, 代码审查, 怎么命名"
+description: >-
+  Rust 编码规范（50 条核心规则）：命名、格式、注释最佳实践。需要代码风格指导
+  或代码审查时使用。
+  Keywords: 编码规范, 命名规范, 代码风格, 最佳实践, naming, formatting, clippy,
+  rustfmt, P.NAM, G.FMT, 怎么命名, 格式化, 代码审查
 source: https://rust-coding-guidelines.github.io/rust-coding-guidelines-zh/
 user-invocable: false
 ---

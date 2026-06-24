@@ -1,6 +1,8 @@
 ---
 name: rust-deps-visualizer
-description: "Visualize Rust project dependencies as ASCII art. Triggers on: /deps-viz, dependency graph, show dependencies, visualize deps, 依赖图, 依赖可视化, 显示依赖"
+description: >-
+  依赖树可视化：生成 Rust 项目依赖结构的 ASCII 艺术图。触发词：/deps-viz, 依赖图,
+  依赖可视化, dependency graph, visualize deps
 argument-hint: "[--depth N] [--features]"
 allowed-tools: ["Bash", "Read", "Glob"]
 ---

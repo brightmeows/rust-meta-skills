@@ -1,6 +1,10 @@
 ---
 name: rust-learner
-description: "Use when asking about Rust versions or crate info. Keywords: latest version, what's new, changelog, Rust 1.x, Rust release, stable, nightly, crate info, crates.io, lib.rs, docs.rs, API documentation, crate features, dependencies, which crate, what version, Rust edition, edition 2021, edition 2024, cargo add, cargo update, 最新版本, 版本号, 稳定版, 最新, 哪个版本, crate 信息, 文档, 依赖, Rust 版本, 新特性, 有什么特性"
+description: >-
+  Rust 版本查询与 crate 信息获取。需要查询最新 Rust 版本、crate 文档或
+  API 参考时使用。
+  Keywords: Rust 版本, crate 信息, 文档查询, 最新版本, API 文档, docs.rs,
+  crates.io, edition, cargo add, 新特性, latest version, what's new
 allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 ---
 

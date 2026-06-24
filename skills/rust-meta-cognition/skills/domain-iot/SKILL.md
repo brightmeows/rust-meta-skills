@@ -1,6 +1,9 @@
 ---
 name: domain-iot
-description: "Use when building IoT apps. Keywords: IoT, Internet of Things, sensor, MQTT, device, edge computing, telemetry, actuator, smart home, gateway, protocol, 物联网, 传感器, 边缘计算, 智能家居"
+description: >-
+  物联网领域 Rust 设计约束与最佳实践。构建 IoT 设备固件、边缘计算或传感器网络时使用。
+  Keywords: 物联网, IoT, 传感器, 边缘计算, MQTT, 智能家居, edge computing,
+  telemetry, gateway, Internet of Things
 user-invocable: false
 ---
 

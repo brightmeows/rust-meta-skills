@@ -1,6 +1,9 @@
 ---
 name: domain-cloud-native
-description: "Use when building cloud-native apps. Keywords: kubernetes, k8s, docker, container, grpc, tonic, microservice, service mesh, observability, tracing, metrics, health check, cloud, deployment, 云原生, 微服务, 容器"
+description: >-
+  云原生领域 Rust 设计约束与最佳实践。构建微服务、gRPC 服务或容器化部署时使用。
+  Keywords: 云原生, 微服务, 容器, gRPC, tonic, kubernetes, k8s, 可观测性,
+  tracing, metrics, cloud native, microservice
 user-invocable: false
 ---
 

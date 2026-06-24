@@ -1,6 +1,10 @@
 ---
 name: unsafe-checker
-description: "CRITICAL: Use for unsafe Rust code review and FFI. Triggers on: unsafe, raw pointer, FFI, extern, transmute, *mut, *const, union, #[repr(C)], libc, std::ffi, MaybeUninit, NonNull, SAFETY comment, soundness, undefined behavior, UB, safe wrapper, memory layout, bindgen, cbindgen, CString, CStr, 安全抽象, 裸指针, 外部函数接口, 内存布局, 不安全代码, FFI 绑定, 未定义行为"
+description: >-
+  Unsafe Rust 代码审查与 FFI 绑定安全指导。CRITICAL: 遇到 unsafe 代码块、
+  裸指针操作或 FFI 调用时使用。
+  Keywords: unsafe, 不安全代码, 裸指针, FFI, 未定义行为, raw pointer, transmute,
+  MaybeUninit, SAFETY, soundness, CString, bindgen, 内存布局, memory layout
 globs: ["**/*.rs"]
 allowed-tools: ["Read", "Grep", "Glob"]
 ---

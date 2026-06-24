@@ -1,6 +1,9 @@
 ---
 name: m02-resource
-description: "CRITICAL: Use for smart pointers and resource management. Triggers: Box, Rc, Arc, Weak, RefCell, Cell, smart pointer, heap allocation, reference counting, RAII, Drop, should I use Box or Rc, when to use Arc vs Rc, 智能指针, 引用计数, 堆分配"
+description: >-
+  智能指针选型与资源管理模式指导。CRITICAL: 需要选择 Box/Rc/Arc/RefCell 或管理资源生命周期时使用。
+  Keywords: 智能指针, 资源管理, 引用计数, 堆分配, Box, Rc, Arc, RefCell, Cell,
+  RAII, Drop, smart pointer, heap allocation, reference counting
 user-invocable: false
 ---
 

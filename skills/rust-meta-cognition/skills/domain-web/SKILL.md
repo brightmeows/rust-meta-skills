@@ -1,7 +1,10 @@
 ---
 name: domain-web
-description: "Use when building web services. Keywords: web server, HTTP, REST API, GraphQL, WebSocket, axum, actix, warp, rocket, tower, hyper, reqwest, middleware, router, handler, extractor, state management, authentication, authorization, JWT, session, cookie, CORS, rate limiting, web 开发, HTTP 服务, API 设计, 中间件, 路由"
-globs: ["**/Cargo.toml"]
+description: >-
+  Web 服务 Rust 架构指导：HTTP 领域约束到设计决策的映射。构建 HTTP 服务、
+  REST API 或 WebSocket 应用时使用。
+  Keywords: Web 服务, HTTP, REST, API, WebSocket, axum, actix, tower, hyper,
+  中间件, JWT, 认证, 路由, web server, middleware, handler, extractor
 user-invocable: false
 ---
 

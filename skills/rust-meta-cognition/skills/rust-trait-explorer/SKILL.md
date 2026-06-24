@@ -1,6 +1,8 @@
 ---
 name: rust-trait-explorer
-description: "Explore Rust trait implementations using LSP. Triggers on: /trait-impl, find implementations, who implements, trait 实现, 谁实现了, 实现了哪些trait"
+description: >-
+  Trait 实现探索：发现 trait 实现关系并理解多态设计。触发词：/trait-impl, trait 实现,
+  find implementations, 谁实现了, who implements
 argument-hint: "<TraitName|StructName>"
 allowed-tools: ["LSP", "Read", "Glob", "Grep"]
 ---
