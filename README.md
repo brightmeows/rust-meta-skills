@@ -153,6 +153,10 @@ Layer 1: 语言机制 (HOW - 怎么做)
 - [功能概览](./skills/rust-meta-cognition/docs/functional-overview-zh.md)
 - [元认知示例：E0382](./skills/rust-meta-cognition/docs/meta-cognition-example-e0382.md)
 
+## 基于项目
+
+本项目基于 [actionbook/rust-skills](https://github.com/actionbook/rust-skills)（MIT 许可证）进行定制和扩展，在原项目的三层认知模型框架和技能架构基础上发展。使用时须遵守原项目许可证条款。
+
 ## 许可证
 
 MIT
