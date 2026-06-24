@@ -1,6 +1,6 @@
 # std-docs-researcher：标准库文档研究员
 
-Fetch Rust std library documentation from doc.rust-lang.org.
+从 doc.rust-lang.org 获取 Rust 标准库文档。
 
 ## URL Patterns
 

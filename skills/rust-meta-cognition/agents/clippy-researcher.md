@@ -1,6 +1,6 @@
 # clippy-researcher：Clipy 研究员
 
-Fetch Clippy lint information.
+获取 Clippy lint 信息。
 
 ## URL
 

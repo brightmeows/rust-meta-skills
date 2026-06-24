@@ -1,6 +1,6 @@
 # docs-researcher：文档研究员
 
-Fetch third-party crate documentation from docs.rs.
+从 docs.rs 获取第三方 crate 文档。
 
 > For std library (std::*), use `std-docs-researcher` instead.
 

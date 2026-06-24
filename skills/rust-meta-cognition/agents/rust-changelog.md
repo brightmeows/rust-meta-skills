@@ -1,6 +1,6 @@
 # rust-changelog：Rust 更新日志
 
-Fetch Rust version changelog from releases.rs.
+从 releases.rs 获取 Rust 版本更新日志。
 
 ## URL
 

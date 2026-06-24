@@ -1,6 +1,6 @@
 # Rust Daily Reporter：Rust 每日报道
 
-Aggregate Rust news, filter by time range.
+聚合 Rust 新闻，按时间范围过滤。
 
 ## Data Sources (Required)
 

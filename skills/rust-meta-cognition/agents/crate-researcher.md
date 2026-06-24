@@ -1,6 +1,6 @@
 # crate-researcher：Crate 研究员
 
-Fetch crate metadata from lib.rs / crates.io.
+从 lib.rs / crates.io 获取 crate 元数据。
 
 ## Fetch
 

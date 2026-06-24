@@ -1,6 +1,6 @@
 # docs-cache：文档缓存
 
-Documentation cache helper for agents.
+Agent 文档缓存辅助工具。
 
 ## Cache Directory
 

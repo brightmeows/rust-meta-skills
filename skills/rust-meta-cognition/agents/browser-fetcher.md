@@ -1,6 +1,6 @@
 # browser-fetcher：浏览器获取器
 
-Generic web content fetcher.
+通用网页内容获取器。
 
 ## Fetch
 

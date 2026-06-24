@@ -2,11 +2,11 @@
 
 > Agent 在协商模式下的标准响应结构。
 
-## When to Use
+## 使用时机
 
-This format is REQUIRED when the orchestrator dispatches with `negotiation: true`.
+当编排器以 `negotiation: true` 调度时，**必须**使用此格式。
 
-For standard (non-negotiation) queries, use the agent's default output format.
+对于标准（非协商）查询，使用 agent 的默认输出格式。
 
 ---
 
