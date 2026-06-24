@@ -1,91 +1,91 @@
-# Rust Skills Tests
+# Rust Skills 测试
 
-## Overview
+## 概述
 
-This directory contains test scenarios for validating rust-skills functionality.
+本目录包含用于验证 rust-skills 功能的测试场景。
 
-## Directory Structure
+## 目录结构
 
 ```
 tests/
 ├── README.md
-├── scenarios/              # Test scenarios by category
-│   ├── ownership.md        # m01-m04 ownership/resource tests
-│   ├── layer2-skills.md    # m05, m09-m15 design skills
-│   ├── domain-skills.md    # Layer 3 domain skills
-│   ├── unsafe.md           # unsafe-checker tests
-│   ├── routing.md          # rust-router tests
-│   └── agents.md           # Agent integration tests
+├── scenarios/              # 按类别划分的测试场景
+│   ├── ownership.md        # m01-m04 所有权/资源测试
+│   ├── layer2-skills.md    # m05, m09-m15 设计类 skill
+│   ├── domain-skills.md    # Layer 3 领域 skill
+│   ├── unsafe.md           # unsafe-checker 测试
+│   ├── routing.md          # rust-router 测试
+│   └── agents.md           # Agent 集成测试
 │
-├── pressure-scenarios/     # Edge case tests
+├── pressure-scenarios/     # 边界情况测试
 │   ├── m01-ownership/
 │   ├── m06-error-handling/
 │   └── m07-concurrency/
 │
-└── validation/             # Validation scripts
+└── validation/             # 验证脚本
     └── validate-skills.sh
 ```
 
-## Quick Test Reference
+## 快速测试参考
 
-See `test-triggers.md` in project root for complete trigger test checklist.
+项目根目录下的 `test-triggers.md` 包含完整的触发测试清单。
 
-## Running Tests
+## 运行测试
 
-### Manual Testing
+### 手工测试
 
-Use the test scenarios as prompts:
+使用测试场景作为提示词：
 
 ```bash
-# Layer 1: Language Mechanics
+# Layer 1：语言机制
 claude -p "E0382 错误怎么解决"           # m01-ownership
 claude -p "E0499 multiple mutable borrows" # m03-mutability
 claude -p "newtype pattern"              # m05-type-driven
 claude -p "Send Sync trait"              # m07-concurrency
 
-# Layer 2: Design Choices
+# Layer 2：设计选择
 claude -p "DDD in Rust"                  # m09-domain
 claude -p "benchmark 怎么写"              # m10-performance
 claude -p "RAII pattern"                 # m12-lifecycle
 claude -p "常见 Rust 错误"                # m15-anti-pattern
 
-# Layer 3: Domain Constraints
+# Layer 3：领域约束
 claude -p "axum web server"              # domain-web
 claude -p "decimal 精度计算"              # domain-fintech
 claude -p "no_std embedded"              # domain-embedded
 
-# Core Skills
+# 核心 Skill
 claude -p "unsafe 代码怎么写"             # unsafe-checker
 claude -p "tokio 最新版本"                # rust-learner
 ```
 
-### Validation Script
+### 验证脚本
 
 ```bash
 ./tests/validation/validate-skills.sh
 ```
 
-## Test Categories
+## 测试分类
 
-### 1. Layer 1 - Language Mechanics (m01-m07)
-- Ownership, borrowing, lifetimes
-- Resource management
-- Mutability
-- Zero-cost abstraction
-- Type-driven design
-- Error handling
-- Concurrency
+### 1. Layer 1 - 语言机制（m01-m07）
+- 所有权、借用、生命周期
+- 资源管理
+- 可变性
+- 零成本抽象
+- 类型驱动设计
+- 错误处理
+- 并发
 
-### 2. Layer 2 - Design Choices (m09-m15)
-- Domain modeling
-- Performance optimization
-- Ecosystem integration
-- Resource lifecycle
-- Domain error patterns
-- Mental models
-- Anti-patterns
+### 2. Layer 2 - 设计选择（m09-m15）
+- 领域建模
+- 性能优化
+- 生态集成
+- 资源生命周期
+- 领域错误模式
+- 心智模型
+- 反模式
 
-### 3. Layer 3 - Domain Constraints
+### 3. Layer 3 - 领域约束
 - domain-fintech
 - domain-web
 - domain-cli
@@ -94,34 +94,34 @@ claude -p "tokio 最新版本"                # rust-learner
 - domain-iot
 - domain-ml
 
-### 4. Core Skills
+### 4. 核心 Skill
 - rust-router
 - rust-learner
 - coding-guidelines
 - unsafe-checker
 
-### 5. Agent Integration
+### 5. Agent 集成
 - crate-researcher
 - rust-changelog
 - docs-researcher
 - clippy-researcher
 
-## Coverage Summary
+## 覆盖度总结
 
-| Category | Skills | Tested |
+| 类别 | Skill 数 | 已测试 |
 |----------|--------|--------|
 | Layer 1 | 7 | 7/7 |
 | Layer 2 | 7 | 7/7 |
 | Layer 3 | 7 | 7/7 |
-| Core | 4 | 4/4 |
-| **Total** | **25** | **25/25** |
+| 核心 | 4 | 4/4 |
+| **总计** | **25** | **25/25** |
 
-## Adding New Tests
+## 添加新测试
 
-1. Create scenario file in `tests/scenarios/`
-2. Include:
-   - Test prompt
-   - Expected skill trigger
-   - Expected response elements
-3. Update `test-triggers.md` in project root
-4. Update validation script if needed
+1. 在 `tests/scenarios/` 中创建场景文件
+2. 包含：
+    - 测试提示词
+    - 期望触发的 Skill
+    - 期望的响应要素
+3. 更新项目根目录的 `test-triggers.md`
+4. 根据需要更新验证脚本

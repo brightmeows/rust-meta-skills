@@ -1,65 +1,65 @@
-# Rust Skills Review Report
+# Rust Skills 审查报告
 
-> **Date:** 2026-01-16
+> **日期：** 2026-01-16
 
-## Current Structure
+## 当前结构
 
-### Skills Count: 30
+### Skill 数量：30
 
-| Category | Count | Skills |
+| 类别 | 数量 | Skill |
 |----------|-------|--------|
-| Core | 4 | rust-router, rust-learner, coding-guidelines, unsafe-checker |
-| Meta-Questions (m01-m15) | 15 | m01-m15 |
-| Domains | 7 | cloud-native, fintech, web, cli, iot, ml, embedded |
-| Utilities | 4 | agent-browser, actionbook, dynamic-skills, fix-skill-docs |
+| 核心 | 4 | rust-router, rust-learner, coding-guidelines, unsafe-checker |
+| 元问题（m01-m15）| 15 | m01-m15 |
+| 领域 | 7 | cloud-native, fintech, web, cli, iot, ml, embedded |
+| 工具类 | 4 | agent-browser, actionbook, dynamic-skills, fix-skill-docs |
 
 ---
 
-## Issues Found
+## 发现的问题
 
-### Issue 1: Skill Overlap
+### 问题 1：Skill 重叠
 
-| Skill A | Skill B | Overlap |
+| Skill A | Skill B | 重叠度 |
 |---------|---------|---------|
-| `m08-safety` | `unsafe-checker` | 90% - both cover unsafe code |
-| `m06-error-handling` | `m13-domain-error` | 40% - error handling |
+| `m08-safety` | `unsafe-checker` | 90% - 都覆盖 unsafe 代码 |
+| `m06-error-handling` | `m13-domain-error` | 40% - 错误处理 |
 | `m01-ownership` | `m12-lifecycle` | 30% - RAII, Drop |
-| `m02-resource` | `m12-lifecycle` | 30% - resource management |
+| `m02-resource` | `m12-lifecycle` | 30% - 资源管理 |
 
-**Recommendation:** Remove `m08-safety`, merge content into `unsafe-checker`
+**建议：** 移除 `m08-safety`，内容合并到 `unsafe-checker`
 
-### Issue 2: Utility Skills Should Not Auto-Trigger
+### 问题 2：工具类 Skill 不应自动触发
 
-These skills are internal tools, not user-facing:
+这些 skill 是内部工具，非面向用户：
 
-| Skill | Problem |
+| Skill | 问题 |
 |-------|---------|
-| `agent-browser` | User shouldn't trigger this directly |
-| `actionbook` | Internal tool for other skills |
-| `dynamic-skills` | Command-based, not question-based |
-| `fix-skill-docs` | Internal maintenance tool |
+| `agent-browser` | 用户不应直接触发 |
+| `actionbook` | 供其他 skill 使用的内部工具 |
+| `dynamic-skills` | 基于命令，非基于问题 |
+| `fix-skill-docs` | 内部维护工具 |
 
-**Recommendation:** Move to `skills/internal/` or remove `description` to prevent triggering
+**建议：** 移至 `skills/internal/` 或移除 `description` 以防止触发
 
-### Issue 3: Naming Inconsistency
+### 问题 3：命名不一致
 
-| Current | Issue |
+| 当前 | 问题 |
 |---------|-------|
-| `domain-web` | Uses prefix `domain-` |
-| `domain-cli` | Uses prefix `domain-` |
-| `domain-embedded` | Uses prefix `domain-` |
-| `cloud-native` | No prefix |
-| `fintech` | No prefix |
-| `iot` | No prefix |
-| `ml` | No prefix |
+| `domain-web` | 使用前缀 `domain-` |
+| `domain-cli` | 使用前缀 `domain-` |
+| `domain-embedded` | 使用前缀 `domain-` |
+| `cloud-native` | 无前缀 |
+| `fintech` | 无前缀 |
+| `iot` | 无前缀 |
+| `ml` | 无前缀 |
 
-**Recommendation:** Consistent naming: all use `domain-xxx` or none
+**建议：** 统一命名：全部使用 `domain-xxx` 或都不使用
 
-### Issue 4: Keyword Conflicts
+### 问题 4：关键词冲突
 
-Multiple skills triggered by same keywords:
+多个 skill 被相同关键词触发：
 
-| Keyword | Triggered Skills |
+| 关键词 | 触发的 Skill |
 |---------|------------------|
 | `unsafe` | m08-safety, unsafe-checker |
 | `FFI` | m08-safety, unsafe-checker |
@@ -67,126 +67,126 @@ Multiple skills triggered by same keywords:
 | `RAII` | m01-ownership, m02-resource, m12-lifecycle |
 | `Drop` | m01-ownership, m02-resource, m12-lifecycle |
 
-### Issue 5: Error Codes Not Comprehensive
+### 问题 5：错误码不全面
 
-Current coverage:
+当前覆盖：
 
-| Error Code | Skill | Status |
+| 错误码 | Skill | 状态 |
 |------------|-------|--------|
 | E0382 | m01-ownership | ✅ |
 | E0597 | m01-ownership | ✅ |
-| E0499 | m01-ownership, m03-mutability | ⚠️ Duplicate |
-| E0502 | m01-ownership, m03-mutability | ⚠️ Duplicate |
-| E0277 | m04-zero-cost, m07-concurrency | ⚠️ Duplicate |
+| E0499 | m01-ownership, m03-mutability | ⚠️ 重复 |
+| E0502 | m01-ownership, m03-mutability | ⚠️ 重复 |
+| E0277 | m04-zero-cost, m07-concurrency | ⚠️ 重复 |
 | E0308 | m04-zero-cost | ✅ |
 | E0425 | m11-ecosystem | ✅ |
 | E0596 | m03-mutability | ✅ |
 
-Missing common errors: E0106, E0133, E0204, E0255, E0271, E0282, E0283, E0317
+缺失的常见错误码：E0106, E0133, E0204, E0255, E0271, E0282, E0283, E0317
 
 ---
 
-## Recommendations
+## 建议
 
-### 1. Remove Redundant Skills
+### 1. 移除冗余 Skill
 
 ```
-REMOVE:
-- m08-safety (merge into unsafe-checker)
+移除：
+- m08-safety（合并到 unsafe-checker）
 
-KEEP:
-- m01-m07, m09-m15 (12 meta-question skills)
-- unsafe-checker (comprehensive unsafe coverage)
+保留：
+- m01-m07, m09-m15（12 个元问题 skill）
+- unsafe-checker（全面的 unsafe 覆盖）
 ```
 
-### 2. Move Internal Skills
+### 2. 移动内部 Skill
 
 ```
 skills/internal/
-├── agent-browser/SKILL.md    # No auto-trigger
-├── actionbook/SKILL.md       # No auto-trigger
-├── dynamic-skills/SKILL.md   # Command-only
-└── fix-skill-docs/SKILL.md   # Internal tool
+├── agent-browser/SKILL.md    # 不自动触发
+├── actionbook/SKILL.md       # 不自动触发
+├── dynamic-skills/SKILL.md   # 仅命令
+└── fix-skill-docs/SKILL.md   # 内部工具
 ```
 
-Or remove `description` field from these skills to prevent triggering.
+或者移除这些 skill 的 `description` 字段以防止触发。
 
-### 3. Standardize Domain Names
+### 3. 统一领域名称
 
 ```
-CURRENT → RECOMMENDED:
+当前 → 建议：
 cloud-native    → domain-cloud-native
 fintech         → domain-fintech
 iot             → domain-iot
 ml              → domain-ml
 ```
 
-### 4. Assign Error Codes to Single Skill
+### 4. 将错误码分配给单个 Skill
 
-| Error Code | Assigned To | Reason |
+| 错误码 | 分配给 | 原因 |
 |------------|-------------|--------|
-| E0499, E0502 | m03-mutability | Mutability focus |
-| E0277 | m04-zero-cost (traits) | Keep in m07 only for Send/Sync context |
+| E0499, E0502 | m03-mutability | 可变性焦点 |
+| E0277 | m04-zero-cost（traits）| 仅在 Send/Sync 上下文中保留于 m07 |
 
-### 5. Add Missing Error Codes
+### 5. 添加缺失的错误码
 
 ```yaml
-m01-ownership: + E0106 (missing lifetime specifier)
-m04-zero-cost: + E0271, E0282, E0283 (type inference)
-m07-concurrency: E0277 (only for Send/Sync)
+m01-ownership：+ E0106（缺少生命周期说明符）
+m04-zero-cost：+ E0271, E0282, E0283（类型推断）
+m07-concurrency：E0277（仅用于 Send/Sync）
 ```
 
 ---
 
-## Trigger Test Plan
+## 触发测试计划
 
-### Test Cases
+### 测试用例
 
 ```markdown
-## Ownership (m01)
-| Query | Expected Skill | Keywords |
+## 所有权（m01）
+| 查询 | 期望的 Skill | 关键词 |
 |-------|----------------|----------|
 | "我遇到了 E0382 错误" | m01-ownership | E0382 |
 | "value moved after use" | m01-ownership | value moved |
 | "借用检查器报错" | m01-ownership | 借用 |
 | "lifetime 怎么标注" | m01-ownership | lifetime |
 
-## Error Handling (m06)
-| Query | Expected Skill | Keywords |
+## 错误处理（m06）
+| 查询 | 期望的 Skill | 关键词 |
 |-------|----------------|----------|
 | "什么时候用 panic" | m06-error-handling | panic |
 | "Result vs Option" | m06-error-handling | Result, Option |
 | "thiserror 怎么用" | m06-error-handling | thiserror |
 
-## Concurrency (m07)
-| Query | Expected Skill | Keywords |
+## 并发（m07）
+| 查询 | 期望的 Skill | 关键词 |
 |-------|----------------|----------|
 | "cannot be sent between threads" | m07-concurrency | sent between threads |
 | "async await 怎么用" | m07-concurrency | async await |
 | "tokio spawn" | m07-concurrency + rust-learner | tokio, spawn |
 
-## Unsafe (unsafe-checker)
-| Query | Expected Skill | Keywords |
+## Unsafe（unsafe-checker）
+| 查询 | 期望的 Skill | 关键词 |
 |-------|----------------|----------|
 | "如何写安全的 unsafe" | unsafe-checker | unsafe |
 | "FFI 绑定怎么写" | unsafe-checker | FFI |
 | "SAFETY 注释" | unsafe-checker | SAFETY |
 
-## Version/Crate (rust-learner)
-| Query | Expected Skill | Keywords |
+## 版本/Crate（rust-learner）
+| 查询 | 期望的 Skill | 关键词 |
 |-------|----------------|----------|
 | "tokio 最新版本" | rust-learner | 最新版本 |
 | "Rust 1.85 有什么新特性" | rust-learner | Rust 1.85, 新特性 |
 | "serde 文档" | rust-learner | 文档 |
 
-## Router (rust-router)
-| Query | Expected Skill | Keywords |
+## 路由器（rust-router）
+| 查询 | 期望的 Skill | 关键词 |
 |-------|----------------|----------|
 | "分析这个问题的意图" | rust-router | 意图分析 |
 | "这是什么类型的问题" | rust-router | 分析 |
 ```
 
-### Test Script
+### 测试脚本
 
 ```bash
 #!/bin/bash
@@ -210,21 +210,21 @@ done
 
 ---
 
-## Action Items (Completed 2026-01-16)
+## 行动项（完成于 2026-01-16）
 
-- [x] Remove m08-safety, merge to unsafe-checker
-- [x] Move internal skills to skills/internal/ or remove descriptions
-- [x] Standardize domain skill naming
-- [x] Deduplicate error codes across skills
-- [x] Add missing error codes
-- [x] Create and run trigger tests
-- [x] Update rust-router routing table
+- [x] 移除 m08-safety，合并到 unsafe-checker
+- [x] 将内部 skill 移至 skills/internal/ 或移除描述
+- [x] 统一领域 skill 命名
+- [x] 跨 skill 去重错误码
+- [x] 添加缺失的错误码
+- [x] 创建并运行触发测试
+- [x] 更新 rust-router 路由表
 
-## Changes Made
+## 已做的变更
 
-1. **Removed m08-safety** - Merged content into unsafe-checker
-2. **Internal skills** - Removed descriptions from agent-browser, actionbook, dynamic-skills, fix-skill-docs
-3. **Domain naming** - Standardized to domain-xxx prefix (domain-fintech, domain-ml, etc.)
-4. **Error codes** - E0499/E0502 now only in m03-mutability, added E0106/E0271/E0282
-5. **rust-router** - Updated routing tables to reflect all changes
-6. **Test script** - Created `test-triggers.sh` for validation
+1. **移除了 m08-safety** - 内容合并到 unsafe-checker
+2. **内部 skill** - 移除了 agent-browser、actionbook、dynamic-skills、fix-skill-docs 的描述
+3. **领域命名** - 统一为 domain-xxx 前缀（domain-fintech, domain-ml 等）
+4. **错误码** - E0499/E0502 现在仅存在于 m03-mutability，添加了 E0106/E0271/E0282
+5. **rust-router** - 更新了路由表以反映所有变更
+6. **测试脚本** - 创建了 `test-triggers.sh` 用于验证

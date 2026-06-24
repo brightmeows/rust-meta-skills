@@ -1,40 +1,40 @@
-# Agent Cache System
+# Agent 缓存系统
 
-## Overview
+## 概述
 
-This directory contains cached responses from agents to reduce redundant web fetches and improve response time.
+本目录包含 agent 的缓存响应，用于减少冗余的网络获取并提高响应速度。
 
-## Cache Structure
+## 缓存结构
 
 ```
 cache/
 ├── README.md
-├── config.yaml           # Cache configuration
-├── crates/               # Crate information cache
+├── config.yaml           # 缓存配置
+├── crates/               # Crate 信息缓存
 │   ├── tokio.json
 │   ├── serde.json
 │   └── ...
-├── rust-versions/        # Rust version changelog cache
+├── rust-versions/        # Rust 版本更新日志缓存
 │   ├── 1.75.json
 │   ├── 1.76.json
 │   └── ...
-├── clippy-lints/         # Clippy lint information cache
+├── clippy-lints/         # Clippy lint 信息缓存
 │   └── lints.json
-└── docs/                 # API documentation cache
+└── docs/                 # API 文档缓存
     ├── tokio/
     ├── serde/
     └── ...
 ```
 
-## Cache Entry Format
+## 缓存条目格式
 
-### Crate Cache (`crates/*.json`)
+### Crate 缓存（`crates/*.json`）
 
 ```json
 {
   "name": "tokio",
   "version": "1.35.1",
-  "description": "An event-driven, non-blocking I/O platform",
+  "description": "一个事件驱动的非阻塞 I/O 平台",
   "features": ["full", "rt-multi-thread", "macros", "sync"],
   "repository": "https://github.com/tokio-rs/tokio",
   "cached_at": "2024-01-15T10:30:00Z",
@@ -43,15 +43,15 @@ cache/
 }
 ```
 
-### Rust Version Cache (`rust-versions/*.json`)
+### Rust 版本缓存（`rust-versions/*.json`）
 
 ```json
 {
   "version": "1.75.0",
   "release_date": "2023-12-28",
   "highlights": [
-    "async fn in traits",
-    "RPITIT (return position impl Trait in traits)"
+    "trait 中的 async fn",
+    "RPITIT（trait 中返回位置的 impl Trait）"
   ],
   "stabilized_features": [
     "async_fn_in_trait",
@@ -63,85 +63,85 @@ cache/
 }
 ```
 
-## Cache Configuration (`config.yaml`)
+## 缓存配置（`config.yaml`）
 
 ```yaml
 cache:
   enabled: true
 
-  # Time-to-live settings (in hours)
+  # 生存时间设置（小时）
   ttl:
-    crates: 24        # Crate info valid for 24 hours
-    rust_versions: 168  # Rust versions valid for 1 week
-    clippy_lints: 168   # Clippy lints valid for 1 week
-    docs: 72           # API docs valid for 3 days
+    crates: 24        # Crate 信息有效 24 小时
+    rust_versions: 168  # Rust 版本有效 1 周
+    clippy_lints: 168   # Clippy lint 有效 1 周
+    docs: 72           # API 文档有效 3 天
 
-  # Cache size limits
+  # 缓存大小限制
   limits:
     max_entries_per_category: 100
     max_total_size_mb: 50
 
-  # Auto-cleanup
+  # 自动清理
   cleanup:
     enabled: true
     interval_hours: 24
     remove_expired: true
 ```
 
-## Usage in Agents
+## 在 Agent 中使用
 
-### Checking Cache Before Fetch
+### 获取前检查缓存
 
 ```
-1. Check if cache/<category>/<key>.json exists
-2. If exists, check if (now - cached_at) < ttl_hours
-3. If valid, return cached data
-4. If invalid/missing, fetch fresh data
-5. Store result in cache with timestamp
+1. 检查 cache/<类别>/<键>.json 是否存在
+2. 如果存在，检查 (now - cached_at) < ttl_hours
+3. 如果有效，返回缓存数据
+4. 如果无效/缺失，获取新鲜数据
+5. 将结果存入缓存并记录时间戳
 ```
 
-### Example Agent Workflow
+### Agent 工作流示例
 
 ```markdown
-## Cache-Aware Workflow
+## 感知缓存的工作流
 
-1. **Check Cache**
-   - Read cache/crates/<crate_name>.json
-   - If valid (exists and not expired), return cached data
+1. **检查缓存**
+   - 读取 cache/crates/<crate_name>.json
+   - 如果有效（存在且未过期），返回缓存数据
 
-2. **Fetch if Needed**
-   - Use actionbook/agent-browser to fetch
-   - Parse and structure the data
+2. **按需获取**
+   - 使用 actionbook/agent-browser 获取
+   - 解析并结构化数据
 
-3. **Update Cache**
-   - Write to cache/crates/<crate_name>.json
-   - Include cached_at timestamp
+3. **更新缓存**
+   - 写入 cache/crates/<crate_name>.json
+   - 包含 cached_at 时间戳
 ```
 
-## Cache Management Commands
+## 缓存管理命令
 
-### Clear All Cache
+### 清除所有缓存
 ```bash
 rm -rf cache/crates/* cache/rust-versions/* cache/docs/*
 ```
 
-### Clear Expired Only
+### 仅清除过期缓存
 ```bash
-# Use the cache-cleaner agent or manual script
+# 使用 cache-cleaner agent 或手动脚本
 find cache -name "*.json" -mtime +7 -delete
 ```
 
-### View Cache Stats
+### 查看缓存统计
 ```bash
 echo "Crates cached: $(ls cache/crates/*.json 2>/dev/null | wc -l)"
 echo "Versions cached: $(ls cache/rust-versions/*.json 2>/dev/null | wc -l)"
 echo "Total size: $(du -sh cache 2>/dev/null | cut -f1)"
 ```
 
-## Best Practices
+## 最佳实践
 
-1. **Always check cache first** - Reduces latency and API load
-2. **Use appropriate TTL** - Balance freshness vs. performance
-3. **Include source** - Track where data came from
-4. **Handle stale gracefully** - Return stale if fetch fails
-5. **Don't cache errors** - Only cache successful responses
+1. **始终先检查缓存** - 减少延迟和 API 负载
+2. **使用适当的 TTL** - 平衡新鲜度与性能
+3. **包含来源信息** - 追踪数据来源
+4. **优雅处理过期数据** - 如果获取失败则返回过期数据
+5. **不缓存错误** - 仅缓存成功的响应

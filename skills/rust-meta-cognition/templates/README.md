@@ -1,57 +1,57 @@
-# Rust Code Templates
+# Rust 代码模板
 
-## Overview
+## 概述
 
-Ready-to-use code templates for common Rust patterns. These templates follow coding guidelines and best practices.
+用于常见 Rust 模式的即用型代码模板。这些模板遵循编码规范和最佳实践。
 
-## Directory Structure
+## 目录结构
 
 ```
 templates/
-├── error-handling/     # Error type definitions
-│   ├── thiserror.rs    # Library error with thiserror
-│   ├── anyhow.rs       # Application error with anyhow
-│   └── custom.rs       # Manual error implementation
+├── error-handling/     # 错误类型定义
+│   ├── thiserror.rs    # 使用 thiserror 的库错误
+│   ├── anyhow.rs       # 使用 anyhow 的应用错误
+│   └── custom.rs       # 手动错误实现
 │
-├── concurrency/        # Concurrent patterns
-│   ├── worker-pool.rs  # Thread pool pattern
-│   ├── actor.rs        # Actor pattern with channels
-│   └── async-task.rs   # Async task spawning
+├── concurrency/        # 并发模式
+│   ├── worker-pool.rs  # 线程池模式
+│   ├── actor.rs        # 使用通道的 Actor 模式
+│   └── async-task.rs   # 异步任务生成
 │
-├── ffi/               # FFI patterns
-│   ├── c-bindings.rs  # Calling C from Rust
-│   ├── expose-api.rs  # Exposing Rust to C
-│   └── safe-wrapper.rs # Safe wrapper for unsafe FFI
+├── ffi/               # FFI 模式
+│   ├── c-bindings.rs  # 从 Rust 调用 C
+│   ├── expose-api.rs  # 向 C 暴露 Rust
+│   └── safe-wrapper.rs # 为 unsafe FFI 提供的安全包装
 │
-├── testing/           # Testing patterns
-│   ├── unit-tests.rs  # Unit test examples
-│   ├── mock.rs        # Mocking with traits
-│   └── integration.rs # Integration test setup
+├── testing/           # 测试模式
+│   ├── unit-tests.rs  # 单元测试示例
+│   ├── mock.rs        # 使用 trait 模拟
+│   └── integration.rs # 集成测试设置
 │
-└── project/           # Project templates
-    ├── lib.rs         # Library crate structure
-    ├── main.rs        # Binary crate structure
-    └── Cargo.toml     # Cargo.toml with common deps
+└── project/           # 项目模板
+    ├── lib.rs         # 库 crate 结构
+    ├── main.rs        # 二进制 crate 结构
+    └── Cargo.toml     # 含常用依赖的 Cargo.toml
 ```
 
-## Usage
+## 使用方式
 
-Copy and adapt templates for your needs:
+复制并根据需要调整模板：
 
 ```bash
-# Copy error template
+# 复制错误处理模板
 cp templates/error-handling/thiserror.rs src/error.rs
 ```
 
-## Templates Reference
+## 模板参考
 
-| Template | Use When |
+| 模板 | 使用场景 |
 |----------|----------|
-| thiserror.rs | Library with specific error types |
-| anyhow.rs | Application with error context |
-| worker-pool.rs | CPU-bound parallel processing |
-| actor.rs | Message-passing concurrency |
-| async-task.rs | I/O-bound async operations |
-| c-bindings.rs | Calling existing C libraries |
-| expose-api.rs | Building Rust library for C |
-| safe-wrapper.rs | Wrapping unsafe FFI safely |
+| thiserror.rs | 需要特定错误类型的库 |
+| anyhow.rs | 需要错误上下文的应用 |
+| worker-pool.rs | CPU 密集型并行处理 |
+| actor.rs | 消息传递并发 |
+| async-task.rs | I/O 密集型异步操作 |
+| c-bindings.rs | 调用已有的 C 库 |
+| expose-api.rs | 构建给 C 调用的 Rust 库 |
+| safe-wrapper.rs | 安全包装 unsafe FFI |
