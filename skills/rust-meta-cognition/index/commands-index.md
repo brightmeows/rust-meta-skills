@@ -1,6 +1,6 @@
-# Commands Index
+# 命令索引
 
-Available slash commands.
+可用的斜杠命令。
 
 | Command | Usage | Description |
 |---------|-------|-------------|

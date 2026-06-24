@@ -1,6 +1,6 @@
-# Domain Extension Index
+# 领域扩展索引
 
-Special domain codes for industry-specific applications.
+用于行业特定应用的专用领域代码。
 
 ---
 
@@ -14,11 +14,11 @@ Special domain codes for industry-specific applications.
 | F060-F079 | Risk Management | Risk engines, anti-fraud |
 | F080-F099 | Regulatory Compliance | KYC, AML |
 
-### Key Crates
+### 关键 Crate
 - rust_decimal, chrono, uuid
 - serde, tokio
 
-### Related Meta-Questions
+### 相关元问题
 - m01, m06, m07, m10
 
 ---
@@ -83,16 +83,16 @@ Special domain codes for industry-specific applications.
 
 ---
 
-## Cross-Reference
+## 交叉引用
 
-| Domain | Primary Categories | Secondary Categories |
+| 领域 | 主要类别 | 次要类别 |
 |--------|-------------------|---------------------|
 | FinTech | F001-F099 | 040-043 (Error), 120-139 (Concurrency) |
 | ML | M001-M099 | 020-029 (Types), 250-279 (Async) |
 | Cloud Native | CN001-CN099 | 200-299 (Web), 250-279 (Async) |
 | IoT | IoT001-IoT099 | 700-759 (Embedded), 880-889 (Unsafe) |
 
-## Usage Examples
+## 使用示例
 
 ```sql
 -- Find all FinTech high-precision computing issues

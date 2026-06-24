@@ -1,8 +1,8 @@
-# Rust Compiler Error Code Index
+# Rust 编译器错误码索引
 
-Quick lookup table: Error code → Skill routing
+快速查找表：错误码 → Skill 路由
 
-## Ownership & Lifetimes (m01)
+## 所有权与生命周期（m01）
 
 | Error Code | Message | Skill | Common Fix |
 |------------|---------|-------|------------|
@@ -16,13 +16,13 @@ Quick lookup table: Error code → Skill routing
 | E0716 | temporary value dropped while borrowed | m01-ownership | Bind to variable, extend lifetime |
 | E0621 | explicit lifetime required in the type | m01-ownership | Add lifetime annotations |
 
-## Mutability (m03)
+## 可变性（m03）
 
 | Error Code | Message | Skill | Common Fix |
 |------------|---------|-------|------------|
 | E0596 | cannot borrow as mutable | m03-mutability | Add `mut`, use interior mutability |
 
-## Type System (m04)
+## 类型系统（m04）
 
 | Error Code | Message | Skill | Common Fix |
 |------------|---------|-------|------------|
@@ -30,14 +30,14 @@ Quick lookup table: Error code → Skill routing
 | E0308 | mismatched types | m04-zero-cost | Type conversion, fix generics |
 | E0599 | no method named `X` found for type `Y` | m04-zero-cost | Import trait, check types |
 
-## Concurrency (m07)
+## 并发（m07）
 
 | Error Code | Message | Skill | Common Fix |
 |------------|---------|-------|------------|
 | E0277 (Send) | `X` cannot be sent between threads safely | m07-concurrency | Use `Arc`, ensure `Send` |
 | E0277 (Sync) | `X` cannot be shared between threads safely | m07-concurrency | Use `Mutex`, ensure `Sync` |
 
-## Ecosystem (m11)
+## 生态（m11）
 
 | Error Code | Message | Skill | Common Fix |
 |------------|---------|-------|------------|
@@ -45,7 +45,7 @@ Quick lookup table: Error code → Skill routing
 | E0433 | failed to resolve: could not find `X` | m11-ecosystem | Add dependency, fix path |
 | E0603 | `X` is private | m11-ecosystem | Use public API, check exports |
 
-## Quick Diagnosis Flow
+## 快速诊断流程
 
 ```
 Compiler Error
@@ -66,7 +66,7 @@ Contains "cannot find" or "private"?
     → m11-ecosystem
 ```
 
-## Common Error Patterns
+## 常见错误模式
 
 ### "value moved here" → m01
 ```rust

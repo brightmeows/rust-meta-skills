@@ -1,6 +1,6 @@
-# Technical Subcategory Index (YYY)
+# 技术子类别索引（YYY）
 
-Complete index of technical subcategories (001-999).
+技术子类别的完整索引（001-999）。
 
 ---
 

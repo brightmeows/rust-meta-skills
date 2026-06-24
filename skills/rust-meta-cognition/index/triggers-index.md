@@ -1,10 +1,10 @@
-# Trigger Keywords Index
+# 触发关键词索引
 
-Complete mapping of keywords to skills.
+关键词到 Skill 的完整映射。
 
 ---
 
-## Error Codes → Skills
+## 错误码 → Skill
 
 | Error Code | Description | Route To |
 |------------|-------------|----------|
@@ -26,9 +26,9 @@ Complete mapping of keywords to skills.
 
 ---
 
-## Keywords → Skills
+## 关键词 → Skill
 
-### Layer 1: Language Mechanics
+### Layer 1：语言机制
 
 | Keywords | Route To |
 |----------|----------|
@@ -41,7 +41,7 @@ Complete mapping of keywords to skills.
 | Send, Sync, thread, async, await, channel, tokio | m07-concurrency |
 | unsafe, FFI, extern, raw pointer, transmute | unsafe-checker |
 
-### Layer 2: Design Choices
+### Layer 2：设计选择
 
 | Keywords | Route To |
 |----------|----------|
@@ -53,7 +53,7 @@ Complete mapping of keywords to skills.
 | mental model, how to think, learning Rust | m14-mental-model |
 | anti-pattern, common mistake, pitfall, code smell | m15-anti-pattern |
 
-### Layer 3: Domain Constraints
+### Layer 3：领域约束
 
 | Keywords | Route To |
 |----------|----------|
@@ -67,7 +67,7 @@ Complete mapping of keywords to skills.
 
 ---
 
-## Chinese Keywords → Skills
+## 中文关键词 → Skill
 
 | 中文关键词 | Route To |
 |------------|----------|
@@ -89,7 +89,7 @@ Complete mapping of keywords to skills.
 
 ---
 
-## Query Patterns → Actions
+## 查询模式 → 行动
 
 | Pattern | Action |
 |---------|--------|
@@ -101,7 +101,7 @@ Complete mapping of keywords to skills.
 
 ---
 
-## Priority Rules
+## 优先级规则
 
 When multiple skills match, use this priority:
 
@@ -110,7 +110,7 @@ When multiple skills match, use this priority:
 3. **Comparison queries** → enable negotiation, load multiple skills
 4. **General keywords** → route to most specific skill
 
-### Conflict Resolution
+### 冲突解决
 
 | Conflict | Resolution |
 |----------|------------|
@@ -120,7 +120,7 @@ When multiple skills match, use this priority:
 
 ---
 
-## Related Documents
+## 相关文档
 
 | Document | Purpose |
 |----------|---------|

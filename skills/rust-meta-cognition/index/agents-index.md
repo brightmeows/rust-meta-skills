@@ -1,6 +1,6 @@
-# Agents Index
+# Agent 索引
 
-Auto-generated index of all agents.
+所有 agent 的自动生成索引。
 
 | Agent | Model | Tools | Purpose |
 |-------|-------|-------|---------|

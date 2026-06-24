@@ -1,10 +1,10 @@
-# Skills Index
+# Skill 索引
 
-Complete index of all rust-skills with descriptions.
+所有 rust-skills 的完整索引及描述。
 
 ---
 
-## Meta-Question Skills (Layer 1: Language Mechanics)
+## 元问题 Skill（Layer 1：语言机制）
 
 | ID | Name | Core Question | Key Concepts |
 |----|------|---------------|--------------|
@@ -18,7 +18,7 @@ Complete index of all rust-skills with descriptions.
 
 > **Note:** m08 (Safety Boundaries) has been merged into **unsafe-checker** skill.
 
-## Meta-Question Skills (Layer 2: Design Choices)
+## 元问题 Skill（Layer 2：设计选择）
 
 | ID | Name | Core Question | Key Concepts |
 |----|------|---------------|--------------|
@@ -32,7 +32,7 @@ Complete index of all rust-skills with descriptions.
 
 ---
 
-## Core Skills
+## 核心 Skill
 
 | Name | Description | Key Triggers |
 |------|-------------|--------------|
@@ -43,7 +43,7 @@ Complete index of all rust-skills with descriptions.
 
 ---
 
-## Domain Skills (Layer 3: Domain Constraints)
+## 领域 Skill（Layer 3：领域约束）
 
 | Name | Focus Area | Key Concepts |
 |------|------------|--------------|
@@ -57,7 +57,7 @@ Complete index of all rust-skills with descriptions.
 
 ---
 
-## Utility Skills
+## 工具类 Skill
 
 | Name | Description |
 |------|-------------|
@@ -70,7 +70,7 @@ Complete index of all rust-skills with descriptions.
 
 ---
 
-## Skill Count Summary
+## Skill 数量统计
 
 | Category | Count |
 |----------|-------|
@@ -83,7 +83,7 @@ Complete index of all rust-skills with descriptions.
 
 ---
 
-## Related Documents
+## 相关文档
 
 | Document | Purpose |
 |----------|---------|
@@ -91,14 +91,14 @@ Complete index of all rust-skills with descriptions.
 | [meta-questions.md](./meta-questions.md) | Meta-question category definitions |
 | [domain-extensions.md](./domain-extensions.md) | Domain-specific code ranges |
 
-### Framework
+### 框架
 
 | File | Purpose |
 |------|---------|
 | [../_meta/reasoning-framework.md](../_meta/reasoning-framework.md) | Cognitive layer tracing |
 | [../_meta/negotiation-protocol.md](../_meta/negotiation-protocol.md) | Agent communication protocol |
 
-### Router
+### 路由器
 
 | File | Purpose |
 |------|---------|
