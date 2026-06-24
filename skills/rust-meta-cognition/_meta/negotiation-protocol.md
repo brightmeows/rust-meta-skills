@@ -1,344 +1,344 @@
-# Sub-Agent Context Negotiation Protocol
+# 子 Agent 上下文协商协议
 
-> Protocol for structured communication between orchestrator and sub-agents.
+> 编排器（Orchestrator）与子 Agent 之间结构化通信的协议。
 
-## Problem Statement
+## 问题陈述
 
-Sub-agent summaries often miss critical details because they lack the full semantic context behind the original request. Like an employee summarizing a meeting without knowing the boss's priorities, the summary may omit exactly what's needed.
+子 Agent 的摘要常常遗漏关键细节，因为它们缺乏原始请求背后的完整语义上下文。就像一位员工在不了解老板优先事项的情况下总结会议，摘要可能会遗漏恰恰需要的内容。
 
-## Core Principle
+## 核心原则
 
-**Every sub-agent response is a negotiation, not a final answer.**
+**每个子 Agent 的响应都是一次协商，而非最终答案。**
 
-The orchestrator evaluates each response against the original intent and can refine queries until sufficient information is gathered.
+编排器根据原始意图评估每个响应，并可以优化查询，直到收集到足够的信息。
 
 ---
 
-## Protocol Overview
+## 协议概述
 
-### 1. Negotiation Request
+### 1. 协商请求
 
-When dispatching to an agent, the orchestrator MAY enable negotiation mode:
+当分派到 agent 时，编排器可以启用协商模式：
 
 ```
 negotiation: true
 ```
 
-This signals the agent to return a structured response instead of a plain answer.
+这指示 agent 返回结构化响应而非普通答案。
 
-### 2. Negotiation Response
+### 2. 协商响应
 
-Agent returns structured response with:
-- **Findings**: What was discovered
-- **Confidence**: How reliable the findings are
-- **Gaps**: What couldn't be found or verified
-- **Context Needed**: Questions for the orchestrator
+Agent 返回包含以下内容的结构化响应：
+- **发现**：发现了什么
+- **置信度**：发现结果有多可靠
+- **差距**：未能找到或验证的内容
+- **需要的上下文**：向编排器提出的问题
 
-### 3. Orchestrator Evaluation
+### 3. 编排器评估
 
-Orchestrator checks:
-1. Does confidence meet threshold?
-2. Do gaps affect the original intent?
-3. Can context questions be answered?
+编排器检查：
+1. 置信度是否达到阈值？
+2. 差距是否影响原始意图？
+3. 上下文问题能否被回答？
 
-### 4. Refinement Loop
+### 4. 优化循环
 
-If insufficient:
-1. Provide additional context
-2. Re-query with refined parameters
-3. Maximum 3 rounds before synthesis
+如果不足：
+1. 提供额外的上下文
+2. 用优化后的参数重新查询
+3. 综合前最多 3 轮
 
 ---
 
-## Negotiation Triggers
+## 协商触发条件
 
-### Always Enable Negotiation
+### 始终启用协商
 
-| Query Pattern | Example | Reason |
+| 查询模式 | 示例 | 原因 |
 |---------------|---------|--------|
-| Comparative | "Compare X and Y" | Requires data from multiple sources |
-| Cross-domain | "E0382 in trading system" | Needs both technical and domain context |
-| Ambiguous scope | "tokio performance" | Unclear what aspect to measure |
-| Synthesis | "best practices for X" | Requires aggregation from multiple sources |
-| Multi-faceted | "how to design auth" | Multiple valid approaches |
+| 比较型 | "比较 X 和 Y" | 需要多个来源的数据 |
+| 跨领域 | "交易系统中的 E0382" | 需要技术和领域上下文 |
+| 范围模糊 | "tokio 性能" | 不清楚要衡量哪个方面 |
+| 综合型 | "X 的最佳实践" | 需要从多个来源聚合 |
+| 多面型 | "如何设计认证" | 多个有效方法 |
 
-### Skip Negotiation
+### 跳过协商
 
-| Query Pattern | Example | Reason |
+| 查询模式 | 示例 | 原因 |
 |---------------|---------|--------|
-| Single lookup | "tokio latest version" | Direct answer possible |
-| Error code | "what is E0382" | Defined meaning |
-| Simple definition | "what is Send trait" | Factual lookup |
+| 单一查找 | "tokio 最新版本" | 可以直接回答 |
+| 错误码 | "什么是 E0382" | 有确定的含义 |
+| 简单定义 | "什么是 Send trait" | 事实性查找 |
 
 ---
 
-## Confidence Levels
+## 置信度级别
 
-### HIGH
+### 高
 
-Agent found comprehensive information with multiple sources or official documentation.
+Agent 找到了来自多个来源或官方文档的全面信息。
 
-**Criteria:**
-- Primary source available (official docs, release notes)
-- Core data complete
-- No conflicting information
+**标准：**
+- 主要来源可用（官方文档、发布说明）
+- 核心数据完整
+- 无冲突信息
 
-**Action:** Accept response, proceed to synthesis
+**行动：** 接受响应，进行综合
 
-### MEDIUM
+### 中
 
-Agent found partial information, some gaps exist but don't block core understanding.
+Agent 找到了部分信息，存在一些差距但不影响核心理解。
 
-**Criteria:**
-- Some source available
-- Core data found, but incomplete
-- Minor gaps identified
+**标准：**
+- 某些来源可用
+- 核心数据已找到但不完整
+- 识别出次要差距
 
-**Action:** Evaluate if gaps affect intent; may refine or accept
+**行动：** 评估差距是否影响意图；可以优化或接受
 
-### LOW
+### 低
 
-Agent found limited information with significant gaps.
+Agent 找到了有限的信息，存在显著差距。
 
-**Criteria:**
-- Minimal sources
-- Core data incomplete
-- Significant gaps
+**标准：**
+- 来源极少
+- 核心数据不完整
+- 显著差距
 
-**Action:** Refine query with additional context
+**行动：** 用额外上下文优化查询
 
-### UNCERTAIN
+### 不确定
 
-Agent couldn't find reliable information or encountered errors.
+Agent 找不到可靠信息或遇到错误。
 
-**Criteria:**
-- No reliable sources
-- Contradictory information
-- Fetch failures
+**标准：**
+- 无可靠来源
+- 矛盾信息
+- 获取失败
 
-**Action:** Try alternative agent/source or escalate
-
----
-
-## Negotiation Flow
-
-```
-User Question
-     │
-     ▼
-┌─────────────────────────────────────────┐
-│ [1] Router Analysis                     │
-│     - Parse intent                      │
-│     - Check if negotiation needed       │
-│     - If single-lookup: skip to direct  │
-└─────────────────────────────────────────┘
-     │
-     ▼ (negotiation needed)
-┌─────────────────────────────────────────┐
-│ [2] Dispatch Agent (negotiation: true)  │
-│     - Include original query            │
-│     - Include known context             │
-└─────────────────────────────────────────┘
-     │
-     ▼
-┌─────────────────────────────────────────┐
-│ [3] Agent Returns Structured Response   │
-│     - Findings                          │
-│     - Confidence                        │
-│     - Gaps                              │
-│     - Context Needed                    │
-└─────────────────────────────────────────┘
-     │
-     ▼
-┌─────────────────────────────────────────┐
-│ [4] Orchestrator Evaluation             │
-│     - Map findings to original intent   │
-│     - Check confidence threshold        │
-│     - Assess gap impact                 │
-└─────────────────────────────────────────┘
-     │
-     ├──► (sufficient) ──► [6] Synthesize
-     │
-     ▼ (insufficient, rounds < 3)
-┌─────────────────────────────────────────┐
-│ [5] Refine Query                        │
-│     - Answer agent's context questions  │
-│     - Narrow scope                      │
-│     - Try alternative agent             │
-└─────────────────────────────────────────┘
-     │
-     └──► Loop to [2]
-
-If rounds = 3 and still insufficient:
-     │
-     ▼
-┌─────────────────────────────────────────┐
-│ [6] Synthesize Best-Effort Answer       │
-│     - Combine all findings              │
-│     - Explicitly state gaps             │
-│     - Disclose confidence level         │
-└─────────────────────────────────────────┘
-```
+**行动：** 尝试替代 agent/来源或升级
 
 ---
 
-## Integration with Existing Systems
-
-### With Meta-Cognition Framework
-
-Negotiation extends the L1/L2/L3 tracing:
+## 协商流程
 
 ```
-Standard:  User → Router → Skill → [Answer]
+用户问题
+     │
+     ▼
+┌─────────────────────────────────────────┐
+│ [1] 路由器分析                          │
+│     - 解析意图                          │
+│     - 检查是否需要协商                  │
+│     - 如果是单一查找：跳到直接回答      │
+└─────────────────────────────────────────┘
+     │
+     ▼（需要协商）
+┌─────────────────────────────────────────┐
+│ [2] 分派 Agent（negotiation: true）     │
+│     - 包含原始查询                      │
+│     - 包含已知上下文                    │
+└─────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────┐
+│ [3] Agent 返回结构化响应                │
+│     - 发现                              │
+│     - 置信度                            │
+│     - 差距                              │
+│     - 需要的上下文                      │
+└─────────────────────────────────────────┘
+     │
+     ▼
+┌─────────────────────────────────────────┐
+│ [4] 编排器评估                          │
+│     - 将发现映射到原始意图              │
+│     - 检查置信度阈值                    │
+│     - 评估差距影响                      │
+└─────────────────────────────────────────┘
+     │
+     ├──►（足够）──► [6] 综合
+     │
+     ▼（不足，轮次 < 3）
+┌─────────────────────────────────────────┐
+│ [5] 优化查询                            │
+│     - 回答 agent 的上下文问题           │
+│     - 缩小范围                          │
+│     - 尝试替代 agent                    │
+└─────────────────────────────────────────┘
+     │
+     └──► 循环到 [2]
 
-Negotiation:
-           User → Router → Skill/Agent → [Structured Response]
+如果轮次 = 3 仍然不足：
+     │
+     ▼
+┌─────────────────────────────────────────┐
+│ [6] 综合尽力而为的答案                  │
+│     - 结合所有发现                      │
+│     - 明确说明差距                      │
+│     - 披露置信度级别                    │
+└─────────────────────────────────────────┘
+```
+
+---
+
+## 与现有系统的集成
+
+### 与元认知框架
+
+协商扩展了 L1/L2/L3 追溯：
+
+```
+标准：    用户 → 路由器 → Skill → [答案]
+
+协商：
+          用户 → 路由器 → Skill/Agent → [结构化响应]
                               ↑                    ↓
-                              └──── [Evaluate] ◄──┘
+                              └──── [评估] ◄──┘
                                        ↓
-                                 [Sufficient?]
+                                 [足够？]
                                   ↓         ↓
-                                Yes        No
+                                是         否
                                   ↓         ↓
-                           [Synthesize] [Refine]
+                           [综合]    [优化]
 ```
 
-### With 3-Strike Rule
+### 与三振出局规则
 
-Negotiation follows the same escalation principle:
+协商遵循相同的升级原则：
 
 ```
-Strike 1: Initial query returns LOW confidence
-  → Refine with more context
+第 1 振：初始查询返回低置信度
+  → 用更多上下文优化
 
-Strike 2: Refined query still LOW
-  → Try alternative agent/source
+第 2 振：优化后的查询仍然低
+  → 尝试替代 agent/来源
 
-Strike 3: Still insufficient
-  → Synthesize best-effort answer
-  → Report gaps to user
+第 3 振：仍然不足
+  → 综合尽力而为的答案
+  → 向用户报告差距
 ```
 
-See `error-protocol.md` for the extended negotiation rules.
+详见 `error-protocol.md` 中的扩展协商规则。
 
 ---
 
-## Orchestrator Responsibilities
+## 编排器职责
 
-### 1. Intent Preservation
+### 1. 意图保持
 
-Always track the original user intent. Map each agent response back to:
-- What aspect of the question does this answer?
-- What aspects remain unanswered?
+始终追踪原始用户意图。将每个 agent 响应映射到：
+- 这个答案对应问题的哪方面？
+- 哪些方面仍未回答？
 
-### 2. Context Accumulation
+### 2. 上下文积累
 
-Across negotiation rounds, accumulate:
-- Confirmed facts
-- Ruled-out options
-- Remaining uncertainties
+在协商轮次中积累：
+- 已确认的事实
+- 已排除的选项
+- 剩余的不确定性
 
-### 3. Gap Assessment
+### 3. 差距评估
 
-For each identified gap, ask:
-- Does this gap block answering the user's question?
-- Can this gap be filled with another query?
-- Is partial answer acceptable?
+对每个识别出的差距，问：
+- 这个差距是否阻碍回答用户的问题？
+- 这个差距能否通过另一个查询填补？
+- 部分答案是否可以接受？
 
-### 4. Final Synthesis
+### 4. 最终综合
 
-When synthesizing:
-- Combine findings from all rounds
-- State confidence level
-- Disclose any remaining gaps
-- Provide source attribution
-
----
-
-## Agent Responsibilities
-
-### 1. Honest Assessment
-
-Report confidence honestly:
-- Don't inflate confidence
-- Acknowledge limitations
-- Identify gaps proactively
-
-### 2. Structured Response
-
-Follow response format exactly:
-- All sections required when negotiation enabled
-- Clear categorization of confidence
-- Specific gap identification
-
-### 3. Context Questions
-
-Ask relevant questions:
-- Don't ask obvious questions
-- Focus on blockers
-- Prioritize by impact on answer quality
+综合时：
+- 结合所有轮次的发现
+- 说明置信度级别
+- 披露任何剩余差距
+- 提供来源归属
 
 ---
 
-## Example Scenarios
+## Agent 职责
 
-### Scenario 1: Comparative Query
+### 1. 诚实评估
 
-**Query:** "Compare tokio and async-std for web servers"
+诚实地报告置信度：
+- 不要夸大置信度
+- 承认局限性
+- 主动识别差距
 
-**Round 1 (tokio agent):**
-```
-Confidence: MEDIUM
-Gaps: No web-specific benchmarks, no async-std comparison
-Context Needed: Which web framework? Is multi-threaded runtime needed?
-```
+### 2. 结构化响应
 
-**Orchestrator Evaluation:**
-- Intent: Compare two runtimes for web use
-- Gap impact: HIGH - need both runtimes
-- Action: Answer context, query async-std
+严格遵循响应格式：
+- 启用协商时需要所有部分
+- 清晰的置信度分类
+- 具体的差距识别
 
-**Round 2 (with context: axum/tide, yes multi-threaded):**
-```
-Confidence: HIGH
-Gaps: No formal benchmarks (resolved: documented characteristics)
-```
+### 3. 上下文问题
 
-**Synthesis:**
-- Combine findings
-- Note: No formal benchmarks, based on documented characteristics
-
-### Scenario 2: Cross-Domain Query
-
-**Query:** "E0382 in my trading system"
-
-**Round 1 (error lookup):**
-```
-Confidence: HIGH for E0382 definition
-Gaps: No trading-specific context
-Context Needed: What data is being moved? Is this shared state?
-```
-
-**Orchestrator Evaluation:**
-- Technical answer sufficient for error meaning
-- Domain context needed for appropriate fix
-- Action: Provide trading context, invoke domain-fintech
-
-**Round 2 (with trading context):**
-```
-Confidence: HIGH
-Finding: Trading records need Arc<T> for audit compliance
-```
-
-**Synthesis:**
-- Error meaning: Use of moved value
-- Domain-appropriate fix: Arc<TradeRecord> for shared immutable audit data
+提出相关问题：
+- 不要问显而易见的问题
+- 聚焦于阻碍因素
+- 按对答案质量的影响排序
 
 ---
 
-## Related Documents
+## 示例场景
 
-- `_meta/reasoning-framework.md` - Cognitive layer tracing
-- `_meta/error-protocol.md` - 3-Strike escalation (extended for negotiation)
-- `agents/_negotiation/response-format.md` - Standard response template
-- `agents/_negotiation/confidence-rubric.md` - Confidence assessment criteria
+### 场景 1：比较型查询
+
+**查询：** "比较 tokio 和 async-std 用于 Web 服务器"
+
+**第 1 轮（tokio agent）：**
+```
+置信度：中
+差距：没有 Web 特定基准，没有 async-std 比较
+需要的上下文：使用哪个 Web 框架？是否需要多线程运行时？
+```
+
+**编排器评估：**
+- 意图：比较两个运行时用于 Web 使用
+- 差距影响：高 - 需要两个运行时
+- 行动：回答上下文，查询 async-std
+
+**第 2 轮（附带上文：axum/tide，需要多线程）：**
+```
+置信度：高
+差距：没有正式基准（已解决：记录了特性）
+```
+
+**综合：**
+- 结合发现
+- 备注：没有正式基准，基于记录的特性
+
+### 场景 2：跨领域查询
+
+**查询：** "我的交易系统中的 E0382"
+
+**第 1 轮（错误查找）：**
+```
+置信度：E0382 定义为高
+差距：没有交易特定上下文
+需要的上下文：什么数据被移动了？这是共享状态吗？
+```
+
+**编排器评估：**
+- 技术答案足以说明错误含义
+- 需要领域上下文才能提供适当修复
+- 行动：提供交易上下文，调用 domain-fintech
+
+**第 2 轮（附带交易上下文）：**
+```
+置信度：高
+发现：交易记录需要 Arc<T> 以符合审计要求
+```
+
+**综合：**
+- 错误含义：使用了已移动的值
+- 领域适当修复：Arc<TradeRecord> 用于共享不可变审计数据
+
+---
+
+## 相关文档
+
+- `_meta/reasoning-framework.md` - 认知层级追溯
+- `_meta/error-protocol.md` - 三振出局升级（扩展用于协商）
+- `agents/_negotiation/response-format.md` - 标准响应模板
+- `agents/_negotiation/confidence-rubric.md` - 置信度评估标准

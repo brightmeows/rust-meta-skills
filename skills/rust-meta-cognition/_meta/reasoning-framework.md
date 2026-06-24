@@ -1,239 +1,239 @@
-# Meta-Cognition Reasoning Framework
+# 元认知推理框架
 
-> Universal framework for tracing problems through cognitive layers.
-> Borrowed from `planning-with-files` principles.
+> 用于通过认知层级追溯问题的通用框架。
+> 借鉴自 `planning-with-files` 原则。
 
-## Core Principle
+## 核心原则
 
-**Don't answer directly. Trace through the cognitive layers first.**
+**不要直接回答。先通过认知层级进行追溯。**
 
-When encountering a problem, the goal is not to provide an immediate fix, but to understand:
-1. What layer the problem originates from
-2. What constraints or decisions led to this state
-3. What the contextually-appropriate solution is
+遇到问题时，目标不是立即提供修复方案，而是理解：
+1. 问题源自哪个层级
+2. 哪些约束或决策导致了当前状态
+3. 什么是符合上下文的最佳解决方案
 
-## The Three Layers
+## 三个层级
 
 ```
-Layer 3: Domain Constraints (WHY - Why is it designed this way?)
-├── Domain rules dictate design choices
-├── Example: Financial systems require immutable, auditable data
-└── → This determines the ownership model
+Layer 3：领域约束（为什么 - 为什么这样设计？）
+├── 领域规则决定设计选择
+├── 示例：金融系统需要不可变、可审计的数据
+└── → 这决定了所有权模型
 
-Layer 2: Design Choices (WHAT - What design to adopt?)
-├── Design patterns and architectural decisions
-├── Example: Use Value Objects, Arc sharing
-└── → This triggers specific language mechanisms
+Layer 2：设计选择（做什么 - 采用什么设计？）
+├── 设计模式和架构决策
+├── 示例：使用值对象、Arc 共享
+└── → 这触发了特定的语言机制
 
-Layer 1: Language Mechanics (HOW - How to implement?)
-├── Rust language features and compiler rules
-├── Example: E0382 indicates ownership design issue
-└── → Surface error, needs to trace upward
+Layer 1：语言机制（如何做 - 如何实现？）
+├── Rust 语言特性和编译器规则
+├── 示例：E0382 表明所有权设计问题
+└── → 表面错误，需要向上追溯
 ```
 
-## Reasoning Steps
+## 推理步骤
 
-### Step 1: Identify Entry Point
+### 步骤 1：识别入口点
 
-| Signal | Entry Layer | Direction |
+| 信号 | 入口层 | 方向 |
 |--------|-------------|-----------|
-| Error code (E0xxx), compile error | Layer 1 | Trace UP ↑ |
-| "How to design...", pattern question | Layer 2 | Check Layer 3, then DOWN ↓ |
-| "Building a [domain] system" | Layer 3 | Trace DOWN ↓ |
-| "Why does Rust..." | Layer 2 | Bidirectional |
+| 错误码（E0xxx）、编译错误 | Layer 1 | 向上追溯 ↑ |
+| "如何设计..."、模式问题 | Layer 2 | 检查 Layer 3，然后向下 ↓ |
+| "构建一个 [领域] 系统" | Layer 3 | 向下追溯 ↓ |
+| "为什么 Rust..." | Layer 2 | 双向 |
 
-### Step 2: Trace the Chain
-
-```
-Layer 1 (Mechanics) ←→ Layer 2 (Design) ←→ Layer 3 (Domain)
-```
-
-At each layer, ask:
-- **Layer 1**: What mechanism is involved? What does the compiler tell us?
-- **Layer 2**: What design choice triggered this? Is this the right pattern?
-- **Layer 3**: What domain constraint requires this design? Is the constraint valid?
-
-### Step 3: Answer with Context
-
-Include the reasoning chain in your answer. Not just WHAT to do, but WHY this is the right choice for this domain.
-
-## Tracing Examples
-
-### Example 1: E0382 in Trading System
+### 步骤 2：追溯链条
 
 ```
-User: "My trading system reports E0382, data was moved"
+Layer 1（机制）←→ Layer 2（设计）←→ Layer 3（领域）
+```
 
-Traditional Answer: "Use .clone()"
+在每个层级，询问：
+- **Layer 1**：涉及什么机制？编译器告诉我们什么？
+- **Layer 2**：什么设计选择触发了这个？这是正确的模式吗？
+- **Layer 3**：什么领域约束要求这种设计？该约束是否有效？
 
-Meta-Cognition Answer:
-┌─ Layer 1: E0382 = ownership issue → Why do we need this ownership design?
+### 步骤 3：结合上下文回答
+
+在你的回答中包含推理链。不仅要说明做什么，还要说明为什么这是该领域的正确选择。
+
+## 追溯示例
+
+### 示例 1：交易系统中的 E0382
+
+```
+用户："我的交易系统报 E0382，数据被移动了"
+
+传统答案："使用 .clone()"
+
+元认知答案：
+┌─ Layer 1：E0382 = 所有权问题 → 为什么我们需要这种所有权设计？
 │      ↑
-├─ Layer 3: Trading records are immutable audit data → Should be shared, not copied
+├─ Layer 3：交易记录是不可变的审计数据 → 应该共享，而非复制
 │      ↓
-└─ Layer 2: Use Arc<TradeRecord> as shared immutable value
+└─ Layer 2：使用 Arc<TradeRecord> 作为共享不可变值
        ↓
-Suggestion: Not clone, but redesign as Arc<T>
+建议：不要克隆，而是重新设计为 Arc<T>
 ```
 
-### Example 2: Designing User Auth
+### 示例 2：设计用户认证
 
 ```
-User: "How should I design user authentication?"
+用户："我应该如何设计用户认证？"
 
-Analysis:
-┌─ Layer 3: Security domain constraints
-│  ├── Tokens must expire
-│  ├── Passwords must be hashed
-│  └── Sessions need secure storage
+分析：
+┌─ Layer 3：安全领域约束
+│  ├── 令牌必须过期
+│  ├── 密码必须哈希
+│  └── 会话需要安全存储
 │      ↓
-├─ Layer 2: Design patterns
-│  ├── JWT for stateless auth
-│  ├── Session store for stateful
-│  └── Password hash with argon2
+├─ Layer 2：设计模式
+│  ├── JWT 用于无状态认证
+│  ├── 会话存储用于有状态
+│  └── 使用 argon2 进行密码哈希
 │      ↓
-└─ Layer 1: Rust implementation
-   ├── Use jsonwebtoken crate
-   └── Store in Arc<RwLock<HashMap>> or Redis
+└─ Layer 1：Rust 实现
+   ├── 使用 jsonwebtoken crate
+   └── 存储在 Arc<RwLock<HashMap>> 或 Redis 中
 ```
 
-### Example 3: Performance Issue
+### 示例 3：性能问题
 
 ```
-User: "My API is slow when processing large lists"
+用户："我的 API 在处理大列表时很慢"
 
-Analysis:
-┌─ Layer 1: Possible causes
-│  ├── Cloning large data?
-│  ├── Blocking async?
-│  └── N+1 queries?
+分析：
+┌─ Layer 1：可能的原因
+│  ├── 克隆了大量数据？
+│  ├── 阻塞了异步？
+│  └── N+1 查询？
 │      ↑
-├─ Layer 2: Design review
-│  ├── Is data ownership correct?
-│  ├── Is async used properly?
-│  └── Is query pattern optimal?
+├─ Layer 2：设计审查
+│  ├── 数据所有权是否正确？
+│  ├── 异步是否正确使用？
+│  └── 查询模式是否最优？
 │      ↑
-└─ Layer 3: Domain constraints
-   ├── How large is "large"?
-   ├── What latency is acceptable?
-   └── Can data be paginated/streamed?
+└─ Layer 3：领域约束
+   ├── "大"有多大？
+   ├── 可接受的延迟是多少？
+   └── 数据可以分页/流式处理吗？
 ```
 
-## Trace Direction Rules
+## 追溯方向规则
 
-### Trace UP ↑ (Layer 1 → 3)
+### 向上追溯 ↑（Layer 1 → 3）
 
-Use when:
-- Compiler errors (E0xxx)
-- Runtime panics
-- Type mismatches
-- Unexpected behavior
+在以下情况使用：
+- 编译器错误（E0xxx）
+- 运行时 panic
+- 类型不匹配
+- 意外行为
 
-Question to ask: "What design decision led to this constraint?"
+要问的问题："什么设计决策导致了这个约束？"
 
-### Trace DOWN ↓ (Layer 3 → 1)
+### 向下追溯 ↓（Layer 3 → 1）
 
-Use when:
-- New feature design
-- Architecture planning
-- "How should I..." questions
-- Domain modeling
+在以下情况使用：
+- 新功能设计
+- 架构规划
+- "我应该如何..."问题
+- 领域建模
 
-Question to ask: "Given this constraint, what's the appropriate pattern?"
+要问的问题："鉴于这个约束，什么模式是合适的？"
 
-### Bidirectional ←→
+### 双向 ←→
 
-Use when:
-- Refactoring existing code
-- Performance optimization
-- "Why does Rust..." questions
-- Trade-off analysis
+在以下情况使用：
+- 重构现有代码
+- 性能优化
+- "为什么 Rust..."问题
+- 权衡分析
 
-## Integration with Skills
+## 与 Skill 的集成
 
-| Layer | Related Skills | Purpose |
+| 层级 | 相关 Skill | 目的 |
 |-------|---------------|---------|
-| Layer 1 | m01-m07 | Language mechanics, compiler behavior |
-| Layer 2 | m09-m15 | Design patterns, mental models |
-| Layer 3 | domain-* | Domain-specific constraints |
+| Layer 1 | m01-m07 | 语言机制、编译器行为 |
+| Layer 2 | m09-m15 | 设计模式、心智模型 |
+| Layer 3 | domain-* | 特定领域约束 |
 
-### Skill Invocation Flow
+### Skill 调用流程
 
 ```
-Entry Point Detected
+检测到入口点
        ↓
-[1] Identify Layer → Read corresponding skill
+[1] 识别层级 → 读取对应的 skill
        ↓
-[2] Trace to related layers → Cross-reference skills
+[2] 追溯到相关层级 → 交叉引用 skills
        ↓
-[3] Synthesize answer with full context
+[3] 结合完整上下文综合回答
 ```
 
-## 5-Question Reboot Test
+## 5 问重启测试
 
-When stuck or confused in complex problem-solving, answer these 5 questions:
+当在复杂问题求解中卡住或困惑时，回答这 5 个问题：
 
-| # | Question | Find Answer In |
+| # | 问题 | 找到答案的位置 |
 |---|----------|----------------|
-| 1 | What error am I solving? | Entry point / original question |
-| 2 | What layer am I in? | Current trace position |
-| 3 | What domain constraints apply? | Layer 3 / domain-* skills |
-| 4 | What have I tried? | Previous attempts |
-| 5 | What's the next trace direction? | This framework |
+| 1 | 我在解决什么错误？ | 入口点 / 原始问题 |
+| 2 | 我在哪个层级？ | 当前追溯位置 |
+| 3 | 哪些领域约束适用？ | Layer 3 / domain-* skills |
+| 4 | 我尝试过什么？ | 之前的尝试 |
+| 5 | 下一步追溯方向是什么？ | 本框架 |
 
-## Anti-Patterns
+## 反模式
 
-### Don't: Answer at Surface Level
-
-```
-User: "E0382 error"
-Bad: "Use .clone()"
-```
-
-### Don't: Skip Layers
+### 不要：在表面层级回答
 
 ```
-User: "Design a payment system"
-Bad: "Use rust_decimal" (jumped to Layer 1)
+用户："E0382 错误"
+不好："使用 .clone()"
 ```
 
-### Don't: Ignore Domain Context
+### 不要：跳过层级
 
 ```
-User: "How to share data between threads?"
-Bad: "Use Arc<Mutex<T>>" (didn't ask about domain constraints)
+用户："设计一个支付系统"
+不好："使用 rust_decimal"（跳到了 Layer 1）
 ```
 
-## Summary
+### 不要：忽略领域上下文
 
-1. **Identify entry layer** from user's question type
-2. **Trace through layers** to understand full context
-3. **Answer with reasoning chain** showing WHY not just WHAT
-4. **Reference appropriate skills** for each layer
-5. **Use 5-Question Reboot** when stuck
+```
+用户："如何在线程之间共享数据？"
+不好："使用 Arc<Mutex<T>>"（没有询问领域约束）
+```
+
+## 总结
+
+1. **从用户的问题类型识别入口层级**
+2. **通过各层级追溯**以理解完整上下文
+3. **用推理链回答**说明为什么而不仅仅是做什么
+4. **为每个层级引用适当的 skill**
+5. **卡住时使用 5 问重启**
 
 ---
 
-## Related Documents
+## 相关文档
 
-| Document | Purpose |
+| 文档 | 目的 |
 |----------|---------|
-| [layer-definitions.md](./layer-definitions.md) | Detailed layer definitions and boundaries |
-| [negotiation-protocol.md](./negotiation-protocol.md) | Agent communication protocol |
-| [error-protocol.md](./error-protocol.md) | 3-Strike escalation rules |
-| [externalization.md](./externalization.md) | Cognitive externalization patterns |
-| [hooks-patterns.md](./hooks-patterns.md) | Automatic trigger mechanisms |
+| [layer-definitions.md](./layer-definitions.md) | 详细的层级定义和边界 |
+| [negotiation-protocol.md](./negotiation-protocol.md) | Agent 通信协议 |
+| [error-protocol.md](./error-protocol.md) | 三振出局升级规则 |
+| [externalization.md](./externalization.md) | 认知外化模式 |
+| [hooks-patterns.md](./hooks-patterns.md) | 自动触发机制 |
 
-### Index Files
+### 索引文件
 
-| File | Purpose |
+| 文件 | 目的 |
 |------|---------|
-| [../index/skills-index.md](../index/skills-index.md) | Complete skill catalog |
-| [../index/triggers-index.md](../index/triggers-index.md) | Keyword-to-skill mapping |
-| [../index/meta-questions.md](../index/meta-questions.md) | Meta-question category definitions |
+| [../index/skills-index.md](../index/skills-index.md) | 完整 Skill 目录 |
+| [../index/triggers-index.md](../index/triggers-index.md) | 关键词到 Skill 的映射 |
+| [../index/meta-questions.md](../index/meta-questions.md) | 元问题类别定义 |
 
-### Router
+### 路由器
 
-| File | Purpose |
+| 文件 | 目的 |
 |------|---------|
-| [../skills/rust-router/SKILL.md](../skills/rust-router/SKILL.md) | Master routing logic |
+| [../skills/rust-router/SKILL.md](../skills/rust-router/SKILL.md) | 主路由逻辑 |

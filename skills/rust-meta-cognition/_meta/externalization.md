@@ -1,104 +1,104 @@
-# Externalized Cognition Principles
+# 外化认知原则
 
-> Borrowed from `planning-with-files`: Use the filesystem as external memory.
+> 借鉴自 `planning-with-files`：使用文件系统作为外部记忆。
 
-## Core Insight
+## 核心洞察
 
 ```
-Context Window = RAM (volatile, limited)
-Filesystem = Disk (persistent, unlimited)
+上下文窗口 = RAM（易失、有限）
+文件系统 = 磁盘（持久、无限）
 
-→ Important cognitive processes should be externalized to files
+→ 重要的认知过程应外化到文件中
 ```
 
-## The 3-File Pattern
+## 三文件模式
 
-For complex problems, create a reasoning directory:
+对于复杂问题，创建推理目录：
 
 ```
 _reasoning/
-├── trace.md      # Layer tracing record
-├── findings.md   # Discovered constraints and patterns
-└── decision.md   # Final decision and rationale
+├── trace.md      # 层级追溯记录
+├── findings.md   # 发现的约束和模式
+└── decision.md   # 最终决策及其理由
 ```
 
-### When to Use 3-File Pattern
+### 何时使用三文件模式
 
-| Scenario | Use Pattern? |
+| 场景 | 使用模式？ |
 |----------|--------------|
-| Simple E0xxx fix | No, inline reasoning |
-| Multi-file refactor | Yes |
-| Architecture decision | Yes |
-| Debugging complex issue | Yes |
-| Performance optimization | Yes |
-| Design review | Yes |
+| 简单的 E0xxx 修复 | 否，内联推理 |
+| 多文件重构 | 是 |
+| 架构决策 | 是 |
+| 调试复杂问题 | 是 |
+| 性能优化 | 是 |
+| 设计评审 | 是 |
 
 ---
 
-## File Templates
+## 文件模板
 
 ### trace.md
 
 ```markdown
-# Reasoning Trace
+# 推理追溯
 
-## Entry Point
-- Signal: [error code / question type]
-- Layer: [1/2/3]
+## 入口点
+- 信号：[错误码 / 问题类型]
+- 层级：[1/2/3]
 
-## Trace UP ↑ (if applicable)
+## 向上追溯 ↑（如适用）
 ### Layer 1 → Layer 2
-- Question: What design choice led to this?
-- Finding: [discovered pattern]
+- 问题：什么设计选择导致了这种情况？
+- 发现：[发现的模式]
 
 ### Layer 2 → Layer 3
-- Question: What domain constraint requires this?
-- Finding: [discovered constraint]
+- 问题：什么领域约束要求这种设计？
+- 发现：[发现的约束]
 
-## Trace DOWN ↓ (if applicable)
+## 向下追溯 ↓（如适用）
 ### Layer 3 → Layer 2
-- Constraint: [domain rule]
-- Implication: [design choice]
+- 约束：[领域规则]
+- 含义：[设计选择]
 
 ### Layer 2 → Layer 1
-- Pattern: [chosen design]
-- Implementation: [Rust approach]
+- 模式：[选择的设计]
+- 实现：[Rust 方法]
 
-## Attempts
-1. [First attempt] - [result]
-2. [Second attempt] - [result]
+## 尝试
+1. [第一次尝试] - [结果]
+2. [第二次尝试] - [结果]
 
-## Current Status
-- [ ] Problem understood
-- [ ] Root cause identified
-- [ ] Solution designed
-- [ ] Solution implemented
-- [ ] Solution verified
+## 当前状态
+- [ ] 问题已理解
+- [ ] 根本原因已识别
+- [ ] 解决方案已设计
+- [ ] 解决方案已实现
+- [ ] 解决方案已验证
 ```
 
 ### findings.md
 
 ```markdown
-# Findings
+# 发现
 
-## Domain Constraints (Layer 3)
-- [constraint 1]
-- [constraint 2]
+## 领域约束（Layer 3）
+- [约束 1]
+- [约束 2]
 
-## Design Patterns (Layer 2)
-- [pattern 1]: [why appropriate]
-- [pattern 2]: [why not appropriate]
+## 设计模式（Layer 2）
+- [模式 1]：[为什么合适]
+- [模式 2]：[为什么不合适]
 
-## Implementation Details (Layer 1)
-- [mechanism 1]: [how it applies]
-- [mechanism 2]: [how it applies]
+## 实现细节（Layer 1）
+- [机制 1]：[如何应用]
+- [机制 2]：[如何应用]
 
-## Cross-References
-- Skill: [skill name] - [relevant section]
-- Docs: [link] - [relevant info]
+## 交叉引用
+- Skill：[skill 名称] - [相关章节]
+- 文档：[链接] - [相关信息]
 
-## Trade-offs Identified
-| Option | Pros | Cons |
+## 已识别的权衡
+| 选项 | 优点 | 缺点 |
 |--------|------|------|
 | A | | |
 | B | | |
@@ -107,208 +107,208 @@ _reasoning/
 ### decision.md
 
 ```markdown
-# Decision Record
+# 决策记录
 
-## Context
-[Brief description of the problem]
+## 上下文
+[问题的简要描述]
 
-## Decision
-[What was decided]
+## 决策
+[决定了什么]
 
-## Rationale
-### Layer 3 (Domain)
-[Why this fits domain constraints]
+## 理由
+### Layer 3（领域）
+[为什么这符合领域约束]
 
-### Layer 2 (Design)
-[Why this pattern was chosen]
+### Layer 2（设计）
+[为什么选择这个模式]
 
-### Layer 1 (Implementation)
-[How this is implemented in Rust]
+### Layer 1（实现）
+[如何在 Rust 中实现]
 
-## Consequences
-- Positive: [benefits]
-- Negative: [trade-offs accepted]
+## 后果
+- 正面：[好处]
+- 负面：[接受的权衡]
 
-## Alternatives Rejected
-- [Alternative 1]: [why rejected]
-- [Alternative 2]: [why rejected]
+## 被拒绝的替代方案
+- [替代方案 1]：[为什么拒绝]
+- [替代方案 2]：[为什么拒绝]
 ```
 
 ---
 
-## 2-Action Rule
+## 二操作规则
 
-> After every 2 key operations, update external files.
+> 每执行 2 个关键操作后，更新外部文件。
 
-### Why?
+### 为什么？
 
-Prevents information loss when:
-- Context resets
-- Multi-modal information (code, errors, docs) accumulates
-- Reasoning chain becomes long
+在以下情况防止信息丢失：
+- 上下文重置
+- 多模态信息（代码、错误、文档）累积
+- 推理链变长
 
-### Key Operations
+### 关键操作
 
-| Category | Operations |
+| 类别 | 操作 |
 |----------|-----------|
-| Build | cargo build, cargo run, cargo test |
-| Read | Reading docs, source code, error messages |
-| Write | Creating/modifying code |
-| Debug | Adding logs, inspecting state |
+| 构建 | cargo build、cargo run、cargo test |
+| 读取 | 读取文档、源代码、错误信息 |
+| 写入 | 创建/修改代码 |
+| 调试 | 添加日志、检查状态 |
 
-### Implementation
+### 实现
 
 ```
-Operation 1: cargo build → error
-Operation 2: read error, identify issue
-→ UPDATE: Add to trace.md
+操作 1：cargo build → 错误
+操作 2：读取错误，识别问题
+→ 更新：添加到 trace.md
 
-Operation 3: attempt fix
-Operation 4: cargo build → different error
-→ UPDATE: Add to trace.md, update findings.md
+操作 3：尝试修复
+操作 4：cargo build → 不同错误
+→ 更新：添加到 trace.md，更新 findings.md
 
-Operation 5: read docs for pattern
-Operation 6: implement pattern
-→ UPDATE: Add to findings.md, update trace.md
+操作 5：读取文档查找模式
+操作 6：实现模式
+→ 更新：添加到 findings.md，更新 trace.md
 ```
 
 ---
 
-## Attention Manipulation
+## 注意力管理
 
-### Pre-Action Reading
+### 行动前阅读
 
-Before key decisions, re-read relevant files:
-
-```
-Before writing code:
-1. Re-read trace.md (current understanding)
-2. Re-read findings.md (constraints identified)
-3. Re-read relevant skill (patterns to apply)
-```
-
-### Post-Action Recording
-
-After key actions, update files:
+在关键决策前，重新读取相关文件：
 
 ```
-After running code:
-1. Record result in trace.md
-2. Update findings.md if new info learned
-3. Update decision.md if decision made
+编写代码前：
+1. 重新读取 trace.md（当前理解）
+2. 重新读取 findings.md（已识别的约束）
+3. 重新读取相关 skill（要应用的模式）
 ```
 
-### Context Refresh Points
+### 行动后记录
 
-| Trigger | Action |
+关键行动后，更新文件：
+
+```
+运行代码后：
+1. 在 trace.md 中记录结果
+2. 如果学到新信息，更新 findings.md
+3. 如果做出决策，更新 decision.md
+```
+
+### 上下文刷新点
+
+| 触发条件 | 行动 |
 |---------|--------|
-| Before starting new task | Read previous state |
-| After 50+ tool calls | Re-read goal and progress |
-| After any error | Update trace with error |
-| Before committing | Review decision record |
+| 开始新任务前 | 读取之前的状态 |
+| 50+ 次工具调用后 | 重新读取目标和进度 |
+| 任何错误发生后 | 用错误更新 trace |
+| 提交前 | 审查决策记录 |
 
 ---
 
-## Error Persistence
+## 错误持久化
 
-### Principle
+### 原则
 
-> Errors should not be hidden. Keep them in context for learning.
+> 错误不应被隐藏。将其保留在上下文中以便学习。
 
-### Implementation
+### 实现
 
 ```markdown
-## Error Log (in trace.md)
+## 错误日志（在 trace.md 中）
 
-### Error 1
-- Time: [when]
-- Error: [full error message]
-- Analysis: [what went wrong]
-- Fix: [how resolved]
+### 错误 1
+- 时间：[何时]
+- 错误：[完整错误信息]
+- 分析：[出了什么问题]
+- 修复：[如何解决]
 
-### Error 2
-- Time: [when]
-- Error: [full error message]
-- Analysis: [what went wrong]
-- Fix: [pending/how resolved]
+### 错误 2
+- 时间：[何时]
+- 错误：[完整错误信息]
+- 分析：[出了什么问题]
+- 修复：[待定/如何解决]
 ```
 
-### Benefits
+### 好处
 
-1. Prevents repeating same mistakes
-2. Builds pattern recognition
-3. Documents learning process
-4. Helps debugging if issue recurs
+1. 防止重复相同的错误
+2. 建立模式识别
+3. 记录学习过程
+4. 有助于问题再次出现时的调试
 
 ---
 
-## Working Memory Management
+## 工作记忆管理
 
-### Problem
+### 问题
 
-LLM context window is limited. Long conversations lose early information.
+LLM 上下文窗口有限。长对话会丢失早期信息。
 
-### Solution
+### 解决方案
 
-Use external files as "saved registers":
+使用外部文件作为"保存的寄存器"：
 
-| File | Contains | Refresh When |
+| 文件 | 包含内容 | 何时刷新 |
 |------|----------|--------------|
-| trace.md | Current reasoning state | Every 2 operations |
-| findings.md | Accumulated knowledge | When new info learned |
-| decision.md | Final decisions | When decision made |
+| trace.md | 当前推理状态 | 每 2 个操作 |
+| findings.md | 累积的知识 | 学到新信息时 |
+| decision.md | 最终决策 | 做出决策时 |
 
-### Retrieval Strategy
+### 检索策略
 
-When context feels "lost":
-1. Read trace.md to restore state
-2. Read findings.md to recall constraints
-3. Read decision.md to remember choices
-4. Continue from documented state
+当感觉"丢失了上下文"时：
+1. 读取 trace.md 恢复状态
+2. 读取 findings.md 回忆约束
+3. 读取 decision.md 记住选择
+4. 从已记录的状态继续
 
 ---
 
-## Integration with Skills
+## 与 Skill 的集成
 
-### Skill Reading Triggers
+### Skill 读取触发
 
-| Situation | Read Skill |
+| 情况 | 读取 Skill |
 |-----------|-----------|
-| Layer 1 error | m01-m07 skill for that error |
-| Design question | m09-m15 skill for that pattern |
-| Domain context | domain-* skill for that domain |
-| Before writing fix | Related skill(s) |
+| Layer 1 错误 | 该错误的 m01-m07 skill |
+| 设计问题 | 该模式的 m09-m15 skill |
+| 领域上下文 | 该领域的 domain-* skill |
+| 编写修复前 | 相关 skill |
 
-### Skill → File Flow
+### Skill → 文件流程
 
 ```
-Read Skill
+读取 Skill
     ↓
-Extract relevant patterns/rules
+提取相关模式/规则
     ↓
-Record in findings.md
+记录到 findings.md
     ↓
-Apply to trace.md reasoning
+应用到 trace.md 推理
     ↓
-Document in decision.md
+记录到 decision.md
 ```
 
 ---
 
-## Summary Checklist
+## 总结清单
 
-Before complex problem-solving:
-- [ ] Create _reasoning/ directory
-- [ ] Initialize trace.md with entry point
-- [ ] Identify relevant skills to read
+复杂问题求解前：
+- [ ] 创建 _reasoning/ 目录
+- [ ] 用入口点初始化 trace.md
+- [ ] 识别要读取的相关 skill
 
-During problem-solving:
-- [ ] Update trace.md every 2 operations
-- [ ] Record findings in findings.md
-- [ ] Keep errors in trace.md (don't hide)
-- [ ] Re-read files at refresh points
+复杂问题求解中：
+- [ ] 每 2 个操作更新 trace.md
+- [ ] 在 findings.md 中记录发现
+- [ ] 在 trace.md 中保留错误（不隐藏）
+- [ ] 在刷新点重新读取文件
 
-After problem-solving:
-- [ ] Complete decision.md with rationale
-- [ ] Review trace.md for learning
-- [ ] Archive or clean up _reasoning/
+复杂问题求解后：
+- [ ] 用理由完善 decision.md
+- [ ] 审查 trace.md 以便学习
+- [ ] 归档或清理 _reasoning/

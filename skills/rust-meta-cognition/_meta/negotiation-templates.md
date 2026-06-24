@@ -1,339 +1,339 @@
-# Negotiation Response Templates
+# 协商响应模板
 
-> Standard templates for agent negotiation responses.
+> Agent 协商响应的标准模板。
 
-## Agent Response Template
+## Agent 响应模板
 
-When `negotiation: true`, agents MUST use this format:
+当 `negotiation: true` 时，agent 必须使用此格式：
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-[Query results - what was discovered]
+### 发现
+[查询结果 - 发现了什么]
 
-### Confidence
-- **Level**: HIGH | MEDIUM | LOW | UNCERTAIN
-- **Reason**: [Why this confidence level]
+### 置信度
+- **级别**：高 | 中 | 低 | 不确定
+- **原因**：[为什么是这个置信度级别]
 
-### Gaps Identified
-- [ ] [Gap 1: What couldn't be found or verified]
-- [ ] [Gap 2: Incomplete information area]
-- [x] [Gap 3: Initially missing but resolved] (if applicable)
+### 已识别的差距
+- [ ] [差距 1：未能找到或验证的内容]
+- [ ] [差距 2：信息不完整的领域]
+- [x] [差距 3：最初缺失但已解决]（如适用）
 
-### Context Needed
-- Q1: [Clarifying question for orchestrator]
-- Q2: [Scope/constraint question]
+### 需要的上下文
+- Q1：[向编排器提出的澄清问题]
+- Q2：[范围/约束问题]
 
-### Metadata
-- **Source**: [Where data came from]
-- **Coverage**: [Query coverage, e.g., "80% - missing X"]
+### 元数据
+- **来源**：[数据来源]
+- **覆盖度**：[查询覆盖度，例如 "80% - 缺少 X"]
 ```
 
 ---
 
-## Template by Agent Type
+## 按 Agent 类型分类的模板
 
 ### crate-researcher
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Crate:** <name>
-**Version:** <version>
-**Description:** <description>
+### 发现
+**Crate：** <名称>
+**版本：** <版本>
+**描述：** <描述>
 
-**Features:**
-- `feature1`: description
+**特性：**
+- `feature1`：描述
 
-**Dependencies:** [if relevant]
+**依赖：** [如果相关]
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Found on lib.rs with complete metadata"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如 "在 lib.rs 上找到，元数据完整"]
 
-### Gaps Identified
-- [ ] Feature documentation incomplete
-- [ ] Version history not available
-- [ ] Dependency tree not fetched
-- [ ] Breaking changes unknown
-- [ ] Comparison data not available (for comparative queries)
+### 已识别的差距
+- [ ] 特性文档不完整
+- [ ] 版本历史不可用
+- [ ] 依赖树未获取
+- [ ] 破坏性变更未知
+- [ ] 比较数据不可用（用于比较查询）
 
-### Context Needed
-- Q1: Is this for async or sync usage?
-- Q2: Which features do you plan to enable?
-- Q3: What's the minimum supported Rust version?
+### 需要的上下文
+- Q1：这是用于异步还是同步？
+- Q2：你计划启用哪些特性？
+- Q3：最低支持的 Rust 版本是多少？
 
-### Metadata
-- **Source**: lib.rs | crates.io | docs.rs
-- **Coverage**: [e.g., "90% - missing changelog"]
+### 元数据
+- **来源**：lib.rs | crates.io | docs.rs
+- **覆盖度**：[例如 "90% - 缺少 changelog"]
 ```
 
 ### docs-researcher
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Item:** <crate>::<Item>
-**Signature:**
+### 发现
+**项：** <crate>::<Item>
+**签名：**
 \`\`\`rust
 <signature>
 \`\`\`
-**Description:** <main doc>
+**描述：** <主要文档>
 
-**Examples found:** [yes/no, count]
+**找到的示例：** [是/否，数量]
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Official docs.rs with examples"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如 "官方 docs.rs 带示例"]
 
-### Gaps Identified
-- [ ] No usage examples
-- [ ] Missing error documentation
-- [ ] Related types not fetched
-- [ ] Version-specific behavior unclear
+### 已识别的差距
+- [ ] 没有使用示例
+- [ ] 缺少错误文档
+- [ ] 相关类型未获取
+- [ ] 版本特定行为不明确
 
-### Context Needed
-- Q1: Which version are you using?
-- Q2: What's the specific use case?
-- Q3: Do you need error handling patterns?
+### 需要的上下文
+- Q1：你使用的是哪个版本？
+- Q2：具体的用例是什么？
+- Q3：你需要错误处理模式吗？
 
-### Metadata
-- **Source**: docs.rs/<crate>/<version>
-- **Coverage**: [e.g., "70% - no examples"]
+### 元数据
+- **来源**：docs.rs/<crate>/<version>
+- **覆盖度**：[例如 "70% - 无示例"]
 ```
 
 ### std-docs-researcher
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Item:** std::<path>::<Item>
-**Signature:**
+### 发现
+**项：** std::<path>::<Item>
+**签名：**
 \`\`\`rust
 <signature>
 \`\`\`
-**Key Points:**
-- Point 1
-- Point 2
+**关键点：**
+- 要点 1
+- 要点 2
 
-**Related items:** [if relevant]
+**相关项：** [如果相关]
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Official Rust documentation"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如 "官方 Rust 文档"]
 
-### Gaps Identified
-- [ ] Implementation details not covered
-- [ ] Platform-specific behavior unclear
-- [ ] Related traits not fetched
-- [ ] Performance characteristics unknown
+### 已识别的差距
+- [ ] 实现细节未涵盖
+- [ ] 平台特定行为不明确
+- [ ] 相关 trait 未获取
+- [ ] 性能特性未知
 
-### Context Needed
-- Q1: Which platform/target?
-- Q2: Is this for no_std environment?
-- Q3: Do you need thread-safety guarantees?
+### 需要的上下文
+- Q1：哪个平台/目标？
+- Q2：这是用于 no_std 环境吗？
+- Q3：你需要线程安全保证吗？
 
-### Metadata
-- **Source**: doc.rust-lang.org/std
-- **Coverage**: [e.g., "95% - standard docs complete"]
+### 元数据
+- **来源**：doc.rust-lang.org/std
+- **覆盖度**：[例如 "95% - 标准文档完整"]
 ```
 
 ### clippy-researcher
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Lint:** clippy::<lint_name>
-**Level:** warn | deny | allow
-**Category:** correctness | style | complexity | perf | pedantic
+### 发现
+**Lint：** clippy::<lint_name>
+**级别：** warn | deny | allow
+**分类：** correctness | style | complexity | perf | pedantic
 
-**What it checks:** <description>
-**Why it matters:** <rationale>
+**检查内容：** <描述>
+**为何重要：** <理由>
 
-**Bad example:**
+**错误示例：**
 \`\`\`rust
 <triggering code>
 \`\`\`
 
-**Good example:**
+**正确示例：**
 \`\`\`rust
 <fixed code>
 \`\`\`
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Official clippy documentation"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如 "官方 clippy 文档"]
 
-### Gaps Identified
-- [ ] Edge cases not documented
-- [ ] Configuration options unclear
-- [ ] Related lints not listed
-- [ ] False positive scenarios unknown
+### 已识别的差距
+- [ ] 边界情况未文档化
+- [ ] 配置选项不明确
+- [ ] 相关 lint 未列出
+- [ ] 误报场景未知
 
-### Context Needed
-- Q1: What's triggering this lint?
-- Q2: Is suppression acceptable for your use case?
+### 需要的上下文
+- Q1：什么触发了这个 lint？
+- Q2：对于你的用例，抑制 lint 是否可以接受？
 
-### Metadata
-- **Source**: rust-lang.github.io/rust-clippy
-- **Coverage**: [e.g., "100% - lint fully documented"]
+### 元数据
+- **来源**：rust-lang.github.io/rust-clippy
+- **覆盖度**：[例如 "100% - lint 已完整文档化"]
 ```
 
 ### rust-changelog
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Version:** Rust <version>
-**Release Date:** <date>
+### 发现
+**版本：** Rust <version>
+**发布日期：** <date>
 
-**Language Features:**
-- Feature 1: description
+**语言特性：**
+- 特性 1：描述
 
-**Stabilized APIs:**
-- API 1: description
+**稳定的 API：**
+- API 1：描述
 
-**Breaking Changes:**
-- Change 1: description
+**破坏性变更：**
+- 变更 1：描述
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Official release notes from releases.rs"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如 "来自 releases.rs 的官方发布说明"]
 
-### Gaps Identified
-- [ ] Migration guide not available
-- [ ] Edition changes not detailed
-- [ ] Cargo changes incomplete
-- [ ] MSRV impact unclear
+### 已识别的差距
+- [ ] 迁移指南不可用
+- [ ] Edition 变更未详细说明
+- [ ] Cargo 变更不完整
+- [ ] MSRV 影响不明确
 
-### Context Needed
-- Q1: Are you migrating from a specific version?
-- Q2: Do you need edition-specific changes?
+### 需要的上下文
+- Q1：你是从特定版本迁移吗？
+- Q2：你需要 edition 特定的变更吗？
 
-### Metadata
-- **Source**: releases.rs/docs/<version>
-- **Coverage**: [e.g., "85% - missing detailed migration"]
+### 元数据
+- **来源**：releases.rs/docs/<version>
+- **覆盖度**：[例如 "85% - 缺少详细迁移指南"]
 ```
 
 ---
 
-## Orchestrator Evaluation Template
+## 编排器评估模板
 
-When evaluating agent responses:
+评估 agent 响应时：
 
 ```markdown
-## Evaluation: [Agent] Response
+## 评估：[Agent] 响应
 
-### Intent Mapping
-- Original question aspect 1: [COVERED|PARTIAL|MISSING]
-- Original question aspect 2: [COVERED|PARTIAL|MISSING]
+### 意图映射
+- 原始问题方面 1：[已覆盖|部分覆盖|缺失]
+- 原始问题方面 2：[已覆盖|部分覆盖|缺失]
 
-### Confidence Assessment
-- Agent reported: [LEVEL]
-- Adjusted assessment: [LEVEL] (if different)
-- Reason: [why adjustment]
+### 置信度评估
+- Agent 报告：[级别]
+- 调整后评估：[级别]（如果不同）
+- 原因：[为什么调整]
 
-### Gap Impact
-| Gap | Impact on Intent | Action |
+### 差距影响
+| 差距 | 对意图的影响 | 行动 |
 |-----|------------------|--------|
-| [Gap 1] | [HIGH|MEDIUM|LOW] | [refine|accept|ignore] |
-| [Gap 2] | [HIGH|MEDIUM|LOW] | [refine|accept|ignore] |
+| [差距 1] | [高|中|低] | [优化|接受|忽略] |
+| [差距 2] | [高|中|低] | [优化|接受|忽略] |
 
-### Context Provision
-[Answers to agent's context questions]
-- A1: [answer to Q1]
-- A2: [answer to Q2]
+### 上下文提供
+[对 agent 上下文问题的回答]
+- A1：[对 Q1 的回答]
+- A2：[对 Q2 的回答]
 
-### Decision
-- [ ] ACCEPT - Proceed to synthesis
-- [ ] REFINE - Query again with context
-- [ ] ALTERNATIVE - Try different agent
-- [ ] ESCALATE - Need user input
+### 决策
+- [ ] 接受 - 继续综合
+- [ ] 优化 - 用上下文重新查询
+- [ ] 替代 - 尝试不同的 agent
+- [ ] 升级 - 需要用户输入
 ```
 
 ---
 
-## Refinement Request Template
+## 优化请求模板
 
-When re-querying an agent:
+重新查询 agent 时：
 
 ```markdown
-## Refined Query
+## 优化查询
 
-### Original Query
-[Original question]
+### 原始查询
+[原始问题]
 
-### Previous Round Summary
-- Findings: [key findings from last round]
-- Gaps to address: [specific gaps]
+### 上一轮总结
+- 发现：[上一轮的关键发现]
+- 需要解决的差距：[具体差距]
 
-### Additional Context
-[Answers to agent's questions]
-- [Context 1]
-- [Context 2]
+### 额外上下文
+[对 agent 问题的回答]
+- [上下文 1]
+- [上下文 2]
 
-### Focus Areas
-[Specific aspects to focus on this round]
-1. [Focus 1]
-2. [Focus 2]
+### 关注领域
+[本轮要关注的具体方面]
+1. [关注点 1]
+2. [关注点 2]
 
-### Round
-[2|3] of 3
+### 轮次
+[2|3] / 3
 ```
 
 ---
 
-## Final Synthesis Template
+## 最终综合模板
 
 ```markdown
-## Synthesized Answer
+## 综合答案
 
-### Summary
-[Direct answer to user's question]
+### 摘要
+[对用户问题的直接回答]
 
-### Details
-[Comprehensive findings from all rounds]
+### 详情
+[所有轮次的全面发现]
 
-### Confidence
-- **Overall**: [HIGH|MEDIUM|LOW]
-- **Basis**: [What this is based on]
+### 置信度
+- **总体**：[高|中|低]
+- **依据**：[这基于什么]
 
-### Disclosed Gaps
-[Any remaining gaps that user should know about]
-- Gap 1: [what's missing and why]
+### 披露的差距
+[用户应该了解的任何剩余差距]
+- 差距 1：[缺少什么以及原因]
 
-### Sources
-- [Source 1]: [what it provided]
-- [Source 2]: [what it provided]
+### 来源
+- [来源 1]：[它提供了什么]
+- [来源 2]：[它提供了什么]
 
-### Negotiation Rounds
-- Round 1: [agent] - [key finding]
-- Round 2: [agent] - [key finding] (if applicable)
+### 协商轮次
+- 第 1 轮：[agent] - [关键发现]
+- 第 2 轮：[agent] - [关键发现]（如适用）
 ```
 
 ---
 
-## Quick Reference
+## 快速参考
 
-### Confidence Quick Assessment
+### 置信度快速评估
 
-| Data Quality | Sources | Confidence |
+| 数据质量 | 来源 | 置信度 |
 |--------------|---------|------------|
-| Complete + verified | Official docs | HIGH |
-| Partial + verified | Official docs | MEDIUM |
-| Partial + unverified | Third-party | LOW |
-| Missing + errors | None/failed | UNCERTAIN |
+| 完整 + 已验证 | 官方文档 | 高 |
+| 部分 + 已验证 | 官方文档 | 中 |
+| 部分 + 未验证 | 第三方 | 低 |
+| 缺失 + 错误 | 无/失败 | 不确定 |
 
-### Gap Priority
+### 差距优先级
 
-| Gap Type | Priority | Action |
+| 差距类型 | 优先级 | 行动 |
 |----------|----------|--------|
-| Blocks core answer | HIGH | Must refine |
-| Affects accuracy | MEDIUM | Refine if rounds available |
-| Nice-to-have | LOW | Accept, disclose |
+| 阻碍核心答案 | 高 | 必须优化 |
+| 影响准确性 | 中 | 如有剩余轮次则优化 |
+| 锦上添花 | 低 | 接受，披露 |

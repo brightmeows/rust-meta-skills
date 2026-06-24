@@ -1,240 +1,240 @@
-# Cognitive Layer Definitions
+# 认知层级定义
 
-> Defines the three cognitive layers for meta-cognition reasoning.
+> 定义元认知推理的三个认知层级。
 
-## Overview
+## 概览
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  Layer 3: Domain Constraints (WHY)                          │
-│  ├── Business rules, regulatory requirements                │
-│  ├── Performance/reliability SLAs                           │
-│  └── Domain-specific invariants                             │
+│  Layer 3：领域约束（为什么）                                │
+│  ├── 业务规则、监管要求                                      │
+│  ├── 性能/可靠性 SLA                                       │
+│  └── 特定领域的不变量                                       │
 ├─────────────────────────────────────────────────────────────┤
-│  Layer 2: Design Choices (WHAT)                             │
-│  ├── Architecture patterns, DDD concepts                    │
-│  ├── API design, module structure                           │
-│  └── Trade-off decisions                                    │
+│  Layer 2：设计选择（做什么）                                │
+│  ├── 架构模式、DDD 概念                                    │
+│  ├── API 设计、模块结构                                    │
+│  └── 权衡决策                                             │
 ├─────────────────────────────────────────────────────────────┤
-│  Layer 1: Language Mechanics (HOW)                          │
-│  ├── Ownership, borrowing, lifetimes                        │
-│  ├── Type system, trait bounds                              │
-│  └── Compiler errors and fixes                              │
+│  Layer 1：语言机制（如何做）                                │
+│  ├── 所有权、借用、生命周期                                │
+│  ├── 类型系统、trait 约束                                  │
+│  └── 编译器错误与修复                                      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Layer 1: Language Mechanics (HOW)
+## Layer 1：语言机制（如何做）
 
-### Definition
+### 定义
 
-The implementation layer dealing with Rust's language features, compiler rules, and runtime behavior.
+处理 Rust 语言特性、编译器规则和运行时行为的实现层。
 
-### Scope
+### 范围
 
-| Category | Examples |
+| 类别 | 示例 |
 |----------|----------|
-| Ownership | Move semantics, borrowing, lifetimes |
-| Type System | Generics, traits, bounds, associated types |
-| Memory | Stack vs heap, smart pointers, RAII |
-| Concurrency | Send, Sync, async/await, channels |
-| Error Handling | Result, Option, panic, ? operator |
-| Unsafe | Raw pointers, FFI, transmute |
+| 所有权 | 移动语义、借用、生命周期 |
+| 类型系统 | 泛型、trait、约束、关联类型 |
+| 内存 | 栈 vs 堆、智能指针、RAII |
+| 并发 | Send、Sync、async/await、通道 |
+| 错误处理 | Result、Option、panic、? 运算符 |
+| Unsafe | 裸指针、FFI、transmute |
 
-### Entry Signals
+### 入口信号
 
-| Signal | Interpretation |
+| 信号 | 解释 |
 |--------|---------------|
-| E0382 | Ownership issue - value moved |
-| E0597 | Lifetime issue - reference outlives owner |
-| E0277 | Trait bound not satisfied |
-| E0308 | Type mismatch |
-| Compile error | Language rule violation |
-| Runtime panic | Runtime invariant violation |
+| E0382 | 所有权问题 - 值被移动 |
+| E0597 | 生命周期问题 - 引用比所有者存活更久 |
+| E0277 | Trait 约束未满足 |
+| E0308 | 类型不匹配 |
+| 编译错误 | 语言规则违反 |
+| 运行时 panic | 运行时不变式违反 |
 
-### Related Skills
+### 相关 Skill
 
 ```
-m01-ownership    → Ownership, borrowing, lifetimes
-m02-resource     → Smart pointers, RAII
-m03-mutability   → Interior mutability, Cell/RefCell
-m04-zero-cost    → Generics, traits, monomorphization
-m05-type-driven  → Type state, newtype, PhantomData
-m06-error-handling → Result, Option, error patterns
-m07-concurrency  → Async, threads, Send/Sync
+m01-ownership    → 所有权、借用、生命周期
+m02-resource     → 智能指针、RAII
+m03-mutability   → 内部可变性、Cell/RefCell
+m04-zero-cost    → 泛型、trait、单态化
+m05-type-driven  → 类型状态、newtype、PhantomData
+m06-error-handling → Result、Option、错误模式
+m07-concurrency  → 异步、线程、Send/Sync
 ```
 
-### Key Questions
+### 关键问题
 
-- What does the compiler error mean?
-- What language rule is being violated?
-- What's the idiomatic Rust solution?
+- 这个编译器错误是什么意思？
+- 违反了哪条语言规则？
+- Rust 的惯用解决方案是什么？
 
 ---
 
-## Layer 2: Design Choices (WHAT)
+## Layer 2：设计选择（做什么）
 
-### Definition
+### 定义
 
-The architectural layer dealing with design patterns, system structure, and trade-off decisions.
+处理设计模式、系统结构和权衡决策的架构层。
 
-### Scope
+### 范围
 
-| Category | Examples |
+| 类别 | 示例 |
 |----------|----------|
-| Domain Modeling | Entities, Value Objects, Aggregates |
-| Architecture | Modules, layers, boundaries |
-| API Design | Public interfaces, ergonomics |
-| Patterns | Builder, State machine, Repository |
-| Trade-offs | Performance vs safety, flexibility vs simplicity |
-| Mental Models | How to think about the problem |
+| 领域建模 | 实体、值对象、聚合 |
+| 架构 | 模块、层级、边界 |
+| API 设计 | 公共接口、人机工程学 |
+| 模式 | Builder、状态机、Repository |
+| 权衡 | 性能 vs 安全、灵活性 vs 简洁性 |
+| 心智模型 | 如何思考该问题 |
 
-### Entry Signals
+### 入口信号
 
-| Signal | Interpretation |
+| 信号 | 解释 |
 |--------|---------------|
-| "How to design..." | Architecture question |
-| "What pattern..." | Design pattern question |
-| "Trade-off between..." | Decision question |
-| "Best practice for..." | Convention question |
-| "Why does Rust..." | Mental model question |
+| "如何设计..." | 架构问题 |
+| "什么模式..." | 设计模式问题 |
+| "在...之间权衡" | 决策问题 |
+| "...的最佳实践" | 约定问题 |
+| "为什么 Rust..." | 心智模型问题 |
 
-### Related Skills
+### 相关 Skill
 
 ```
-m09-domain       → DDD, domain modeling
-m10-performance  → Optimization patterns
-m11-ecosystem    → Crate integration
-m12-lifecycle    → Resource lifecycle, RAII patterns
-m13-domain-error → Domain error handling
-m14-mental-model → How to think in Rust
-m15-anti-pattern → Common mistakes to avoid
+m09-domain       → DDD、领域建模
+m10-performance  → 优化模式
+m11-ecosystem    → Crate 集成
+m12-lifecycle    → 资源生命周期、RAII 模式
+m13-domain-error → 领域错误处理
+m14-mental-model → 如何用 Rust 思考
+m15-anti-pattern → 需避免的常见错误
 ```
 
-### Key Questions
+### 关键问题
 
-- What's the appropriate pattern for this problem?
-- What are the trade-offs of this design?
-- How does this fit into the larger architecture?
+- 这个问题适合什么模式？
+- 这个设计有哪些权衡？
+- 这如何融入更大的架构？
 
 ---
 
-## Layer 3: Domain Constraints (WHY)
+## Layer 3：领域约束（为什么）
 
-### Definition
+### 定义
 
-The context layer dealing with business rules, regulatory requirements, and domain-specific invariants.
+处理业务规则、监管要求和特定领域不变量的上下文层。
 
-### Scope
+### 范围
 
-| Category | Examples |
+| 类别 | 示例 |
 |----------|----------|
-| Business Rules | Validation, workflows, policies |
-| Regulatory | Audit, compliance, security |
-| Performance | SLAs, latency, throughput |
-| Domain Invariants | Consistency rules, constraints |
-| Environment | Deployment, infrastructure |
-| Users | UX requirements, accessibility |
+| 业务规则 | 验证、工作流、策略 |
+| 监管 | 审计、合规、安全 |
+| 性能 | SLA、延迟、吞吐量 |
+| 领域不变量 | 一致性规则、约束 |
+| 环境 | 部署、基础设施 |
+| 用户 | UX 要求、可访问性 |
 
-### Entry Signals
+### 入口信号
 
-| Signal | Interpretation |
+| 信号 | 解释 |
 |--------|---------------|
-| "Building [domain] app" | Domain context |
-| "Business requirement..." | Constraint specification |
-| "Must be auditable..." | Regulatory constraint |
-| "Users expect..." | UX constraint |
-| "Production needs..." | Deployment constraint |
+| "构建 [领域] 应用" | 领域上下文 |
+| "业务要求..." | 约束规格 |
+| "必须可审计..." | 监管约束 |
+| "用户期望..." | UX 约束 |
+| "生产环境需要..." | 部署约束 |
 
-### Related Skills
+### 相关 Skill
 
 ```
-domain-fintech   → Financial domain constraints
-domain-web       → Web service constraints
-domain-cli       → CLI application constraints
-domain-embedded  → Embedded system constraints
-domain-iot       → IoT device constraints
-domain-ml        → Machine learning constraints
-domain-cloud-native → Cloud infrastructure constraints
+domain-fintech   → 金融领域约束
+domain-web       → Web 服务约束
+domain-cli       → CLI 应用约束
+domain-embedded  → 嵌入式系统约束
+domain-iot       → 物联网设备约束
+domain-ml        → 机器学习约束
+domain-cloud-native → 云基础设施约束
 ```
 
-### Key Questions
+### 关键问题
 
-- What domain rules apply here?
-- What constraints can't be violated?
-- What trade-offs does the domain allow?
+- 这里适用哪些领域规则？
+- 哪些约束不能被违反？
+- 该领域允许哪些权衡？
 
 ---
 
-## Layer Interactions
+## 层级交互
 
-### Downward Flow (Design Time)
-
-```
-Layer 3: "Financial transactions must be auditable"
-    ↓ implies
-Layer 2: "Use immutable event sourcing pattern"
-    ↓ implements as
-Layer 1: "Arc<T> for shared immutable references"
-```
-
-### Upward Flow (Debug Time)
+### 向下流动（设计时）
 
 ```
-Layer 1: "E0382: value moved"
-    ↑ asks
-Layer 2: "Why is ownership structured this way?"
-    ↑ asks
-Layer 3: "What domain constraint led to this design?"
+Layer 3："金融交易必须可审计"
+    ↓ 意味着
+Layer 2："使用不可变事件溯源模式"
+    ↓ 实现为
+Layer 1："Arc<T> 用于共享不可变引用"
 ```
 
-### Bidirectional Flow (Refactor Time)
+### 向上流动（调试时）
+
+```
+Layer 1："E0382：值被移动"
+    ↑ 询问
+Layer 2："为什么所有权这样组织？"
+    ↑ 询问
+Layer 3："什么领域约束导致了这种设计？"
+```
+
+### 双向流动（重构时）
 
 ```
 Layer 3 ←→ Layer 2 ←→ Layer 1
-   "Are current constraints still valid?"
-   "Does the design serve the domain?"
-   "Is the implementation optimal?"
+   "当前约束仍然有效吗？"
+   "该设计是否服务于领域？"
+   "实现是否最优？"
 ```
 
 ---
 
-## Layer Mapping Table
+## 层级映射表
 
-| Question Type | Entry | Direction | Skill Type |
+| 问题类型 | 入口 | 方向 | Skill 类型 |
 |---------------|-------|-----------|------------|
-| Compiler error | L1 | UP ↑ | m01-m07 |
-| "How to fix..." | L1 | UP ↑ | m01-m07 |
-| "What pattern..." | L2 | DOWN ↓ | m09-m15 |
-| "Best practice..." | L2 | BOTH ↕ | m09-m15 |
-| "Building [domain]..." | L3 | DOWN ↓ | domain-* |
-| "Why in Rust..." | L2 | UP ↑ | m14-mental-model |
-| Performance issue | L1 | UP ↑ | m10-performance |
-| Design review | L2 | BOTH ↕ | m09-m15 |
+| 编译器错误 | L1 | 向上 ↑ | m01-m07 |
+| "如何修复..." | L1 | 向上 ↑ | m01-m07 |
+| "什么模式..." | L2 | 向下 ↓ | m09-m15 |
+| "最佳实践..." | L2 | 双向 ↕ | m09-m15 |
+| "构建 [领域]..." | L3 | 向下 ↓ | domain-* |
+| "为什么在 Rust 中..." | L2 | 向上 ↑ | m14-mental-model |
+| 性能问题 | L1 | 向上 ↑ | m10-performance |
+| 设计评审 | L2 | 双向 ↕ | m09-m15 |
 
 ---
 
-## Extensibility
+## 可扩展性
 
-This framework is designed to be extended:
+该框架设计为可扩展的：
 
-### For Rust Skills
-- Layer 1: Add new m0x skills for new language features
-- Layer 2: Add new m1x skills for new patterns
-- Layer 3: Add new domain-* skills for new domains
+### 对于 Rust Skills
+- Layer 1：为新的语言特性添加新的 m0x skill
+- Layer 2：为新的模式添加新的 m1x skill
+- Layer 3：为新的领域添加新的 domain-* skill
 
-### For Other Languages/Frameworks
-- Layer 1: Replace with framework-specific mechanics
-- Layer 2: Keep patterns (mostly language-agnostic)
-- Layer 3: Keep constraints (fully domain-specific)
+### 对于其他语言/框架
+- Layer 1：替换为框架特定的机制
+- Layer 2：保留模式（大部分与语言无关）
+- Layer 3：保留约束（完全领域特定）
 
-### Example: Makepad Extension
+### 示例：Makepad 扩展
 
 ```
-Layer 3: UI domain constraints (60fps, accessibility)
+Layer 3：UI 领域约束（60fps、可访问性）
     ↓
-Layer 2: Widget patterns, layout patterns
+Layer 2：Widget 模式、布局模式
     ↓
-Layer 1: Makepad-specific mechanics + Rust basics
+Layer 1：Makepad 特定机制 + Rust 基础
 ```

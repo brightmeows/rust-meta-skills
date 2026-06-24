@@ -1,414 +1,415 @@
-# Error Protocol (3-Strike Rule)
+# 错误协议（三振出局规则）
 
-> Systematic approach to handling errors with escalation.
+> 系统性的错误处理方法，带升级机制。
 
-## Core Principle
+## 核心原则
 
-**If the same approach fails 3 times, escalate to the next level.**
+**如果相同方法失败 3 次，升级到下一层级。**
 
-Errors are not just problems to fix—they are signals about design appropriateness.
+错误不仅仅是需要修复的问题——它们是关于设计是否恰当的信号。
 
 ---
 
-## The 3-Strike Rule
+## 三振出局规则
 
 ```
-Strike 1: Fix at current layer
-Strike 2: Question the approach, try alternative
-Strike 3: Escalate to next layer up
+第 1 振：在当前层级修复
+第 2 振：质疑该方法，尝试替代方案
+第 3 振：升级到上一层级
 ```
 
-### Why 3 Strikes?
+### 为什么是 3 振？
 
-| Strike | Purpose |
+| 振次 | 目的 |
 |--------|---------|
-| 1 | Try obvious fix (maybe simple mistake) |
-| 2 | Try alternative approach (maybe wrong method) |
-| 3 | Question the design (maybe wrong approach entirely) |
+| 1 | 尝试明显的修复（可能只是简单错误） |
+| 2 | 尝试替代方法（可能方法不对） |
+| 3 | 质疑设计（可能整个方法都错了） |
 
 ---
 
-## Strike Tracking
+## 振次追踪
 
-### In trace.md
+### 在 trace.md 中
 
 ```markdown
-## Error Log
+## 错误日志
 
-### E0382: use of moved value
-- Strike 1: Added .clone() → Still fails (different location)
-- Strike 2: Changed to &T borrow → Lifetime error E0597
-- Strike 3: → ESCALATE: Question ownership design
+### E0382：使用了已移动的值
+- 第 1 振：添加了 .clone() → 仍然失败（不同位置）
+- 第 2 振：改为 &T 借用 → 生命周期错误 E0597
+- 第 3 振：→ 升级：质疑所有权设计
 
-### Escalation to Layer 2
-- Question: Why is data being moved multiple times?
-- Finding: Data needs to be shared, not copied
-- New approach: Use Arc<T> for shared ownership
+### 升级到 Layer 2
+- 问题：为什么数据被多次移动？
+- 发现：数据需要被共享，而非复制
+- 新方法：使用 Arc<T> 实现共享所有权
 ```
 
-### Tracking Format
+### 追踪格式
 
 ```markdown
-## Current Error: [error code/description]
+## 当前错误：[错误码/描述]
 
-### Strike 1
-- Attempt: [what was tried]
-- Result: [pass/fail]
-- If fail: [why]
+### 第 1 振
+- 尝试：[试了什么]
+- 结果：[通过/失败]
+- 如果失败：[原因]
 
-### Strike 2
-- Attempt: [different approach]
-- Result: [pass/fail]
-- If fail: [why]
+### 第 2 振
+- 尝试：[不同的方法]
+- 结果：[通过/失败]
+- 如果失败：[原因]
 
-### Strike 3
-- Attempt: [another approach]
-- Result: [pass/fail]
-- If fail: → ESCALATE
+### 第 3 振
+- 尝试：[另一种方法]
+- 结果：[通过/失败]
+- 如果失败：→ 升级
 
-### Escalation
-- From Layer: [1/2/3]
-- To Layer: [2/3]
-- Question to answer: [what needs reconsideration]
+### 升级
+- 从层级：[1/2/3]
+- 到层级：[2/3]
+- 要回答的问题：[需要重新考虑什么]
 ```
 
 ---
 
-## Escalation Paths
+## 升级路径
 
 ### Layer 1 → Layer 2
 
-**Trigger:** Language mechanic errors persist after 3 attempts.
+**触发条件：** 语言机制错误在 3 次尝试后仍然存在。
 
-**Question to ask:** "Is the design pattern appropriate for this use case?"
+**要问的问题：** "设计模式适用于这个用例吗？"
 
-**Examples:**
+**示例：**
 
-| Persistent Error | Escalation Question |
+| 持续错误 | 升级问题 |
 |-----------------|---------------------|
-| E0382 repeated | Should ownership be shared instead of moved? |
-| E0597 repeated | Is the scope boundary in the right place? |
-| E0277 (Send) repeated | Is async the right choice for this task? |
+| E0382 反复出现 | 所有权应该被共享而非移动吗？ |
+| E0597 反复出现 | 作用域边界在正确的位置吗？ |
+| E0277（Send）反复出现 | 这个任务选择 async 是正确的吗？ |
 
 ### Layer 2 → Layer 3
 
-**Trigger:** Design pattern doesn't fit after 3 attempts.
+**触发条件：** 设计模式在 3 次尝试后仍然不合适。
 
-**Question to ask:** "Is the domain constraint correctly understood?"
+**要问的问题：** "领域约束被正确理解了吗？"
 
-**Examples:**
+**示例：**
 
-| Persistent Issue | Escalation Question |
+| 持续问题 | 升级问题 |
 |-----------------|---------------------|
-| Can't model data correctly | What are the actual domain invariants? |
-| Performance always poor | What are the actual performance requirements? |
-| Error handling unclear | What are the actual failure modes in this domain? |
+| 无法正确建模数据 | 实际的领域不变量是什么？ |
+| 性能始终很差 | 实际的性能要求是什么？ |
+| 错误处理不清晰 | 该领域实际的故障模式是什么？ |
 
 ---
 
-## Error Classification
+## 错误分类
 
-### Compile-Time Errors
+### 编译时错误
 
-| Error Type | Typical Strike 1 | Escalate After |
+| 错误类型 | 典型第 1 振 | 之后升级 |
 |-----------|------------------|----------------|
-| E0382 (moved value) | Clone, borrow | Ownership redesign |
-| E0597 (lifetime) | Extend scope | Scope redesign |
-| E0277 (trait bound) | Add bound | Type redesign |
-| E0308 (type mismatch) | Cast, convert | Interface redesign |
+| E0382（值被移动） | Clone、借用 | 所有权重新设计 |
+| E0597（生命周期） | 扩展作用域 | 作用域重新设计 |
+| E0277（trait 约束） | 添加约束 | 类型重新设计 |
+| E0308（类型不匹配） | 转换、转化 | 接口重新设计 |
 
-### Runtime Errors
+### 运行时错误
 
-| Error Type | Typical Strike 1 | Escalate After |
+| 错误类型 | 典型第 1 振 | 之后升级 |
 |-----------|------------------|----------------|
-| Panic (unwrap) | Handle None/Err | Error strategy redesign |
-| Index out of bounds | Check bounds | Data structure redesign |
-| Deadlock | Reorder locks | Concurrency redesign |
+| Panic（unwrap） | 处理 None/Err | 错误策略重新设计 |
+| 索引越界 | 检查边界 | 数据结构重新设计 |
+| 死锁 | 重新排序锁 | 并发重新设计 |
 
-### Logic Errors
+### 逻辑错误
 
-| Error Type | Typical Strike 1 | Escalate After |
+| 错误类型 | 典型第 1 振 | 之后升级 |
 |-----------|------------------|----------------|
-| Wrong result | Fix algorithm | Requirements clarification |
-| Missing case | Add case | Domain model redesign |
-| Race condition | Add sync | Architecture redesign |
+| 错误结果 | 修复算法 | 需求澄清 |
+| 遗漏情况 | 添加情况 | 领域模型重新设计 |
+| 竞态条件 | 添加同步 | 架构重新设计 |
 
 ---
 
-## Escalation Protocol
+## 升级协议
 
-### Step 1: Document Current State
+### 步骤 1：记录当前状态
 
-Before escalating, ensure trace.md has:
-- [ ] All 3 attempts documented
-- [ ] Why each attempt failed
-- [ ] What layer we're currently in
-- [ ] What skill was used
+升级前，确保 trace.md 中有：
+- [ ] 所有 3 次尝试已记录
+- [ ] 每次尝试失败的原因
+- [ ] 我们当前所在的层级
+- [ ] 使用了什么 skill
 
-### Step 2: Ask Escalation Question
+### 步骤 2：提出升级问题
 
-| From | To | Question Template |
+| 从 | 到 | 问题模板 |
 |------|-----|-------------------|
-| L1 | L2 | "What design choice led to this constraint being violated?" |
-| L2 | L3 | "What domain rule makes this design necessary?" |
+| L1 | L2 | "什么设计选择导致了该约束被违反？" |
+| L2 | L3 | "什么领域规则使得这种设计成为必要？" |
 
-### Step 3: Load Appropriate Skill
+### 步骤 3：加载适当的 Skill
 
-| Escalating To | Load |
+| 升级到 | 加载 |
 |---------------|------|
-| Layer 2 | m09-m15 (design pattern skills) |
-| Layer 3 | domain-* (domain constraint skills) |
+| Layer 2 | m09-m15（设计模式 skill） |
+| Layer 3 | domain-*（领域约束 skill） |
 
-### Step 4: Re-Trace Downward
+### 步骤 4：重新向下追溯
 
-After understanding higher layer:
-1. Record new understanding in findings.md
-2. Trace back down with new insight
-3. Implement with new approach
-4. Reset strike counter
+理解更高层级后：
+1. 在 findings.md 中记录新的理解
+2. 带着新见解向下追溯
+3. 用新方法实现
+4. 重置振次计数器
 
 ---
 
-## Special Cases
+## 特殊情况
 
-### Early Escalation
+### 提前升级
 
-Sometimes escalate before 3 strikes:
+有时在 3 振之前就升级：
 
-| Signal | Action |
+| 信号 | 行动 |
 |--------|--------|
-| Error explicitly mentions design issue | Escalate immediately |
-| User says "I've tried everything" | Start at Layer 2 |
-| Problem is architectural | Start at Layer 3 |
+| 错误明确提到设计问题 | 立即升级 |
+| 用户说"我什么都试过了" | 从 Layer 2 开始 |
+| 问题是架构性的 | 从 Layer 3 开始 |
 
-### Cross-Layer Errors
+### 跨层错误
 
-Some errors span multiple layers:
+有些错误跨越多个层级：
 
-| Error | Layers Involved | Approach |
+| 错误 | 涉及的层级 | 方法 |
 |-------|----------------|----------|
-| "Trait not satisfied for async context" | L1 (trait) + L2 (async design) | Address both |
-| "Can't share data between threads" | L1 (Send) + L3 (concurrency requirement) | Start at L3 |
+| "异步上下文中 trait 不满足" | L1（trait）+ L2（异步设计） | 同时处理 |
+| "无法在线程间共享数据" | L1（Send）+ L3（并发需求） | 从 L3 开始 |
 
-### Non-Escalating Errors
+### 不升级的错误
 
-Some errors don't escalate—they're just bugs:
+有些错误不需要升级——它们只是 bug：
 
-| Error Type | Fix | Don't Escalate If |
+| 错误类型 | 修复 | 如果以下情况不要升级 |
 |-----------|-----|-------------------|
-| Typo | Fix spelling | One-time mistake |
-| Missing import | Add import | Just forgot |
-| Syntax error | Fix syntax | Just typo |
+| 拼写错误 | 修正拼写 | 一次性错误 |
+| 缺少导入 | 添加导入 | 只是忘了 |
+| 语法错误 | 修正语法 | 只是笔误 |
 
 ---
 
-## Integration with 5-Question Reboot
+## 与 5 问重启的集成
 
-When escalation happens, use 5-Question Reboot:
+当升级发生时，使用 5 问重启：
 
-1. **What error am I solving?** → Original error + escalation context
-2. **What layer am I in?** → Escalated-to layer
-3. **What domain constraints apply?** → Re-read domain-* skill
-4. **What have I tried?** → All 3+ strikes
-5. **What's the next trace direction?** → Down from new layer
+1. **我在解决什么错误？** → 原始错误 + 升级上下文
+2. **我在哪个层级？** → 升级到的层级
+3. **哪些领域约束适用？** → 重新读取 domain-* skill
+4. **我尝试过什么？** → 所有 3+ 次振次
+5. **下一步追溯方向是什么？** → 从新层级向下
 
 ---
 
-## Examples
+## 示例
 
-### Example 1: E0382 Escalation
+### 示例 1：E0382 升级
 
 ```markdown
-## Error: E0382 (use of moved value)
+## 错误：E0382（使用了已移动的值）
 
-### Strike 1
-- Attempt: Added .clone() at line 42
-- Result: Fail - Now E0382 at line 67 (different move)
-- Why: Data is moved in multiple places
+### 第 1 振
+- 尝试：在第 42 行添加了 .clone()
+- 结果：失败 - 现在第 67 行出现 E0382（不同的移动）
+- 原因：数据在多个地方被移动
 
-### Strike 2
-- Attempt: Changed function to take &Data instead of Data
-- Result: Fail - E0597 (borrowed value doesn't live long enough)
-- Why: Caller's data goes out of scope
+### 第 2 振
+- 尝试：将函数改为接收 &Data 而非 Data
+- 结果：失败 - E0597（借用的值存活不够久）
+- 原因：调用者的数据离开了作用域
 
-### Strike 3
-- Attempt: Used Cell<Data> for interior mutability
-- Result: Fail - Data doesn't implement Copy
-- Why: Wrong tool for this job
+### 第 3 振
+- 尝试：使用 Cell<Data> 实现内部可变性
+- 结果：失败 - Data 未实现 Copy
+- 原因：选错了工具
 
-### Escalation to Layer 2
-- Question: Why is this data being moved/borrowed so much?
-- Load: m09-domain skill
-- Finding: This data is shared state across multiple components
-- New approach: Use Arc<Data> for shared ownership
+### 升级到 Layer 2
+- 问题：为什么这个数据被如此频繁地移动/借用？
+- 加载：m09-domain skill
+- 发现：这个数据是跨多个组件的共享状态
+- 新方法：使用 Arc<Data> 实现共享所有权
 
-### Resolution
-- Wrapped Data in Arc
-- Clone Arc (cheap) instead of Data (expensive)
-- All components share reference
-- E0382 resolved
+### 解决方案
+- 将 Data 包装在 Arc 中
+- 克隆 Arc（廉价）而非 Data（昂贵）
+- 所有组件共享引用
+- E0382 已解决
 ```
 
-### Example 2: Performance Escalation
+### 示例 2：性能升级
 
 ```markdown
-## Error: Slow response (>1s latency)
+## 错误：响应慢（>1s 延迟）
 
-### Strike 1
-- Attempt: Added caching
-- Result: Still >500ms
-- Why: Cache miss rate is high
+### 第 1 振
+- 尝试：添加了缓存
+- 结果：仍然 >500ms
+- 原因：缓存未命中率高
 
-### Strike 2
-- Attempt: Optimized hot path with Vec instead of HashMap
-- Result: Still >300ms
-- Why: Most time in database query
+### 第 2 振
+- 尝试：使用 Vec 替代 HashMap 优化热路径
+- 结果：仍然 >300ms
+- 原因：大部分时间在数据库查询
+- ...
 
-### Strike 3
-- Attempt: Added database connection pooling
-- Result: Still >200ms
-- Why: Query itself is N+1
+### 第 3 振
+- 尝试：添加了数据库连接池
+- 结果：仍然 >200ms
+- 原因：查询本身是 N+1
 
-### Escalation to Layer 3
-- Question: What are the actual latency requirements?
-- Load: domain-web skill
-- Finding: SLA is actually 500ms, current is acceptable
-- But also: The N+1 query is a design smell
+### 升级到 Layer 3
+- 问题：实际的延迟要求是什么？
+- 加载：domain-web skill
+- 发现：SLA 实际是 500ms，当前可接受
+- 但此外：N+1 查询是设计坏味道
 
-### Resolution
-- Current performance meets SLA (no immediate fix needed)
-- Created tech debt item: Refactor to batch query
-- Documented in decision.md
+### 解决方案
+- 当前性能满足 SLA（无需立即修复）
+- 创建了技术债务项：重构为批量查询
+- 记录在 decision.md 中
 ```
 
 ---
 
-## Summary
+## 总结
 
-1. **Track strikes** in trace.md
-2. **Escalate after 3** failed attempts at same layer
-3. **Ask the right question** for the escalation
-4. **Load appropriate skill** for new layer
-5. **Re-trace downward** with new understanding
-6. **Reset counter** after successful escalation
+1. **在 trace.md 中追踪振次**
+2. **在相同层级失败 3 次后升级**
+3. **为升级提出正确的问题**
+4. **为新层级加载适当的 skill**
+5. **带着新的理解重新向下追溯**
+6. **成功升级后重置计数器**
 
 ---
 
-## Negotiation 3-Strike Rule
+## 协商三振出局规则
 
-The 3-Strike Rule extends to agent negotiation responses.
+三振出局规则扩展到 agent 协商响应。
 
-### Confidence-Based Strikes
+### 基于信心的振次
 
-| Agent Response | Strike Action |
+| Agent 响应 | 振次行动 |
 |----------------|---------------|
-| HIGH confidence, covers intent | No strike - accept |
-| MEDIUM confidence, covers intent | No strike - accept with gaps |
-| MEDIUM confidence, partial intent | Strike 1 - refine query |
-| LOW confidence | Strike 1 - refine query |
-| UNCERTAIN | Strike 1 - try alternative |
+| 高置信度，覆盖意图 | 无振次 - 接受 |
+| 中置信度，覆盖意图 | 无振次 - 接受但有差距 |
+| 中置信度，部分意图 | 第 1 振 - 优化查询 |
+| 低置信度 | 第 1 振 - 优化查询 |
+| 不确定 | 第 1 振 - 尝试替代方案 |
 
-### Negotiation Strike Tracking
+### 协商振次追踪
 
 ```markdown
-## Negotiation Log: [Query]
+## 协商日志：[查询]
 
-### Round 1 (Strike 1)
-- Agent: crate-researcher
-- Confidence: LOW
-- Gaps: [list]
-- Action: Refine with context
+### 第 1 轮（第 1 振）
+- Agent：crate-researcher
+- 置信度：低
+- 差距：[列表]
+- 行动：用上下文优化
 
-### Round 2 (Strike 2)
-- Agent: crate-researcher (refined)
-- Confidence: MEDIUM
-- Gaps: [fewer]
-- Action: Still need comparison data, try docs-researcher
+### 第 2 轮（第 2 振）
+- Agent：crate-researcher（已优化）
+- 置信度：中
+- 差距：[更少]
+- 行动：仍需要比较数据，尝试 docs-researcher
 
-### Round 3 (Strike 3)
-- Agent: docs-researcher
-- Confidence: MEDIUM
-- Action: Synthesize best-effort answer
+### 第 3 轮（第 3 振）
+- Agent：docs-researcher
+- 置信度：中
+- 行动：综合尽力而为的答案
 ```
 
-### Negotiation Escalation Protocol
+### 协商升级协议
 
 ```
-Strike 1: Initial query returns LOW/UNCERTAIN confidence
+第 1 振：初始查询返回低/不确定置信度
   ┌─────────────────────────────────────┐
-  │ - Review agent's context questions  │
-  │ - Provide additional context        │
-  │ - Narrow scope if ambiguous         │
-  │ - Re-query same agent               │
+  │ - 审查 agent 的上下文问题           │
+  │ - 提供额外的上下文                  │
+  │ - 如果模糊则缩小范围                │
+  │ - 重新查询同一个 agent              │
   └─────────────────────────────────────┘
 
-Strike 2: Refined query still LOW, or gaps block intent
+第 2 振：优化后的查询仍然低置信度，或差距阻碍意图
   ┌─────────────────────────────────────┐
-  │ - Try alternative agent             │
-  │ - Try different source              │
-  │ - Combine with other data           │
+  │ - 尝试替代 agent                    │
+  │ - 尝试不同的来源                    │
+  │ - 与其他数据结合                    │
   └─────────────────────────────────────┘
 
-Strike 3: Still insufficient
+第 3 振：仍然不足
   ┌─────────────────────────────────────┐
-  │ - Synthesize best-effort answer     │
-  │ - Explicitly list remaining gaps    │
-  │ - Disclose confidence level to user │
-  │ - Suggest manual verification       │
+  │ - 综合尽力而为的答案                │
+  │ - 明确列出剩余差距                  │
+  │ - 向用户披露置信度级别              │
+  │ - 建议手动验证                      │
   └─────────────────────────────────────┘
 ```
 
-### Negotiation vs Error 3-Strike Comparison
+### 协商 vs 错误三振出局比较
 
-| Aspect | Error 3-Strike | Negotiation 3-Strike |
+| 方面 | 错误三振出局 | 协商三振出局 |
 |--------|----------------|----------------------|
-| Trigger | Repeated failure | Low confidence |
-| Target | Layer escalation | Query refinement |
-| Reset | After successful fix | After sufficient answer |
-| Final action | Redesign question | Best-effort synthesis |
+| 触发 | 重复失败 | 低置信度 |
+| 目标 | 层级升级 | 查询优化 |
+| 重置 | 成功修复后 | 获得充分答案后 |
+| 最终行动 | 重新设计问题 | 尽力而为的综合 |
 
-### Integration Points
+### 集成点
 
-**With Meta-Cognition:**
-- Negotiation happens within layers, not across
-- Layer escalation still follows standard 3-Strike
-- Negotiation is for data gathering, not design
+**与元认知：**
+- 协商在层级内发生，而非跨层级
+- 层级升级仍然遵循标准三振出局
+- 协商用于数据收集，而非设计
 
-**With Router:**
-- Router decides if negotiation is needed
-- Router evaluates negotiation responses
-- Router manages refinement loop
+**与路由器：**
+- 路由器决定是否需要协商
+- 路由器评估协商响应
+- 路由器管理优化循环
 
-### Example: Negotiation 3-Strike Sequence
+### 示例：协商三振出局序列
 
 ```markdown
-## Query: "Best practices for async error handling in web APIs"
+## 查询："Web API 中异步错误处理的最佳实践"
 
-### Strike 1
-- Agent: docs-researcher (tokio error handling)
-- Confidence: MEDIUM
-- Finding: General tokio error patterns
-- Gap: No web-specific patterns
-- Action: Need web context
+### 第 1 振
+- Agent：docs-researcher（tokio 错误处理）
+- 置信度：中
+- 发现：通用 tokio 错误模式
+- 差距：没有 Web 特定模式
+- 行动：需要 Web 上下文
 
-### Strike 2
-- Agent: docs-researcher (axum error handling)
-- Confidence: MEDIUM
-- Finding: Axum error response patterns
-- Gap: No integration with tokio patterns
-- Action: Try to synthesize
+### 第 2 振
+- Agent：docs-researcher（axum 错误处理）
+- 置信度：中
+- 发现：Axum 错误响应模式
+- 差距：没有与 tokio 模式的集成
+- 行动：尝试综合
 
-### Strike 3
-- Synthesize from both rounds
-- Answer: Combined tokio + axum patterns
-- Disclosed gaps:
-  - No official "best practice" document exists
-  - Patterns compiled from multiple sources
-- Confidence: MEDIUM (synthesized)
+### 第 3 振
+- 从两轮综合
+- 答案：组合的 tokio + axum 模式
+- 披露的差距：
+  - 不存在官方的"最佳实践"文档
+  - 模式从多个来源编译
+- 置信度：中（综合的）
 ```
 
-### Related Documents
+### 相关文档
 
-- `negotiation-protocol.md` - Full negotiation specification
-- `negotiation-templates.md` - Response templates
-- `reasoning-framework.md` - Layer tracing
+- `negotiation-protocol.md` - 完整协商规范
+- `negotiation-templates.md` - 响应模板
+- `reasoning-framework.md` - 层级追溯

@@ -1,187 +1,187 @@
-# Hooks Patterns Library
+# Hook 模式库
 
-> Cognitive triggers for automatic reasoning processes.
+> 用于自动推理过程的认知触发器。
 
-## Overview
+## 概述
 
-Hooks are automatic triggers that activate meta-cognition processes at key moments. They ensure reasoning happens consistently without relying on manual memory.
+Hook 是在关键时刻激活元认知过程的自动触发器。它们确保推理一致地发生，而不依赖手动记忆。
 
-## Hook Categories
+## Hook 分类
 
 ```
-PreToolUse   → Before executing a tool
-PostToolUse  → After tool execution
-OnError      → When an error occurs
-OnPattern    → When a pattern is detected
-Periodic     → At regular intervals
+PreToolUse   → 执行工具前
+PostToolUse  → 工具执行后
+OnError      → 错误发生时
+OnPattern    → 检测到模式时
+Periodic     → 定期
 ```
 
 ---
 
-## Rust-Specific Hooks
+## Rust 特定 Hook
 
-### PreToolUse Hooks
+### PreToolUse Hook
 
-#### Before Writing Code
+#### 编写代码前
 
 ```yaml
 trigger: [Write, Edit]
-condition: target is *.rs file
+condition: target 是 *.rs 文件
 actions:
-  - Re-read relevant domain-* skill (if domain context exists)
-  - Re-read relevant m0x skill (if fixing error)
-  - Check trace.md for current understanding
-purpose: Refresh constraints before implementation
+  - 重新读取相关 domain-* skill（如果存在领域上下文）
+  - 重新读取相关 m0x skill（如果修复错误）
+  - 检查 trace.md 了解当前理解
+purpose: 实现前刷新约束
 ```
 
-#### Before Running Build
+#### 运行构建前
 
 ```yaml
 trigger: [Bash with cargo build/run/test]
 actions:
-  - Verify current approach aligns with trace.md
-  - Prepare to capture output for trace.md
-purpose: Ensure intentional action
+  - 验证当前方法与 trace.md 一致
+  - 准备捕获输出到 trace.md
+purpose: 确保有意行动
 ```
 
-### PostToolUse Hooks
+### PostToolUse Hook
 
-#### After Build/Run/Test
+#### 构建/运行/测试后
 
 ```yaml
 trigger: [Bash with cargo]
 condition: exit_code != 0
 actions:
-  - Parse error for E0xxx codes
-  - Update trace.md with error
-  - If E0xxx, initiate Layer 1 → 3 trace
-  - Increment attempt counter
-purpose: Error-driven learning
+  - 解析错误中的 E0xxx 码
+  - 用错误更新 trace.md
+  - 如果是 E0xxx，启动 Layer 1 → 3 追溯
+  - 增加尝试计数器
+purpose: 错误驱动的学习
 ```
 
-#### After Reading Docs
+#### 读取文档后
 
 ```yaml
 trigger: [WebFetch, Read docs]
 actions:
-  - Extract key patterns to findings.md
-  - Update trace.md with what was learned
-purpose: Knowledge persistence
+  - 提取关键模式到 findings.md
+  - 用所学内容更新 trace.md
+purpose: 知识持久化
 ```
 
-#### After Successful Build
+#### 成功构建后
 
 ```yaml
 trigger: [Bash with cargo]
 condition: exit_code == 0
 actions:
-  - Update trace.md with success
-  - If problem was being debugged, update decision.md
-purpose: Progress tracking
+  - 用成功更新 trace.md
+  - 如果正在调试问题，更新 decision.md
+purpose: 进度追踪
 ```
 
-### OnError Hooks
+### OnError Hook
 
-#### Compile Error
+#### 编译错误
 
 ```yaml
-trigger: cargo compile error
+trigger: cargo 编译错误
 actions:
-  - Log full error to trace.md
-  - Identify error code (E0xxx)
-  - Load corresponding m0x skill
-  - Start upward trace (Layer 1 → 2 → 3)
-purpose: Systematic error handling
+  - 将完整错误记录到 trace.md
+  - 识别错误码（E0xxx）
+  - 加载对应的 m0x skill
+  - 开始向上追溯（Layer 1 → 2 → 3）
+purpose: 系统化错误处理
 ```
 
-#### Runtime Panic
+#### 运行时 Panic
 
 ```yaml
-trigger: panic! detected in output
+trigger: 输出中检测到 panic!
 actions:
-  - Log panic message to trace.md
-  - Identify panic location
-  - Load relevant skill based on panic type
-purpose: Panic debugging
+  - 将 panic 信息记录到 trace.md
+  - 识别 panic 位置
+  - 基于 panic 类型加载相关 skill
+purpose: Panic 调试
 ```
 
-#### Repeated Error
+#### 重复错误
 
 ```yaml
-trigger: same error code appears 3+ times
+trigger: 相同错误码出现 3 次以上
 actions:
-  - Escalate to Layer 2 analysis
-  - Question current design approach
-  - Consider alternative patterns
-purpose: 3-Strike rule enforcement
+  - 升级到 Layer 2 分析
+  - 质疑当前设计方法
+  - 考虑替代模式
+purpose: 三振出局规则执行
 ```
 
-### OnPattern Hooks
+### OnPattern Hook
 
-#### Domain Context Detected
+#### 检测到领域上下文
 
 ```yaml
-trigger: domain keywords in question
+trigger: 问题中的领域关键词
 patterns: fintech, trading, web, embedded, cli, iot, ml
 actions:
-  - Load corresponding domain-* skill
-  - Set Layer 3 context
-  - Start downward trace if designing
-purpose: Domain-aware reasoning
+  - 加载对应的 domain-* skill
+  - 设置 Layer 3 上下文
+  - 如果是在设计，开始向下追溯
+purpose: 领域感知的推理
 ```
 
-#### Error Code Detected
+#### 检测到错误码
 
 ```yaml
-trigger: E0xxx in error message
+trigger: 错误信息中的 E0xxx
 actions:
-  - Map to corresponding m0x skill
-  - Set Layer 1 entry point
-  - Prepare for upward trace
-purpose: Error-driven skill loading
+  - 映射到对应的 m0x skill
+  - 设置 Layer 1 入口点
+  - 准备向上追溯
+purpose: 错误驱动的 skill 加载
 ```
 
-#### Design Pattern Detected
+#### 检测到设计模式
 
 ```yaml
-trigger: pattern keywords in question
+trigger: 问题中的模式关键词
 patterns: repository, factory, builder, state machine
 actions:
-  - Load m09-domain skill
-  - Load relevant m0x for implementation
-  - Set Layer 2 focus
-purpose: Pattern-aware reasoning
+  - 加载 m09-domain skill
+  - 加载相关的 m0x 用于实现
+  - 设置 Layer 2 焦点
+purpose: 模式感知的推理
 ```
 
-### Periodic Hooks
+### Periodic Hook
 
-#### Context Refresh
+#### 上下文刷新
 
 ```yaml
-trigger: every 50 tool calls
+trigger: 每 50 次工具调用
 actions:
-  - Re-read trace.md
-  - Re-read current goal
-  - Verify still on track
-purpose: Prevent context drift
+  - 重新读取 trace.md
+  - 重新读取当前目标
+  - 验证仍在正轨
+purpose: 防止上下文漂移
 ```
 
-#### Progress Check
+#### 进度检查
 
 ```yaml
-trigger: every 20 tool calls
+trigger: 每 20 次工具调用
 actions:
-  - Review attempts in trace.md
-  - Check if stuck (same error repeated)
-  - Consider escalation if needed
-purpose: Progress monitoring
+  - 审查 trace.md 中的尝试
+  - 检查是否卡住（相同错误重复）
+  - 考虑是否需要升级
+purpose: 进度监控
 ```
 
 ---
 
-## Hook Implementation Patterns
+## Hook 实现模式
 
-### Conditional Hooks
+### 条件 Hook
 
 ```yaml
 hook:
@@ -194,7 +194,7 @@ hook:
     - update_trace
 ```
 
-### Chained Hooks
+### 链式 Hook
 
 ```yaml
 hooks:
@@ -211,7 +211,7 @@ hooks:
       - trigger: start_trace
 ```
 
-### Stateful Hooks
+### 有状态 Hook
 
 ```yaml
 hook:
@@ -226,114 +226,114 @@ hook:
 
 ---
 
-## Skill-Specific Hooks
+## Skill 特定 Hook
 
-### For m01-ownership
+### 用于 m01-ownership
 
 ```yaml
 hooks:
   - trigger: E0382, E0597, E0506, E0507, E0515, E0716, E0106
     actions:
       - Load m01-ownership
-      - Ask: "What design led to this ownership pattern?"
-      - Trace up to Layer 2/3
+      - Ask: "什么设计导致了这种所有权模式？"
+      - 向上追溯到 Layer 2/3
 ```
 
-### For m07-concurrency
+### 用于 m07-concurrency
 
 ```yaml
 hooks:
-  - trigger: E0277 with Send/Sync
+  - trigger: 带有 Send/Sync 的 E0277
     actions:
       - Load m07-concurrency
-      - Check for async context
-      - Review thread safety requirements
+      - 检查异步上下文
+      - 审查线程安全要求
 ```
 
-### For unsafe-checker
+### 用于 unsafe-checker
 
 ```yaml
 hooks:
-  - trigger: unsafe keyword in code
+  - trigger: 代码中的 unsafe 关键词
     actions:
       - Load unsafe-checker
-      - Check SAFETY comment
-      - Verify invariants documented
+      - 检查 SAFETY 注释
+      - 验证记录了不变量
 ```
 
 ---
 
-## Anti-Pattern Prevention Hooks
+## 反模式预防 Hook
 
-### Prevent Clone Reflex
+### 防止 Clone 反射
 
 ```yaml
 hook:
-  trigger: about to add .clone()
-  condition: fixing E0382
+  trigger: 即将添加 .clone()
+  condition: 修复 E0382
   actions:
-    - Pause
-    - Ask: "Is clone the right solution?"
-    - Load m01-ownership
-    - Trace to Layer 2 first
-purpose: Prevent surface-level fixes
+    - 暂停
+    - 问："clone 是正确解决方案吗？"
+    - 加载 m01-ownership
+    - 先追溯到 Layer 2
+purpose: 防止表面级别的修复
 ```
 
-### Prevent Unwrap Habit
+### 防止 Unwrap 习惯
 
 ```yaml
 hook:
-  trigger: about to add .unwrap()
-  condition: not in test code
+  trigger: 即将添加 .unwrap()
+  condition: 不在测试代码中
   actions:
-    - Pause
-    - Ask: "Should this propagate error?"
-    - Load m06-error-handling
-    - Consider ?, expect(), or proper handling
-purpose: Prevent panic-prone code
+    - 暂停
+    - 问："应该传播这个错误吗？"
+    - 加载 m06-error-handling
+    - 考虑 ?、expect() 或正确处理
+purpose: 防止容易 panic 的代码
 ```
 
-### Prevent Over-Arc
+### 防止过度使用 Arc
 
 ```yaml
 hook:
-  trigger: about to wrap in Arc<Mutex<>>
+  trigger: 即将包装在 Arc<Mutex<>> 中
   actions:
-    - Pause
-    - Ask: "Is shared mutable state necessary?"
-    - Load m07-concurrency
-    - Consider message passing alternatives
-purpose: Prevent concurrency anti-patterns
+    - 暂停
+    - 问："可变的共享状态是必要的吗？"
+    - 加载 m07-concurrency
+    - 考虑消息传递替代方案
+purpose: 防止并发反模式
 ```
 
 ---
 
-## Integration with Externalization
+## 与外化的集成
 
-### Hook → File Updates
+### Hook → 文件更新
 
-| Hook | Updates |
+| Hook | 更新 |
 |------|---------|
-| OnError | trace.md (error log) |
-| After docs read | findings.md (new knowledge) |
-| After success | trace.md (progress), decision.md (if resolved) |
-| Pattern detected | trace.md (context set) |
+| OnError | trace.md（错误日志） |
+| 读取文档后 | findings.md（新知识） |
+| 成功后 | trace.md（进度），decision.md（如果已解决） |
+| 检测到模式 | trace.md（上下文设置） |
 
-### File → Hook Triggers
+### 文件 → Hook 触发
 
-| File State | Triggers |
+| 文件状态 | 触发 |
 |------------|----------|
-| trace.md has 3+ same errors | escalation hook |
-| findings.md has conflicting info | clarification hook |
-| decision.md incomplete | reminder hook |
+| trace.md 有 3+ 相同错误 | 升级 hook |
+| findings.md 有冲突信息 | 澄清 hook |
+| decision.md 不完整 | 提醒 hook |
 
 ---
 
-## Summary
+## 总结
 
-Hooks ensure:
-1. **Automatic skill loading** based on context
-2. **Error tracking** and learning
-3. **Context persistence** through file updates
-4. **Anti-pattern prevention** through pause-and-think
-5. **Progress monitoring** through periodic checks
+Hook 确保：
+1. **基于上下文自动加载 skill**
+2. **错误追踪**和学习
+3. **通过文件更新保持上下文持久化**
+4. **通过暂停思考防止反模式**
+5. **通过定期检查监控进度**
