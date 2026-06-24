@@ -1,6 +1,6 @@
 # 所有权最佳实践
 
-## API Design Patterns
+## API 设计模式
 
 ### 1. Prefer Borrowing Over Ownership
 

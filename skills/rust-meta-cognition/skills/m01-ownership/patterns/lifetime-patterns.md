@@ -1,6 +1,6 @@
 # 生命周期模式
 
-## Basic Lifetime Annotation
+## 基本生命周期标注
 
 ### When Required
 ```rust
