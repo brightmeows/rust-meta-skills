@@ -1,30 +1,30 @@
-# TDD for Rust-Skills
+# Rust-Skills 的 TDD
 
-Test-Driven Development framework for creating and validating skills.
+用于创建和验证 Skills 的测试驱动开发框架。
 
-## Core Principle
+## 核心原则
 
-**"NO SKILL WITHOUT FAILING TEST FIRST"**
+**“没有先写失败测试，就不要创建 Skill”**
 
-Before creating or modifying a skill, you must:
-1. Define a pressure scenario that the skill should handle
-2. Test the scenario WITHOUT the skill
-3. Document the baseline failure
-4. Only then create/modify the skill
+在创建或修改 Skill 之前，必须：
+1. 定义该 Skill 应该处理的压力场景
+2. 在没有该 Skill 的情况下测试该场景
+3. 记录基准失败结果
+4. 然后才创建/修改 Skill
 
-## TDD Phases
+## TDD 阶段
 
-### RED Phase: Define Failure
+### RED 阶段：定义失败
 
-1. **Identify pressure scenario**
-   - User question that triggers the skill
-   - Expected knowledge gaps without the skill
+1. **确定压力场景**
+   - 触发 Skill 的用户问题
+   - 没有 Skill 时的预期知识缺口
 
-2. **Test WITHOUT skill loaded**
-   - Ask Claude the question in a fresh session
-   - Document what Claude gets wrong or misses
+2. **不加载 Skill 进行测试**
+   - 在新会话中向 Claude 提问
+   - 记录 Claude 答错或遗漏的内容
 
-3. **Document baseline**
+3. **记录基准结果**
    ```markdown
    ## Scenario: E0382 Error Explanation
 
@@ -39,17 +39,17 @@ Before creating or modifying a skill, you must:
    - [x] MISSING: Related guidelines (P.VAR.01)
    ```
 
-### GREEN Phase: Create Minimal Skill
+### GREEN 阶段：创建最小 Skill
 
-1. **Write minimal skill content**
-   - Address ONLY the documented failures
-   - Keep content under 200 words (excluding tables)
+1. **编写最小 Skill 内容**
+   - 只针对已记录的失败
+   - 内容控制在 200 词以内（不含表格）
 
-2. **Test WITH skill loaded**
-   - Ask the same question
-   - Verify improvements
+2. **加载 Skill 进行测试**
+   - 提出同样的问题
+   - 验证改进结果
 
-3. **Verify checklist**
+3. **验证检查清单**
    ```markdown
    ## Verification: E0382 Explanation
 

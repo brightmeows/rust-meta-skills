@@ -1,16 +1,16 @@
-# Clippy Lint → Rule Mapping
+# Clippy Lint → 规则映射
 
-| Clippy Lint | Category | Fix |
+| Clippy Lint | 分类 | 修复 |
 |-------------|----------|-----|
-| `unwrap_used` | Error | Use `?` or `expect()` |
-| `needless_clone` | Perf | Use reference |
-| `await_holding_lock` | Async | Scope guard before await |
-| `linkedlist` | Perf | Use Vec/VecDeque |
-| `wildcard_imports` | Style | Explicit imports |
-| `missing_safety_doc` | Safety | Add `# Safety` doc |
-| `undocumented_unsafe_blocks` | Safety | Add `// SAFETY:` |
-| `transmute_ptr_to_ptr` | Safety | Use `pointer::cast()` |
-| `large_stack_arrays` | Mem | Use Vec or Box |
-| `too_many_arguments` | Design | Use struct params |
+| `unwrap_used` | 错误 | 使用 `?` 或 `expect()` |
+| `needless_clone` | 性能 | 使用引用 |
+| `await_holding_lock` | 异步 | 在 await 前释放 guard |
+| `linkedlist` | 性能 | 使用 Vec/VecDeque |
+| `wildcard_imports` | 风格 | 显式导入 |
+| `missing_safety_doc` | 安全 | 添加 `# Safety` 文档 |
+| `undocumented_unsafe_blocks` | 安全 | 添加 `// SAFETY:` |
+| `transmute_ptr_to_ptr` | 安全 | 使用 `pointer::cast()` |
+| `large_stack_arrays` | 内存 | 使用 Vec 或 Box |
+| `too_many_arguments` | 设计 | 使用结构体参数 |
 
-For unsafe-related lints → see `unsafe-checker` skill.
+对于 unsafe 相关的 lint → 参见 `unsafe-checker` skill。
