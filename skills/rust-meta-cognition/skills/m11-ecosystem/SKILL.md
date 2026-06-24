@@ -4,13 +4,13 @@ description: "Use when integrating crates or ecosystem questions. Keywords: E042
 user-invocable: false
 ---
 
-## Current Dependencies (Auto-Injected)
+# 生态集成
+
+## Current Dependencies（自动注入）
 
 !`grep -A 100 '^\[dependencies\]' Cargo.toml 2>/dev/null | head -30 || echo "No Cargo.toml found"`
 
 ---
-
-# 生态集成
 
 > **第 2 层：设计选择**
 
@@ -19,6 +19,7 @@ user-invocable: false
 **这个任务该用哪个 crate，如何集成？**
 
 在添加依赖之前：
+
 - 有标准方案吗？
 - 维护状态如何？
 - API 稳定性如何？

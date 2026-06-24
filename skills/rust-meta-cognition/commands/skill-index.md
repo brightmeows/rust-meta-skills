@@ -26,6 +26,7 @@ Query Rust skills by meta-question category or technical subcategory.
 ## Query Format
 
 ### By Meta-Question (XX)
+
 - `m01` - Memory Ownership & Lifetimes
 - `m02` - Resource Management Balance
 - `m03` - Mutability Boundaries
@@ -43,6 +44,7 @@ Query Rust skills by meta-question category or technical subcategory.
 - `m15` - Error Pattern Recognition
 
 ### By Tech Category (YYY)
+
 - `001-099` - Language Core
 - `100-199` - Standard Library
 - `200-299` - Web Development
@@ -54,6 +56,7 @@ Query Rust skills by meta-question category or technical subcategory.
 - `850-899` - Toolchain & Build
 
 ### By Domain Extension
+
 - `F*` - FinTech
 - `M*` - Machine Learning
 - `CN*` - Cloud Native
@@ -62,6 +65,7 @@ Query Rust skills by meta-question category or technical subcategory.
 ## Output
 
 Returns matching skills with:
+
 - Category code and name
 - Related technical subcategories
 - Key concepts and keywords

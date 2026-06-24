@@ -141,6 +141,7 @@ skills/
 ```
 
 **不要嵌套 skill：**
+
 ```
 # 错误
 skills/domains/fintech/SKILL.md
@@ -253,6 +254,7 @@ skills/core-actionbook/SKILL.md
 ### 1. Skill 是思维框架，而非知识库
 
 Claude 已经了解 Rust。Skill 提供：
+
 - 结构化的推理路径
 - 特定领域的约束
 - 决策框架
@@ -265,6 +267,7 @@ Hook 必须**强制**追溯所有相关层级。
 ### 3. 领域检测至关重要
 
 相同的错误（E0382）在不同领域中有不同的解决方案：
+
 - Web：Arc<T> + State 提取器
 - 金融科技：Arc<T> 用于审计追踪
 - CLI：也许 Rc<T> 就足够了（单线程）
@@ -282,6 +285,7 @@ Claude Code 插件系统要求扁平的 skill 目录。
 ### 6. 关键词匹配很重要
 
 Skill 需要全面的触发关键词：
+
 - 错误码（E0382, E0597）
 - 英文术语（ownership, borrow）
 - 中文术语（所有权, 借用）
@@ -290,6 +294,7 @@ Skill 需要全面的触发关键词：
 ### 7. 示例至关重要
 
 无论在 Skill 还是 Hook 中：
+
 - 展示正确的回复格式
 - 展示需要避免的错误回复
 - 包含完整的推理链
@@ -297,6 +302,7 @@ Skill 需要全面的触发关键词：
 ### 8. 内部 Skill 需要不同处理
 
 内部/工具类 Skill 不应自动触发：
+
 ```yaml
 # 无 description = 不会自动触发
 name: core-actionbook

@@ -69,6 +69,7 @@ Contains "cannot find" or "private"?
 ## 常见错误模式
 
 ### "value moved here" → m01
+
 ```rust
 let s = String::from("hello");
 let s2 = s;  // s moved here
@@ -76,6 +77,7 @@ println!("{}", s);  // E0382: use of moved value
 ```
 
 ### "does not live long enough" → m01
+
 ```rust
 fn dangling() -> &str {
     let s = String::from("hello");
@@ -84,6 +86,7 @@ fn dangling() -> &str {
 ```
 
 ### "cannot be sent between threads" → m07
+
 ```rust
 let rc = Rc::new(42);
 thread::spawn(move || {
@@ -92,6 +95,7 @@ thread::spawn(move || {
 ```
 
 ### "trait bound not satisfied" → m04
+
 ```rust
 fn print_debug<T: Debug>(t: T) {
     println!("{:?}", t);

@@ -347,6 +347,7 @@ pedantic = "warn"
 ### 2. 双技能加载
 
 检测到领域上下文时，自动加载两个技能：
+
 - Layer 1 skill (语言机制)
 - Layer 3 skill (领域约束)
 
@@ -373,11 +374,13 @@ pedantic = "warn"
 **问题**: "我的 Web API 报错 Rc cannot be sent between threads"
 
 **传统回答**:
+
 ```
 用 Arc 替代 Rc。
 ```
 
 **元认知回答**:
+
 ```
 ### 推理链
 +-- Layer 1: Send/Sync 错误

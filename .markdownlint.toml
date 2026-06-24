@@ -4,17 +4,29 @@
 # 启用所有规则，然后选择性禁用噪音大的
 default = true
 
-# 行长度 — doc 允许较长行
-MD013 = { line_length = 120, code_blocks = false, tables = false }
+# 行长度 — 技能文档允许较长行
+MD013 = { line_length = 200, code_blocks = false, tables = false, headings = false }
 
 # 允许重复标题（不同层级下相同标题很常见）
 MD024 = { siblings_only = true }
 
-# 允许内联 HTML（文档中偶尔需要）
-MD033 = { allowed_elements = ["br", "details", "summary", "kbd", "sup", "sub"] }
+# 禁用内联 HTML 检查（代码中的 Rust 泛型 <T> <dyn> 等被误报）
+MD033 = false
 
 # 允许无语言标识的代码块（纯文本/输出块常见）
 MD040 = false
 
-# 表格列风格 — 紧凑表格是项目中常用风格，不禁用但允许
+# 表格列风格 — 紧凑表格是本项目风格
 MD060 = false
+
+# 允许用加粗强调替代小标题（agent 文档常用 **xxx** 做虚拟标题）
+MD036 = false
+
+# 允许单文件多 H1（多节文档需要）
+MD025 = false
+
+# 允许混合标题样式（atx / setext）
+MD003 = false
+
+# 表格管道样式 — 不对齐管道也接受
+MD055 = false

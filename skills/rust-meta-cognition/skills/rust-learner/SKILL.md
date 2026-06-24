@@ -9,6 +9,7 @@ allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 
 你是获取 Rust 和 crate 信息的专家。帮助用户：
+
 - **版本查询**：获取最新的 Rust/crate 版本
 - **API 文档**：从 docs.rs 获取文档
 - **更新日志**：从 releases.rs 获取 Rust 版本特性
@@ -55,6 +56,7 @@ allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 ### Agent Mode Examples
 
 **Crate Version Query:**
+
 ```
 User: "tokio latest version"
 
@@ -66,6 +68,7 @@ Claude:
 ```
 
 **Rust Changelog Query:**
+
 ```
 User: "What's new in Rust 1.85?"
 
@@ -95,6 +98,7 @@ Claude:
 ```
 
 **Output Format:**
+
 ```markdown
 ## {Crate Name}
 
@@ -121,6 +125,7 @@ Claude:
 ```
 
 **Output Format:**
+
 ```markdown
 ## Rust 1.{version}
 
@@ -152,6 +157,7 @@ Claude:
 ```
 
 **Common Std Library Paths:**
+
 | Item | Path |
 |------|------|
 | Send, Sync, Copy, Clone | `std/marker/trait.{Name}.html` |
@@ -163,6 +169,7 @@ Claude:
 | String | `std/string/struct.String.html` |
 
 **Output Format:**
+
 ```markdown
 ## std::{path}::{Name}
 
@@ -175,20 +182,24 @@ Claude:
 {description}
 
 **Examples:**
+
 ```rust
 {example_code}
 ```
+
 ```
 
 ### Third-Party Crate Docs (tokio, serde, etc.)
 
 ```
-1. Construct URL: "https://docs.rs/{crate}/latest/{crate}/{path}"
+
+1. Construct URL: "<https://docs.rs/{crate}/latest/{crate}/{path}>"
 2. agent-browser CLI (or WebFetch fallback):
    - open <url>
    - get text ".docblock"
    - close
 3. Parse and format output
+
 ```
 
 **Output Format:**
@@ -204,20 +215,24 @@ Claude:
 {description}
 
 **Examples:**
+
 ```rust
 {example_code}
 ```
+
 ```
 
 ### Clippy Lints
 
 ```
+
 1. agent-browser CLI (or WebFetch fallback):
-   - open "https://rust-lang.github.io/rust-clippy/stable/"
+   - open "<https://rust-lang.github.io/rust-clippy/stable/>"
    - search for lint name in page
    - get text ".lint-doc" for matching lint
    - close
 2. Parse and format output
+
 ```
 
 **Output Format:**
@@ -236,9 +251,11 @@ Claude:
 ```
 
 **Example (Good):**
+
 ```rust
 {good_code}
 ```
+
 ```
 
 ---
@@ -258,7 +275,7 @@ Both modes use the same tool chain order:
    agent-browser close
    ```
 
-3. **WebFetch** - Last resort only if agent-browser unavailable
+1. **WebFetch** - Last resort only if agent-browser unavailable
 
 ### Fallback Principle (CRITICAL)
 
@@ -267,6 +284,7 @@ actionbook → agent-browser → WebFetch (only if agent-browser unavailable)
 ```
 
 **DO NOT:**
+
 - Skip agent-browser because it's slower
 - Use WebFetch as primary when agent-browser is available
 - Block on WebFetch without trying agent-browser first
@@ -294,6 +312,7 @@ actionbook → agent-browser → WebFetch (only if agent-browser unavailable)
 ## Proactive Triggering
 
 This skill triggers AUTOMATICALLY when:
+
 - Any Rust crate name mentioned (tokio, serde, axum, sqlx, etc.)
 - Questions about "latest", "new", "version", "changelog"
 - API documentation requests

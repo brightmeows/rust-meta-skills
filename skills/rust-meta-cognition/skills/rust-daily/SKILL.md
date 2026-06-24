@@ -65,11 +65,13 @@ agent-browser close
 ```
 
 **Or with WebFetch fallback:**
+
 ```
 WebFetch("https://www.reddit.com/r/rust/hot/", "Extract top 10 posts with scores and titles")
 ```
 
 **Parse output into:**
+
 | Score | Title | Link |
 |-------|-------|------|
 
@@ -87,6 +89,7 @@ agent-browser close
 ```
 
 **Parse output into:**
+
 - Issue #{number} ({date}): highlights
 
 ### 3. Rust Blog (Official)
@@ -98,11 +101,13 @@ agent-browser close
 ```
 
 **Or with WebFetch fallback:**
+
 ```
 WebFetch("https://blog.rust-lang.org/", "Extract latest 5 blog posts with dates and titles")
 ```
 
 **Parse output into:**
+
 | Date | Title | Summary |
 |------|-------|---------|
 
@@ -115,6 +120,7 @@ agent-browser close
 ```
 
 **Or with WebFetch fallback:**
+
 ```
 WebFetch("https://blog.rust-lang.org/inside-rust/", "Extract latest 3 posts with dates and titles")
 ```
@@ -159,6 +165,7 @@ After fetching all sources, combine into the output format below.
 Both modes use the same tool chain order:
 
 1. **actionbook MCP** - Check for cached/pre-fetched content first
+
    ```
    mcp__actionbook__search_actions("rust news {date}")
    mcp__actionbook__search_actions("this week in rust")
@@ -166,6 +173,7 @@ Both modes use the same tool chain order:
    ```
 
 2. **agent-browser CLI** - For dynamic web content
+
    ```bash
    agent-browser open "<url>"
    agent-browser get text "<selector>"
@@ -182,6 +190,7 @@ Both modes use the same tool chain order:
 | Foundation | actionbook → WebFetch | - |
 
 **DO NOT use:**
+
 - Chrome MCP directly
 - WebSearch for fetching news pages
 

@@ -8,6 +8,7 @@ argument-hint: [day|week|month] [--save [path]]
 生成 Reddit 社区 AI 新闻的汇总报告。
 
 Arguments: $ARGUMENTS
+
 - `time_range` (optional): `day` | `week` | `month` (default: `day`)
 - `--save` (optional): Save report to file. If path not specified, saves to `~/Documents/reports/ai-daily/`
 
@@ -17,9 +18,9 @@ Arguments: $ARGUMENTS
 
 | Community | URL | Focus |
 |-----------|-----|-------|
-| r/AI_Agents | https://www.reddit.com/r/AI_Agents/ | AI Agent development, tools |
-| r/ClaudeAI | https://www.reddit.com/r/ClaudeAI/ | Claude, Anthropic updates |
-| r/ChatGPT | https://www.reddit.com/r/ChatGPT/ | ChatGPT, OpenAI updates |
+| r/AI_Agents | <https://www.reddit.com/r/AI_Agents/> | AI Agent development, tools |
+| r/ClaudeAI | <https://www.reddit.com/r/ClaudeAI/> | Claude, Anthropic updates |
+| r/ChatGPT | <https://www.reddit.com/r/ChatGPT/> | ChatGPT, OpenAI updates |
 
 ---
 
@@ -94,6 +95,7 @@ Bash("agent-browser close")
 #### Step 2d: Alternative Selectors (if 'article' returns empty)
 
 Try these selectors in order:
+
 ```
 "[data-testid='post-container']"
 ".Post"
@@ -104,6 +106,7 @@ Try these selectors in order:
 ### 3. Format Output
 
 **CRITICAL: Every item MUST include:**
+
 1. ✅ Real source link (not fabricated)
 2. ✅ Key takeaway summary (1-2 sentences)
 3. ✅ Engagement metrics (upvotes, comments)
@@ -271,6 +274,7 @@ Based on today's discussions, consider:
 ### 4. Summarize Trends
 
 After collecting posts from all subreddits:
+
 - Identify common themes across communities
 - Note any major announcements or releases
 - Highlight highly-engaged discussions (high comment counts)
@@ -303,6 +307,7 @@ Write("{save_dir}/{date}-ai-{time_range}.md", "{full_report_markdown}")
 ```
 
 After saving, inform user:
+
 ```
 ✅ Report saved to: {filename}
 ```
@@ -320,12 +325,14 @@ After saving, inform user:
 ```
 
 **Why --headed?**
+
 - Uses local browser instance
 - Preserves user's cookies and login state
 - Can bypass some anti-bot measures
 - User can see what's happening
 
 **DO NOT:**
+
 - Skip agent-browser and assume it's unavailable
 - Use WebFetch for Reddit (will fail - requires JS)
 - Use WebSearch for fetching posts
@@ -544,17 +551,20 @@ Based on today's discussions, consider:
 If agent-browser commands fail:
 
 1. **Check installation:**
+
    ```bash
    which agent-browser
    agent-browser install
    ```
 
 2. **Try without --headed:**
+
    ```bash
    agent-browser open 'https://www.reddit.com/r/ClaudeAI/'
    ```
 
 3. **Check browser is installed:**
+
    ```bash
    agent-browser install --with-deps
    ```

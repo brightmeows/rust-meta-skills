@@ -16,12 +16,14 @@ allowed-tools: ["LSP", "Read", "Glob", "Grep", "Edit"]
 ```
 
 **Actions:**
+
 - `rename <old> <new>` - Rename symbol
 - `extract-fn <selection>` - Extract to function
 - `inline <fn>` - Inline function
 - `move <symbol> <dest>` - Move to module
 
 **Examples:**
+
 - `/rust-refactor-helper rename parse_config load_config`
 - `/rust-refactor-helper extract-fn src/main.rs:20-35`
 - `/rust-refactor-helper move UserService src/services/`

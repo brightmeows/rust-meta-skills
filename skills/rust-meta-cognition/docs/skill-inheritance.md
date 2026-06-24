@@ -5,6 +5,7 @@
 ## 问题背景
 
 Claude Code 的 Skills 是独立的：
+
 - 每个 skill 根据 `description` 关键词独立触发
 - 不会自动加载"父" skill
 - 共享规则需要重复写在每个 skill 中
@@ -123,6 +124,7 @@ my-plugin/
 ### 配置文件
 
 **.claude/settings.json**:
+
 ```json
 {
   "hooks": {
@@ -137,6 +139,7 @@ my-plugin/
 ```
 
 **.claude/hooks/inject-rules.sh**:
+
 ```bash
 #!/bin/bash
 cat << 'EOF'
@@ -311,6 +314,7 @@ done
 ```
 
 使用：
+
 ```bash
 ./setup-skill-inheritance.sh tokio tokio-task tokio-sync serde axum
 ```

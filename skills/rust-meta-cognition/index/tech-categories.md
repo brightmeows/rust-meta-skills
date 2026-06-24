@@ -7,6 +7,7 @@
 ## Language Core Layer (001-099)
 
 ### Ownership System (001-019)
+
 | Code | Technical Detail | Key Concepts |
 |------|------------------|--------------|
 | 001 | Move Semantics Basics | move, value ownership transfer |
@@ -20,6 +21,7 @@
 | 009 | Advanced Borrow Checking | NLL, reborrowing |
 
 ### Type System (020-039)
+
 | Code | Technical Detail | Key Concepts |
 |------|------------------|--------------|
 | 020 | Basic Type System | primitive types, compound types |
@@ -34,6 +36,7 @@
 | 029 | Type-Level Programming | Compile-time computation |
 
 ### Error Handling & Patterns (040-059)
+
 | Code | Technical Detail | Key Concepts |
 |------|------------------|--------------|
 | 040 | Result Basics | Result<T,E>, ? operator |
@@ -51,6 +54,7 @@
 ## Standard Library Layer (100-199)
 
 ### Collections & Strings (100-119)
+
 | Code | Technical Detail | Key Concepts |
 |------|------------------|--------------|
 | 100 | Vec Dynamic Arrays | Vec<T>, dynamic growth |
@@ -63,6 +67,7 @@
 | 107 | String Parsing | FromStr, parse |
 
 ### Concurrency Primitives (120-139)
+
 | Code | Technical Detail | Key Concepts |
 |------|------------------|--------------|
 | 120 | Thread Basics | thread::spawn, JoinHandle |
@@ -80,6 +85,7 @@
 ## Web Development Ecosystem (200-299)
 
 ### Axum Framework (200-209)
+
 | Code | Technical Detail |
 |------|------------------|
 | 200 | Router System |
@@ -94,6 +100,7 @@
 | 209 | Deployment Config |
 
 ### Actix-Web Framework (210-219)
+
 | Code | Technical Detail |
 |------|------------------|
 | 210 | Actor Model |
@@ -108,6 +115,7 @@
 | 219 | Performance Monitoring |
 
 ### HTTP Clients & Tools (220-239)
+
 | Code | Technical Detail |
 |------|------------------|
 | 220 | Reqwest Client |
@@ -126,6 +134,7 @@
 ## Async Concurrency Layer (250-299)
 
 ### Tokio Runtime (250-259)
+
 | Code | Technical Detail |
 |------|------------------|
 | 250 | Runtime Configuration |
@@ -140,6 +149,7 @@
 | 259 | Runtime Optimization |
 
 ### Async Control Flow (260-269)
+
 | Code | Technical Detail |
 |------|------------------|
 | 260 | select! Macro |
@@ -154,6 +164,7 @@
 | 269 | Async Barrier |
 
 ### Stream & Future (270-279)
+
 | Code | Technical Detail |
 |------|------------------|
 | 270 | Future Trait |
@@ -172,6 +183,7 @@
 ## Data Processing Layer (400-499)
 
 ### Serialization Framework (420-429)
+
 | Code | Technical Detail |
 |------|------------------|
 | 420 | Serde Basics |
@@ -186,6 +198,7 @@
 | 429 | Error Handling |
 
 ### Database Integration (450-469)
+
 | Code | Technical Detail |
 |------|------------------|
 | 450 | SQLx Async SQL |
@@ -204,6 +217,7 @@
 ## Systems Programming Layer (500-599)
 
 ### OS Development (500-519)
+
 | Code | Technical Detail |
 |------|------------------|
 | 500 | Kernel Development Basics |
@@ -218,6 +232,7 @@
 | 509 | Power Management |
 
 ### Rust-for-Linux (510-519)
+
 | Code | Technical Detail |
 |------|------------------|
 | 510 | Kernel Module Development |
@@ -232,6 +247,7 @@
 | 519 | Debug & Diagnostics |
 
 ### Network Programming (520-539)
+
 | Code | Technical Detail |
 |------|------------------|
 | 520 | TCP Socket |
@@ -250,6 +266,7 @@
 ## Embedded Development Layer (700-799)
 
 ### Hardware Abstraction Layer (700-719)
+
 | Code | Technical Detail |
 |------|------------------|
 | 700 | embedded-hal |
@@ -264,6 +281,7 @@
 | 709 | DMA Direct Memory Access |
 
 ### Microcontroller Platforms (720-739)
+
 | Code | Technical Detail |
 |------|------------------|
 | 720 | STM32 Series |
@@ -278,6 +296,7 @@
 | 729 | Power Management |
 
 ### RTOS & Async Frameworks (740-759)
+
 | Code | Technical Detail |
 |------|------------------|
 | 740 | Embassy Async |
@@ -296,6 +315,7 @@
 ## Cross-Language Integration (800-899)
 
 ### Python Bindings (820-829)
+
 | Code | Technical Detail |
 |------|------------------|
 | 820 | PyO3 Basics |
@@ -310,6 +330,7 @@
 | 829 | Performance Optimization |
 
 ### C/C++ Interoperability (830-839)
+
 | Code | Technical Detail |
 |------|------------------|
 | 830 | FFI Basics |
@@ -324,6 +345,7 @@
 | 839 | Build Integration |
 
 ### WebAssembly (840-849)
+
 | Code | Technical Detail |
 |------|------------------|
 | 840 | wasm-bindgen |
@@ -342,6 +364,7 @@
 ## Toolchain & Build (850-899)
 
 ### Build Tools (850-859)
+
 | Code | Technical Detail |
 |------|------------------|
 | 850 | Cargo Basics |
@@ -356,6 +379,7 @@
 | 859 | Performance Analysis |
 
 ### Development Tools (860-869)
+
 | Code | Technical Detail |
 |------|------------------|
 | 860 | rust-analyzer |
@@ -370,6 +394,7 @@
 | 869 | Containerization |
 
 ### Security & unsafe (880-899)
+
 | Code | Technical Detail |
 |------|------------------|
 | 880 | unsafe Basics |

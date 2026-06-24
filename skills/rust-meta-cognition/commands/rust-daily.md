@@ -8,6 +8,7 @@ argument-hint: [day|week|month] [--category ecosystem|official|foundation] [--sa
 Generate a summarized report of Rust news from multiple sources.
 
 Arguments: $ARGUMENTS
+
 - `time_range` (optional): `day` | `week` | `month` (default: `week`)
 - `--category` (optional): `ecosystem` | `official` | `foundation` | `all` (default: `all`)
 - `--save` (optional): Save report to file. If path not specified, saves to `~/Documents/reports/rust-daily/`
@@ -127,6 +128,7 @@ If Bash fails → Use WebFetch tool
 ### 4. Format Output
 
 **CRITICAL: Every item MUST include:**
+
 1. ✅ Real source link (not fabricated)
 2. ✅ Key takeaway summary (1-2 sentences)
 3. ✅ Engagement metrics (upvotes, comments)
@@ -290,6 +292,7 @@ Write("{save_dir}/{date}-rust-{time_range}.md", "{full_report_markdown}")
 ```
 
 After saving, inform user:
+
 ```
 ✅ Report saved to: {filename}
 ```
@@ -483,6 +486,7 @@ mkdir -p ~/.claude/cache/rust-daily/
 | Foundation | ✅ First | ✅ Fallback | ❌ Never |
 
 **DO NOT:**
+
 - Skip agent-browser and go directly to WebFetch
 - Use WebFetch for Reddit (will fail)
 - Use WebSearch for any news fetching

@@ -68,6 +68,7 @@ claude -p "tokio 最新版本"                # rust-learner
 ## 测试分类
 
 ### 1. Layer 1 - 语言机制（m01-m07）
+
 - 所有权、借用、生命周期
 - 资源管理
 - 可变性
@@ -77,6 +78,7 @@ claude -p "tokio 最新版本"                # rust-learner
 - 并发
 
 ### 2. Layer 2 - 设计选择（m09-m15）
+
 - 领域建模
 - 性能优化
 - 生态集成
@@ -86,6 +88,7 @@ claude -p "tokio 最新版本"                # rust-learner
 - 反模式
 
 ### 3. Layer 3 - 领域约束
+
 - domain-fintech
 - domain-web
 - domain-cli
@@ -95,12 +98,14 @@ claude -p "tokio 最新版本"                # rust-learner
 - domain-ml
 
 ### 4. 核心 Skill
+
 - rust-router
 - rust-learner
 - coding-guidelines
 - unsafe-checker
 
 ### 5. Agent 集成
+
 - crate-researcher
 - rust-changelog
 - docs-researcher

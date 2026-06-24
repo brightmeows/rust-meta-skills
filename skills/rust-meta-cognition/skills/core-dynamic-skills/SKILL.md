@@ -16,6 +16,7 @@ agent: general-purpose
 ## 概念
 
 动态 Skill 是：
+
 - 在 `~/.claude/skills/` 本地生成的
 - 基于 Cargo.toml 依赖
 - 使用 docs.rs 的 llms.txt 创建
@@ -27,6 +28,7 @@ agent: general-purpose
 ### 打开提示
 
 进入包含 Cargo.toml 的目录时：
+
 1. 检测 Cargo.toml（单项目或工作空间）
 2. 解析依赖列表
 3. 检查哪些 crate 缺少 Skill
@@ -99,6 +101,7 @@ cat Cargo.toml | grep -A 100 '\[dependencies\]' | grep -E '^[a-zA-Z]'
 ```
 
 Or use Read tool to parse Cargo.toml and extract:
+
 - `[dependencies]` section
 - `[dev-dependencies]` section (optional)
 - Workspace members (if workspace project)
@@ -138,6 +141,7 @@ agent-browser close
 ```
 
 **WebFetch fallback:**
+
 ```
 WebFetch("https://docs.rs/{crate}/latest/{crate}/", "Extract API documentation overview, key types, and usage examples")
 ```

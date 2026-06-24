@@ -16,6 +16,7 @@ agent: general-purpose
 ## 用法
 
 **参数：**
+
 - `crate_name`：要检查的特定 crate（可选，默认检查所有）
 - `--check-only`：仅报告问题，不修复
 - `--remove-invalid`：移除无效引用而不是创建文件
@@ -25,6 +26,7 @@ agent: general-purpose
 **关键：检查 agent 基础设施是否可用。**
 
 本 Skill 可在两种模式下运行：
+
 - **Agent 模式**：使用后台 agent 获取文档
 - **内联模式**：直接使用 agent-browser CLI 或 WebFetch 执行
 
@@ -134,6 +136,7 @@ done
 ### Step 4: Report Status
 
 Output format:
+
 ```
 === {crate_name} ===
 SKILL.md: OK
@@ -149,6 +152,7 @@ Action needed: 1 file missing
 For each missing file:
 
 **Using agent-browser CLI:**
+
 ```bash
 agent-browser open "https://docs.rs/{crate_name}/latest/{crate_name}/{module}/"
 agent-browser get text ".docblock"
@@ -157,12 +161,14 @@ agent-browser close
 ```
 
 **Using WebFetch fallback:**
+
 ```
 WebFetch("https://docs.rs/{crate_name}/latest/{crate_name}/{module}/",
          "Extract the main documentation content for this module")
 ```
 
 Then write the content:
+
 ```bash
 Write("~/.claude/skills/{crate_name}/references/{module}.md", <fetched_content>)
 ```

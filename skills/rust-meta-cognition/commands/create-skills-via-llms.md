@@ -3,9 +3,12 @@ description: Create high-quality Rust crate skills from llms.txt
 argument-hint: <crate_name> <llms_path> [version] [description]
 ---
 
+# /create-skills-via-llms：从 llms.txt 创建 Skills
+
 基于 llms.txt 文档为 Rust crate 创建高质量 skills。
 
 Arguments: $ARGUMENTS
+
 - First argument: crate_name (required) - the Rust crate name (e.g., tokio, serde)
 - Second argument: llms_path (required) - local path to the llms.txt file
 - Third argument: version (optional) - the crate version (e.g., "1.40.0", "2.0.0")
@@ -92,6 +95,7 @@ Refer to the local files for detailed documentation:
 ### References Directory
 
 Each skill's `references/` directory contains detailed documentation:
+
 - API reference documentation
 - Configuration options details
 - Advanced usage examples
@@ -114,6 +118,7 @@ Each skill's `references/` directory contains detailed documentation:
 ### 1.5 Confirm Version Number
 
 If the user did not provide a version number (third argument):
+
 1. Use the AskUserQuestion tool to ask the user for the current version
 2. Version format examples: "1.40.0", "2.0.0", "latest"
 3. Use the version number for all SKILL.md Version fields
@@ -148,6 +153,7 @@ Output to `~/tmp/{YYYYMMDDHHmm}-{crate_name}-skills-plan.md`:
 For each skill:
 
 1. **Create directory structure**:
+
    ```
    ~/.claude/skills/{crate_name}-{feature}/
    ├── SKILL.md

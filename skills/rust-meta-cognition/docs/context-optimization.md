@@ -163,6 +163,7 @@ Cross-Layer Synthesis (主上下文)
 ### 上下文消耗对比
 
 **传统方式（主上下文）:**
+
 ```
 ├── 读取 m01-ownership    +1,200 tokens
 ├── 读取 m02-resource     +1,000 tokens
@@ -174,6 +175,7 @@ Cross-Layer Synthesis (主上下文)
 ```
 
 **三层并行 Fork:**
+
 ```
 ├── L1 摘要返回           +600 tokens
 ├── L2 摘要返回           +600 tokens
@@ -275,6 +277,7 @@ Cross-Layer Synthesis (主上下文)
 ### 方法一验证
 
 - [ ] rust-router 自动触发测试
+
   ```bash
   claude -p "E0382 错误怎么解决"
   claude -p "比较 tokio 和 async-std"
@@ -283,6 +286,7 @@ Cross-Layer Synthesis (主上下文)
 ### 方法二验证
 
 - [ ] Fork skill 执行测试
+
   ```bash
   /sync-crate-skills
   /rust-daily
@@ -291,6 +295,7 @@ Cross-Layer Synthesis (主上下文)
 ### 方法三验证
 
 - [ ] 三层并行分析测试
+
   ```bash
   /meta-parallel 交易系统报 E0382
   ```

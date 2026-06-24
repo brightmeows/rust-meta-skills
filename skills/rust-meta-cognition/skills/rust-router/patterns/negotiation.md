@@ -121,6 +121,7 @@ See `_meta/error-protocol.md` for full escalation rules.
 ## Negotiation Routing Examples
 
 **Example 1: No Negotiation Needed**
+
 ```
 Query: "What is tokio's latest version?"
 Analysis: Single lookup
@@ -128,6 +129,7 @@ Action: Direct dispatch to crate-researcher
 ```
 
 **Example 2: Negotiation Required**
+
 ```
 Query: "Compare tokio and async-std for a web server"
 Analysis: Comparative + domain context
@@ -137,6 +139,7 @@ Evaluation: Check if web-server specific data found
 ```
 
 **Example 3: Cross-Domain Negotiation**
+
 ```
 Query: "E0382 in my trading system"
 Analysis: Error code + domain context

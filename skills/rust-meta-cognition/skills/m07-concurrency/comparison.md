@@ -283,6 +283,7 @@ After:  "Explicitly declare what can be shared and how"
 ```
 
 Key shifts:
+
 - `Arc<Mutex<T>>` instead of implicit sharing
 - Compiler enforces thread safety
 - Async needs explicit runtime
@@ -295,6 +296,7 @@ After:  "Types encode thread safety, compiler enforces"
 ```
 
 Key shifts:
+
 - No need for synchronized keyword
 - Mutex contains data, not separate
 - No GC pauses in critical sections
@@ -307,6 +309,7 @@ After:  "Compiler catches data races, trust the type system"
 ```
 
 Key shifts:
+
 - Send/Sync replace convention
 - RAII locks are mandatory, not optional
 - Much harder to write incorrect concurrent code

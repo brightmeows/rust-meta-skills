@@ -16,6 +16,7 @@ allowed-tools: ["Bash", "Read", "Glob"]
 ```
 
 **Options:**
+
 - `--depth N`: Limit tree depth (default: 3)
 - `--features`: Show feature flags
 
@@ -62,9 +63,10 @@ cargo tree --depth=${DEPTH:-3} ${FEATURES:+--features} 2>/dev/null
 **Step 3:** Format as ASCII art tree
 
 Use these box-drawing characters:
+
 - `├──` for middle items
 - `└──` for last items
-- `│   ` for continuation lines
+- `│` for continuation lines
 
 ## Visual Enhancements
 

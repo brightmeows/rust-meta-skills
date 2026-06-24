@@ -50,4 +50,5 @@ Why this rule matters for safety/soundness.
 ## 相关规则
 
 - `{other-rule-id}`: Brief description
+
 ```

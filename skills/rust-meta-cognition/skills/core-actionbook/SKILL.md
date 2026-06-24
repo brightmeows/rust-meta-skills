@@ -23,6 +23,7 @@ disable-model-invocation: true
 ### 参数
 
 **search_actions**：
+
 - `query`（必填）：搜索关键词（例如“airbnb search”、“google login”）
 - `type`：`vector` | `fulltext` | `hybrid`（默认）
 - `limit`：最大结果数（默认：5）
@@ -30,6 +31,7 @@ disable-model-invocation: true
 - `minScore`：最低相关度评分（0-1）
 
 **get_action_by_id**：
+
 - `id`（必填）：基于 URL 的操作 ID（例如 `example.com/page`）
 
 ## Example Response

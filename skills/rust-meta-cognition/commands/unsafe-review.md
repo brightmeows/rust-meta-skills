@@ -50,11 +50,13 @@ Reviewing: unsafe { *ptr }
 ## Checklist Categories
 
 ### Surface-Level
+
 - SAFETY comments present and meaningful?
 - Safety documentation for unsafe fn?
 - Unsafe blocks minimized?
 
 ### Memory Safety
+
 - Pointer validity (non-null, aligned, valid)
 - No aliasing violations
 - No use-after-free
@@ -62,16 +64,19 @@ Reviewing: unsafe { *ptr }
 - Bounds checking
 
 ### Type Safety
+
 - Correct transmutes
 - Valid enum discriminants
 - Proper repr attributes
 
 ### Concurrency
+
 - Send/Sync correctness
 - No data races
 - Proper synchronization
 
 ### FFI
+
 - Type compatibility
 - Panic handling
 - Error handling

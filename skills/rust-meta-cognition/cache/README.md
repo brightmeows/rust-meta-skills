@@ -121,17 +121,20 @@ cache:
 ## 缓存管理命令
 
 ### 清除所有缓存
+
 ```bash
 rm -rf cache/crates/* cache/rust-versions/* cache/docs/*
 ```
 
 ### 仅清除过期缓存
+
 ```bash
 # 使用 cache-cleaner agent 或手动脚本
 find cache -name "*.json" -mtime +7 -delete
 ```
 
 ### 查看缓存统计
+
 ```bash
 echo "Crates cached: $(ls cache/crates/*.json 2>/dev/null | wc -l)"
 echo "Versions cached: $(ls cache/rust-versions/*.json 2>/dev/null | wc -l)"

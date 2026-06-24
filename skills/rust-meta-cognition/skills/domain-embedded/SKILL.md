@@ -5,14 +5,14 @@ globs: ["**/Cargo.toml", "**/.cargo/config.toml"]
 user-invocable: false
 ---
 
+# 嵌入式领域
+
 ## Project Context（自动注入）
 
 **目标配置：**
 !`cat .cargo/config.toml 2>/dev/null || echo "No .cargo/config.toml found"`
 
 ---
-
-# 嵌入式领域
 
 > **第 3 层：领域约束**
 

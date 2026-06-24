@@ -8,6 +8,7 @@ argument-hint: <crate_name> [version]
 Force regenerate a crate skill with the latest documentation.
 
 Arguments: $ARGUMENTS
+
 - `crate_name` (required): The crate to update
 - `version` (optional): Specific version to target
 
@@ -23,6 +24,7 @@ cat ~/.claude/skills/{crate_name}*/SKILL.md | head -20
 ```
 
 Display current version info if exists:
+
 ```
 Current skill:
 - Crate: tokio
@@ -33,6 +35,7 @@ Current skill:
 ### 2. Get Latest Version
 
 If version not provided, fetch latest from crates.io:
+
 ```bash
 cargo search {crate_name} --limit 1
 ```

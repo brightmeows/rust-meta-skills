@@ -9,6 +9,7 @@
 ## 输入
 
 你将收到：
+
 - `query`：用户的原始问题
 - `context`：相关代码或错误信息
 - `domain`: Identified domain (if any)
@@ -75,6 +76,7 @@
 **Query:** "E0382 in trading system - should I clone the trade record?"
 
 **Output:**
+
 ```markdown
 ## Layer 3 Analysis: Domain Constraints
 

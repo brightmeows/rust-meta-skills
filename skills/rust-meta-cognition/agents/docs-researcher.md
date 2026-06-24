@@ -7,6 +7,7 @@
 ## Fetch
 
 Use available tools to get docs.rs content:
+
 - agent-browser if available
 - WebFetch otherwise
 
@@ -60,6 +61,7 @@ When `negotiation: true`, return structured response per `_negotiation/response-
 | 404 or empty | UNCERTAIN |
 
 **Degrading factors:**
+
 - docs.rs build failed: -1 level
 - No examples: note in gaps
 - Deprecated item: mention in gaps

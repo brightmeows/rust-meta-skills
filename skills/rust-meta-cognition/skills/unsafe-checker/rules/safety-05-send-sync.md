@@ -14,7 +14,9 @@ When manually implementing `Send` or `Sync`, you must ensure thread safety invar
 
 ## 理由
 
-`Send` and `Sync` are unsafe traits because incorrect implementations cause data races, which are undefined behavior. The compiler auto-implements them conservatively, but manual implementations require careful analysis.
+`Send` and `Sync` are unsafe traits because incorrect implementations cause data
+races, which are undefined behavior. The compiler auto-implements them conservatively,
+but manual implementations require careful analysis.
 
 ## Trait Meanings
 

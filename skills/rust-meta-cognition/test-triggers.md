@@ -243,6 +243,7 @@ claude -p "decimal 精度计算"              # domain-fintech
 ## 期望行为
 
 当 skill 被正确触发时，你应该看到：
+
 1. 在 Claude Code 的状态行中显示 skill 名称
 2. 与 skill 专业领域匹配的响应内容
 3. 引用该 skill 中的模式/规则
@@ -250,6 +251,7 @@ claude -p "decimal 精度计算"              # domain-fintech
 ## 故障排除
 
 如果 skill 没有触发：
+
 1. 确保已安装 rust-skills 插件：`claude /plugins`
 2. 检查插件路径是否正确
 3. 验证 SKILL.md 文件包含带有关键词的 `description:` 字段

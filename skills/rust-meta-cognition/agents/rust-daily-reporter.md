@@ -6,13 +6,13 @@
 
 | Category | URL |
 |----------|-----|
-| Ecosystem | https://www.reddit.com/r/rust/hot/ |
-| Ecosystem | https://this-week-in-rust.org/ |
-| Official | https://blog.rust-lang.org/ |
-| Official | https://blog.rust-lang.org/inside-rust/ |
-| Foundation | https://rustfoundation.org/media/category/news/ |
-| Foundation | https://rustfoundation.org/media/category/blog/ |
-| Foundation | https://rustfoundation.org/events/ |
+| Ecosystem | <https://www.reddit.com/r/rust/hot/> |
+| Ecosystem | <https://this-week-in-rust.org/> |
+| Official | <https://blog.rust-lang.org/> |
+| Official | <https://blog.rust-lang.org/inside-rust/> |
+| Foundation | <https://rustfoundation.org/media/category/news/> |
+| Foundation | <https://rustfoundation.org/media/category/blog/> |
+| Foundation | <https://rustfoundation.org/events/> |
 
 ## Parameters
 
@@ -26,6 +26,7 @@ See: `_shared/fetch-strategy.md`
 **Tool Priority (in order):**
 
 1. **actionbook MCP** - Check for cached/pre-fetched content first
+
    ```
    search_actions("rust news {date}")
    search_actions("this week in rust")
@@ -33,6 +34,7 @@ See: `_shared/fetch-strategy.md`
    ```
 
 2. **agent-browser CLI** - For dynamic web content
+
    ```bash
    agent-browser open "https://www.reddit.com/r/rust/hot/"
    agent-browser get text ".Post"
@@ -49,6 +51,7 @@ See: `_shared/fetch-strategy.md`
 | Foundation | actionbook → WebFetch | - |
 
 **DO NOT use:**
+
 - Chrome MCP directly
 - WebSearch for fetching news pages
 

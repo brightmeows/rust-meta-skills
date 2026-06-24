@@ -77,6 +77,7 @@ cd my-async-project
 ```
 
 系统会：
+
 1. 解析 `Cargo.toml` 中的依赖
 2. 为每个依赖生成专属 Skill
 3. 存储在 `~/.claude/skills/` 目录
@@ -96,6 +97,7 @@ description: |
 当你询问 "tokio spawn 怎么用" 时，这个 Skill 会被自动触发，AI 会基于最新的 tokio 文档给出准确答案。
 
 **动态 Skills 的优势**：
+
 - **版本追踪**：记录 crate 版本，确保文档时效性
 - **按需加载**：只生成你需要的，不浪费资源
 - **可更新**：通过 `/update-crate-skill tokio` 随时更新
@@ -166,6 +168,7 @@ unsafe { slice.get_unchecked(index) }
 3. 提取需要的信息
 
 这种方法的问题：
+
 - **速度慢**：需要下载整个页面
 - **不稳定**：网站结构变化会导致解析失败
 - **不准确**：可能提取到无关内容

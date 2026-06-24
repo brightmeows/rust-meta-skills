@@ -102,15 +102,20 @@ DON'T:
 ```markdown
 CORRECT Response:
 ```
+
 ### Reasoning Chain
+
 +-- Layer 1: Send/Sync Error
 +-- Layer 3: Web Domain constraint
 +-- Layer 2: Design decision
+
 ```
 
 WRONG Response:
 ```
+
 Use Arc instead of Rc.
+
 ```
 
 效果: 具体示例 > 抽象描述
@@ -273,11 +278,13 @@ Your response MUST include ALL of these sections:
 
 ### Reasoning Chain
 ```
+
 +-- Layer 1: [specific error]
 |       ^
 +-- Layer 3: [domain constraint]
 |       v
 +-- Layer 2: [design decision]
+
 ```
 
 # 使用技巧:
@@ -291,15 +298,20 @@ Your response MUST include ALL of these sections:
 ```markdown
 CORRECT Response:
 ```
+
 ### Reasoning Chain
+
 +-- Layer 1: Send/Sync Error
 ...
+
 ```
 
 WRONG Response (stops at L1):
 ```
+
 Problem: Rc is not Send
 Solution: Use Arc
+
 ```
 
 # 使用技巧:
@@ -346,10 +358,13 @@ Output should include reasoning chain.
 # 好
 Output MUST include reasoning chain:
 ```
+
 ### Reasoning Chain
+
 +-- Layer 1: [error]
 +-- Layer 3: [constraint]
 +-- Layer 2: [decision]
+
 ```
 ```
 
@@ -451,6 +466,7 @@ CORRECT (with domain analysis):
 > **约束的本质是改变模型的概率分布，让"遵循指令"的路径概率高于"默认行为"的路径。**
 
 关键技巧:
+
 1. **强度递增**: should < IMPORTANT < CRITICAL + MUST
 2. **正反对比**: CORRECT vs WRONG 示例
 3. **格式模板**: 具体格式 > 抽象描述

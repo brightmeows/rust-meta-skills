@@ -13,6 +13,7 @@ user-invocable: false
 **需要编译时多态还是运行时多态？**
 
 在泛型和 trait 对象之间做选择之前：
+
 - 类型在编译时是否已知？
 - 是否需要异构集合？
 - 性能优先级如何？
@@ -127,6 +128,7 @@ fn process(x: Box<dyn Display>) { }  // 所有权
 ## Object Safety
 
 一个 trait 是 object-safe 的条件：
+
 - 没有 `Self: Sized` 约束
 - 不返回 `Self`
 - 没有泛型方法

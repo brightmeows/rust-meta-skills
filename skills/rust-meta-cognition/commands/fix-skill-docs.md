@@ -8,6 +8,7 @@ argument-hint: [crate_name] [--check-only] [--remove-invalid]
 Check dynamic skills for missing reference files and fix them.
 
 Arguments: $ARGUMENTS
+
 - `crate_name`: Specific crate to check (optional, defaults to all crates in ~/.claude/skills/)
 - `--check-only`: Only report issues, don't fix
 - `--remove-invalid`: Remove references to non-existent files instead of creating them
@@ -45,6 +46,7 @@ Also check "Expected reference files" section if present.
 ### 3. Check File Existence
 
 For each referenced file:
+
 ```bash
 if [ ! -f "{skill_dir}/references/{filename}" ]; then
     echo "MISSING: {filename}"
@@ -54,6 +56,7 @@ fi
 ### 4. Report Status
 
 Output format:
+
 ```
 === {crate_name} ===
 SKILL.md: ✅

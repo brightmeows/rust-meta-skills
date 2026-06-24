@@ -14,7 +14,9 @@ A function taking `&self` or `&T` must not return `&mut T` to the same data with
 
 ## 理由
 
-Returning `&mut` from `&` violates Rust's aliasing rules. The caller has an immutable borrow, so they can create additional `&` references. Returning `&mut` creates mutable aliasing, which is undefined behavior.
+Returning `&mut` from `&` violates Rust's aliasing rules. The caller has an
+immutable borrow, so they can create additional `&` references. Returning `&mut`
+creates mutable aliasing, which is undefined behavior.
 
 ## 错误示例
 
@@ -120,5 +122,5 @@ impl ValidInteriorMut {
 
 ## 相关规则
 
-- `ptr-05`: Don't manually convert *const to *mut
+- `ptr-05`: Don't manually convert *const to*mut
 - `safety-02`: Verify safety invariants

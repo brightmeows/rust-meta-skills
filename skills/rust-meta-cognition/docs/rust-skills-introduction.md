@@ -86,6 +86,7 @@ cd my-async-project
 ```
 
 系统会自动完成：
+
 1. 解析 `Cargo.toml` 中的所有依赖
 2. 为每个 crate 生成包含最新文档的专属 Skill
 3. 存储到本地 `~/.claude/skills/` 目录
@@ -166,6 +167,7 @@ unsafe { slice.get_unchecked(index) }
 当 AI 需要查询 docs.rs 或 crates.io 时，常规做法是：抓取整个 HTML → 解析 DOM → 提取信息。
 
 这条路问题重重：
+
 - **效率低**：下载和解析整个页面耗时耗力
 - **脆弱**：网站结构稍有调整就可能解析失败
 - **噪声大**：容易混入无关内容
@@ -175,6 +177,7 @@ unsafe { slice.get_unchecked(index) }
 [Actionbook](https://github.com/actionbook/actionbook) 采用了一种更聪明的方式：**预计算**。
 
 它预先分析目标网站，生成结构化的"行动手册"，包含：
+
 - 页面功能描述
 - DOM 结构分析
 - 精确的 CSS/XPath 选择器

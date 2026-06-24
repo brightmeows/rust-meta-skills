@@ -6,7 +6,7 @@ impact: MEDIUM
 clippy: debug_assert_with_mut_call
 ---
 
-# 在 Unsafe 函数中使用 assert! 而非 debug_assert!
+# 在 Unsafe 函数中使用 assert! 而非 debug_assert
 
 ## 概要
 

@@ -190,6 +190,7 @@ Reason: Future features are speculative
 | Not found or error | UNCERTAIN |
 
 **Degrading factors:**
+
 - Last update > 2 years: -1 level
 - No README: -1 level
 - Yanked versions: mention in gaps
@@ -204,6 +205,7 @@ Reason: Future features are speculative
 | 404 or empty | UNCERTAIN |
 
 **Degrading factors:**
+
 - docs.rs build failed: -1 level
 - No examples: note in gaps
 - Deprecated item: mention in gaps

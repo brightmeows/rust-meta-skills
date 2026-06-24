@@ -13,11 +13,13 @@
 ### 优先级
 
 1. **Skill references 目录**（如果 skill 存在）
+
    ```
    ~/.claude/skills/{crate}/references/{item}.md
    ```
 
 2. **全局缓存目录**（fallback）
+
    ```
    ~/.claude/cache/rust-docs/{source}/{path}.json
    ```
@@ -76,6 +78,7 @@ pub unsafe auto trait Send { }
 
 **Description:**
 Types that can be transferred across thread boundaries...
+
 ```
 
 ## 过期时间
@@ -93,28 +96,34 @@ Types that can be transferred across thread boundaries...
 ### 1. 检查缓存
 
 ```
+
 1. 构建缓存路径
 2. 检查文件是否存在
 3. 检查是否过期 (expires_at < now)
 4. 如果有效，返回缓存内容
+
 ```
 
 ### 2. 获取并缓存
 
 ```
+
 1. 使用 actionbook + agent-browser 获取
 2. 解析内容
 3. 生成缓存文件（JSON 或 Markdown）
 4. 保存到对应路径
 5. 返回内容
+
 ```
 
 ### 3. 强制刷新
 
 用户可以请求强制刷新：
 ```
+
 "刷新 Send trait 文档"
 "refresh tokio::spawn docs"
+
 ```
 
 ## 缓存管理命令
@@ -123,22 +132,27 @@ Types that can be transferred across thread boundaries...
 
 显示缓存状态：
 ```
+
 Rust Docs Cache Status:
+
 - std library: 45 items, 12MB
 - docs.rs: 128 items, 34MB
 - releases.rs: 15 items, 2MB
 - Total: 188 items, 48MB
 
 Expired: 23 items
+
 ```
 
 ### /rust-skills:cache-clean
 
 清理过期或全部缓存：
 ```
+
 /rust-skills:cache-clean          # 清理过期
 /rust-skills:cache-clean --all    # 清理全部
 /rust-skills:cache-clean tokio    # 清理特定 crate
+
 ```
 
 ## 实现位置

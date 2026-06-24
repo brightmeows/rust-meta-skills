@@ -16,6 +16,7 @@ allowed-tools: ["LSP", "Read", "Glob"]
 ```
 
 **Examples:**
+
 - `/rust-symbol-analyzer` - Analyze entire project
 - `/rust-symbol-analyzer src/lib.rs` - Analyze single file
 - `/rust-symbol-analyzer --type trait` - List all traits in project

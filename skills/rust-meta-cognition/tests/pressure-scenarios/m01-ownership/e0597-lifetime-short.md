@@ -1,12 +1,15 @@
 # 压力场景：E0597 生命周期过短
 
 ## 测试的 Skill
+
 m01-ownership
 
 ## User Question
+
 "Why am I getting E0597: borrowed value does not live long enough?"
 
 ## Code Context
+
 ```rust
 fn get_str() -> &str {
     let s = String::from("hello");
@@ -15,6 +18,7 @@ fn get_str() -> &str {
 ```
 
 ## Expected Behavior
+
 - [x] Explain stack vs heap lifetime
 - [x] Show why returned reference is invalid
 - [x] Provide fix options (return owned, 'static, lifetime params)
@@ -22,9 +26,11 @@ fn get_str() -> &str {
 - [x] Reference to P.MEM.LFT.01, P.MEM.LFT.02 guidelines
 
 ## Baseline Test (without skill)
+
 Date: [To be filled]
 
 Result:
+
 - [ ] Stack/heap lifetime: [PASS/FAIL]
 - [ ] Invalid reference: [PASS/FAIL]
 - [ ] Fix options: [PASS/FAIL]
@@ -35,9 +41,11 @@ Notes:
 [To be filled after test]
 
 ## Post-Skill Test
+
 Date: [To be filled]
 
 Result:
+
 - [ ] Stack/heap lifetime: [PASS/FAIL]
 - [ ] Invalid reference: [PASS/FAIL]
 - [ ] Fix options: [PASS/FAIL]
@@ -48,6 +56,7 @@ Notes:
 [To be filled after test]
 
 ## Edge Cases
+
 1. "What if I use Box?" → Should explain heap allocation
 2. "Can I use 'static?" → Should explain when appropriate
 3. "What about Cow?" → Should suggest for flexible ownership

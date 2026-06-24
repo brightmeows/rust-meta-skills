@@ -16,6 +16,7 @@ allowed-tools: ["LSP", "Read", "Glob"]
 ```
 
 **Examples:**
+
 - `/rust-code-navigator parse_config` - Find definition of parse_config
 - `/rust-code-navigator MyStruct in src/lib.rs:42` - Navigate from specific location
 
@@ -35,6 +36,7 @@ LSP(
 ```
 
 **Use when:**
+
 - User asks "where is X defined?"
 - User wants to understand a type/function
 - Ctrl+click equivalent
@@ -53,6 +55,7 @@ LSP(
 ```
 
 **Use when:**
+
 - User asks "who uses X?"
 - Before refactoring/renaming
 - Understanding impact of changes
@@ -71,6 +74,7 @@ LSP(
 ```
 
 **Use when:**
+
 - User asks "what type is X?"
 - User wants documentation
 - Quick type checking

@@ -24,6 +24,6 @@ Get Rust version changelog and new features.
 
 1. Use `search_actions("releases.rs")` to get action ID
 2. Use `get_action_by_id()` to get page selectors
-3. Use `agent-browser` to open https://releases.rs and navigate to the version
+3. Use `agent-browser` to open <https://releases.rs> and navigate to the version
 4. Extract changelog content
 5. Summarize key features for user

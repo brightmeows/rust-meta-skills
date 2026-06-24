@@ -13,7 +13,9 @@ Never create `String`, `Vec`, or `Box` from memory allocated outside Rust's allo
 
 ## 理由
 
-`String`, `Vec`, and `Box` assume memory was allocated by Rust's global allocator. When dropped, they call `dealloc`. If the memory came from C's `malloc`, a different allocator, or shared memory, this causes undefined behavior.
+`String`, `Vec`, and `Box` assume memory was allocated by Rust's global allocator.
+When dropped, they call `dealloc`. If the memory came from C's `malloc`, a different
+allocator, or shared memory, this causes undefined behavior.
 
 ## 错误示例
 

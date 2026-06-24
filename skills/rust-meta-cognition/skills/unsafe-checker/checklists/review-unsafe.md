@@ -76,6 +76,7 @@ For each pointer dereference:
 ## 9. Verification Questions
 
 Ask the author:
+
 - "What would happen if [X invariant] was violated?"
 - "How do you know [pointer/reference] is valid here?"
 - "What if this panics at [specific line]?"

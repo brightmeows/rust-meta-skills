@@ -235,6 +235,7 @@ EOF
 ```
 
 **为什么选择 UserPromptSubmit**:
+
 - 最早时机，在 Claude 思考前注入
 - 可以影响整个回答流程
 - 不会遗漏任何匹配的问题
@@ -339,6 +340,7 @@ rust-skills/
 ```
 
 **plugin.json**:
+
 ```json
 {
   "name": "rust-skills",
@@ -402,6 +404,7 @@ for case in test_cases:
 ```
 
 如果没有看到这个，说明:
+
 - 关键词没匹配
 - Hook 配置路径错误
 - plugin.json 没有引用 hooks

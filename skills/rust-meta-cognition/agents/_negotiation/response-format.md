@@ -44,12 +44,14 @@
 What the agent discovered. This is the core content.
 
 **Guidelines:**
+
 - Include all relevant data found
 - Structure clearly (use sub-headers if complex)
 - Don't omit data just because it seems obvious
 - Include raw data, let orchestrator synthesize
 
 **Example:**
+
 ```markdown
 ### Findings
 **Crate:** tokio
@@ -77,6 +79,7 @@ Self-assessment of finding reliability.
 | UNCERTAIN | Unreliable | No sources, errors, conflicts |
 
 **Example:**
+
 ```markdown
 ### Confidence
 - **Level**: MEDIUM
@@ -88,12 +91,14 @@ Self-assessment of finding reliability.
 What couldn't be found or verified.
 
 **Guidelines:**
+
 - Be specific about what's missing
 - Use checkboxes to allow marking as resolved
 - Prioritize by impact on answer quality
 - Don't list irrelevant gaps
 
 **Example:**
+
 ```markdown
 ### Gaps Identified
 - [ ] Performance benchmarks not found
@@ -106,17 +111,20 @@ What couldn't be found or verified.
 Questions for the orchestrator to enable better answers.
 
 **When to include:**
+
 - Query is ambiguous
 - Multiple valid interpretations
 - Need domain-specific context
 - Scope unclear
 
 **When to skip:**
+
 - Query is unambiguous
 - All necessary context provided
 - Direct lookup with clear answer
 
 **Example:**
+
 ```markdown
 ### Context Needed
 - Q1: Is this for a web server or CLI application?
@@ -124,6 +132,7 @@ Questions for the orchestrator to enable better answers.
 ```
 
 **Not needed for:**
+
 ```markdown
 Query: "What is tokio's latest version?"
 → No context needed, direct lookup
@@ -134,6 +143,7 @@ Query: "What is tokio's latest version?"
 Source attribution and coverage assessment.
 
 **Example:**
+
 ```markdown
 ### Metadata
 - **Source**: lib.rs/crates/tokio, docs.rs/tokio/1.49.0

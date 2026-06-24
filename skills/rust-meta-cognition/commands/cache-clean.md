@@ -8,6 +8,7 @@ argument-hint: [--all | --expired | crate_name]
 Clean cached Rust documentation.
 
 Arguments: $ARGUMENTS
+
 - `--all`: Remove all cached docs
 - `--expired`: Remove only expired docs (default)
 - `crate_name`: Remove cache for specific crate/item

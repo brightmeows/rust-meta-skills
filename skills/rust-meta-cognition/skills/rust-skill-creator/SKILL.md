@@ -15,6 +15,7 @@ agent: general-purpose
 ## When to Use
 
 This skill handles requests to create skills for:
+
 - Third-party crates (tokio, serde, axum, etc.)
 - Rust standard library (std::sync, std::marker, etc.)
 - Any Rust documentation URL
@@ -24,6 +25,7 @@ This skill handles requests to create skills for:
 **CRITICAL: Check if related commands/skills are available.**
 
 This skill relies on:
+
 - `/create-llms-for-skills` command
 - `/create-skills-via-llms` command
 
@@ -98,6 +100,7 @@ agent-browser close
 ```
 
 **Or with WebFetch fallback:**
+
 ```
 WebFetch("<documentation_url>", "Extract API documentation including types, functions, and examples")
 ```
@@ -154,6 +157,7 @@ description: "Documentation for {crate_name} crate. Keywords: {keywords}"
 
 - [docs.rs](https://docs.rs/{crate})
 - [crates.io](https://crates.io/crates/{crate})
+
 ```
 
 ### Step 5: Generate Reference Files

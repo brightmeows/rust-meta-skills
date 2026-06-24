@@ -220,11 +220,13 @@ Layer 3 ←→ Layer 2 ←→ Layer 1
 该框架设计为可扩展的：
 
 ### 对于 Rust Skills
+
 - Layer 1：为新的语言特性添加新的 m0x skill
 - Layer 2：为新的模式添加新的 m1x skill
 - Layer 3：为新的领域添加新的 domain-* skill
 
 ### 对于其他语言/框架
+
 - Layer 1：替换为框架特定的机制
 - Layer 2：保留模式（大部分与语言无关）
 - Layer 3：保留约束（完全领域特定）

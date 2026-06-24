@@ -14,6 +14,7 @@ When a struct contains raw pointers but logically owns or borrows the pointed-to
 ## 理由
 
 Raw pointers don't carry ownership or lifetime information. `PhantomData` lets you:
+
 - Indicate ownership (for `Drop` check)
 - Control variance (covariant, contravariant, invariant)
 - Participate in lifetime elision

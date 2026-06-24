@@ -5,6 +5,7 @@
 ## Fetch
 
 Use available tools:
+
 - lib.rs (preferred, more info): `lib.rs/crates/<name>`
 - crates.io (fallback): `crates.io/crates/<name>`
 
@@ -47,6 +48,7 @@ When `negotiation: true`, return structured response per `_negotiation/response-
 | Not found or error | UNCERTAIN |
 
 **Degrading factors:**
+
 - Last update > 2 years: -1 level
 - No README: -1 level
 - Yanked versions: mention in gaps

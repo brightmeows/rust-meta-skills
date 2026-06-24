@@ -16,6 +16,7 @@ disable-model-invocation: true
 3. **agent-browser CLI** - 直接浏览器自动化（最后手段）
 
 仅在以下情况直接使用 agent-browser：
+
 - actionbook 没有目标站点的预计算选择器
 - 需要交互式浏览器测试/自动化
 - 需要截图或表单填写
@@ -40,6 +41,7 @@ agent-browser close             # Close browser
 ## Commands
 
 ### Navigation
+
 ```bash
 agent-browser open <url>      # Navigate to URL
 agent-browser back            # Go back
@@ -49,6 +51,7 @@ agent-browser close           # Close browser
 ```
 
 ### Snapshot (page analysis)
+
 ```bash
 agent-browser snapshot        # Full accessibility tree
 agent-browser snapshot -i     # Interactive elements only (recommended)
@@ -57,6 +60,7 @@ agent-browser snapshot -d 3   # Limit depth to 3
 ```
 
 ### Interactions (use @refs from snapshot)
+
 ```bash
 agent-browser click @e1           # Click
 agent-browser dblclick @e1        # Double-click
@@ -73,6 +77,7 @@ agent-browser scrollintoview @e1  # Scroll element into view
 ```
 
 ### Get information
+
 ```bash
 agent-browser get text @e1        # Get element text
 agent-browser get value @e1       # Get input value
@@ -81,6 +86,7 @@ agent-browser get url             # Get current URL
 ```
 
 ### Screenshots
+
 ```bash
 agent-browser screenshot          # Screenshot to stdout
 agent-browser screenshot path.png # Save to file
@@ -88,6 +94,7 @@ agent-browser screenshot --full   # Full page
 ```
 
 ### Wait
+
 ```bash
 agent-browser wait @e1                     # Wait for element
 agent-browser wait 2000                    # Wait milliseconds
@@ -96,6 +103,7 @@ agent-browser wait --load networkidle      # Wait for network idle
 ```
 
 ### Semantic locators (alternative to refs)
+
 ```bash
 agent-browser find role button click --name "Submit"
 agent-browser find text "Sign In" click

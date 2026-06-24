@@ -184,7 +184,7 @@
 |---------|---------|
 | `/rust-features [version]` | Rust 更新日志/特性 |
 | `/crate-info crate` | Crate 元数据 |
-| `/rust-daily [day|week|month]` | 生态新闻 |
+| `/rust-daily [day/week/month]` | 生态新闻 |
 
 ### 审计命令
 
@@ -193,14 +193,14 @@
 | `/unsafe-check file` | 分析文件的 unsafe 问题 |
 | `/unsafe-review file` | 交互式 unsafe 审查 |
 | `/rust-review file` | 轻量级 clippy 审查 |
-| `/audit [security|safety|concurrency|full]` | 重量级审计 |
+| `/audit [security/safety/concurrency/full]` | 重量级审计 |
 
 ### 缓存命令
 
 | 命令 | 目的 |
 |---------|---------|
 | `/cache-status [--verbose]` | 显示缓存状态 |
-| `/cache-clean [--all|--expired|crate]` | 清理缓存 |
+| `/cache-clean [--all/--expired/crate]` | 清理缓存 |
 
 ### 动态 Skill 命令
 
@@ -347,6 +347,7 @@ pedantic = "warn"
 ### 2. 双 Skill 加载
 
 当检测到领域上下文时，自动同时加载：
+
 - Layer 1 Skill（机制）
 - Layer 3 Skill（领域约束）
 
@@ -373,11 +374,13 @@ pedantic = "warn"
 **问题**：“我的 Web API 报告 Rc 无法在线程之间发送”
 
 **传统答案**：
+
 ```
 使用 Arc 替代 Rc。
 ```
 
 **元认知答案**：
+
 ```
 ### 推理链
 +-- Layer 1: Send/Sync 错误

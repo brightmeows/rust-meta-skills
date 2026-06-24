@@ -7,11 +7,13 @@
 ## 1. CSO (Claude Search Optimization) - 描述优化
 
 ### 问题
+
 Skills 的 `description` 字段是 Claude 匹配用户问题的关键，但很多 skill 描述不够优化，导致无法被正确触发。
 
 ### 解决方案
 
 **使用 "CRITICAL:" 前缀提升优先级：**
+
 ```yaml
 description: |
   CRITICAL: Use for tokio async runtime questions. Triggers on:
@@ -48,6 +50,7 @@ description: |
 ## 2. 分布式触发架构
 
 ### 问题
+
 单一入口点（如 rust-router）会成为瓶颈，所有问题都要先经过它路由。
 
 ### 解决方案
@@ -91,6 +94,7 @@ description: |
 ```
 
 **命名约定：**
+
 - 主技能：`{crate_name}/`
 - 子技能：`{crate_name}-{feature}/`（如 `tokio-task/`, `tokio-sync/`）
 - 共享目录：以 `_` 开头（不被扫描为 skill）
@@ -100,6 +104,7 @@ description: |
 ## 4. 文档完整性检查
 
 ### 问题
+
 Skills 引用的 reference 文件可能不存在，导致读取失败但用户不知道原因。
 
 ### 解决方案
@@ -119,6 +124,7 @@ Skills 引用的 reference 文件可能不存在，导致读取失败但用户�
 ```
 
 **创建检查命令：**
+
 - `/fix-skill-docs` - 检查并修复缺失文件
 - `/fix-skill-docs --check-only` - 只检查不修复
 
@@ -127,6 +133,7 @@ Skills 引用的 reference 文件可能不存在，导致读取失败但用户�
 ## 5. 工具优先级
 
 ### 问题
+
 直接使用 WebSearch 可能获取过时信息，且绕过了专用工具。
 
 ### 解决方案
@@ -144,6 +151,7 @@ Skills 引用的 reference 文件可能不存在，导致读取失败但用户�
 ```
 
 **原因：**
+
 - "DO NOT use WebSearch" 太绝对，如果 agent 不可用会导致任务失败
 - "PREFER" 允许 fallback，更健壮
 
@@ -152,20 +160,24 @@ Skills 引用的 reference 文件可能不存在，导致读取失败但用户�
 ## 6. Skills TDD (测试驱动开发)
 
 ### 概念
+
 "没有失败测试就没有技能" - 先定义技能应该解决的问题，再编写技能。
 
 ### 流程
 
 **RED 阶段：**
+
 1. 定义压力场景（用户问题 + 期望行为）
 2. 在没有技能的情况下测试
 3. 记录基线失败
 
 **GREEN 阶段：**
+
 1. 编写最小化技能解决失败
 2. 测试验证改进
 
 **REFACTOR 阶段：**
+
 1. 识别漏洞
 2. 添加对策
 3. 测试边缘情况
@@ -187,9 +199,11 @@ Skills 引用的 reference 文件可能不存在，导致读取失败但用户�
 ```
 
 ## Expected Behavior
+
 - [x] 解释 XXX
 - [x] 提供修复方案
 - [x] 引用相关指南
+
 ```
 
 ---
@@ -215,6 +229,7 @@ Skills 引用的 reference 文件可能不存在，导致读取失败但用户�
 ```
 
 **原则：**
+
 - 表格放在文件顶部
 - 每个示例 < 20 词
 - 详细内容放 references/
@@ -224,6 +239,7 @@ Skills 引用的 reference 文件可能不存在，导致读取失败但用户�
 ## 8. Commands vs Skills 热加载
 
 ### 发现
+
 - **Skills** (`skills/*/SKILL.md`) - 可以热加载
 - **Commands** (`commands/*.md`) - 需要重启才能加载
 
@@ -241,6 +257,7 @@ skills/
 ```
 
 **Skill 包装内容：**
+
 ```yaml
 ---
 name: core-fix-skill-docs
@@ -321,6 +338,7 @@ Refer to the local files for detailed documentation:
 
 1. Key point 1
 2. Key point 2
+
 ```
 
 ---

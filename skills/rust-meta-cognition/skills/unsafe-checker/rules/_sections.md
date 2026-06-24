@@ -27,6 +27,7 @@
 **Focus**: Building sound safe abstractions over unsafe code
 
 Key invariants:
+
 - Panic safety
 - Memory initialization
 - Send/Sync correctness
@@ -63,6 +64,7 @@ Key invariants:
 **Focus**: Safe C interoperability
 
 Subcategories:
+
 - String handling (CString, CStr)
 - Type compatibility
 - Error handling across FFI

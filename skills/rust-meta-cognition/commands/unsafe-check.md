@@ -26,22 +26,26 @@
 ## Checks Performed
 
 ### Safety Comments
+
 - Every `unsafe` block should have `// SAFETY:` comment
 - Comment should explain invariants, not just say "this is safe"
 
 ### Pointer Operations
+
 - Null checks before dereference
 - Alignment verification
 - Bounds checking
 - No aliasing violations
 
 ### FFI
+
 - Types have `#[repr(C)]`
 - Panics caught at boundary
 - String handling correct
 - Memory ownership clear
 
 ### Send/Sync
+
 - Manual implementations are sound
 - No data races possible
 

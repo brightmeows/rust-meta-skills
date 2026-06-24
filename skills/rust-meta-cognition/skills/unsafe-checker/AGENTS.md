@@ -5,6 +5,7 @@
 ## Rule Summary by Section
 
 ### General Principles (3 rules)
+
 | ID | Level | Title |
 |----|-------|-------|
 | general-01 | P | Do Not Abuse Unsafe to Escape Compiler Safety Checks |
@@ -12,6 +13,7 @@
 | general-03 | G | Do Not Create Aliases for Types/Methods Named "Unsafe" |
 
 ### Safety Abstraction (11 rules)
+
 | ID | Level | Title |
 |----|-------|-------|
 | safety-01 | P | Be Aware of Memory Safety Issues from Panics |
@@ -27,6 +29,7 @@
 | safety-11 | G | Use assert! Instead of debug_assert! in Unsafe Functions |
 
 ### Raw Pointers (6 rules)
+
 | ID | Level | Title |
 |----|-------|-------|
 | ptr-01 | P | Do Not Share Raw Pointers Across Threads |
@@ -37,12 +40,14 @@
 | ptr-06 | G | Prefer pointer::cast Over `as` for Pointer Casting |
 
 ### Union (2 rules)
+
 | ID | Level | Title |
 |----|-------|-------|
 | union-01 | P | Avoid Union Except for C Interop |
 | union-02 | P | Do Not Use Union Variants Across Different Lifetimes |
 
 ### Memory Layout (6 rules)
+
 | ID | Level | Title |
 |----|-------|-------|
 | mem-01 | P | Choose Appropriate Data Layout for Struct/Tuple/Enum |
@@ -53,6 +58,7 @@
 | mem-06 | G | Use MaybeUninit<T> for Uninitialized Memory |
 
 ### FFI (18 rules)
+
 | ID | Level | Title |
 |----|-------|-------|
 | ffi-01 | P | Avoid Passing Strings Directly to C |
@@ -75,6 +81,7 @@
 | ffi-18 | P | Avoid Passing Trait Objects to C |
 
 ### I/O Safety (1 rule)
+
 | ID | Level | Title |
 |----|-------|-------|
 | io-01 | P | Ensure I/O Safety When Using Raw Handles |
@@ -120,6 +127,7 @@ Writing unsafe code?
 ## Essential Checklist
 
 Before every unsafe block:
+
 - [ ] SAFETY comment present
 - [ ] Invariants documented
 - [ ] Pointer validity checked

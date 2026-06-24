@@ -22,6 +22,7 @@
 | <!-- constraint --> | <!-- domain-* skill or analysis --> | <!-- what this means for design --> |
 
 ### 已识别的领域规则
+
 - [ ] <!-- Rule 1 -->
 - [ ] <!-- Rule 2 -->
 - [ ] <!-- Rule 3 -->
@@ -39,6 +40,7 @@
 | <!-- pattern name --> | Yes / No / Maybe | <!-- why --> |
 
 ### 选定的模式
+
 - **Pattern**: <!-- chosen pattern -->
 - **Skill Source**: <!-- m09-m15 -->
 - **Rationale**: <!-- why this pattern fits the constraints -->
@@ -55,6 +57,7 @@
 | <!-- mechanism --> | <!-- application --> | <!-- m01-m07 --> |
 
 ### Key Code Patterns
+
 ```rust
 // Pattern 1: [description]
 // code example
@@ -86,6 +89,7 @@
 ## 已识别的权衡
 
 ### Option A: <!-- name -->
+
 | Aspect | Evaluation |
 |--------|------------|
 | **Pros** | <!-- benefits --> |
@@ -94,6 +98,7 @@
 | **Complexity** | <!-- low/medium/high --> |
 
 ### Option B: <!-- name -->
+
 | Aspect | Evaluation |
 |--------|------------|
 | **Pros** | <!-- benefits --> |
@@ -102,6 +107,7 @@
 | **Complexity** | <!-- low/medium/high --> |
 
 ### Option C: <!-- name -->
+
 | Aspect | Evaluation |
 |--------|------------|
 | **Pros** | <!-- benefits --> |
@@ -114,14 +120,17 @@
 ## 约束总结
 
 ### 必须有的（不可协商）
+
 1. <!-- 来自领域规则的约束 -->
 2. <!-- 来自领域规则的约束 -->
 
 ### 应该有的（重要）
+
 1. <!-- 首选但可灵活 -->
 2. <!-- 首选但可灵活 -->
 
 ### 锦上添花（可选）
+
 1. <!-- 如果可实现则更佳 -->
 2. <!-- 如果可实现则更佳 -->
 

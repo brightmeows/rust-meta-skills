@@ -119,6 +119,7 @@ pedantic = "warn"
 ```
 
 Rules:
+
 - ALWAYS `edition = "2024"`
 - 包含 `rust-version` 明确 MSRV
 - 默认启用 clippy `all` + `pedantic`
@@ -173,12 +174,14 @@ unsafe { slice.get_unchecked(index) }
 ## 技能索引
 
 ### Core
+
 - `rust-router` — 主路由（所有 Rust 问题先走它）
 - `rust-learner` — 获取最新 Rust / crate 版本
 - `coding-guidelines` — 编码规范查询
 - `unsafe-checker` — unsafe 代码审查
 
 ### Layer 1: Language Mechanics (m01-m07)
+
 | Skill | Core Question |
 |-------|---------------|
 | m01-ownership | Who owns this data? |
@@ -190,6 +193,7 @@ unsafe { slice.get_unchecked(index) }
 | m07-concurrency | CPU-bound or I/O-bound? |
 
 ### Layer 2: Design Choices (m09-m15)
+
 | Skill | Core Question |
 |-------|---------------|
 | m09-domain | What role does this concept play? |
@@ -201,9 +205,11 @@ unsafe { slice.get_unchecked(index) }
 | m15-anti-pattern | Does this hide design issues? |
 
 ### Layer 3: Domain Constraints (domain-*)
+
 `domain-fintech` · `domain-web` · `domain-cli` · `domain-embedded` · `domain-cloud-native` · `domain-iot` · `domain-ml`
 
 ### Utility & Experimental
+
 `rust-daily` · `rust-skill-creator` · `core-actionbook` · `core-agent-browser` · `core-dynamic-skills` · `core-fix-skill-docs` · `meta-cognition-parallel`
 
 ## 参考文件索引

@@ -16,10 +16,12 @@ allowed-tools: ["LSP", "Read", "Glob"]
 ```
 
 **Options:**
+
 - `--depth N`: How many levels to traverse (default: 3)
 - `--direction`: `in` (callers), `out` (callees), `both`
 
 **Examples:**
+
 - `/rust-call-graph process_request` - Show both callers and callees
 - `/rust-call-graph handle_error --direction in` - Show only callers
 - `/rust-call-graph main --direction out --depth 5` - Deep callee analysis

@@ -13,6 +13,7 @@
 ### 问题
 
 传统 AI 的 Rust 辅助：
+
 ```
 用户: "我的交易系统报 E0382"
 AI: "用 .clone()"  ← 表面修复，忽略领域约束
@@ -21,6 +22,7 @@ AI: "用 .clone()"  ← 表面修复，忽略领域约束
 ### 解决方案
 
 带元认知的 Rust Skills：
+
 ```
 用户: "我的交易系统报 E0382"
 
@@ -217,6 +219,7 @@ Layer 1: 语言机制 (HOW - 怎么做)
 ## Skills 概览
 
 ### 核心 Skills
+
 - `rust-router` - Rust 问题主路由器 (首先调用)
 - `rust-learner` - 获取最新 Rust/crate 版本信息
 - `coding-guidelines` - 编码规范查询
@@ -283,6 +286,7 @@ cd my-rust-project
 ```
 
 ### 特性
+
 - **按需生成**: 从 Cargo.toml 依赖创建
 - **本地存储**: `~/.claude/skills/`
 - **版本追踪**: 每个 skill 记录 crate 版本
@@ -340,5 +344,5 @@ MIT 许可证 - 详见 [LICENSE](LICENSE)
 
 ## 链接
 
-- **GitHub**: https://github.com/actionbook/rust-skills
-- **Issues**: https://github.com/actionbook/rust-skills/issues
+- **GitHub**: <https://github.com/actionbook/rust-skills>
+- **Issues**: <https://github.com/actionbook/rust-skills/issues>

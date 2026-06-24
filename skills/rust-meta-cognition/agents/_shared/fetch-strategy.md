@@ -23,6 +23,7 @@ Regular sites: WebFetch → crawl4ai MCP
 User's real browser with login and normal fingerprint.
 
 **macOS:**
+
 ```bash
 # Open URL
 osascript -e 'tell application "Google Chrome" to open location "URL"'
@@ -66,6 +67,7 @@ Built-in tool, simple and fast, no anti-crawler capability.
 ## Validation
 
 After fetch, check:
+
 - Content is not empty
 - Not an error page (403, 429, "blocked")
 - Contains expected data

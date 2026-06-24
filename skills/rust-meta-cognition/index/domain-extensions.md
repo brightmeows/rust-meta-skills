@@ -15,10 +15,12 @@
 | F080-F099 | Regulatory Compliance | KYC, AML |
 
 ### 关键 Crate
+
 - rust_decimal, chrono, uuid
 - serde, tokio
 
 ### 相关元问题
+
 - m01, m06, m07, m10
 
 ---
@@ -34,10 +36,12 @@
 | M080-M099 | MLOps | Model serving, monitoring |
 
 ### Key Crates
+
 - ndarray, tract, candle
 - tch-rs, polars
 
 ### Related Meta-Questions
+
 - m04, m07, m10, m11
 
 ---
@@ -53,10 +57,12 @@
 | CN080-CN099 | Serverless | FaaS, edge computing |
 
 ### Key Crates
+
 - tonic, kube, tracing
 - opentelemetry, bollard
 
 ### Related Meta-Questions
+
 - m06, m07, m10, m12
 
 ---
@@ -72,13 +78,16 @@
 | IoT080-IoT099 | Security Protection | Device authentication, encryption |
 
 ### Key Crates
+
 - embedded-hal, embassy, rtic
 - rumqttc, defmt
 
 ### Related Meta-Questions
+
 - m01, m07, unsafe-checker, m10
 
 ### Related Tech Categories
+
 - 700-759: Embedded Development Layer
 
 ---

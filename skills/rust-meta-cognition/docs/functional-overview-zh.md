@@ -4,15 +4,11 @@
 
 ## 三大功能分类
 
-
-
-
 |     中文 |    英文 |   作用  |
 |------|---------|---------|
 |元认知类|Meta-Cognition|提升语义识别，追溯问题本质|
 |动态 Skills 类|Dynamic Skills|按需生成 Skills，热加载 crate skills |
 |信息获取类|Info Fetching|获取最新信息，紧跟 Rust 前沿 |
-
 
 ---
 
@@ -236,6 +232,7 @@
 ```
 
 **优势**:
+
 - 触发精度：父广泛匹配，子精确匹配
 - 规则复用：共享 `rust-defaults.md`
 - 上下文节省：只加载需要的子 Skill

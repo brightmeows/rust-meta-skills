@@ -16,6 +16,7 @@ allowed-tools: ["LSP", "Read", "Glob", "Grep"]
 ```
 
 **Examples:**
+
 - `/rust-trait-explorer Handler` - Find all implementors of Handler trait
 - `/rust-trait-explorer MyStruct` - Find all traits implemented by MyStruct
 
@@ -35,6 +36,7 @@ LSP(
 ```
 
 **Use when:**
+
 - Trait name is known
 - Want to find all implementors
 - Understanding polymorphic code

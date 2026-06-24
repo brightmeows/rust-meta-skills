@@ -7,6 +7,7 @@
 **“没有先写失败测试，就不要创建 Skill”**
 
 在创建或修改 Skill 之前，必须：
+
 1. 定义该 Skill 应该处理的压力场景
 2. 在没有该 Skill 的情况下测试该场景
 3. 记录基准失败结果
@@ -25,6 +26,7 @@
    - 记录 Claude 答错或遗漏的内容
 
 3. **记录基准结果**
+
    ```markdown
    ## Scenario: E0382 Error Explanation
 
@@ -50,6 +52,7 @@
    - 验证改进结果
 
 3. **验证检查清单**
+
    ```markdown
    ## Verification: E0382 Explanation
 
@@ -73,6 +76,7 @@
    - Cross-references to related skills
 
 3. **Test edge cases**
+
    ```markdown
    ## Edge Cases: m01-ownership
 
@@ -138,17 +142,20 @@ Common excuses and counters for skipping TDD:
 ## Quality Metrics
 
 ### Token Efficiency
+
 - [ ] Main SKILL.md < 200 words (excluding tables)
 - [ ] Quick reference table present
 - [ ] Examples compressed (target: 20 words each)
 
 ### CSO Compliance
+
 - [ ] Description starts with "Use when:"
 - [ ] Error codes listed
 - [ ] Symptom keywords included
 - [ ] User questions as triggers
 
 ### Coverage
+
 - [ ] At least 3 pressure scenarios per skill
 - [ ] Edge cases documented
 - [ ] Cross-references to related skills
@@ -156,6 +163,7 @@ Common excuses and counters for skipping TDD:
 ## Running Tests
 
 ### Manual Testing
+
 1. Start fresh Claude session (no skills loaded)
 2. Ask pressure scenario question
 3. Document response quality
@@ -164,7 +172,9 @@ Common excuses and counters for skipping TDD:
 6. Compare and document improvements
 
 ### Automated Indicators
+
 While fully automated testing isn't available, track:
+
 - User satisfaction (via feedback)
 - Routing accuracy (via logs if available)
 - Common follow-up questions (indicates gaps)

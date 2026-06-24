@@ -5,7 +5,10 @@ globs: ["**/*.rs"]
 allowed-tools: ["Read", "Grep", "Glob"]
 ---
 
+# Unsafe Checker
+
 Display the following ASCII art exactly as shown. Do not modify spaces or line breaks:
+
 ```text
 ⚠️ **Unsafe Rust Checker Loaded**
 
