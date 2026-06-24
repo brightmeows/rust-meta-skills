@@ -1,351 +1,349 @@
-# What Is a Skill?
+# 什么是 Skill？
 
-> A precise definition based on rust-skills architecture
+> 基于 rust-skills 架构的精确定义
 
-## The Wrong Mental Model
+## 错误的心智模型
 
 ```
-Skill ≠ Knowledge Database
-Skill ≠ Documentation
-Skill ≠ FAQ Collection
-Skill ≠ Code Snippets Library
+Skill ≠ 知识数据库
+Skill ≠ 文档
+Skill ≠ 常见问题集
+Skill ≠ 代码片段库
 ```
 
-Claude already knows Rust. Teaching it "ownership rules" or "how Arc works" adds no value.
+Claude 已经了解 Rust。教它“所有权规则”或“Arc 如何工作”并没有价值。
 
 ---
 
-## The Right Mental Model
+## 正确的心智模型
 
-### Definition
+### 定义
 
-> **A Skill is a Cognitive Protocol that shapes HOW Claude thinks about a problem, not WHAT it knows.**
+> **Skill 是一种认知协议（Cognitive Protocol），它塑造了 Claude 如何思考一个问题，而非它知道什么。**
 
-### Components
+### 组成部分
 
 ```
-Skill = Routing Logic
-      + Reasoning Template
-      + Constraint Set
-      + Attention Director
-      + Decision Framework
+Skill = 路由逻辑
+      + 推理模板
+      + 约束集
+      + 注意力导向器
+      + 决策框架
 ```
 
 ---
 
-## Anatomy of a Skill (rust-skills)
+## Skill 的解剖（rust-skills）
 
-### 1. Routing Logic
+### 1. 路由逻辑
 
-**What it does**: Classifies the problem and determines which thinking mode to activate.
+**作用**：对问题进行分类，确定激活哪种思维模式。
 
 ```
 rust-router:
-  "E0382" → Layer 1 entry → m01-ownership
-  "Web API" → Layer 3 context → domain-web
-  "How to design" → Layer 2 question → m09-domain
+  "E0382" → Layer 1 入口 → m01-ownership
+  "Web API" → Layer 3 上下文 → domain-web
+  "如何设计" → Layer 2 问题 → m09-domain
 ```
 
-**Not**: "Here's what E0382 means"
-**But**: "This is a Layer 1 problem, trace UP to find why"
+**不是**：“这是 E0382 的含义”
+**而是**：“这是一个 Layer 1 问题，向上追溯查找原因”
 
-### 2. Reasoning Template
+### 2. 推理模板
 
-**What it does**: Provides a structured thinking process, not answers.
+**作用**：提供结构化的思考过程，而非答案。
 
 ```markdown
-## Core Question
-**Who should own this data?**  ← Forces Claude to ASK, not TELL
+## 核心问题
+**谁应该拥有这个数据？**  ← 迫使 Claude 去问，而不是直接告诉
 
-## Error → Design Question
-| Error | Don't Just Say | Ask Instead |
-| E0382 | "Clone it" | "Who should own this?" |
+## 错误 → 设计问题
+| 错误 | 不要只说 | 而要问 |
+| E0382 | “克隆它” | “谁应该拥有这个？” |
 ```
 
-**Not**: "E0382 means value was moved, use clone"
-**But**: "Before fixing, ask: Is this ownership design intentional?"
+**不是**：“E0382 表示值被移动了，使用 clone”
+**而是**：“修复之前，先问：这个所有权设计是有意的吗？”
 
-### 3. Constraint Set
+### 3. 约束集
 
-**What it does**: Defines boundaries that shape valid solutions.
+**作用**：定义边界，塑造有效的解决方案。
 
 ```markdown
-## Domain Constraints (domain-web)
-| Rule | Constraint | Implication |
-| Stateless HTTP | No request globals | State via extractors |
-| Concurrency | Many connections | Must be Send + Sync |
+## 领域约束（domain-web）
+| 规则 | 约束 | 含义 |
+| 无状态 HTTP | 无请求全局变量 | 通过提取器管理状态 |
+| 并发 | 多连接 | 必须为 Send + Sync |
 ```
 
-**Not**: "Web apps use async"
-**But**: "Web domain REQUIRES thread-safe state, this constrains your options"
+**不是**：“Web 应用使用 async”
+**而是**：“Web 领域要求线程安全的状态，这限制了你的选择”
 
-### 4. Attention Director
+### 4. 注意力导向器
 
-**What it does**: Points Claude's attention to what matters for THIS context.
+**作用**：将 Claude 的注意力引导到当前上下文中重要的方面。
 
 ```markdown
-## Trace Up ↑
-When you see Send/Sync error in Web context:
-  → Load domain-web
-  → Find: "Handlers run on any thread"
-  → This constraint explains WHY Arc is needed
+## 向上追溯 ↑
+当你在 Web 上下文中看到 Send/Sync 错误时：
+  → 加载 domain-web
+  → 发现：“处理器（Handler）在任意线程上运行”
+  → 这个约束解释了为什么需要 Arc
 ```
 
-**Not**: "Arc is thread-safe"
-**But**: "In THIS context, look at domain-web constraints FIRST"
+**不是**：“Arc 是线程安全的”
+**而是**：“在这个上下文中，先查看 domain-web 的约束”
 
-### 5. Decision Framework
+### 5. 决策框架
 
-**What it does**: Provides decision trees, not conclusions.
+**作用**：提供决策树，而非结论。
 
 ```markdown
-## Decision Flowchart
-Need shared data?
-├─ Yes → Multi-thread?
-│        ├─ Yes → Arc<T>
-│        └─ No → Rc<T>
-└─ No → Owned value
+## 决策流程图
+需要共享数据？
+├─ 是 → 多线程？
+│        ├─ 是 → Arc<T>
+│        └─ 否 → Rc<T>
+└─ 否 → 自有值
 ```
 
-**Not**: "Use Arc for shared data"
-**But**: "Here's how to DECIDE what to use"
+**不是**：“使用 Arc 共享数据”
+**而是**：“以下是决定使用什么的决策方法”
 
 ---
 
-## Skill Types in rust-skills
+## rust-skills 中的 Skill 类型
 
-### Type 1: Mechanism Skills (Layer 1)
+### 类型 1：机制类 Skill（Layer 1）
 
-**Purpose**: Provide thinking frameworks for language mechanics.
-
-```
-m01-ownership: "Who should own this?"
-m02-resource:  "What ownership model?"
-m07-concurrency: "CPU-bound or I/O-bound?"
-```
-
-These are not "ownership tutorials" but **ownership reasoning protocols**.
-
-### Type 2: Design Skills (Layer 2)
-
-**Purpose**: Provide design decision frameworks.
+**目的**：为语言机制提供思维框架。
 
 ```
-m09-domain: "How do domain rules become types?"
-m10-performance: "Where are the bottlenecks?"
-m15-anti-pattern: "What cognitive traps to avoid?"
+m01-ownership：“谁应该拥有这个？”
+m02-resource：“需要什么所有权模型？”
+m07-concurrency：“是 CPU 密集型还是 I/O 密集型？”
 ```
 
-These are not "design patterns catalog" but **design thinking protocols**.
+这些不是“所有权教程”，而是**所有权推理协议**。
 
-### Type 3: Domain Skills (Layer 3)
+### 类型 2：设计类 Skill（Layer 2）
 
-**Purpose**: Define domain-specific constraints that shape all lower decisions.
-
-```
-domain-web: "Handlers on any thread" → Forces Arc, not Rc
-domain-fintech: "Audit trail required" → Forces immutability
-domain-embedded: "no_std constraint" → Limits available patterns
-```
-
-These are not "domain knowledge" but **domain constraint systems**.
-
-### Type 4: Router Skills
-
-**Purpose**: Meta-level routing that orchestrates other skills.
+**目的**：提供设计决策框架。
 
 ```
-rust-router:
-  1. Identify entry layer
-  2. Detect domain context
-  3. Load appropriate skills
-  4. Enforce tracing direction
+m09-domain：“领域规则如何成为类型？”
+m10-performance：“瓶颈在哪里？”
+m15-anti-pattern：“需要避免哪些认知陷阱？”
 ```
 
-This is a **cognitive traffic controller**.
+这些不是“设计模式目录”，而是**设计思维协议**。
+
+### 类型 3：领域类 Skill（Layer 3）
+
+**目的**：定义特定领域的约束，影响所有低层决策。
+
+```
+domain-web：“处理器在任意线程上运行” → 强制使用 Arc，而非 Rc
+domain-fintech：“需要审计追踪” → 强制不可变性
+domain-embedded：“no_std 约束” → 限制可用模式
+```
+
+这些不是“领域知识”，而是**领域约束系统**。
+
+### 类型 4：路由类 Skill
+
+**目的**：元层次的路由，编排其他 Skill。
+
+```
+rust-router：
+  1. 识别入口层级
+  2. 检测领域上下文
+  3. 加载适当的 Skill
+  4. 强制追溯方向
+```
+
+这是一个**认知交通控制器**。
 
 ---
 
-## What Skills Actually Do
+## Skill 的实际作用
 
-### Before (No Skills)
-
-```
-User: "Web API reports Rc cannot be sent"
-
-Claude's thinking:
-  → I know Rc is !Send
-  → I know Arc is Send
-  → Answer: "Use Arc"
-```
-
-### After (With Skills)
+### 之前（没有 Skill）
 
 ```
-User: "Web API reports Rc cannot be sent"
+用户：“Web API 报告 Rc 无法被发送”
 
-Skill-guided thinking:
-  → rust-router: Detect "Web API" → Load domain-web
-  → rust-router: Detect "Send" error → Load m07-concurrency
-  → m07-concurrency: "Don't just fix, trace UP"
-  → domain-web: "Handlers run on any thread" (constraint)
-  → domain-web: "Rc in state" is Common Mistake (validation)
-  → m07-concurrency: "Multi-thread + shared → Arc" (decision tree)
-  → Answer: Arc + State extractor (domain best practice)
+Claude 的思考：
+  → 我知道 Rc 不是 Send
+  → 我知道 Arc 是 Send
+  → 答案：“使用 Arc”
 ```
 
----
+### 之后（有 Skill）
 
-## The Skill Contract
+```
+用户：“Web API 报告 Rc 无法被发送”
 
-Every skill in rust-skills follows this contract:
-
-```markdown
-# Skill Name
-
-> Layer X: Category
-
-## Core Question
-[The meta-question that reframes the problem]
-
-## Error → Design Question
-[Transforms surface symptoms into deeper questions]
-
-## Trace Up ↑
-[When and how to escalate to higher layers]
-
-## Trace Down ↓
-[How to implement from design decisions]
-
-## Decision Framework
-[Trees/tables for making choices, not prescriptions]
-
-## Anti-Patterns
-[What NOT to do, and why]
+Skill 引导的思考：
+  → rust-router：检测到“Web API” → 加载 domain-web
+  → rust-router：检测到“Send”错误 → 加载 m07-concurrency
+  → m07-concurrency：“不要只修复，要向上追溯”
+  → domain-web：“处理器在任意线程上运行”（约束）
+  → domain-web：“状态中的 Rc”是常见错误（验证）
+  → m07-concurrency：“多线程 + 共享 → Arc”（决策树）
+  → 答案：Arc + State 提取器（领域最佳实践）
 ```
 
 ---
 
-## Formal Definition
+## Skill 契约
 
-### Skill (n.)
+rust-skills 中的每个 Skill 都遵循以下契约：
 
-> A **Cognitive Protocol** consisting of:
+```markdown
+# Skill 名称
+
+> Layer X：类别
+
+## 核心问题
+[重新定义问题的元问题]
+
+## 错误 → 设计问题
+[将表面症状转化为更深层的问题]
+
+## 向上追溯 ↑
+[何时及如何升级到更高层级]
+
+## 向下追溯 ↓
+[如何从设计决策实现]
+
+## 决策框架
+[用于做出选择的树形/表格，而非规定]
+
+## 反模式
+[不应该做什么，以及原因]
+```
+
+---
+
+## 正式定义
+
+### Skill（名词）
+
+> 一种**认知协议**，包含：
 >
-> 1. **Classification Rules** - How to categorize this problem
-> 2. **Reasoning Templates** - What questions to ask
-> 3. **Constraint Definitions** - What boundaries apply
-> 4. **Attention Directives** - Where to look for context
-> 5. **Decision Frameworks** - How to choose between options
+> 1. **分类规则** - 如何对这个问题分类
+> 2. **推理模板** - 应该问什么问题
+> 3. **约束定义** - 适用哪些边界
+> 4. **注意力指令** - 何处查找上下文
+> 5. **决策框架** - 如何在选项之间选择
 >
-> That **shapes the reasoning process** rather than providing pre-computed answers.
+> 它**塑造推理过程**而非提供预先计算好的答案。
 
-### In Code Terms
+### 用代码表达
 
 ```rust
 struct Skill {
-    /// Routes problem to appropriate thinking mode
+    /// 将问题路由到适当的思维模式
     routing: fn(Problem) -> Layer,
 
-    /// Questions to ask, not answers to give
+    /// 要问的问题，而非要给出的答案
     core_question: MetaQuestion,
 
-    /// Boundaries that constrain valid solutions
+    /// 约束有效解决方案的边界
     constraints: Vec<Constraint>,
 
-    /// What to pay attention to in this context
+    /// 在此上下文中需要注意的内容
     attention: Vec<AttentionDirective>,
 
-    /// Decision trees for making choices
+    /// 用于做出选择的决策树
     decisions: Vec<DecisionFramework>,
 
-    /// Links to related skills for tracing
+    /// 指向相关 Skill 的链接，用于追溯
     trace_up: Vec<SkillRef>,
     trace_down: Vec<SkillRef>,
 }
 
 impl Skill {
-    /// Skills don't answer, they guide reasoning
+    /// Skill 不会给出答案，而是引导推理
     fn apply(&self, problem: Problem) -> ReasoningProcess {
-        // NOT: return Answer
-        // BUT: return HowToThinkAboutThis
+        // 不是：return Answer
+        // 而是：return HowToThinkAboutThis
     }
 }
 ```
 
 ---
 
-## Why This Matters
+## 为什么这很重要
 
-### Knowledge-Based Approach (Limited)
-
-```
-Input: E0382
-Output: "Use clone()"
-Result: Compiles, but may be wrong design
-```
-
-### Skill-Based Approach (Powerful)
+### 基于知识的方法（有限）
 
 ```
-Input: E0382 + "Web API" context
-Process:
-  1. Route to m01-ownership + domain-web
-  2. Ask "Who should own this?"
-  3. Check domain constraint "thread-safe state"
-  4. Decide via framework "shared + multi-thread → Arc"
-  5. Apply domain pattern "State<Arc<T>>"
-Output: Architecturally correct solution
-Result: Right design for this domain
+输入：E0382
+输出：“使用 clone()”
+结果：能编译，但可能是错误的设计
+```
+
+### 基于 Skill 的方法（强大）
+
+```
+输入：E0382 + “Web API” 上下文
+过程：
+  1. 路由到 m01-ownership + domain-web
+  2. 问“谁应该拥有这个？”
+  3. 检查领域约束“线程安全状态”
+  4. 通过框架决策“共享 + 多线程 → Arc”
+  5. 应用领域模式“State<Arc<T>>”
+输出：架构正确的解决方案
+结果：适用于该领域的正确设计
 ```
 
 ---
 
-## Summary
+## 总结
 
-| Aspect | Knowledge Base | Skill |
+| 维度 | 知识库 | Skill |
 |--------|---------------|-------|
-| Contains | Facts, answers | Protocols, frameworks |
-| Provides | What to do | How to think |
-| Output | Solutions | Reasoning processes |
-| Adapts to | Nothing | Context, domain |
-| Value-add | Recall | Judgment |
+| 包含 | 事实、答案 | 协议、框架 |
+| 提供 | 做什么 | 如何思考 |
+| 输出 | 解决方案 | 推理过程 |
+| 适应性 | 无 | 上下文、领域 |
+| 增值 | 回忆 | 判断 |
 
-### One-Line Definition
+### 一句话定义
 
-> **A Skill is a reusable reasoning protocol that transforms how Claude thinks about a class of problems, not what it knows about them.**
+> **Skill 是一种可重用的推理协议，它改变的是 Claude 如何思考某类问题，而非它对这些问题知道什么。**
 
 ---
 
-## rust-skills Architecture Summary
+## rust-skills 架构总结
 
 ```
 ┌─────────────────────────────────────────────────┐
 │                  rust-router                     │
-│         (Cognitive Traffic Controller)           │
+│             （认知交通控制器）                     │
 └─────────────────┬───────────────────────────────┘
                   │
-        ┌─────────┼─────────┐
-        │         │         │
-        ▼         ▼         ▼
-   ┌─────────┬─────────┬─────────┐
-   │ Layer 1 │ Layer 2 │ Layer 3 │
-   │Mechanism│ Design  │ Domain  │
-   │ Skills  │ Skills  │ Skills  │
-   └────┬────┴────┬────┴────┬────┘
-        │         │         │
-        │    Reasoning      │
-        │    Templates      │
-        │         │         │
-        └─────────┼─────────┘
+         ┌────────┼────────┐
+         │        │        │
+         ▼        ▼        ▼
+    ┌─────────┬─────────┬─────────┐
+    │ Layer 1 │ Layer 2 │ Layer 3 │
+    │ 机制类  │ 设计类  │ 领域类  │
+    │ Skills  │ Skills  │ Skills  │
+    └────┬────┴────┬────┴────┬────┘
+         │        │         │
+         │    推理模板      │
+         │        │         │
+         └────────┼─────────┘
                   │
                   ▼
-        ┌─────────────────┐
-        │ Context-Aware   │
-        │ Reasoning       │
-        │ Process         │
-        └─────────────────┘
+         ┌─────────────────┐
+         │   上下文感知     │
+         │   推理过程       │
+         └─────────────────┘
 ```
 
-**rust-skills is not a Rust knowledge base.**
-**rust-skills is a Rust reasoning system.**
+**rust-skills 不是一个 Rust 知识库。**
+**rust-skills 是一个 Rust 推理系统。**

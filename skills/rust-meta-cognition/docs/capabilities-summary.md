@@ -1,316 +1,316 @@
-# Rust-Skills Capabilities Summary
+# Rust-Skills 能力概览
 
-> Complete capability inventory of the rust-skills Claude Code plugin
+> rust-skills Claude Code 插件的完整能力清单
 
-## Overview
+## 概览
 
-| Metric | Count |
+| 指标 | 数量 |
 |--------|-------|
-| Total Skills | 31 |
-| Background Agents | 8 |
-| Slash Commands | 18 |
-| Unsafe Rules | 47 |
-| Coding Guidelines | 80+ |
-| Trigger Keywords | 400+ |
+| 总 Skill 数 | 31 |
+| 后台 Agent | 8 |
+| 斜杠命令 | 18 |
+| Unsafe 规则 | 47 |
+| 编码规范 | 80+ |
+| 触发关键词 | 400+ |
 
 ---
 
-## Core Architecture: Meta-Cognition Framework
+## 核心架构：元认知框架
 
-### Three-Layer Cognitive Model
+### 三层认知模型
 
 ```
 ┌─────────────────────────────────────────────────────┐
-│ Layer 3: Domain Constraints (WHY)                   │
-│ ├── domain-fintech: Audit, precision, immutability │
-│ ├── domain-web: Stateless, thread-safe, async      │
-│ ├── domain-cli: Single-thread, user interaction    │
-│ ├── domain-embedded: no_std, resource constraints  │
-│ ├── domain-cloud-native: Distributed, observable   │
-│ ├── domain-iot: Low resource, telemetry            │
-│ └── domain-ml: Tensor ops, inference optimization  │
+│ Layer 3：领域约束（为什么）                          │
+│ ├── domain-fintech：审计、精度、不可变             │
+│ ├── domain-web：无状态、线程安全、异步             │
+│ ├── domain-cli：单线程、用户交互                   │
+│ ├── domain-embedded：no_std、资源约束               │
+│ ├── domain-cloud-native：分布式、可观测             │
+│ ├── domain-iot：低资源、遥测                       │
+│ └── domain-ml：张量运算、推理优化                   │
 ├─────────────────────────────────────────────────────┤
-│ Layer 2: Design Choices (WHAT)                      │
-│ ├── m09-domain: DDD, entity vs value object        │
-│ ├── m10-performance: Benchmarking, optimization    │
-│ ├── m11-ecosystem: Crate selection, integration    │
-│ ├── m12-lifecycle: RAII, Drop, resource patterns   │
-│ ├── m13-domain-error: Retry, circuit breaker       │
-│ ├── m14-mental-model: Learning, mental models      │
-│ └── m15-anti-pattern: Code smells, pitfalls        │
+│ Layer 2：设计选择（做什么）                          │
+│ ├── m09-domain：DDD、实体 vs 值对象                │
+│ ├── m10-performance：基准测试、优化                 │
+│ ├── m11-ecosystem：Crate 选择、集成                 │
+│ ├── m12-lifecycle：RAII、Drop、资源模式             │
+│ ├── m13-domain-error：重试、断路器                  │
+│ ├── m14-mental-model：学习、心智模型                │
+│ └── m15-anti-pattern：代码坏味道、陷阱              │
 ├─────────────────────────────────────────────────────┤
-│ Layer 1: Language Mechanics (HOW)                   │
-│ ├── m01-ownership: Ownership, borrowing, lifetime  │
-│ ├── m02-resource: Box, Rc, Arc, smart pointers     │
-│ ├── m03-mutability: mut, Cell, RefCell, interior   │
-│ ├── m04-zero-cost: Generics, traits, dispatch      │
-│ ├── m05-type-driven: Newtype, PhantomData, state   │
-│ ├── m06-error-handling: Result, Error, panic       │
-│ └── m07-concurrency: Send, Sync, async, channels   │
+│ Layer 1：语言机制（如何做）                          │
+│ ├── m01-ownership：所有权、借用、生命周期           │
+│ ├── m02-resource：Box、Rc、Arc、智能指针            │
+│ ├── m03-mutability：mut、Cell、RefCell、内部可变性  │
+│ ├── m04-zero-cost：泛型、trait、分发                │
+│ ├── m05-type-driven：Newtype、PhantomData、状态      │
+│ ├── m06-error-handling：Result、Error、panic        │
+│ └── m07-concurrency：Send、Sync、async、通道         │
 └─────────────────────────────────────────────────────┘
 ```
 
-### Routing Flow
+### 路由流程
 
 ```
-User Question
+用户问题
     │
     ▼
 ┌─────────────────┐
-│ Hook Triggers   │ ← 400+ keywords (EN/CN/Error codes)
+│ Hook 触发       │ ← 400+ 关键词（英文/中文/错误码）
 │ (UserPromptSubmit)
 └────────┬────────┘
          │
          ▼
 ┌─────────────────┐
-│ rust-router     │ ← Identifies entry layer + domain
+│ rust-router     │ ← 识别入口层级 + 领域
 └────────┬────────┘
          │
-    ┌────┴────┐
-    │         │
-    ▼         ▼
+     ┌───┴────┐
+     │        │
+     ▼        ▼
 ┌───────┐ ┌────────┐
-│ L1    │ │ L3     │  ← Dual-skill loading
-│ Skill │ │ Domain │
+│ L1    │ │ L3     │  ← 双 Skill 加载
+│ Skill │ │ 领域   │
 └───┬───┘ └────┬───┘
     │          │
     └────┬─────┘
          │
          ▼
 ┌─────────────────┐
-│ Trace UP/DOWN   │ ← Cross-layer reasoning
+│ 向上/向下追溯   │ ← 跨层推理
 └────────┬────────┘
          │
          ▼
 ┌─────────────────┐
-│ Context-Aware   │ ← Domain best practices
-│ Answer          │
+│ 上下文感知      │ ← 领域最佳实践
+│ 答案            │
 └─────────────────┘
 ```
 
 ---
 
-## Skills Inventory (31 Total)
+## Skill 清单（共 31 个）
 
-### Layer 1: Language Mechanics (7 Skills)
+### Layer 1：语言机制（7 个 Skill）
 
-| Skill | Core Question | Triggers |
+| Skill | 核心问题 | 触发条件 |
 |-------|---------------|----------|
-| **m01-ownership** | Who should own this data? | E0382, E0597, E0506, E0507, E0515, E0716, move, borrow, lifetime |
-| **m02-resource** | What ownership model needed? | Box, Rc, Arc, Weak, RefCell, Cell, smart pointer |
-| **m03-mutability** | Where are immutability boundaries? | E0596, E0499, E0502, mut, interior mutability |
-| **m04-zero-cost** | What can compiler optimize? | E0277, E0308, E0599, generic, trait, monomorphization |
-| **m05-type-driven** | How do types encode constraints? | PhantomData, newtype, type state, builder pattern |
-| **m06-error-handling** | Expected or exceptional failure? | Result, Option, Error, panic, anyhow, thiserror |
-| **m07-concurrency** | How ensure compile-time safety? | Send, Sync, thread, async, await, Mutex, channel |
+| **m01-ownership** | 谁应该拥有这个数据？ | E0382, E0597, E0506, E0507, E0515, E0716, move, borrow, lifetime |
+| **m02-resource** | 需要什么所有权模型？ | Box, Rc, Arc, Weak, RefCell, Cell, 智能指针 |
+| **m03-mutability** | 不可变性边界在哪里？ | E0596, E0499, E0502, mut, 内部可变性 |
+| **m04-zero-cost** | 编译器能优化什么？ | E0277, E0308, E0599, generic, trait, monomorphization |
+| **m05-type-driven** | 类型如何编码约束？ | PhantomData, newtype, 类型状态, builder 模式 |
+| **m06-error-handling** | 预期还是异常失败？ | Result, Option, Error, panic, anyhow, thiserror |
+| **m07-concurrency** | 如何确保编译时安全？ | Send, Sync, thread, async, await, Mutex, channel |
 
-### Layer 2: Design Choices (7 Skills)
+### Layer 2：设计选择（7 个 Skill）
 
-| Skill | Core Question | Focus |
+| Skill | 核心问题 | 关注点 |
 |-------|---------------|-------|
-| **m09-domain** | How do domain rules become types? | DDD, entity, value object, aggregate, repository |
-| **m10-performance** | What are performance bottlenecks? | Benchmark, profiling, flamegraph, criterion |
-| **m11-ecosystem** | How integrate with existing systems? | Crate selection, FFI, PyO3, WASM, feature flags |
-| **m12-lifecycle** | What are domain resource patterns? | RAII, Drop, connection pools, OnceCell |
-| **m13-domain-error** | What are failure recovery strategies? | Retry, circuit breaker, graceful degradation |
-| **m14-mental-model** | What is the correct mental model? | Learning Rust, visual memory, analogies |
-| **m15-anti-pattern** | What are common cognitive pitfalls? | Code smells, beginner mistakes, idioms |
+| **m09-domain** | 领域规则如何变成类型？ | DDD, 实体, 值对象, 聚合, 仓库 |
+| **m10-performance** | 性能瓶颈在哪里？ | 基准测试, 性能分析, flamegraph, criterion |
+| **m11-ecosystem** | 如何与现有系统集成？ | Crate 选择, FFI, PyO3, WASM, 特性标志 |
+| **m12-lifecycle** | 领域资源模式是什么？ | RAII, Drop, 连接池, OnceCell |
+| **m13-domain-error** | 故障恢复策略是什么？ | 重试, 断路器, 优雅降级 |
+| **m14-mental-model** | 正确的心智模型是什么？ | 学习 Rust, 视觉记忆, 类比 |
+| **m15-anti-pattern** | 常见的认知陷阱有哪些？ | 代码坏味道, 新手错误, 惯用法 |
 
-### Layer 3: Domain Constraints (7 Skills)
+### Layer 3：领域约束（7 个 Skill）
 
-| Skill | Domain | Key Constraints |
+| Skill | 领域 | 关键约束 |
 |-------|--------|-----------------|
-| **domain-fintech** | Financial | Audit trail, decimal precision, immutable transactions |
-| **domain-web** | Web Services | Stateless HTTP, thread-safe state, async handlers |
-| **domain-cli** | Command Line | Argument parsing, TUI, progress bars, config files |
-| **domain-embedded** | Embedded/no_std | MCU, bare metal, HAL, interrupts, resource limits |
-| **domain-cloud-native** | Cloud | Kubernetes, gRPC, observability, distributed tracing |
-| **domain-iot** | IoT | MQTT, sensors, edge computing, low resources |
-| **domain-ml** | Machine Learning | Tensors, inference, model optimization |
+| **domain-fintech** | 金融 | 审计追踪, 十进制精度, 不可变交易 |
+| **domain-web** | Web 服务 | 无状态 HTTP, 线程安全状态, 异步处理器 |
+| **domain-cli** | 命令行 | 参数解析, TUI, 进度条, 配置文件 |
+| **domain-embedded** | 嵌入式/no_std | MCU, 裸机, HAL, 中断, 资源限制 |
+| **domain-cloud-native** | 云原生 | Kubernetes, gRPC, 可观测性, 分布式追踪 |
+| **domain-iot** | 物联网 | MQTT, 传感器, 边缘计算, 低资源 |
+| **domain-ml** | 机器学习 | 张量, 推理, 模型优化 |
 
-### Core & Utility Skills (10 Skills)
+### 核心及工具类 Skill（10 个）
 
-| Skill | Purpose |
+| Skill | 目的 |
 |-------|---------|
-| **rust-router** | Routes ALL Rust questions, implements meta-cognition |
-| **rust-learner** | Fetches latest Rust/crate versions via agents |
-| **coding-guidelines** | 80+ Rust coding rules (naming, style, patterns) |
-| **unsafe-checker** | 47 unsafe rules, SAFETY comments, FFI review |
-| **rust-daily** | Aggregates Rust news from Reddit, TWIR, blogs |
-| **rust-skill-creator** | Generates new skills from documentation |
-| **core-actionbook** | Pre-computed website selectors |
-| **core-agent-browser** | Browser automation infrastructure |
-| **core-dynamic-skills** | Dynamic skill generation from Cargo.toml |
-| **core-fix-skill-docs** | Skill documentation maintenance |
+| **rust-router** | 路由所有 Rust 问题，实现元认知 |
+| **rust-learner** | 通过 agent 获取最新的 Rust/crate 版本 |
+| **coding-guidelines** | 80+ 条 Rust 编码规则（命名、风格、模式） |
+| **unsafe-checker** | 47 条 unsafe 规则、SAFETY 注释、FFI 审查 |
+| **rust-daily** | 聚合 Reddit、TWIR、博客的 Rust 新闻 |
+| **rust-skill-creator** | 从文档生成新的 Skill |
+| **core-actionbook** | 预计算的网站选择器 |
+| **core-agent-browser** | 浏览器自动化基础设施 |
+| **core-dynamic-skills** | 从 Cargo.toml 动态生成 Skill |
+| **core-fix-skill-docs** | Skill 文档维护 |
 
 ---
 
-## Agents (8 Background Researchers)
+## Agent（8 个后台研究员）
 
-| Agent | Data Source | Output |
+| Agent | 数据源 | 输出 |
 |-------|-------------|--------|
-| **rust-changelog** | releases.rs | Rust version features, breaking changes |
-| **crate-researcher** | lib.rs, crates.io | Crate metadata, versions, features |
-| **docs-researcher** | docs.rs | Third-party crate API documentation |
-| **std-docs-researcher** | doc.rust-lang.org | Standard library documentation |
-| **clippy-researcher** | rust-clippy | Lint explanations, categories |
-| **rust-daily-reporter** | Reddit, TWIR, Blog | Ecosystem news (day/week/month) |
-| **browser-fetcher** | WebFetch | Generic web content fallback |
+| **rust-changelog** | releases.rs | Rust 版本特性、破坏性变更 |
+| **crate-researcher** | lib.rs, crates.io | Crate 元数据、版本、特性 |
+| **docs-researcher** | docs.rs | 第三方 crate API 文档 |
+| **std-docs-researcher** | doc.rust-lang.org | 标准库文档 |
+| **clippy-researcher** | rust-clippy | Lint 解释、分类 |
+| **rust-daily-reporter** | Reddit, TWIR, 博客 | 生态新闻（日/周/月） |
+| **browser-fetcher** | WebFetch | 通用网页内容回退方案 |
 
-### Tool Chain Priority
+### 工具链优先级
 
 ```
-1. actionbook MCP    → Pre-computed selectors
-2. agent-browser CLI → Browser automation
-3. WebFetch          → Last resort fallback
+1. actionbook MCP    → 预计算选择器
+2. agent-browser CLI → 浏览器自动化
+3. WebFetch          → 最后的回退方案
 ```
 
 ---
 
-## Commands (18 Slash Commands)
+## 命令（18 个斜杠命令）
 
-### Query Commands
+### 查询命令
 
-| Command | Purpose |
+| 命令 | 目的 |
 |---------|---------|
-| `/rust-router` | Route question to appropriate skill |
-| `/guideline [--clippy] rule` | Query coding guidelines |
-| `/skill-index category` | Search skills by category |
-| `/docs crate [item]` | Fetch API documentation |
+| `/rust-router` | 将问题路由到适当的 Skill |
+| `/guideline [--clippy] rule` | 查询编码规范 |
+| `/skill-index category` | 按类别搜索 Skill |
+| `/docs crate [item]` | 获取 API 文档 |
 
-### Version & Info Commands
+### 版本与信息命令
 
-| Command | Purpose |
+| 命令 | 目的 |
 |---------|---------|
-| `/rust-features [version]` | Rust changelog/features |
-| `/crate-info crate` | Crate metadata |
-| `/rust-daily [day\|week\|month]` | Ecosystem news |
+| `/rust-features [version]` | Rust 更新日志/特性 |
+| `/crate-info crate` | Crate 元数据 |
+| `/rust-daily [day|week|month]` | 生态新闻 |
 
-### Audit Commands
+### 审计命令
 
-| Command | Purpose |
+| 命令 | 目的 |
 |---------|---------|
-| `/unsafe-check file` | Analyze file for unsafe issues |
-| `/unsafe-review file` | Interactive unsafe review |
-| `/rust-review file` | Lightweight clippy review |
-| `/audit [security\|safety\|concurrency\|full]` | Heavy-weight audit |
+| `/unsafe-check file` | 分析文件的 unsafe 问题 |
+| `/unsafe-review file` | 交互式 unsafe 审查 |
+| `/rust-review file` | 轻量级 clippy 审查 |
+| `/audit [security|safety|concurrency|full]` | 重量级审计 |
 
-### Cache Commands
+### 缓存命令
 
-| Command | Purpose |
+| 命令 | 目的 |
 |---------|---------|
-| `/cache-status [--verbose]` | Show cache status |
-| `/cache-clean [--all\|--expired\|crate]` | Clean cache |
+| `/cache-status [--verbose]` | 显示缓存状态 |
+| `/cache-clean [--all|--expired|crate]` | 清理缓存 |
 
-### Dynamic Skill Commands
+### 动态 Skill 命令
 
-| Command | Purpose |
+| 命令 | 目的 |
 |---------|---------|
-| `/sync-crate-skills [--force]` | Generate skills from Cargo.toml |
-| `/update-crate-skill crate` | Update specific crate skill |
-| `/clean-crate-skills [--all]` | Remove dynamic skills |
-| `/create-skills-via-llms crate path` | Create skill from llms.txt |
-| `/create-llms-for-skills urls` | Generate llms.txt from URLs |
-| `/fix-skill-docs [--check-only]` | Fix skill documentation |
+| `/sync-crate-skills [--force]` | 从 Cargo.toml 生成 Skill |
+| `/update-crate-skill crate` | 更新特定 crate 的 Skill |
+| `/clean-crate-skills [--all]` | 移除动态 Skill |
+| `/create-skills-via-llms crate path` | 从 llms.txt 创建 Skill |
+| `/create-llms-for-skills urls` | 从 URL 生成 llms.txt |
+| `/fix-skill-docs [--check-only]` | 修复 Skill 文档 |
 
 ---
 
-## Unsafe Checker (47 Rules)
+## Unsafe 检查器（47 条规则）
 
-### Categories
+### 分类
 
-| Category | Rules | Focus |
+| 类别 | 规则数 | 关注点 |
 |----------|-------|-------|
-| Memory Safety | 12 | Pointer validity, alignment, initialization |
-| FFI Safety | 10 | C interop, ABI, extern functions |
-| Concurrency | 8 | Send/Sync impl, data races |
-| Undefined Behavior | 10 | Transmute, unions, aliasing |
-| Documentation | 7 | SAFETY comments, invariants |
+| 内存安全 | 12 | 指针有效性、对齐、初始化 |
+| FFI 安全 | 10 | C 互操作、ABI、外部函数 |
+| 并发安全 | 8 | Send/Sync 实现、数据竞争 |
+| 未定义行为 | 10 | Transmute、联合体、别名 |
+| 文档要求 | 7 | SAFETY 注释、不变量 |
 
-### SAFETY Comment Requirement
+### SAFETY 注释要求
 
 ```rust
-// SAFETY: [preconditions] are satisfied because [reasoning]
+// SAFETY：[前置条件] 已满足，因为 [原因]
 unsafe {
-    // code
+    // 代码
 }
 ```
 
 ---
 
-## Coding Guidelines (80+ Rules)
+## 编码规范（80+ 条规则）
 
-### Categories
+### 分类
 
-| Category | Rules | Examples |
+| 类别 | 规则数 | 示例 |
 |----------|-------|----------|
-| Naming | 15 | snake_case, PascalCase, SCREAMING_SNAKE |
-| Data Types | 12 | Prefer &str over String, use newtype |
-| Error Handling | 10 | No unwrap in lib, use thiserror |
-| Memory | 8 | Avoid unnecessary allocations |
-| Concurrency | 10 | Prefer channels over shared state |
-| Async | 8 | Don't block in async, scope locks |
-| Macros | 5 | Prefer functions over macros |
-| Documentation | 12 | Doc examples, # Panics, # Errors |
+| 命名 | 15 | snake_case, PascalCase, SCREAMING_SNAKE |
+| 数据类型 | 12 | 优先 &str 而非 String，使用 newtype |
+| 错误处理 | 10 | 库中不使用 unwrap，使用 thiserror |
+| 内存 | 8 | 避免不必要的分配 |
+| 并发 | 10 | 优先通道而非共享状态 |
+| 异步 | 8 | 不要在 async 中阻塞，控制锁范围 |
+| 宏 | 5 | 优先函数而非宏 |
+| 文档 | 12 | 文档示例、# Panics、# Errors |
 
 ---
 
-## Meta-Cognition Framework (_meta/)
+## 元认知框架（_meta/）
 
-| File | Purpose |
+| 文件 | 目的 |
 |------|---------|
-| **reasoning-framework.md** | Three-layer tracing methodology |
-| **layer-definitions.md** | L1/L2/L3 scope and signals |
-| **error-protocol.md** | 3-Strike escalation rule |
-| **externalization.md** | Filesystem as external memory |
-| **hooks-patterns.md** | Cognitive trigger patterns |
+| **reasoning-framework.md** | 三层追溯方法 |
+| **layer-definitions.md** | L1/L2/L3 范围和信号 |
+| **error-protocol.md** | 三振出局升级规则 |
+| **externalization.md** | 文件系统作为外部记忆 |
+| **hooks-patterns.md** | 认知触发模式 |
 
 ---
 
-## Hook System
+## Hook 系统
 
-### Trigger Keywords (400+)
+### 触发关键词（400+）
 
-| Category | Examples |
+| 类别 | 示例 |
 |----------|----------|
-| Error Codes | E0382, E0597, E0277, E0499, E0502, E0596 |
-| Ownership | ownership, borrow, lifetime, move, clone |
-| Concurrency | async, await, Send, Sync, thread, spawn |
-| Smart Pointers | Box, Rc, Arc, RefCell, Cell, Mutex |
-| Domains | Web API, HTTP, axum, payment, trading, CLI |
-| Chinese | 所有权, 借用, 生命周期, 异步, 并发, 智能指针 |
-| Questions | how to, why, what is, 怎么, 为什么, 如何 |
+| 错误码 | E0382, E0597, E0277, E0499, E0502, E0596 |
+| 所有权 | ownership, borrow, lifetime, move, clone |
+| 并发 | async, await, Send, Sync, thread, spawn |
+| 智能指针 | Box, Rc, Arc, RefCell, Cell, Mutex |
+| 领域 | Web API, HTTP, axum, payment, trading, CLI |
+| 中文 | 所有权, 借用, 生命周期, 异步, 并发, 智能指针 |
+| 问题 | how to, why, what is, 怎么, 为什么, 如何 |
 
-### Hook Behavior
+### Hook 行为
 
-1. **Detect domain keywords** → Load both L1 and L3 skills
-2. **Enforce output format** → Reasoning Chain required
-3. **Mandate tracing** → Must trace through relevant layers
+1. **检测领域关键词** → 同时加载 L1 和 L3 Skill
+2. **强制输出格式** → 需要推理链
+3. **强制追溯** → 必须追溯相关层级
 
 ---
 
-## Caching System
+## 缓存系统
 
-### Configuration
+### 配置
 
-| Cache | TTL | Purpose |
+| 缓存 | TTL | 目的 |
 |-------|-----|---------|
-| Crates | 24h | Crate metadata |
-| Rust Versions | 168h | Release info |
-| Docs | 72h | API documentation |
-| Clippy Lints | 168h | Lint data |
+| Crates | 24 小时 | Crate 元数据 |
+| Rust 版本 | 168 小时 | 发布信息 |
+| 文档 | 72 小时 | API 文档 |
+| Clippy Lints | 168 小时 | Lint 数据 |
 
-### Features
+### 特性
 
-- Auto-cleanup of expired entries
-- Stale-while-revalidate strategy
-- Size limits per category
+- 自动清理过期条目
+- 过期时重新验证策略
+- 每类缓存的大小限制
 
 ---
 
-## Project Configuration
+## 项目配置
 
-### Default Rust Project Settings
+### 默认 Rust 项目设置
 
 ```toml
 [package]
@@ -325,7 +325,7 @@ all = "warn"
 pedantic = "warn"
 ```
 
-### Plugin Manifest
+### 插件清单
 
 ```json
 {
@@ -338,79 +338,79 @@ pedantic = "warn"
 
 ---
 
-## Unique Capabilities
+## 独特能力
 
-### 1. Meta-Cognition Routing
+### 1. 元认知路由
 
-Not just answering questions, but **tracing through cognitive layers** to provide domain-aware solutions.
+不仅仅是回答问题，而是**通过认知层级追溯**以提供领域感知的解决方案。
 
-### 2. Dual-Skill Loading
+### 2. 双 Skill 加载
 
-When domain context detected, automatically loads BOTH:
-- Layer 1 skill (mechanics)
-- Layer 3 skill (domain constraints)
+当检测到领域上下文时，自动同时加载：
+- Layer 1 Skill（机制）
+- Layer 3 Skill（领域约束）
 
-### 3. Dynamic Skill Generation
+### 3. 动态 Skill 生成
 
-Automatically generates crate-specific skills from Cargo.toml dependencies.
+从 Cargo.toml 依赖自动生成 crate 专属 Skill。
 
-### 4. Background Research Agents
+### 4. 后台研究 Agent
 
-8 specialized agents fetch live data without blocking conversation.
+8 个专业 agent 在不阻塞对话的情况下获取实时数据。
 
-### 5. Comprehensive Unsafe Auditing
+### 5. 全面的 Unsafe 审计
 
-47 rules covering memory safety, FFI, concurrency, and documentation.
+47 条规则覆盖内存安全、FFI、并发和文档。
 
-### 6. Bilingual Support
+### 6. 双语支持
 
-400+ trigger keywords in both English and Chinese.
+400+ 触发关键词同时支持英文和中文。
 
 ---
 
-## Example: Meta-Cognition in Action
+## 示例：元认知实战
 
-**Question**: "My Web API reports Rc cannot be sent between threads"
+**问题**：“我的 Web API 报告 Rc 无法在线程之间发送”
 
-**Traditional Answer**:
+**传统答案**：
 ```
-Use Arc instead of Rc.
+使用 Arc 替代 Rc。
 ```
 
-**Meta-Cognition Answer**:
+**元认知答案**：
 ```
-### Reasoning Chain
-+-- Layer 1: Send/Sync Error
-|   Problem: Rc<T> cannot be sent between threads
+### 推理链
++-- Layer 1: Send/Sync 错误
+|   问题：Rc<T> 无法在线程之间发送
 |       ^
-+-- Layer 3: Web Domain (domain-web)
-|   Constraint: Handlers run on any thread
-|   Rule: Shared state must be thread-safe
++-- Layer 3: Web 领域（domain-web）
+|   约束：处理器在任意线程上运行
+|   规则：共享状态必须线程安全
 |       v
-+-- Layer 2: Design Choice
-    Decision: Use Arc<T> + State extractor
++-- Layer 2: 设计选择
+    决策：使用 Arc<T> + State 提取器
 
-### Domain Constraints Analysis
-From domain-web:
-- "Rc in state" is listed as Common Mistake
-- Web handlers require Send + Sync bounds
-- Recommended pattern: axum State<Arc<T>>
+### 领域约束分析
+来自 domain-web：
+- “状态中的 Rc”被列为常见错误
+- Web 处理器需要 Send + Sync 约束
+- 推荐模式：axum State<Arc<T>>
 
-### Recommended Solution
-[Complete code using axum State extractor with Arc,
-following Web domain best practices]
+### 推荐解决方案
+[使用 axum State 提取器和 Arc 的完整代码，
+遵循 Web 领域最佳实践]
 ```
 
 ---
 
-## Summary
+## 总结
 
-**rust-skills** transforms Claude from a Rust knowledge base into a **domain-aware Rust architect** that:
+**rust-skills** 将 Claude 从 Rust 知识库转变为**领域感知的 Rust 架构师**，它能够：
 
-1. **Routes** questions through appropriate cognitive layers
-2. **Traces** to find underlying domain constraints
-3. **Recommends** solutions aligned with domain best practices
-4. **Researches** live data through background agents
-5. **Audits** code for safety and style compliance
+1. **路由**问题到适当的认知层级
+2. **追溯**以发现底层的领域约束
+3. **推荐**与领域最佳实践一致的解决方案
+4. **研究**通过后台 agent 获取实时数据
+5. **审计**代码的安全性和风格合规性
 
-The goal: **Surface-level fixes → Architecturally sound, domain-aware solutions**
+目标：**表面级别的修复 → 架构合理、领域感知的解决方案**

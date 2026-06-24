@@ -1,128 +1,128 @@
-# Skills Design Lessons Learned
+# Skill 设计经验总结
 
-> Summary of design principles and best practices from building rust-skills
+> 构建 rust-skills 的设计原则和最佳实践总结
 
-## Core Insight
+## 核心洞察
 
-**Skills are not knowledge databases. They are cognitive scaffolds.**
+**Skill 不是知识数据库。它们是认知支架。**
 
 ```
-Traditional approach:
-  User Question → Search Knowledge → Return Answer
+传统方法：
+  用户问题 → 搜索知识 → 返回答案
 
-Meta-cognition approach:
-  User Question → Identify Layer → Trace Through Layers → Context-Aware Answer
+元认知方法：
+  用户问题 → 识别层级 → 跨层追溯 → 上下文感知的答案
 ```
 
-The real value is not teaching Claude facts (it already knows Rust), but providing a **thinking framework** that produces deeper, domain-aware answers.
+真正的价值不是教给 Claude 事实（它已经了解 Rust），而是提供一个**思维框架**，生成更深层、领域感知的答案。
 
 ---
 
-## Three-Layer Cognitive Model
+## 三层认知模型
 
-### Architecture
+### 架构
 
 ```
-Layer 3: Domain Constraints (WHY)
-├── Business rules, regulatory requirements, SLAs
-├── domain-fintech, domain-web, domain-cli, etc.
-└── "Why is it designed this way?"
+Layer 3：领域约束（为什么）
+├── 业务规则、监管要求、SLA
+├── domain-fintech, domain-web, domain-cli 等
+└──“为什么这样设计？”
 
-Layer 2: Design Choices (WHAT)
-├── Architecture patterns, DDD concepts
+Layer 2：设计选择（做什么）
+├── 架构模式、DDD 概念
 ├── m09-m15 skills
-└── "What pattern should I use?"
+└──“我应该使用什么模式？”
 
-Layer 1: Language Mechanics (HOW)
-├── Ownership, borrowing, lifetimes, traits
+Layer 1：语言机制（如何做）
+├── 所有权、借用、生命周期、trait
 ├── m01-m07 skills
-└── "How do I implement this in Rust?"
+└──“我如何在 Rust 中实现这个？”
 ```
 
-### Tracing Direction
+### 追溯方向
 
-| Entry Point | Direction | Example |
+| 入口点 | 方向 | 示例 |
 |-------------|-----------|---------|
-| Error code (E0xxx) | Trace UP ↑ | E0382 → Why this ownership design? |
-| Domain question | Trace DOWN ↓ | "Build trading system" → How to implement? |
-| Design question | Both directions | Check L3 constraints, then L1 implementation |
+| 错误码（E0xxx） | 向上追溯 ↑ | E0382 → 为什么这个所有权设计？ |
+| 领域问题 | 向下追溯 ↓ | “构建交易系统” → 如何实现？ |
+| 设计问题 | 双向 | 检查 L3 约束，然后 L1 实现 |
 
-### Key Principle
+### 关键原则
 
-**Don't stop at Layer 1.**
+**不要止步于 Layer 1。**
 
 ```
-Bad:  E0382 → "Use .clone()"
-Good: E0382 → Why ownership error? → Domain constraint? → Design pattern → Implementation
+不好：E0382 → “使用 .clone()”
+好：  E0382 → 为什么所有权错误？→ 领域约束？→ 设计模式 → 实现
 ```
 
 ---
 
-## Skill File Structure
+## Skill 文件结构
 
-### SKILL.md Format
+### SKILL.md 格式
 
 ```yaml
 ---
 name: skill-name
 description: "CRITICAL: Use for [purpose]. Triggers on: keyword1, keyword2, ..."
-globs: ["**/*.rs"]  # Optional: file patterns
+globs: ["**/*.rs"]  # 可选：文件模式
 ---
 
-# Skill Title
+# Skill 标题
 
-> **Layer X: Category**
+> **Layer X: 类别**
 
-## Core Question
+## 核心问题
 
-**The meta-question this skill answers**
+**该 Skill 回答的元问题**
 
-## Error → Design Question
+## 错误 → 设计问题
 
-| Error | Don't Just Say | Ask Instead |
+| 错误 | 不要只说 | 而要问 |
 |-------|----------------|-------------|
-| E0xxx | "Quick fix" | "Deeper question" |
+| E0xxx | “快速修复” | “更深层的问题” |
 
-## Trace Up ↑
+## 向上追溯 ↑
 
-When to escalate to higher layers...
+何时升级到更高层级...
 
-## Trace Down ↓
+## 向下追溯 ↓
 
-How to implement from design decisions...
+如何从设计决策实现...
 
-## Quick Reference
+## 快速参考
 
-Tables, flowcharts, decision trees...
+表格、流程图、决策树...
 
-## Common Errors / Anti-Patterns
+## 常见错误 / 反模式
 
-What to avoid...
+应该避免什么...
 
-## Related Skills
+## 相关 Skill
 
-| When | See |
+| 场景 | 参见 |
 |------|-----|
-| Situation | skill-name |
+| 情况 | skill-name |
 ```
 
-### Description Format (CRITICAL)
+### 描述格式（关键）
 
-For skills to be auto-triggered, use this format:
+为使 Skill 能够自动触发，使用此格式：
 
 ```yaml
 description: "CRITICAL: Use for [purpose]. Triggers on: keyword1, keyword2, keyword3"
 ```
 
-- Start with `CRITICAL: Use for`
-- Include `Triggers on:` with comma-separated keywords
-- Include both English and Chinese keywords for bilingual support
+- 以 `CRITICAL: Use for` 开头
+- 包含 `Triggers on:` 后跟逗号分隔的关键词
+- 同时包含英文和中文关键词以支持双语
 
 ---
 
-## Directory Structure
+## 目录结构
 
-### Flat Structure Required
+### 要求扁平结构
 
 ```
 skills/
@@ -135,37 +135,37 @@ skills/
 ├── domain-fintech/SKILL.md    # Layer 3
 ├── domain-web/SKILL.md
 ├── ...
-├── core-actionbook/SKILL.md   # Utilities
-├── rust-router/SKILL.md       # Router
-└── coding-guidelines/SKILL.md # Guidelines
+├── core-actionbook/SKILL.md   # 工具类
+├── rust-router/SKILL.md       # 路由器
+└── coding-guidelines/SKILL.md # 编码规范
 ```
 
-**DO NOT nest skills:**
+**不要嵌套 skill：**
 ```
-# Wrong
+# 错误
 skills/domains/fintech/SKILL.md
 skills/core/actionbook/SKILL.md
 
-# Correct
+# 正确
 skills/domain-fintech/SKILL.md
 skills/core-actionbook/SKILL.md
 ```
 
-### Naming Convention
+### 命名约定
 
-| Category | Prefix | Example |
+| 类别 | 前缀 | 示例 |
 |----------|--------|---------|
-| Layer 1 (Mechanics) | `m0x-` | m01-ownership, m07-concurrency |
-| Layer 2 (Design) | `m1x-` | m09-domain, m15-anti-pattern |
-| Layer 3 (Domain) | `domain-` | domain-web, domain-fintech |
-| Core utilities | `core-` | core-actionbook, core-dynamic-skills |
-| Other | descriptive | rust-router, coding-guidelines |
+| Layer 1（机制） | `m0x-` | m01-ownership, m07-concurrency |
+| Layer 2（设计） | `m1x-` | m09-domain, m15-anti-pattern |
+| Layer 3（领域） | `domain-` | domain-web, domain-fintech |
+| 核心工具 | `core-` | core-actionbook, core-dynamic-skills |
+| 其他 | 描述性名称 | rust-router, coding-guidelines |
 
 ---
 
-## Hook Configuration
+## Hook 配置
 
-### Plugin Hooks (hooks/hooks.json)
+### 插件 Hook（hooks/hooks.json）
 
 ```json
 {
@@ -185,17 +185,17 @@ skills/core-actionbook/SKILL.md
 }
 ```
 
-### Hook Script Design Principles
+### Hook 脚本设计原则
 
-1. **Force dual-skill loading**: When domain keywords present, load BOTH L1 and L3 skills
-2. **Mandate output format**: Require reasoning chain, not just answer
-3. **Provide examples**: Show correct vs wrong responses
-4. **Use English**: Keep instructions in English for consistency
+1. **强制双 Skill 加载**：当出现领域关键词时，同时加载 L1 和 L3 Skill
+2. **强制输出格式**：要求推理链，而不仅仅是答案
+3. **提供示例**：展示正确与错误的回复
+4. **使用英文**：为保持一致性，指令使用英文
 
-### Domain Detection in Hook
+### Hook 中的领域检测
 
 ```
-| Keywords in Question | Domain Skill to Load |
+| 问题中的关键词 | 要加载的领域 Skill |
 |---------------------|---------------------|
 | Web API, HTTP, axum | domain-web |
 | payment, trading    | domain-fintech |
@@ -204,172 +204,172 @@ skills/core-actionbook/SKILL.md
 
 ---
 
-## Meta-Cognition Routing
+## 元认知路由
 
-### Router Skill (rust-router)
+### 路由 Skill（rust-router）
 
-The router is the entry point for ALL Rust questions:
+路由器是所有 Rust 问题的入口：
 
-1. **Identify entry layer** (L1/L2/L3)
-2. **Detect domain keywords** → Load domain skill
-3. **Route to appropriate skill** (m0x, m1x, domain-*)
-4. **Enforce tracing** (UP or DOWN through layers)
+1. **识别入口层级**（L1/L2/L3）
+2. **检测领域关键词** → 加载领域 Skill
+3. **路由到适当的 Skill**（m0x, m1x, domain-*）
+4. **强制追溯**（向上或向下通过各层级）
 
-### Dual-Skill Loading
+### 双 Skill 加载
 
-**CRITICAL**: When domain context is present, load BOTH:
+**关键**：当存在领域上下文时，同时加载：
 
 ```
-Question: "Web API config error: Rc cannot be sent"
+问题：“Web API 配置错误：Rc 无法被发送”
 
-Load:
-1. m07-concurrency (L1 - Send/Sync mechanics)
-2. domain-web (L3 - Web state management constraints)
+加载：
+1. m07-concurrency（L1 - Send/Sync 机制）
+2. domain-web（L3 - Web 状态管理约束）
 
-Answer must reference BOTH layers.
+答案必须引用两个层级。
 ```
 
-### Output Format Enforcement
+### 输出格式强制
 
 ```markdown
-### Reasoning Chain
-+-- Layer 1: [error]
+### 推理链
++-- Layer 1：[错误]
 |       ^
-+-- Layer 3: [domain constraint]
++-- Layer 3：[领域约束]
 |       v
-+-- Layer 2: [design decision]
++-- Layer 2：[设计决策]
 
-### Domain Constraints Analysis
-[Reference specific rules from domain skill]
+### 领域约束分析
+[引用领域 Skill 中的具体规则]
 
-### Recommended Solution
-[Code following domain best practices]
+### 推荐解决方案
+[遵循领域最佳实践的代码]
 ```
 
 ---
 
-## Lessons Learned
+## 经验教训
 
-### 1. Skills Are Thinking Frameworks, Not Knowledge Bases
+### 1. Skill 是思维框架，而非知识库
 
-Claude already knows Rust. Skills provide:
-- Structured reasoning paths
-- Domain-specific constraints
-- Decision frameworks
+Claude 已经了解 Rust。Skill 提供：
+- 结构化的推理路径
+- 特定领域的约束
+- 决策框架
 
-### 2. Tracing Is Mandatory, Not Optional
+### 2. 追溯是强制性的，而非可选的
 
-Without enforcement, Claude stops at Layer 1 (quick fix).
-Hook must **mandate** tracing through all relevant layers.
+没有强制执行，Claude 会止步于 Layer 1（快速修复）。
+Hook 必须**强制**追溯所有相关层级。
 
-### 3. Domain Detection Is Critical
+### 3. 领域检测至关重要
 
-The same error (E0382) has different solutions in different domains:
-- Web: Arc<T> + State extractor
-- Fintech: Arc<T> for audit trail
-- CLI: Maybe Rc<T> is fine (single-thread)
+相同的错误（E0382）在不同领域中有不同的解决方案：
+- Web：Arc<T> + State 提取器
+- 金融科技：Arc<T> 用于审计追踪
+- CLI：也许 Rc<T> 就足够了（单线程）
 
-### 4. Output Format Drives Behavior
+### 4. 输出格式驱动行为
 
-If you want reasoning chains, **require them in the output format**.
-Vague instructions like "trace through layers" don't work.
+如果你想要推理链，**在输出格式中强制要求它们**。
+诸如“追溯各层级”之类的模糊指令不起作用。
 
-### 5. Flat Directory Structure
+### 5. 扁平目录结构
 
-Claude Code plugin system requires flat skill directories.
-Nested structures (`skills/domains/web/`) won't be registered.
+Claude Code 插件系统要求扁平的 skill 目录。
+嵌套结构（`skills/domains/web/`）不会被注册。
 
-### 6. Keyword Matching Matters
+### 6. 关键词匹配很重要
 
-Skills need comprehensive trigger keywords:
-- Error codes (E0382, E0597)
-- English terms (ownership, borrow)
-- Chinese terms (所有权, 借用)
-- Domain terms (Web API, axum)
+Skill 需要全面的触发关键词：
+- 错误码（E0382, E0597）
+- 英文术语（ownership, borrow）
+- 中文术语（所有权, 借用）
+- 领域术语（Web API, axum）
 
-### 7. Examples Are Essential
+### 7. 示例至关重要
 
-Both in skills and hooks:
-- Show CORRECT response format
-- Show WRONG response to avoid
-- Include complete reasoning chain
+无论在 Skill 还是 Hook 中：
+- 展示正确的回复格式
+- 展示需要避免的错误回复
+- 包含完整的推理链
 
-### 8. Internal Skills Need Different Treatment
+### 8. 内部 Skill 需要不同处理
 
-Internal/utility skills should NOT auto-trigger:
+内部/工具类 Skill 不应自动触发：
 ```yaml
-# No description = won't auto-trigger
+# 无 description = 不会自动触发
 name: core-actionbook
-# Internal tool - no description
+# 内部工具 - 无描述
 ```
 
 ---
 
-## Anti-Patterns to Avoid
+## 需要避免的反模式
 
-### 1. Knowledge Dump Skills
+### 1. 知识倾倒型 Skill
 
 ```markdown
-# Bad: Just facts
-## Ownership Rules
-1. Each value has one owner
-2. When owner goes out of scope, value is dropped
+# 不好：只有事实
+## 所有权规则
+1. 每个值只有一个所有者
+2. 当所有者离开作用域，值被丢弃
 ...
 ```
 
-### 2. No Tracing Instructions
+### 2. 没有追溯指令
 
 ```markdown
-# Bad: No trace up/down
-## Quick Reference
-| Error | Fix |
-| E0382 | Clone it |
+# 不好：没有向上/向下追溯
+## 快速参考
+| 错误 | 修复 |
+| E0382 | 克隆它 |
 ```
 
-### 3. Vague Domain References
+### 3. 模糊的领域引用
 
 ```markdown
-# Bad: Too vague
-Trace Up: Check domain-* skills
+# 不好：太模糊
+向上追溯：检查 domain-* skills
 ```
 
 ```markdown
-# Good: Specific
-| Context | Load | Key Constraint |
-| Web API | domain-web | Handlers on any thread |
+# 好：具体明确
+| 上下文 | 加载 | 关键约束 |
+| Web API | domain-web | 处理器在任意线程上运行 |
 ```
 
-### 4. Stopping at Layer 1
+### 4. 止步于 Layer 1
 
 ```
-# Bad answer
-Problem: Rc is not Send
-Solution: Use Arc
+# 不好的答案
+问题：Rc 不是 Send
+解决方案：使用 Arc
 
-# Good answer
-Reasoning Chain: L1 → L3 → L2
-Domain Constraint: [from domain-web]
-Solution: [follows Web best practices]
+# 好的答案
+推理链：L1 → L3 → L2
+领域约束：[来自 domain-web]
+解决方案：[遵循 Web 最佳实践]
 ```
 
 ---
 
-## File Checklist
+## 文件清单
 
-### Required Files
+### 必需文件
 
-| File | Purpose |
+| 文件 | 目的 |
 |------|---------|
-| `skills/rust-router/SKILL.md` | Main routing logic |
-| `skills/m0x-*/SKILL.md` | Layer 1 skills |
-| `skills/m1x-*/SKILL.md` | Layer 2 skills |
-| `skills/domain-*/SKILL.md` | Layer 3 skills |
-| `.claude/hooks/rust-skill-eval-hook.sh` | Hook script |
-| `hooks/hooks.json` | Plugin hook config |
-| `.claude-plugin/plugin.json` | Plugin manifest |
-| `_meta/reasoning-framework.md` | Core reasoning docs |
+| `skills/rust-router/SKILL.md` | 主路由逻辑 |
+| `skills/m0x-*/SKILL.md` | Layer 1 Skill |
+| `skills/m1x-*/SKILL.md` | Layer 2 Skill |
+| `skills/domain-*/SKILL.md` | Layer 3 Skill |
+| `.claude/hooks/rust-skill-eval-hook.sh` | Hook 脚本 |
+| `hooks/hooks.json` | 插件 Hook 配置 |
+| `.claude-plugin/plugin.json` | 插件清单 |
+| `_meta/reasoning-framework.md` | 核心推理文档 |
 
-### Plugin.json Required Fields
+### Plugin.json 必需字段
 
 ```json
 {
@@ -383,42 +383,42 @@ Solution: [follows Web best practices]
 
 ---
 
-## Testing Skills
+## 测试 Skill
 
-### Manual Test
+### 手动测试
 
 ```
-Question: "My Web API reports Rc cannot be sent between threads"
+问题：“我的 Web API 报告 Rc 无法在线程之间发送”
 
-Expected:
-1. Hook triggers
-2. Loads m07-concurrency AND domain-web
-3. Output includes reasoning chain
-4. References domain-web constraints
-5. Recommends Arc + State extractor (not just "use Arc")
+期望结果：
+1. Hook 触发
+2. 加载 m07-concurrency 和 domain-web
+3. 输出包含推理链
+4. 引用 domain-web 约束
+5. 推荐 Arc + State 提取器（而不仅仅是“使用 Arc”）
 ```
 
-### Validation Script
+### 验证脚本
 
 ```bash
-# Check skill structure
+# 检查 skill 结构
 bash scripts/quality-check.sh
 
-# Check hook regex matching
+# 检查 hook 正则匹配
 python tests/hook-matcher-test.py
 ```
 
 ---
 
-## Summary
+## 总结
 
-| Principle | Implementation |
+| 原则 | 实现 |
 |-----------|----------------|
-| Three-layer model | L1 (mechanics) ↔ L2 (design) ↔ L3 (domain) |
-| Mandatory tracing | Hook enforces output format |
-| Domain detection | Keywords → dual-skill loading |
-| Flat structure | `skills/domain-web/` not `skills/domains/web/` |
-| Keyword coverage | English + Chinese + error codes |
-| Example-driven | Correct vs wrong in hooks and skills |
+| 三层模型 | L1（机制）↔ L2（设计）↔ L3（领域） |
+| 强制追溯 | Hook 强制输出格式 |
+| 领域检测 | 关键词 → 双 Skill 加载 |
+| 扁平结构 | `skills/domain-web/` 而非 `skills/domains/web/` |
+| 关键词覆盖 | 英文 + 中文 + 错误码 |
+| 示例驱动 | Hook 和 Skill 中的正确与错误示例 |
 
-**The goal**: Transform surface-level fixes into domain-aware, architecturally sound solutions.
+**目标**：将表面修复转变为领域感知、架构合理的解决方案。
