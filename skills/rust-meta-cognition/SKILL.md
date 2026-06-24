@@ -138,8 +138,7 @@ Before answering, check if negotiation is required:
 协商响应须结构化：Query Type、Confidence（HIGH / MEDIUM / LOW / UNCERTAIN）、Gaps、Synthesized Answer。
 
 > 完整协议、置信度判定、精炼循环见
-> [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md)；
-> Claude Code 协商输出格式见 [`CLAUDE.md`](CLAUDE.md)。
+> [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md)。
 
 ## 错误码速查
 
