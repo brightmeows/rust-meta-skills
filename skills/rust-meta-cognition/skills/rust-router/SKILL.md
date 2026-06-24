@@ -25,97 +25,97 @@ globs: ["**/Cargo.toml", "**/*.rs"]
 >
 > **v2.0:** Context optimized - detailed examples moved to sub-files
 
-## Meta-Cognition Framework
+## 元认知框架
 
-### Core Principle
+### 核心原则
 
-**Don't answer directly. Trace through the cognitive layers first.**
+**不要直接回答。先穿过认知层级进行追溯。**
 
 ```
-Layer 3: Domain Constraints (WHY)
-├── Business rules, regulatory requirements
-├── domain-fintech, domain-web, domain-cli, etc.
-└── "Why is it designed this way?"
+第 3 层：领域约束（为什么）
+├── 业务规则、监管要求
+├── domain-fintech, domain-web, domain-cli 等
+└── “为什么要这样设计？”
 
-Layer 2: Design Choices (WHAT)
-├── Architecture patterns, DDD concepts
+第 2 层：设计选择（什么）
+├── 架构模式、DDD 概念
 ├── m09-m15 skills
-└── "What pattern should I use?"
+└── “我应该用什么模式？”
 
-Layer 1: Language Mechanics (HOW)
-├── Ownership, borrowing, lifetimes, traits
+第 1 层：语言机制（怎么做）
+├── 所有权、借用、生命周期、trait
 ├── m01-m07 skills
-└── "How do I implement this in Rust?"
+└── “如何用 Rust 实现？”
 ```
 
-### Routing by Entry Point
+### 按入口点路由
 
-| User Signal | Entry Layer | Direction | First Skill |
+| 用户信号 | 入口层 | 方向 | 首个 Skill |
 |-------------|-------------|-----------|-------------|
-| E0xxx error | Layer 1 | Trace UP ↑ | m01-m07 |
-| Compile error | Layer 1 | Trace UP ↑ | Error table below |
-| "How to design..." | Layer 2 | Check L3, then DOWN ↓ | m09-domain |
-| "Building [domain] app" | Layer 3 | Trace DOWN ↓ | domain-* |
-| "Best practice..." | Layer 2 | Both directions | m09-m15 |
-| Performance issue | Layer 1 → 2 | UP then DOWN | m10-performance |
+| E0xxx 错误 | 第 1 层 | 向上追溯 ↑ | m01-m07 |
+| 编译错误 | 第 1 层 | 向上追溯 ↑ | 下方错误表 |
+| “怎么设计……” | 第 2 层 | 检查 L3，然后向下 ↓ | m09-domain |
+| “构建 [领域] 应用” | 第 3 层 | 向下追溯 ↓ | domain-* |
+| “最佳实践……” | 第 2 层 | 双向 | m09-m15 |
+| 性能问题 | 第 1 → 2 层 | 向上再向下 | m10-performance |
 
-### CRITICAL: Dual-Skill Loading
+### 关键：双层 Skill 加载
 
-**When domain keywords are present, you MUST load BOTH skills:**
+**当领域关键词存在时，必须同时加载两个 Skill：**
 
-| Domain Keywords | L1 Skill | L3 Skill |
+| 领域关键词 | L1 Skill | L3 Skill |
 |-----------------|----------|----------|
-| Web API, HTTP, axum, handler | m07-concurrency | **domain-web** |
-| 交易, 支付, trading, payment | m01-ownership | **domain-fintech** |
-| CLI, terminal, clap | m07-concurrency | **domain-cli** |
-| kubernetes, grpc, microservice | m07-concurrency | **domain-cloud-native** |
-| embedded, no_std, MCU | m02-resource | **domain-embedded** |
+| Web API、HTTP、axum、handler | m07-concurrency | **domain-web** |
+| 交易、支付、trading、payment | m01-ownership | **domain-fintech** |
+| CLI、terminal、clap | m07-concurrency | **domain-cli** |
+| kubernetes、grpc、microservice | m07-concurrency | **domain-cloud-native** |
+| embedded、no_std、MCU | m02-resource | **domain-embedded** |
 
 ---
 
-## INSTRUCTIONS FOR CLAUDE
+## CLAUDE 指令
 
-### CRITICAL: Negotiation Protocol Trigger
+### 关键：协商协议触发
 
-**BEFORE answering, check if negotiation is required:**
+**回答之前，检查是否需要协商：**
 
-| Query Contains | Action |
+| 查询包含 | 操作 |
 |----------------|--------|
-| "比较", "对比", "compare", "vs", "versus" | **MUST use negotiation** |
-| "最佳实践", "best practice" | **MUST use negotiation** |
-| Domain + error (e.g., "交易系统 E0382") | **MUST use negotiation** |
-| Ambiguous scope (e.g., "tokio 性能") | **SHOULD use negotiation** |
+| “比较”、“对比”、“compare”、“vs”、“versus” | **必须使用协商** |
+| “最佳实践”、“best practice” | **必须使用协商** |
+| 领域 + 错误（例如“交易系统 E0382”） | **必须使用协商** |
+| 范围不明确（例如“tokio 性能”） | **应该使用协商** |
 
-**When negotiation is required, include:**
+**需要协商时，包含以下内容：**
 
 ```markdown
-## Negotiation Analysis
+## 协商分析
 
-**Query Type:** [Comparative | Cross-domain | Synthesis | Ambiguous]
-**Negotiation:** Enabled
+**查询类型：**[比较 | 跨领域 | 综合 | 不明确]
+**协商：** 已启用
 
-### Source: [Agent/Skill Name]
-**Confidence:** HIGH | MEDIUM | LOW | UNCERTAIN
-**Gaps:** [What's missing]
+### 来源：[Agent/Skill 名称]
+**置信度：** 高 | 中 | 低 | 不确定
+**缺口：**[缺少什么]
 
-## Synthesized Answer
-[Answer]
+## 综合答案
+[答案]
 
-**Overall Confidence:** [Level]
-**Disclosed Gaps:** [Gaps user should know]
+**整体置信度：**[级别]
+**已披露缺口：**[用户应该知道的缺口]
 ```
 
-> **详细协议见:** `patterns/negotiation.md`
+> **详细协议见：** `patterns/negotiation.md`
 
 ---
 
-### Default Project Settings
+### 默认项目设置
 
-When creating new Rust projects or Cargo.toml files, ALWAYS use:
+创建新的 Rust 项目或 Cargo.toml 时，始终使用：
 
 ```toml
 [package]
-edition = "2024"  # ALWAYS use latest stable edition
+edition = "2024"  # 始终使用最新的稳定版
 rust-version = "1.85"
 
 [lints.rust]
@@ -128,105 +128,105 @@ pedantic = "warn"
 
 ---
 
-## Layer 1 Skills (Language Mechanics)
+## 第 1 层 Skill（语言机制）
 
-| Pattern | Route To |
+| 模式 | 路由到 |
 |---------|----------|
-| move, borrow, lifetime, E0382, E0597 | m01-ownership |
-| Box, Rc, Arc, RefCell, Cell | m02-resource |
-| mut, interior mutability, E0499, E0502, E0596 | m03-mutability |
-| generic, trait, inline, monomorphization | m04-zero-cost |
-| type state, phantom, newtype | m05-type-driven |
-| Result, Error, panic, ?, anyhow, thiserror | m06-error-handling |
-| Send, Sync, thread, async, channel | m07-concurrency |
-| unsafe, FFI, extern, raw pointer, transmute | **unsafe-checker** |
+| move、borrow、lifetime、E0382、E0597 | m01-ownership |
+| Box、Rc、Arc、RefCell、Cell | m02-resource |
+| mut、内部可变性、E0499、E0502、E0596 | m03-mutability |
+| generic、trait、inline、单态化 | m04-zero-cost |
+| 类型状态、phantom、newtype | m05-type-driven |
+| Result、Error、panic、?、anyhow、thiserror | m06-error-handling |
+| Send、Sync、thread、async、channel | m07-concurrency |
+| unsafe、FFI、extern、raw pointer、transmute | **unsafe-checker** |
 
-## Layer 2 Skills (Design Choices)
+## 第 2 层 Skill（设计选择）
 
-| Pattern | Route To |
+| 模式 | 路由到 |
 |---------|----------|
-| domain model, business logic | m09-domain |
-| performance, optimization, benchmark | m10-performance |
-| integration, interop, bindings | m11-ecosystem |
-| resource lifecycle, RAII, Drop | m12-lifecycle |
-| domain error, recovery strategy | m13-domain-error |
-| mental model, how to think | m14-mental-model |
-| anti-pattern, common mistake, pitfall | m15-anti-pattern |
+| 领域模型、业务逻辑 | m09-domain |
+| 性能、优化、基准测试 | m10-performance |
+| 集成、互操作、绑定 | m11-ecosystem |
+| 资源生命周期、RAII、Drop | m12-lifecycle |
+| 领域错误、恢复策略 | m13-domain-error |
+| 心智模型、如何思考 | m14-mental-model |
+| 反模式、常见错误、陷阱 | m15-anti-pattern |
 
-## Layer 3 Skills (Domain Constraints)
+## 第 3 层 Skill（领域约束）
 
-| Domain Keywords | Route To |
+| 领域关键词 | 路由到 |
 |-----------------|----------|
-| fintech, trading, decimal, currency | domain-fintech |
-| ml, tensor, model, inference | domain-ml |
-| kubernetes, docker, grpc, microservice | domain-cloud-native |
-| embedded, sensor, mqtt, iot | domain-iot |
-| web server, HTTP, REST, axum, actix | domain-web |
-| CLI, command line, clap, terminal | domain-cli |
-| no_std, microcontroller, firmware | domain-embedded |
+| fintech、trading、decimal、currency | domain-fintech |
+| ml、tensor、model、inference | domain-ml |
+| kubernetes、docker、grpc、microservice | domain-cloud-native |
+| embedded、sensor、mqtt、iot | domain-iot |
+| web server、HTTP、REST、axum、actix | domain-web |
+| CLI、command line、clap、terminal | domain-cli |
+| no_std、microcontroller、firmware | domain-embedded |
 
 ---
 
-## Error Code Routing
+## 错误码路由
 
-| Error Code | Route To | Common Cause |
+| 错误码 | 路由到 | 常见原因 |
 |------------|----------|--------------|
-| E0382 | m01-ownership | Use of moved value |
-| E0597 | m01-ownership | Lifetime too short |
-| E0506 | m01-ownership | Cannot assign to borrowed |
-| E0507 | m01-ownership | Cannot move out of borrowed |
-| E0515 | m01-ownership | Return local reference |
-| E0716 | m01-ownership | Temporary value dropped |
-| E0106 | m01-ownership | Missing lifetime specifier |
-| E0596 | m03-mutability | Cannot borrow as mutable |
-| E0499 | m03-mutability | Multiple mutable borrows |
-| E0502 | m03-mutability | Borrow conflict |
-| E0277 | m04/m07 | Trait bound not satisfied |
-| E0308 | m04-zero-cost | Type mismatch |
-| E0599 | m04-zero-cost | No method found |
-| E0038 | m04-zero-cost | Trait not object-safe |
-| E0433 | m11-ecosystem | Cannot find crate/module |
+| E0382 | m01-ownership | 使用了移动的值 |
+| E0597 | m01-ownership | 生命周期太短 |
+| E0506 | m01-ownership | 不能给借用的变量赋值 |
+| E0507 | m01-ownership | 不能移出借用内容 |
+| E0515 | m01-ownership | 返回局部引用 |
+| E0716 | m01-ownership | 临时值被丢弃 |
+| E0106 | m01-ownership | 缺少生命周期标注 |
+| E0596 | m03-mutability | 不能借用为可变 |
+| E0499 | m03-mutability | 多个可变借用 |
+| E0502 | m03-mutability | 借用冲突 |
+| E0277 | m04/m07 | Trait 约束未满足 |
+| E0308 | m04-zero-cost | 类型不匹配 |
+| E0599 | m04-zero-cost | 未找到方法 |
+| E0038 | m04-zero-cost | Trait 不是 object-safe |
+| E0433 | m11-ecosystem | 找不到 crate/模块 |
 
 ---
 
-## Functional Routing Table
+## 功能路由表
 
-| Pattern | Route To | Action |
+| 模式 | 路由到 | 操作 |
 |---------|----------|--------|
-| latest version, what's new | **rust-learner** | Use agents |
-| API, docs, documentation | **docs-researcher** | Use agent |
-| code style, naming, clippy | **coding-guidelines** | Read skill |
-| unsafe code, FFI | **unsafe-checker** | Read skill |
-| code review | **os-checker** | See `integrations/os-checker.md` |
+| 最新版本、what's new | **rust-learner** | 使用 agent |
+| API、docs、documentation | **docs-researcher** | 使用 agent |
+| 代码风格、命名、clippy | **coding-guidelines** | 读取 skill |
+| unsafe 代码、FFI | **unsafe-checker** | 读取 skill |
+| 代码审查 | **os-checker** | 见 `integrations/os-checker.md` |
 
 ---
 
-## Priority Order
+## 优先级顺序
 
-1. **Identify cognitive layer** (L1/L2/L3)
-2. **Load entry skill** (m0x/m1x/domain)
-3. **Trace through layers** (UP or DOWN)
-4. **Cross-reference skills** as indicated in "Trace" sections
-5. **Answer with reasoning chain**
+1. **识别认知层**（L1/L2/L3）
+2. **加载入口 Skill**（m0x/m1x/domain）
+3. **跨层级追溯**（向上或向下）
+4. **交叉引用**各 Skill 中“追溯”部分指示的内容
+5. **给出推理链回答**
 
-### Keyword Conflict Resolution
+### 关键词冲突解决
 
-| Keyword | Resolution |
+| 关键词 | 解决 |
 |---------|------------|
-| `unsafe` | **unsafe-checker** (more specific than m11) |
-| `error` | **m06** for general, **m13** for domain-specific |
-| `RAII` | **m12** for design, **m01** for implementation |
-| `crate` | **rust-learner** for version, **m11** for integration |
-| `tokio` | **tokio-*** for API, **m07** for concepts |
+| `unsafe` | **unsafe-checker**（比 m11 更具体） |
+| `error` | 通用用 **m06**，领域特定用 **m13** |
+| `RAII` | 设计用 **m12**，实现用 **m01** |
+| `crate` | 版本用 **rust-learner**，集成用 **m11** |
+| `tokio` | API 用 **tokio-***，概念用 **m07** |
 
-**Priority Hierarchy:**
+**优先级层级：**
 
 ```
-1. Error codes (E0xxx) → Direct lookup, highest priority
-2. Negotiation triggers (compare, vs, best practice) → Enable negotiation
-3. Domain keywords + error → Load BOTH domain + error skills
-4. Specific crate keywords → Route to crate-specific skill if exists
-5. General concept keywords → Route to meta-question skill
+1. 错误码（E0xxx）→ 直接查找，最高优先级
+2. 协商触发词（比较、vs、最佳实践）→ 启用协商
+3. 领域关键词 + 错误 → 同时加载领域和错误 Skill
+4. 特定 crate 关键词 → 路由到 crate 特定 Skill（如果存在）
+5. 通用概念关键词 → 路由到元问题 Skill
 ```
 
 ---

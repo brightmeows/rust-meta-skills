@@ -7,7 +7,7 @@ allowed-tools: ["LSP", "Read", "Glob"]
 
 # Rust 符号分析器
 
-Analyze project structure by examining symbols across your Rust codebase.
+通过检查 Rust 代码库中的符号来分析项目结构。
 
 ## Usage
 

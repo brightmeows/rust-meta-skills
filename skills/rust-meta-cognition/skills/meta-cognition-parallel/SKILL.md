@@ -8,9 +8,9 @@ argument-hint: "<rust_question>"
 
 > **Status:** Experimental | **Version:** 0.2.0 | **Last Updated:** 2025-01-27
 >
-> This skill tests parallel three-layer cognitive analysis.
+> 本 Skill 测试并行三层认知分析。
 
-## Concept
+## 概念
 
 Instead of sequential analysis, this skill launches three parallel analyzers - one for each cognitive layer - then synthesizes their results.
 

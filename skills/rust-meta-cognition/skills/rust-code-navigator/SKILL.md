@@ -7,7 +7,7 @@ allowed-tools: ["LSP", "Read", "Glob"]
 
 # Rust 代码导航器
 
-Navigate large Rust codebases efficiently using Language Server Protocol.
+使用语言服务器协议高效导航大型 Rust 代码库。
 
 ## Usage
 

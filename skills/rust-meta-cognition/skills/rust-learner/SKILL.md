@@ -8,56 +8,48 @@ allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 
-You are an expert at fetching Rust and crate information. Help users by:
-- **Version queries**: Get latest Rust/crate versions
-- **API documentation**: Fetch docs from docs.rs
-- **Changelog**: Get Rust version features from releases.rs
+你是获取 Rust 和 crate 信息的专家。帮助用户：
+- **版本查询**：获取最新的 Rust/crate 版本
+- **API 文档**：从 docs.rs 获取文档
+- **更新日志**：从 releases.rs 获取 Rust 版本特性
 
-**Primary skill for fetching Rust/crate information.**
+**获取 Rust/crate 信息的主要 Skill。**
 
-## Execution Mode Detection
+## 执行模式检测
 
-**CRITICAL: Check agent file availability first to determine execution mode.**
+**关键：先检查 agent 文件可用性以确定执行模式。**
 
-Try to read the agent file for your query type. The execution mode depends on whether the file exists:
+尝试读取查询类型对应的 agent 文件。执行模式取决于文件是否存在：
 
-| Query Type | Agent File Path |
+| 查询类型 | Agent 文件路径 |
 |------------|-----------------|
-| Crate info/version | `../../agents/crate-researcher.md` |
-| Rust version features | `../../agents/rust-changelog.md` |
-| Std library docs | `../../agents/std-docs-researcher.md` |
-| Third-party crate docs | `../../agents/docs-researcher.md` |
-| Clippy lints | `../../agents/clippy-researcher.md` |
+| Crate 信息/版本 | `../../agents/crate-researcher.md` |
+| Rust 版本特性 | `../../agents/rust-changelog.md` |
+| 标准库文档 | `../../agents/std-docs-researcher.md` |
+| 第三方 crate 文档 | `../../agents/docs-researcher.md` |
+| Clippy lint | `../../agents/clippy-researcher.md` |
 
 ---
 
-## Agent Mode (Plugin Install)
+## Agent 模式（插件安装）
 
-**When agent files exist at `../../agents/`:**
+**当 agent 文件存在于 `../../agents/` 时：**
 
-### Workflow
+### 工作流程
 
-1. Read the appropriate agent file (relative to this skill)
-2. Launch Task with `run_in_background: true`
-3. Continue with other work or wait for completion
-4. Summarize results to user
+1. 读取对应的 agent 文件（相对于本 Skill）
+2. 使用 `run_in_background: true` 启动 Task
+3. 继续其他工作或等待完成
+4. 向用户总结结果
 
-```
-Task(
-  subagent_type: "general-purpose",
-  run_in_background: true,
-  prompt: <read from ../../agents/*.md file>
-)
-```
+### Agent 路由表
 
-### Agent Routing Table
-
-| Query Type | Agent File | Source |
+| 查询类型 | Agent 文件 | 来源 |
 |------------|------------|--------|
-| Rust version features | `../../agents/rust-changelog.md` | releases.rs |
-| Crate info/version | `../../agents/crate-researcher.md` | lib.rs, crates.io |
-| **Std library docs** (Send, Sync, Arc, etc.) | `../../agents/std-docs-researcher.md` | doc.rust-lang.org |
-| Third-party crate docs (tokio, serde, etc.) | `../../agents/docs-researcher.md` | docs.rs |
+| Rust 版本特性 | `../../agents/rust-changelog.md` | releases.rs |
+| Crate 信息/版本 | `../../agents/crate-researcher.md` | lib.rs, crates.io |
+| **标准库文档**（Send、Sync、Arc 等） | `../../agents/std-docs-researcher.md` | doc.rust-lang.org |
+| 第三方 crate 文档（tokio、serde 等） | `../../agents/docs-researcher.md` | docs.rs |
 | Clippy lints | `../../agents/clippy-researcher.md` | rust-clippy docs |
 
 ### Agent Mode Examples

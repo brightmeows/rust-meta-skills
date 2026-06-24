@@ -7,7 +7,7 @@ allowed-tools: ["LSP", "Read", "Glob"]
 
 # Rust 调用图
 
-Visualize function call relationships using LSP call hierarchy.
+使用 LSP 调用层级可视化函数调用关系。
 
 ## Usage
 

@@ -7,30 +7,30 @@ disable-model-invocation: true
 
 # Actionbook：行动手册
 
-Pre-computed action manuals for browser automation. Agents receive structured page information instead of parsing entire HTML.
+为浏览器自动化预计算的操作手册。Agent 接收结构化页面信息，而无需解析完整 HTML。
 
-## Workflow
+## 工作流程
 
-1. **search_actions** - Search by keyword, returns URL-based action IDs with content previews
-2. **get_action_by_id** - Get full action manual with page details, DOM structure, and element selectors
-3. **Execute** - Use returned selectors with your browser automation tool
+1. **search_actions** - 按关键词搜索，返回基于 URL 的操作 ID 和内容预览
+2. **get_action_by_id** - 获取完整操作手册，含页面详情、DOM 结构和元素选择器
+3. **执行** - 使用返回的选择器配合浏览器自动化工具
 
-## MCP Tools
+## MCP 工具
 
-- `search_actions` - Search by keyword. Returns: URL-based action IDs, content previews, relevance scores
-- `get_action_by_id` - Get full action details. Returns: action content, page element selectors (CSS/XPath), element types, allowed methods (click, type, extract), document metadata
+- `search_actions` - 按关键词搜索。返回：基于 URL 的操作 ID、内容预览、相关度评分
+- `get_action_by_id` - 获取操作详情。返回：操作内容、页面元素选择器（CSS/XPath）、元素类型、允许方法（click、type、extract）、文档元数据
 
-### Parameters
+### 参数
 
-**search_actions**:
-- `query` (required): Search keyword (e.g., "airbnb search", "google login")
-- `type`: `vector` | `fulltext` | `hybrid` (default)
-- `limit`: Max results (default: 5)
-- `sourceIds`: Filter by source IDs (comma-separated)
-- `minScore`: Minimum relevance score (0-1)
+**search_actions**：
+- `query`（必填）：搜索关键词（例如“airbnb search”、“google login”）
+- `type`：`vector` | `fulltext` | `hybrid`（默认）
+- `limit`：最大结果数（默认：5）
+- `sourceIds`：按源 ID 过滤（逗号分隔）
+- `minScore`：最低相关度评分（0-1）
 
-**get_action_by_id**:
-- `id` (required): URL-based action ID (e.g., `example.com/page`)
+**get_action_by_id**：
+- `id`（必填）：基于 URL 的操作 ID（例如 `example.com/page`）
 
 ## Example Response
 

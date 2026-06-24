@@ -11,26 +11,22 @@ agent: general-purpose
 
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 
-Check and fix missing reference files in dynamic skills.
+检查和修复动态 Skill 中缺失的引用文件。
 
-## Usage
+## 用法
 
-```
-/fix-skill-docs [crate_name] [--check-only] [--remove-invalid]
-```
+**参数：**
+- `crate_name`：要检查的特定 crate（可选，默认检查所有）
+- `--check-only`：仅报告问题，不修复
+- `--remove-invalid`：移除无效引用而不是创建文件
 
-**Arguments:**
-- `crate_name`: Specific crate to check (optional, defaults to all)
-- `--check-only`: Only report issues, don't fix
-- `--remove-invalid`: Remove invalid references instead of creating files
+## 执行模式检测
 
-## Execution Mode Detection
+**关键：检查 agent 基础设施是否可用。**
 
-**CRITICAL: Check if agent infrastructure is available.**
-
-This skill can run in two modes:
-- **Agent Mode**: Uses background agents for documentation fetching
-- **Inline Mode**: Executes directly using agent-browser CLI or WebFetch
+本 Skill 可在两种模式下运行：
+- **Agent 模式**：使用后台 agent 获取文档
+- **内联模式**：直接使用 agent-browser CLI 或 WebFetch 执行
 
 ---
 
@@ -238,12 +234,12 @@ Summary: 1 file missing in 1 skill
 
 ---
 
-## Error Handling
+## 错误处理
 
-| Error | Cause | Solution |
+| 错误 | 原因 | 解决方案 |
 |-------|-------|----------|
-| Agent not available | Skills-only install | Use inline mode |
-| Skills directory empty | No skills installed | Run /sync-crate-skills first |
-| docs.rs unavailable | Network issue | Retry or use --remove-invalid |
-| Permission denied | Directory issue | Check ~/.claude/skills/ permissions |
-| Invalid SKILL.md format | Corrupted skill | Re-generate skill |
+| Agent 不可用 | 仅安装了 Skill | 使用内联模式 |
+| Skill 目录为空 | 未安装任何 Skill | 先运行 /sync-crate-skills |
+| docs.rs 不可用 | 网络问题 | 重试或使用 --remove-invalid |
+| 权限被拒绝 | 目录问题 | 检查 ~/.claude/skills/ 权限 |
+| SKILL.md 格式无效 | Skill 损坏 | 重新生成 Skill |

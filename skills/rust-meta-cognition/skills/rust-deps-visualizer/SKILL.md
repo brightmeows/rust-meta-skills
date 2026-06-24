@@ -7,7 +7,7 @@ allowed-tools: ["Bash", "Read", "Glob"]
 
 # Rust 依赖可视化
 
-Generate ASCII art visualizations of your Rust project's dependency tree.
+生成 Rust 项目依赖树的 ASCII 艺术可视化。
 
 ## Usage
 

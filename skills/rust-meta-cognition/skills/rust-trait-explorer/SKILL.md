@@ -7,7 +7,7 @@ allowed-tools: ["LSP", "Read", "Glob", "Grep"]
 
 # Rust Trait 探索器
 
-Discover trait implementations and understand polymorphic designs.
+发现 trait 实现并理解多态设计。
 
 ## Usage
 

@@ -7,7 +7,7 @@ allowed-tools: ["LSP", "Read", "Glob", "Grep", "Edit"]
 
 # Rust 重构助手
 
-Perform safe refactoring with comprehensive impact analysis.
+执行安全的重构，并进行全面的影响分析。
 
 ## Usage
 

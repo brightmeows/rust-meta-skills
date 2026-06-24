@@ -10,7 +10,7 @@ agent: general-purpose
 
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 >
-> Create dynamic skills for Rust crates and std library documentation.
+> 为 Rust crate 和标准库文档创建动态 Skill。
 
 ## When to Use
 

@@ -7,17 +7,18 @@ disable-model-invocation: true
 
 # 浏览器自动化（agent-browser）
 
-## Priority Note
+## 优先级说明
 
-For fetching Rust/crate information, use this priority order:
-1. **rust-learner skill** - Orchestrates actionbook + browser-fetcher
-2. **actionbook MCP** - Pre-computed selectors for known sites
-3. **agent-browser CLI** - Direct browser automation (last resort)
+获取 Rust/crate 信息时，按此优先级：
 
-Use agent-browser directly only when:
-- actionbook has no pre-computed selectors for the target site
-- You need interactive browser testing/automation
-- You need screenshots or form filling
+1. **rust-learner skill** - 协调 actionbook + browser-fetcher
+2. **actionbook MCP** - 已知站点的预计算选择器
+3. **agent-browser CLI** - 直接浏览器自动化（最后手段）
+
+仅在以下情况直接使用 agent-browser：
+- actionbook 没有目标站点的预计算选择器
+- 需要交互式浏览器测试/自动化
+- 需要截图或表单填写
 
 ## Quick start
 

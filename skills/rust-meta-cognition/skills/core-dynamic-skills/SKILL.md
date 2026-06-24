@@ -11,48 +11,48 @@ agent: general-purpose
 
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 
-Orchestrates on-demand generation of crate-specific skills based on project dependencies.
+根据项目依赖按需生成 crate 特定 Skill 的编排器。
 
-## Concept
+## 概念
 
-Dynamic skills are:
-- Generated locally at `~/.claude/skills/`
-- Based on Cargo.toml dependencies
-- Created using llms.txt from docs.rs
-- Versioned and updatable
-- Not committed to the rust-skills repository
+动态 Skill 是：
+- 在 `~/.claude/skills/` 本地生成的
+- 基于 Cargo.toml 依赖
+- 使用 docs.rs 的 llms.txt 创建
+- 带版本且可更新
+- 不提交到 rust-skills 仓库
 
-## Trigger Scenarios
+## 触发场景
 
-### Prompt-on-Open
+### 打开提示
 
-When entering a directory with Cargo.toml:
-1. Detect Cargo.toml (single or workspace)
-2. Parse dependencies list
-3. Check which crates are missing skills
-4. If missing: "Found X dependencies without skills. Sync now?"
-5. If confirmed: run `/sync-crate-skills`
+进入包含 Cargo.toml 的目录时：
+1. 检测 Cargo.toml（单项目或工作空间）
+2. 解析依赖列表
+3. 检查哪些 crate 缺少 Skill
+4. 如果缺少：“发现 X 个依赖没有 Skill。立即同步？”
+5. 如果确认：运行 `/sync-crate-skills`
 
-### Manual Commands
+### 手动命令
 
-- `/sync-crate-skills` - Sync all dependencies
-- `/clean-crate-skills [crate]` - Remove skills
-- `/update-crate-skill <crate>` - Update specific skill
+- `/sync-crate-skills` - 同步所有依赖
+- `/clean-crate-skills [crate]` - 移除 Skill
+- `/update-crate-skill <crate>` - 更新特定 Skill
 
-## Execution Mode Detection
+## 执行模式检测
 
-**CRITICAL: Check if agent and command infrastructure is available.**
+**关键：检查 agent 和命令基础设施是否可用。**
 
-Try to read: `../../agents/` directory
-Check if `/create-llms-for-skills` and `/create-skills-via-llms` commands work.
+尝试读取：`../../agents/` 目录
+检查 `/create-llms-for-skills` 和 `/create-skills-via-llms` 命令是否可用。
 
 ---
 
-## Agent Mode (Plugin Install)
+## Agent 模式（插件安装）
 
-**When full plugin infrastructure is available:**
+**当完整插件基础设施可用时：**
 
-### Architecture
+### 架构
 
 ```
 Cargo.toml
@@ -67,13 +67,13 @@ For each crate:
   └─ Load skill
 ```
 
-### Workflow Priority
+### 工作流优先级
 
-1. **actionbook MCP** - Check for pre-generated llms.txt
-2. **/create-llms-for-skills** - Generate llms.txt from docs.rs
-3. **/create-skills-via-llms** - Create skills from llms.txt
+1. **actionbook MCP** - 检查是否有预生成的 llms.txt
+2. **/create-llms-for-skills** - 从 docs.rs 生成 llms.txt
+3. **/create-skills-via-llms** - 从 llms.txt 创建 Skill
 
-### Sync Command
+### 同步命令
 
 ```bash
 /sync-crate-skills [--force]
@@ -206,11 +206,11 @@ rm -rf ~/.claude/skills/{crate_name}
 - `/create-llms-for-skills` - Generate llms.txt (Agent Mode only)
 - `/create-skills-via-llms` - Create skills from llms.txt (Agent Mode only)
 
-## Error Handling
+## 错误处理
 
-| Error | Cause | Solution |
+| 错误 | 原因 | 解决方案 |
 |-------|-------|----------|
-| Commands not found | Skills-only install | Use inline mode |
-| Cargo.toml not found | Not in Rust project | Navigate to project root |
-| docs.rs unavailable | Network issue | Retry or skip crate |
-| Permission denied | Directory issue | Check ~/.claude/skills/ permissions |
+| 命令未找到 | 仅安装了 Skill | 使用内联模式 |
+| 未找到 Cargo.toml | 不在 Rust 项目中 | 导航到项目根目录 |
+| docs.rs 不可用 | 网络问题 | 重试或跳过 crate |
+| 权限被拒绝 | 目录问题 | 检查 ~/.claude/skills/ 权限 |
