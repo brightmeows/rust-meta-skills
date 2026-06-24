@@ -1,6 +1,6 @@
-# Negotiation Response Format
+# 协商响应格式
 
-> Standard response structure for agents in negotiation mode.
+> Agent 在协商模式下的标准响应结构。
 
 ## When to Use
 

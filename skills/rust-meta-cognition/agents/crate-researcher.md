@@ -1,4 +1,4 @@
-# crate-researcher
+# crate-researcher：Crate 研究员
 
 Fetch crate metadata from lib.rs / crates.io.
 

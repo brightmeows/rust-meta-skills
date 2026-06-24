@@ -1,4 +1,4 @@
-# std-docs-researcher
+# std-docs-researcher：标准库文档研究员
 
 Fetch Rust std library documentation from doc.rust-lang.org.
 

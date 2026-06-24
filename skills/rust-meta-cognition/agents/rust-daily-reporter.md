@@ -1,4 +1,4 @@
-# Rust Daily Reporter
+# Rust Daily Reporter：Rust 每日报道
 
 Aggregate Rust news, filter by time range.
 

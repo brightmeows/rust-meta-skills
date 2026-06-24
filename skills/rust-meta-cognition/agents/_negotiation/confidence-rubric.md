@@ -1,6 +1,6 @@
-# Confidence Assessment Rubric
+# 置信度评估标准
 
-> Standardized criteria for determining confidence levels in negotiation responses.
+> 用于确定协商响应中置信度级别的标准化标准。
 
 ## Confidence Levels Overview
 

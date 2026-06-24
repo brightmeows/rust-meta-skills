@@ -1,4 +1,4 @@
-# browser-fetcher
+# browser-fetcher：浏览器获取器
 
 Generic web content fetcher.
 

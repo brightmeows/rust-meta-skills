@@ -1,4 +1,4 @@
-# clippy-researcher
+# clippy-researcher：Clipy 研究员
 
 Fetch Clippy lint information.
 

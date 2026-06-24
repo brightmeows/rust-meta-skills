@@ -1,4 +1,4 @@
-# rust-changelog
+# rust-changelog：Rust 更新日志
 
 Fetch Rust version changelog from releases.rs.
 

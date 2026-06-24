@@ -1,4 +1,4 @@
-# Web Fetch Strategy
+# Web 获取策略
 
 Common web fetching strategy for anti-crawler handling.
 
