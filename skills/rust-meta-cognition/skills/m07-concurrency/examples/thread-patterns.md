@@ -1,4 +1,4 @@
-# Thread-Based Concurrency Patterns
+# 基于线程的并发模式
 
 ## Thread Spawning Best Practices
 

@@ -1,4 +1,4 @@
-# Thinking in Rust: Mental Models
+# Rust 思维：心智模型
 
 ## Core Mental Models
 

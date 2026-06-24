@@ -1,4 +1,4 @@
-# Error Handling: Library vs Application
+# 错误处理：库 vs 应用
 
 ## Library Error Design
 

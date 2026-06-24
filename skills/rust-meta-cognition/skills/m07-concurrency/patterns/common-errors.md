@@ -1,8 +1,8 @@
-# Common Concurrency Errors & Fixes
+# 常见并发错误与修复
 
-## E0277: Cannot Send Between Threads
+## E0277：无法在线程间发送
 
-### Error Pattern
+### 错误模式
 ```rust
 use std::rc::Rc;
 

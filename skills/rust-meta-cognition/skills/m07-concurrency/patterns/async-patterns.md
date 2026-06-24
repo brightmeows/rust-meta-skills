@@ -1,6 +1,6 @@
-# Async Patterns in Rust
+# Rust 中的异步模式
 
-## Task Spawning
+## 任务生成
 
 ### Basic Spawn
 ```rust

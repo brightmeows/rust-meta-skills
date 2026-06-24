@@ -1,4 +1,4 @@
-# Common Rust Anti-Patterns & Mistakes
+# Rust 常见反模式与错误
 
 ## Ownership Anti-Patterns
 
