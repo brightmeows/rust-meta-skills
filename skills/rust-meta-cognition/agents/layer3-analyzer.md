@@ -14,33 +14,33 @@
 - `context`：相关代码或错误信息
 - `domain`: Identified domain (if any)
 
-## Analysis Focus
+## 分析焦点
 
-| Domain | Skills to Reference | Key Constraints |
-|--------|---------------------|-----------------|
-| FinTech | domain-fintech | Audit, precision, consistency |
-| Web Services | domain-web | Stateless, latency, concurrency |
-| CLI Tools | domain-cli | UX, config, exit codes |
-| Embedded | domain-embedded | No heap, no_std, real-time |
-| Cloud Native | domain-cloud-native | 12-Factor, observability |
-| IoT | domain-iot | Offline-first, power, security |
-| Machine Learning | domain-ml | Memory efficiency, GPU |
+| 领域 | 参考技能 | 关键约束 |
+|------|----------|----------|
+| 金融科技 | domain-fintech | 审计、精度、一致性 |
+| Web 服务 | domain-web | 无状态、延迟、并发 |
+| CLI 工具 | domain-cli | 用户体验、配置、退出码 |
+| 嵌入式 | domain-embedded | 无堆、no_std、实时性 |
+| 云原生 | domain-cloud-native | 12-Factor、可观测性 |
+| 物联网 | domain-iot | 离线优先、功耗、安全 |
+| 机器学习 | domain-ml | 内存效率、GPU |
 
-## Task
+## 任务
 
-1. **Identify domain context**
-   - What domain is the user working in?
-   - What are the critical domain constraints?
+1. **识别领域上下文**
+   - 用户工作在什么领域？
+   - 关键的领域约束是什么？
 
-2. **Apply domain rules**
-   - How do domain rules affect the technical choice?
-   - What domain patterns apply?
+2. **应用领域规则**
+   - 领域规则如何影响技术选择？
+   - 哪些领域模式适用？
 
-3. **Provide domain-driven recommendation**
-   - What does the domain require?
-   - What would violate domain principles?
+3. **提供领域驱动的建议**
+   - 领域要求什么？
+   - 什么会违反领域原则？
 
-## Output Format
+## 输出格式
 
 ```markdown
 ## Layer 3 Analysis: Domain Constraints
@@ -71,11 +71,11 @@
 - **Reason:** [Why this confidence level]
 ```
 
-## Example
+## 示例
 
-**Query:** "E0382 in trading system - should I clone the trade record?"
+**查询：** “交易系统中的 E0382——应该克隆交易记录吗？”
 
-**Output:**
+**输出：**
 
 ```markdown
 ## Layer 3 Analysis: Domain Constraints
@@ -113,14 +113,14 @@
 - **Reason:** "trading system" + "trade record" clearly indicates FinTech domain with well-established constraints
 ```
 
-## Domain Detection Hints
+## 领域检测提示
 
-| Keywords | Likely Domain |
-|----------|---------------|
-| trading, transaction, payment, ledger, audit | FinTech |
+| 关键词 | 可能的领域 |
+|--------|------------|
+| trading, transaction, payment, ledger, audit | 金融科技 |
 | API, endpoint, request, response, REST, GraphQL | Web |
 | command, flag, argument, terminal, stdin | CLI |
-| no_std, embedded, microcontroller, interrupt | Embedded |
-| container, kubernetes, service mesh, deployment | Cloud Native |
-| sensor, device, mqtt, telemetry, battery | IoT |
-| model, tensor, training, inference, GPU | ML |
+| no_std, embedded, microcontroller, interrupt | 嵌入式 |
+| container, kubernetes, service mesh, deployment | 云原生 |
+| sensor, device, mqtt, telemetry, battery | 物联网 |
+| model, tensor, training, inference, GPU | 机器学习 |

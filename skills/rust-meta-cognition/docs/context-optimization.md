@@ -1,4 +1,4 @@
-# Context Optimization Guide
+# 上下文优化指南
 
 > Rust Skills 上下文优化策略与效果
 
@@ -312,6 +312,6 @@ Cross-Layer Synthesis (主上下文)
 
 ---
 
-**Created:** 2025-01-21
-**Updated:** 2025-01-22
-**Status:** ✅ Implemented (Methods 1-3)
+**创建时间：** 2025-01-21
+**更新时间：** 2025-01-22
+**状态：** ✅ 已实现（方法 1–3）

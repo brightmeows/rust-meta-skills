@@ -1,4 +1,4 @@
-# Forced Eval Hook 原理
+# 强制评估 Hook 原理
 
 > 解决 Claude Code Skills 自动触发不可靠的问题
 
@@ -16,10 +16,10 @@ Claude 非常专注于目标，会直接用它认为最好的方式处理问题�
 |------|--------|------|
 | 仅靠 description 关键词 | **~20%** | Claude 很少主动检查 |
 | 简单指令 hook | 40-50% | "建议"检查，Claude 可能忽略 |
-| **Forced Eval Hook** | **~84%** | 强制评估，效果最好 |
+| **强制评估 Hook** | **~84%** | 强制评估，效果最好 |
 | LLM Eval Hook | ~80% | 需要额外 API 调用 |
 
-## Forced Eval Hook 原理
+## 强制评估 Hook 原理
 
 ### 核心思想
 
@@ -217,7 +217,7 @@ You might want to check available skills before responding.
 
 **问题**: "might want" 太弱，Claude 经常忽略
 
-### 方案 C: Forced Eval Hook (推荐)
+### 方案 C：强制评估 Hook（推荐）
 
 ```
 CRITICAL: You MUST evaluate each skill. DO NOT skip.

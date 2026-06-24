@@ -2,7 +2,7 @@
 
 Agent 文档缓存辅助工具。
 
-## Cache Directory
+## 缓存目录
 
 ```
 ~/.claude/cache/rust-docs/
@@ -13,7 +13,7 @@ Agent 文档缓存辅助工具。
 └── clippy/{lint}.json
 ```
 
-## TTL by Source
+## 按来源的 TTL
 
 | Source | TTL | Reason |
 |--------|-----|--------|
@@ -23,7 +23,7 @@ Agent 文档缓存辅助工具。
 | lib.rs/ | 1 day | Version changes |
 | clippy/ | 14 days | Rust version updates |
 
-## Cache Format
+## 缓存格式
 
 ```json
 {
@@ -36,6 +36,6 @@ Agent 文档缓存辅助工具。
 }
 ```
 
-## Skip Cache
+## 跳过缓存
 
-Keywords: refresh, force, --force, update docs
+关键词：refresh, force, --force, update docs

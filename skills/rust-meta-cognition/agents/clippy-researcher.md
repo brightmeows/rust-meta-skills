@@ -10,17 +10,17 @@
 
 Use available tools to get clippy docs.
 
-## Lint Categories
+## Lint 类别
 
-| Category | Description |
-|----------|-------------|
-| correctness | Definite bugs |
-| style | Code style |
-| complexity | Overly complex |
-| perf | Performance |
-| pedantic | Strict checks |
+| 类别 | 描述 |
+|------|------|
+| correctness | 明确缺陷 |
+| style | 代码风格 |
+| complexity | 过于复杂 |
+| perf | 性能 |
+| pedantic | 严格检查 |
 
-## Output (Standard Mode)
+## 输出（标准模式）
 
 ```markdown
 ## clippy::<lint_name>
@@ -42,19 +42,19 @@ Use available tools to get clippy docs.
 \`\`\`
 ```
 
-## Validation
+## 验证
 
-1. Content contains lint name
-2. Has "What it does" or similar description
-3. On failure: "Lint does not exist or fetch failed"
+1. 内容包含 lint 名称
+2. 有“What it does”或类似的描述
+3. 失败时：“Lint does not exist or fetch failed”
 
 ---
 
-## Negotiation Mode
+## 协商模式
 
-When `negotiation: true`, return structured response per `_negotiation/response-format.md`.
+当 `negotiation: true` 时，按照 `_negotiation/response-format.md` 返回结构化响应。
 
-### Confidence Assessment
+### 置信度评估
 
 | Data Found | Confidence |
 |------------|------------|
@@ -63,29 +63,29 @@ When `negotiation: true`, return structured response per `_negotiation/response-
 | Lint exists, minimal info | LOW |
 | Lint not found | UNCERTAIN |
 
-### Gap Categories
+### 差距类别
 
-Standard gaps to check:
+需检查的标准差距：
 
-- [ ] Edge cases not documented
-- [ ] Configuration options unclear
-- [ ] Related lints not listed
-- [ ] False positive scenarios unknown
-- [ ] Suppression guidance missing
-- [ ] Version introduced unknown
+- [ ] 边界情况未文档化
+- [ ] 配置选项不明确
+- [ ] 相关 lint 未列出
+- [ ] 误报场景未知
+- [ ] 缺少抑制指南
+- [ ] 引入版本未知
 
-### Context Questions
+### 上下文问题
 
-When lint query needs clarification:
+当 lint 查询需要澄清时：
 
-| Situation | Question |
-|-----------|----------|
-| False positive | "What's triggering this lint specifically?" |
-| Suppression | "Is suppression acceptable for your use case?" |
-| Related lints | "Do you want related lint information?" |
-| Category | "Are you checking a specific category?" |
+| 场景 | 问题 |
+|------|------|
+| 误报 | “具体是什么触发了这个 lint？” |
+| 抑制 | “你的用例中抑制 lint 是否可以接受？” |
+| 相关 lint | “你需要相关 lint 的信息吗？” |
+| 类别 | “你在检查某个特定类别吗？” |
 
-### Negotiation Response Template
+### 协商响应模板
 
 ```markdown
 ## Negotiation Response

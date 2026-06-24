@@ -4,15 +4,15 @@
 
 ---
 
-## Financial Technology (F001-F099)
+## 金融科技（F001–F099）
 
-| Code Range | Technical Domain | Key Applications |
-|------------|------------------|------------------|
-| F001-F019 | High-Precision Computing | Decimal, currency calculations |
-| F020-F039 | Trading Systems | Order matching, risk control |
-| F040-F059 | Blockchain | Smart contracts, DeFi |
-| F060-F079 | Risk Management | Risk engines, anti-fraud |
-| F080-F099 | Regulatory Compliance | KYC, AML |
+| 代码范围 | 技术领域 | 关键应用 |
+|----------|----------|----------|
+| F001–F019 | 高精度计算 | 十进制、货币计算 |
+| F020–F039 | 交易系统 | 订单匹配、风险控制 |
+| F040–F059 | 区块链 | 智能合约、DeFi |
+| F060–F079 | 风险管理 | 风险引擎、反欺诈 |
+| F080–F099 | 监管合规 | KYC、AML |
 
 ### 关键 Crate
 
@@ -25,92 +25,92 @@
 
 ---
 
-## Machine Learning (M001-M099)
+## 机器学习（M001–M099）
 
-| Code Range | Technical Domain | Key Applications |
-|------------|------------------|------------------|
-| M001-M019 | Tensor Operations | ndarray, GPU acceleration |
-| M020-M039 | Model Inference | ONNX, TensorFlow |
-| M040-M059 | Data Processing | Feature engineering, ETL |
-| M060-M079 | Distributed Training | Parallel computing |
-| M080-M099 | MLOps | Model serving, monitoring |
+| 代码范围 | 技术领域 | 关键应用 |
+|----------|----------|----------|
+| M001–M019 | 张量运算 | ndarray, GPU 加速 |
+| M020–M039 | 模型推理 | ONNX, TensorFlow |
+| M040–M059 | 数据处理 | 特征工程, ETL |
+| M060–M079 | 分布式训练 | 并行计算 |
+| M080–M099 | MLOps | 模型服务, 监控 |
 
-### Key Crates
+### 关键 Crate
 
 - ndarray, tract, candle
 - tch-rs, polars
 
-### Related Meta-Questions
+### 相关元问题
 
 - m04, m07, m10, m11
 
 ---
 
-## Cloud Native (CN001-CN099)
+## 云原生（CN001–CN099）
 
-| Code Range | Technical Domain | Key Applications |
-|------------|------------------|------------------|
-| CN001-CN019 | Containerization | Docker, microservices |
-| CN020-CN039 | Kubernetes | CRD, Operator |
-| CN040-CN059 | Service Mesh | Istio, traffic management |
-| CN060-CN079 | Observability | Monitoring, tracing |
-| CN080-CN099 | Serverless | FaaS, edge computing |
+| 代码范围 | 技术领域 | 关键应用 |
+|----------|----------|----------|
+| CN001–CN019 | 容器化 | Docker, 微服务 |
+| CN020–CN039 | Kubernetes | CRD, Operator |
+| CN040–CN059 | 服务网格 | Istio, 流量管理 |
+| CN060–CN079 | 可观测性 | 监控, 追踪 |
+| CN080–CN099 | 无服务器 | FaaS, 边缘计算 |
 
-### Key Crates
+### 关键 Crate
 
 - tonic, kube, tracing
 - opentelemetry, bollard
 
-### Related Meta-Questions
+### 相关元问题
 
 - m06, m07, m10, m12
 
 ---
 
-## Internet of Things (IoT001-IoT099)
+## 物联网（IoT001–IoT099）
 
-| Code Range | Technical Domain | Key Applications |
-|------------|------------------|------------------|
-| IoT001-IoT019 | Edge Computing | Local inference, data aggregation |
-| IoT020-IoT039 | Device Management | OTA, remote control |
-| IoT040-IoT059 | Communication Protocols | MQTT, CoAP |
-| IoT060-IoT079 | Data Collection | Sensor networks |
-| IoT080-IoT099 | Security Protection | Device authentication, encryption |
+| 代码范围 | 技术领域 | 关键应用 |
+|----------|----------|----------|
+| IoT001–IoT019 | 边缘计算 | 本地推理, 数据聚合 |
+| IoT020–IoT039 | 设备管理 | OTA, 远程控制 |
+| IoT040–IoT059 | 通信协议 | MQTT, CoAP |
+| IoT060–IoT079 | 数据采集 | 传感器网络 |
+| IoT080–IoT099 | 安全防护 | 设备认证, 加密 |
 
-### Key Crates
+### 关键 Crate
 
 - embedded-hal, embassy, rtic
 - rumqttc, defmt
 
-### Related Meta-Questions
+### 相关元问题
 
 - m01, m07, unsafe-checker, m10
 
-### Related Tech Categories
+### 相关技术类别
 
-- 700-759: Embedded Development Layer
+- 700–759：嵌入式开发层
 
 ---
 
 ## 交叉引用
 
 | 领域 | 主要类别 | 次要类别 |
-|--------|-------------------|---------------------|
-| FinTech | F001-F099 | 040-043 (Error), 120-139 (Concurrency) |
-| ML | M001-M099 | 020-029 (Types), 250-279 (Async) |
-| Cloud Native | CN001-CN099 | 200-299 (Web), 250-279 (Async) |
-| IoT | IoT001-IoT099 | 700-759 (Embedded), 880-889 (Unsafe) |
+|------|----------|----------|
+| 金融科技 | F001–F099 | 040–043（错误）, 120–139（并发）|
+| 机器学习 | M001–M099 | 020–029（类型）, 250–279（异步）|
+| 云原生 | CN001–CN099 | 200–299（Web）, 250–279（异步）|
+| 物联网 | IoT001–IoT099 | 700–759（嵌入式）, 880–889（Unsafe）|
 
 ## 使用示例
 
 ```sql
--- Find all FinTech high-precision computing issues
+-- 查找所有金融科技高精度计算问题
 SELECT * WHERE category LIKE 'F001%' OR category LIKE 'F01%'
 
--- Find embedded IoT with real-time constraints
+-- 查找具有实时约束的嵌入式物联网问题
 SELECT * WHERE category BETWEEN 'IoT040' AND 'IoT059'
   OR category BETWEEN '740' AND '749'
 
--- Find cloud-native observability patterns
+-- 查找云原生可观测性模式
 SELECT * WHERE category LIKE 'CN06%'
 ```

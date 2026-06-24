@@ -4,21 +4,21 @@
 
 > For std library (std::*), use `std-docs-researcher` instead.
 
-## Fetch
+## 获取
 
-Use available tools to get docs.rs content:
+使用可用工具获取 docs.rs 内容：
 
-- agent-browser if available
-- WebFetch otherwise
+- agent-browser（如可用）
+- WebFetch（否则）
 
-**URL format:** `docs.rs/<crate>/latest/<crate>/<path>`
+**URL 格式：** `docs.rs/<crate>/latest/<crate>/<path>`
 
-## Cache
+## 缓存
 
-Location: `~/.claude/cache/rust-docs/docs.rs/{crate}/{item}.json`
-TTL: 7 days
+位置：`~/.claude/cache/rust-docs/docs.rs/{crate}/{item}.json`
+TTL：7 天
 
-Skip cache if user says "refresh", "force", or "--force".
+如果用户说“refresh”、“force”或“--force”，则跳过缓存。
 
 ## Output (Standard Mode)
 
@@ -38,20 +38,20 @@ Skip cache if user says "refresh", "force", or "--force".
 \`\`\`
 ```
 
-## Validation
+## 验证
 
-1. Content is not empty
-2. Not a 404 page (check for "Not Found" or empty docblock)
-3. Contains signature or description
-4. On failure: report "Fetch failed: {reason}"
+1. 内容不为空
+2. 不是 404 页面（检查“Not Found”或空文档块）
+3. 包含签名或描述
+4. 失败时：报告“Fetch failed: {reason}”
 
 ---
 
-## Negotiation Mode
+## 协商模式
 
-When `negotiation: true`, return structured response per `_negotiation/response-format.md`.
+当 `negotiation: true` 时，按照 `_negotiation/response-format.md` 返回结构化响应。
 
-### Confidence Assessment
+### 置信度评估
 
 | Data Found | Confidence |
 |------------|------------|
@@ -60,36 +60,36 @@ When `negotiation: true`, return structured response per `_negotiation/response-
 | Signature only | LOW |
 | 404 or empty | UNCERTAIN |
 
-**Degrading factors:**
+**降级因素：**
 
-- docs.rs build failed: -1 level
-- No examples: note in gaps
-- Deprecated item: mention in gaps
-- Old version requested: note version
+- docs.rs 构建失败：降 1 级
+- 无示例：在差距中注明
+- 已废弃项：在差距中注明
+- 请求旧版本：注明版本
 
-### Gap Categories
+### 差距类别
 
-Standard gaps to check:
+需检查的标准差距：
 
-- [ ] No usage examples
-- [ ] Missing error documentation
-- [ ] Related types not fetched
-- [ ] Version-specific behavior unclear
-- [ ] Return type undocumented
-- [ ] Panic conditions not listed
+- [ ] 无使用示例
+- [ ] 缺少错误文档
+- [ ] 相关类型未获取
+- [ ] 版本特定行为不明确
+- [ ] 返回类型未文档化
+- [ ] 未列出 panic 条件
 
-### Context Questions
+### 上下文问题
 
-When documentation request is unclear, ask:
+当文档请求不明确时，询问：
 
-| Situation | Question |
-|-----------|----------|
-| Multiple versions | "Which version are you using?" |
-| Ambiguous use case | "What's the specific use case?" |
-| Error handling | "Do you need error handling patterns?" |
-| Related items | "Do you need related types/traits?" |
+| 场景 | 问题 |
+|------|------|
+| 多版本 | “你使用哪个版本？” |
+| 用例不明确 | “具体的使用场景是什么？” |
+| 错误处理 | “你需要错误处理模式吗？” |
+| 相关项 | “你需要相关的类型/trait 吗？” |
 
-### Negotiation Response Template
+### 协商响应模板
 
 ```markdown
 ## Negotiation Response

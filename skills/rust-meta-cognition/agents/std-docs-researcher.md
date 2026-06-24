@@ -2,33 +2,33 @@
 
 从 doc.rust-lang.org 获取 Rust 标准库文档。
 
-## URL Patterns
+## URL 模式
 
-| Type | URL |
+| 类型 | URL |
 |------|-----|
 | Trait | `doc.rust-lang.org/std/marker/trait.Send.html` |
-| Struct | `doc.rust-lang.org/std/sync/struct.Arc.html` |
-| Module | `doc.rust-lang.org/std/collections/index.html` |
-| Function | `doc.rust-lang.org/std/mem/fn.replace.html` |
+| 结构体 | `doc.rust-lang.org/std/sync/struct.Arc.html` |
+| 模块 | `doc.rust-lang.org/std/collections/index.html` |
+| 函数 | `doc.rust-lang.org/std/mem/fn.replace.html` |
 
-## Common Paths
+## 常用路径
 
-| Item | Path |
-|------|------|
+| 项 | 路径 |
+|----|------|
 | Send, Sync, Copy, Clone | `std/marker/trait.<Name>.html` |
 | Arc, Mutex, RwLock | `std/sync/struct.<Name>.html` |
 | RefCell, Cell | `std/cell/struct.<Name>.html` |
 | Vec | `std/vec/struct.Vec.html` |
 | Option, Result | `std/<name>/enum.<Name>.html` |
 
-## Fetch
+## 获取
 
-Use available tools to get doc.rust-lang.org content.
+使用可用工具获取 doc.rust-lang.org 内容。
 
-## Cache
+## 缓存
 
-Location: `~/.claude/cache/rust-docs/std/{module}/{item}.json`
-TTL: 30 days (std is stable)
+位置：`~/.claude/cache/rust-docs/std/{module}/{item}.json`
+TTL：30 天（std 稳定）
 
 ## Output (Standard Mode)
 
@@ -47,53 +47,53 @@ TTL: 30 days (std is stable)
 - point 2
 ```
 
-## Validation
+## 验证
 
-1. Content is not empty
-2. Not a 404 page
-3. Contains signature or docblock
-4. On failure: "Fetch failed: {reason}, see doc.rust-lang.org"
+1. 内容不为空
+2. 不是 404 页面
+3. 包含签名或文档块
+4. 失败时：“Fetch failed: {reason}, see doc.rust-lang.org”
 
 ---
 
-## Negotiation Mode
+## 协商模式
 
-When `negotiation: true`, return structured response per `_negotiation/response-format.md`.
+当 `negotiation: true` 时，按照 `_negotiation/response-format.md` 返回结构化响应。
 
-### Confidence Assessment
+### 置信度评估
 
-| Data Found | Confidence |
-|------------|------------|
-| Full documentation | HIGH |
-| Basic documentation | MEDIUM |
-| Minimal/stub docs | LOW |
-| Not found | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 完整文档 | 高 |
+| 基本文档 | 中 |
+| 最小/存根文档 | 低 |
+| 未找到 | 不确定 |
 
-**Note:** std docs are generally HIGH confidence when found, as they are official and stable.
+**注意：** std 文档找到后通常为高置信度，因为它们是官方且稳定的。
 
-### Gap Categories
+### 差距类别
 
-Standard gaps to check:
+需检查的标准差距：
 
-- [ ] Implementation details not covered
-- [ ] Platform-specific behavior unclear
-- [ ] Related traits not fetched
-- [ ] Performance characteristics unknown
-- [ ] Unsafe usage notes missing
-- [ ] no_std compatibility unclear
+- [ ] 实现细节未覆盖
+- [ ] 平台特定行为不明确
+- [ ] 相关 trait 未获取
+- [ ] 性能特性未知
+- [ ] unsafe 使用说明缺失
+- [ ] no_std 兼容性不明确
 
-### Context Questions
+### 上下文问题
 
-When std documentation request needs clarification:
+当标准库文档请求需要澄清时：
 
-| Situation | Question |
-|-----------|----------|
-| Platform-specific | "Which platform/target?" |
-| no_std context | "Is this for no_std environment?" |
-| Thread safety | "Do you need thread-safety guarantees?" |
-| Unsafe usage | "Are you using this in unsafe context?" |
+| 场景 | 问题 |
+|------|------|
+| 平台特定 | “哪个平台/目标？” |
+| no_std 上下文 | “这是用于 no_std 环境吗？” |
+| 线程安全 | “你需要线程安全保证吗？” |
+| Unsafe 使用 | “你在 unsafe 上下文中使用吗？” |
 
-### Negotiation Response Template
+### 协商响应模板
 
 ```markdown
 ## Negotiation Response

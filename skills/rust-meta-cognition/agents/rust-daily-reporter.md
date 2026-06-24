@@ -2,30 +2,30 @@
 
 聚合 Rust 新闻，按时间范围过滤。
 
-## Data Sources (Required)
+## 数据源（必需）
 
-| Category | URL |
-|----------|-----|
-| Ecosystem | <https://www.reddit.com/r/rust/hot/> |
-| Ecosystem | <https://this-week-in-rust.org/> |
-| Official | <https://blog.rust-lang.org/> |
-| Official | <https://blog.rust-lang.org/inside-rust/> |
-| Foundation | <https://rustfoundation.org/media/category/news/> |
-| Foundation | <https://rustfoundation.org/media/category/blog/> |
-| Foundation | <https://rustfoundation.org/events/> |
+| 类别 | URL |
+|------|-----|
+| 生态 | <https://www.reddit.com/r/rust/hot/> |
+| 生态 | <https://this-week-in-rust.org/> |
+| 官方 | <https://blog.rust-lang.org/> |
+| 官方 | <https://blog.rust-lang.org/inside-rust/> |
+| 基金会 | <https://rustfoundation.org/media/category/news/> |
+| 基金会 | <https://rustfoundation.org/media/category/blog/> |
+| 基金会 | <https://rustfoundation.org/events/> |
 
-## Parameters
+## 参数
 
-- `time_range`: day | week | month
-- `category`: all | ecosystem | official | foundation
+- `time_range`：day | week | month
+- `category`：all | ecosystem | official | foundation
 
-## Fetch Strategy
+## 获取策略
 
-See: `_shared/fetch-strategy.md`
+参见：`_shared/fetch-strategy.md`
 
-**Tool Priority (in order):**
+**工具优先级（按顺序）：**
 
-1. **actionbook MCP** - Check for cached/pre-fetched content first
+1. **actionbook MCP**——首先检查缓存/预取内容
 
    ```
    search_actions("rust news {date}")
@@ -33,7 +33,7 @@ See: `_shared/fetch-strategy.md`
    search_actions("rust blog")
    ```
 
-2. **agent-browser CLI** - For dynamic web content
+2. **agent-browser CLI**——用于动态网页内容
 
    ```bash
    agent-browser open "https://www.reddit.com/r/rust/hot/"
@@ -41,29 +41,29 @@ See: `_shared/fetch-strategy.md`
    agent-browser close
    ```
 
-3. **WebFetch** - Fallback if agent-browser unavailable
+3. **WebFetch**——agent-browser 不可用时的回退方案
 
-| Source | Primary Tool | Fallback |
-|--------|--------------|----------|
+| 来源 | 主要工具 | 回退方案 |
+|------|----------|----------|
 | Reddit | agent-browser | WebFetch |
 | TWIR | actionbook → agent-browser | WebFetch |
 | Rust Blog | actionbook → WebFetch | - |
-| Foundation | actionbook → WebFetch | - |
+| 基金会 | actionbook → WebFetch | - |
 
-**DO NOT use:**
+**不要使用：**
 
-- Chrome MCP directly
-- WebSearch for fetching news pages
+- 直接使用 Chrome MCP
+- 使用 WebSearch 获取新闻页面
 
-## Time Filter
+## 时间过滤
 
-| Range | Filter |
-|-------|--------|
-| day | Last 24 hours |
-| week | Last 7 days |
-| month | Last 30 days |
+| 范围 | 过滤条件 |
+|------|----------|
+| day | 最近 24 小时 |
+| week | 最近 7 天 |
+| month | 最近 30 天 |
 
-## Output
+## 输出
 
 ```markdown
 # Rust {Day|Week|Month} Report
@@ -84,9 +84,9 @@ See: `_shared/fetch-strategy.md`
 | Date | Title | Summary |
 ```
 
-## Validation (Required)
+## 验证（必需）
 
-1. Check each source has results
-2. Mark "No updates" if empty
-3. Retry with different tool on failure
-4. Report reason if all fail
+1. 检查每个来源是否有结果
+2. 如果为空则标记“No updates”
+3. 失败时用不同工具重试
+4. 如果全部失败则报告原因

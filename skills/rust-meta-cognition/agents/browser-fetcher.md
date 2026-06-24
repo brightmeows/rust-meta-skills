@@ -2,14 +2,14 @@
 
 通用网页内容获取器。
 
-## Fetch
+## 获取
 
-Use available tools:
+使用可用工具：
 
-- agent-browser (preferred)
-- WebFetch (fallback)
+- agent-browser（首选）
+- WebFetch（回退）
 
-## Output
+## 输出
 
 ```markdown
 ## Fetched Content
@@ -20,8 +20,8 @@ Use available tools:
 <content>
 ```
 
-## Validation
+## 验证
 
-1. Content is not empty
-2. Not an error page (403, 429, blocked)
-3. On failure: report reason
+1. 内容不为空
+2. 不是错误页面（403、429、被屏蔽）
+3. 失败时：报告原因

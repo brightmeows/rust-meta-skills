@@ -1,31 +1,26 @@
 ---
 name: rust-meta-cognition
 description: >-
-  Package-level entry for the Rust meta-cognition skill collection — a
-  three-layer cognitive model (Domain → Design → Language Mechanics) that
-  produces domain-correct Rust solutions instead of surface fixes. Use when
-  orienting within the skill pack, routing a Rust question to the right
-  sub-skill, or applying project-level Rust defaults (edition 2024, clippy,
-  unsafe policy). Specific compile errors (E0xxx) and single-concept questions
-  are delegated to the internal rust-router sub-skill. 触发词：Rust 元认知,
-  技能集入口, 问题路由, 三层认知模型, meta-cognition, Rust skills, routing,
-  默认设置, ownership, borrow, lifetime, async, concurrency.
+  Rust 元认知技能集包级别入口——三层认知模型（领域→设计→语言机制），
+  输出领域正确的 Rust 方案，而非表面修复。在技能包中导航、将 Rust 问题
+  路由到合适的子技能、或应用项目级 Rust 默认设置（edition 2024、clippy、
+  unsafe 策略）时使用。具体编译错误（E0xxx）和单一概念问题交由内部
+  rust-router 子技能处理。触发词：Rust 元认知, 技能集入口, 问题路由,
+  三层认知模型, meta-cognition, Rust skills, routing, 默认设置,
+  ownership, borrow, lifetime, async, concurrency.
 ---
 
 # Rust 元认知技能集
 
 ## 概述
 
-**Don't answer directly. Trace through the cognitive layers first.**
+**不要直接回答。先通过认知层级追溯。**
 
-This is the package-level entry for a Rust meta-cognition skill collection.
-Instead of surface-level fixes (e.g. "just `.clone()` it"), it routes problems
-through three cognitive layers to produce domain-correct architectural
-solutions.
+这是 Rust 元认知技能集的包级别入口。它不给出表面修复（例如“直接 `.clone()` 就行”），
+而是将问题通过三个认知层级进行路由，输出领域正确的架构方案。
 
-Per-question routing lives in the **`rust-router`** sub-skill — for any
-concrete Rust question, invoke `rust-router` first (see
-[rust-router 优先](#rust-router-优先强制)).
+每个问题的路由由 **`rust-router`** 子技能处理——对于任何具体的 Rust 问题，
+先调用 `rust-router`（参见 [rust-router 优先](#rust-router-优先强制)）。
 
 ## 何时使用
 
@@ -82,11 +77,10 @@ Layer 1: Language Mechanics (HOW)
 
 ## rust-router 优先（强制）
 
-**For ANY concrete Rust question, invoke `rust-router` FIRST.**
+**对于任何具体的 Rust 问题，先调用 `rust-router`。**
 
-This is non-negotiable. Do NOT answer Rust questions from memory or skip the
-router. `rust-router` identifies the entry layer, loads the matching sub-skill,
-resolves keyword conflicts, and decides whether to trigger negotiation.
+这是不可商量的。不要凭记忆回答 Rust 问题或跳过路由器。`rust-router` 识别入口层级，
+加载匹配的子技能，解决关键词冲突，并决定是否触发协商。
 
 ```
 User Question
@@ -103,7 +97,7 @@ User Question
 
 ## 默认项目设置
 
-Creating Rust projects or `Cargo.toml` files, ALWAYS use:
+创建 Rust 项目或 `Cargo.toml` 文件时，始终使用：
 
 ```toml
 [package]
@@ -126,17 +120,17 @@ Rules:
 
 ## 协商协议触发
 
-Before answering, check if negotiation is required:
+回答前，检查是否需要协商：
 
 | 查询含 | 动作 |
 |--------|------|
 | 比较 / 对比 / compare / vs / versus / 区别 / difference | **必须**启用协商 |
 | 最佳实践 / best practice / 推荐 / recommend | **必须**启用协商 |
-| 领域 + 错误（如"交易系统 E0382"）| **必须**启用协商 |
-| 多技术（如"tokio 和 async-std"）| **必须**启用协商 |
-| 模糊范围（如"tokio 性能"）| **应**启用协商 |
+| 领域 + 错误（如“交易系统 E0382”）| **必须**启用协商 |
+| 多技术（如“tokio 和 async-std”）| **必须**启用协商 |
+| 模糊范围（如“tokio 性能”）| **应**启用协商 |
 
-协商响应须结构化：Query Type、Confidence（HIGH / MEDIUM / LOW / UNCERTAIN）、Gaps、Synthesized Answer。
+协商响应须结构化：查询类型（Query Type）、置信度（HIGH / MEDIUM / LOW / UNCERTAIN）、差距（Gaps）、综合答案（Synthesized Answer）。
 
 > 完整协议、置信度判定、精炼循环见
 > [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md)。

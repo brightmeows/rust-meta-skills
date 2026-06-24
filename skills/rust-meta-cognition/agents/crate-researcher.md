@@ -2,14 +2,14 @@
 
 从 lib.rs / crates.io 获取 crate 元数据。
 
-## Fetch
+## 获取
 
-Use available tools:
+使用可用工具：
 
-- lib.rs (preferred, more info): `lib.rs/crates/<name>`
-- crates.io (fallback): `crates.io/crates/<name>`
+- lib.rs（首选，信息更全）：`lib.rs/crates/<name>`
+- crates.io（回退）：`crates.io/crates/<name>`
 
-## Output (Standard Mode)
+## 输出（标准模式）
 
 ```markdown
 ## <Crate Name>
@@ -24,20 +24,20 @@ Use available tools:
 - docs.rs | crates.io | repo
 ```
 
-## Validation
+## 验证
 
-1. Content contains version number
-2. Not a "crate not found" page
-3. Has description
-4. On failure: "Crate does not exist or fetch failed"
+1. 内容包含版本号
+2. 不是“crate not found”页面
+3. 有描述信息
+4. 失败时：“Crate does not exist or fetch failed”
 
 ---
 
-## Negotiation Mode
+## 协商模式
 
-When `negotiation: true`, return structured response per `_negotiation/response-format.md`.
+当 `negotiation: true` 时，按照 `_negotiation/response-format.md` 返回结构化响应。
 
-### Confidence Assessment
+### 置信度评估
 
 | Data Found | Confidence |
 |------------|------------|
@@ -47,36 +47,36 @@ When `negotiation: true`, return structured response per `_negotiation/response-
 | Version only | LOW |
 | Not found or error | UNCERTAIN |
 
-**Degrading factors:**
+**降级因素：**
 
-- Last update > 2 years: -1 level
-- No README: -1 level
-- Yanked versions: mention in gaps
+- 最后更新超过 2 年：降 1 级
+- 无 README：降 1 级
+- 已撤销版本：在差距中注明
 
-### Gap Categories
+### 差距类别
 
-Standard gaps to check:
+需检查的标准差距：
 
-- [ ] Feature documentation incomplete
-- [ ] Version history not available
-- [ ] Dependency tree not fetched
-- [ ] Breaking changes unknown
-- [ ] Comparison data not available (for comparative queries)
-- [ ] MSRV not specified
-- [ ] License unclear
+- [ ] 特性文档不完整
+- [ ] 版本历史不可用
+- [ ] 依赖树未获取
+- [ ] 破坏性变更未知
+- [ ] 比较数据不可用（用于比较查询）
+- [ ] 未指定 MSRV
+- [ ] 许可证不明确
 
-### Context Questions
+### 上下文问题
 
-When crate usage is unclear, ask:
+当 crate 用法不明确时，询问：
 
-| Situation | Question |
-|-----------|----------|
-| Multiple use cases | "Is this for async or sync usage?" |
-| Feature selection | "Which features do you plan to enable?" |
-| Version targeting | "What's your minimum supported Rust version?" |
-| Comparison query | "What specific aspect do you want compared?" |
+| 场景 | 问题 |
+|------|------|
+| 多种用途 | “这是用于异步还是同步？” |
+| 特性选择 | “你计划启用哪些特性？” |
+| 版本定位 | “你的最低支持的 Rust 版本是多少？” |
+| 比较查询 | “你想比较哪个具体方面？” |
 
-### Negotiation Response Template
+### 协商响应模板
 
 ```markdown
 ## Negotiation Response

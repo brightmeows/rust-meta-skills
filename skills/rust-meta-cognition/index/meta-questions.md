@@ -80,23 +80,23 @@ m[XX][YYY][ZZZZZ]
 
 ---
 
-## Related Documents
+## 相关文档
 
-| Document | Purpose |
-|----------|---------|
-| [skills-index.md](./skills-index.md) | Complete skill catalog with descriptions |
-| [triggers-index.md](./triggers-index.md) | Keyword-to-skill mapping |
-| [domain-extensions.md](./domain-extensions.md) | Domain-specific code ranges (F*, M*, CN*, IoT*) |
+| 文档 | 用途 |
+|------|------|
+| [skills-index.md](./skills-index.md) | 包含描述的完整技能目录 |
+| [triggers-index.md](./triggers-index.md) | 关键词到技能的映射 |
+| [domain-extensions.md](./domain-extensions.md) | 领域特定代码范围（F*, M*, CN*, IoT*）|
 
-### Framework
+### 框架
 
-| File | Purpose |
-|------|---------|
-| [../_meta/reasoning-framework.md](../_meta/reasoning-framework.md) | Cognitive layer tracing methodology |
-| [../_meta/layer-definitions.md](../_meta/layer-definitions.md) | Detailed layer boundaries |
+| 文件 | 用途 |
+|------|------|
+| [../_meta/reasoning-framework.md](../_meta/reasoning-framework.md) | 认知层级追溯方法 |
+| [../_meta/layer-definitions.md](../_meta/layer-definitions.md) | 详细层级边界 |
 
-### Router
+### 路由器
 
-| File | Purpose |
-|------|---------|
-| [../skills/rust-router/SKILL.md](../skills/rust-router/SKILL.md) | Uses meta-questions for routing decisions |
+| 文件 | 用途 |
+|------|------|
+| [../skills/rust-router/SKILL.md](../skills/rust-router/SKILL.md) | 使用元问题进行路由决策 |

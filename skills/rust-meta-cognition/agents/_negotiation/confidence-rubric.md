@@ -2,278 +2,278 @@
 
 > 用于确定协商响应中置信度级别的标准化标准。
 
-## Confidence Levels Overview
+## 置信度级别概览
 
-| Level | Symbol | Meaning | Typical Action |
-|-------|--------|---------|----------------|
-| HIGH | ✓✓✓ | Reliable, complete | Accept |
-| MEDIUM | ✓✓ | Partial, usable | Evaluate gaps |
-| LOW | ✓ | Limited, significant gaps | Refine |
-| UNCERTAIN | ? | Unreliable or failed | Alternative |
-
----
-
-## HIGH Confidence
-
-### Definition
-
-Agent found comprehensive, verified information from authoritative sources. Core data is complete with no significant gaps.
-
-### Criteria (must meet ALL)
-
-- [ ] Primary/official source available
-- [ ] Core requested data complete
-- [ ] No conflicting information
-- [ ] Data is current (not outdated)
-
-### Source Quality for HIGH
-
-| Source Type | Qualifies? | Notes |
-|-------------|------------|-------|
-| Official documentation | Yes | doc.rust-lang.org, docs.rs |
-| Official release notes | Yes | releases.rs, GitHub releases |
-| Crate registry (lib.rs, crates.io) | Yes | For version/metadata |
-| Official blog posts | Yes | blog.rust-lang.org |
-| Third-party tutorials | No | May be outdated |
-| Stack Overflow | No | Varies in quality |
-
-### Examples
-
-```
-Query: "What is serde's latest version?"
-Finding: Version 1.0.219 from lib.rs
-Confidence: HIGH
-Reason: Official registry data, single authoritative answer
-```
-
-```
-Query: "What does Send trait do?"
-Finding: Definition from doc.rust-lang.org
-Confidence: HIGH
-Reason: Official Rust documentation, stable definition
-```
+| 级别 | 符号 | 含义 | 典型行动 |
+|------|------|------|----------|
+| 高 | ✓✓✓ | 可靠、完整 | 接受 |
+| 中 | ✓✓ | 部分可用 | 评估差距 |
+| 低 | ✓ | 有限，有显著差距 | 优化 |
+| 不确定 | ? | 不可靠或失败 | 替代方案 |
 
 ---
 
-## MEDIUM Confidence
+## 高置信度
 
-### Definition
+### 定义
 
-Agent found partial information. Core data exists but with gaps that don't block understanding.
+Agent 从权威来源找到了全面、经过验证的信息。核心数据完整，无显著差距。
 
-### Criteria (must meet MOST)
+### 标准（必须满足全部）
+
+- [ ] 主要/官方来源可用
+- [ ] 请求的核心数据完整
+- [ ] 无冲突信息
+- [ ] 数据是最新的（未过时）
+
+### 高置信度的来源质量
+
+| 来源类型 | 是否符合 | 说明 |
+|----------|----------|------|
+| 官方文档 | 是 | doc.rust-lang.org、docs.rs |
+| 官方发布说明 | 是 | releases.rs、GitHub releases |
+| Crate 注册表（lib.rs、crates.io）| 是 | 用于版本/元数据 |
+| 官方博客文章 | 是 | blog.rust-lang.org |
+| 第三方教程 | 否 | 可能已过时 |
+| Stack Overflow | 否 | 质量参差不齐 |
+
+### 示例
+
+```
+查询：“serde 的最新版本是什么？”
+发现：来自 lib.rs 的版本 1.0.219
+置信度：高
+原因：官方注册表数据，单一权威答案
+```
+
+```
+查询：“Send trait 是做什么的？”
+发现：来自 doc.rust-lang.org 的定义
+置信度：高
+原因：官方 Rust 文档，稳定的定义
+```
+
+---
+
+## 中置信度
+
+### 定义
+
+Agent 找到了部分信息。核心数据存在，但有不会阻碍理解的差距。
+
+### 标准（必须满足多数）
 
 - [ ] Some authoritative source available
 - [ ] Core data found (may be incomplete)
 - [ ] Minor gaps identified
 - [ ] No major conflicts
 
-### Common MEDIUM Scenarios
+### 常见的中置信度场景
 
-| Scenario | Why MEDIUM |
-|----------|------------|
-| Found version but not changelog | Core info present, detail missing |
-| Found API but not examples | Usable, but not complete |
-| Found one side of comparison | Partial answer |
-| Found info but slightly outdated | Usable with caveat |
+| 场景 | 为什么是中 |
+|------|------------|
+| 找到版本但无更新日志 | 核心信息存在，细节缺失 |
+| 找到 API 但无示例 | 可用但不完整 |
+| 找到比较的一方 | 部分答案 |
+| 找到信息但略有过时 | 可用但有保留 |
 
-### Examples
-
-```
-Query: "What features does tokio have?"
-Finding: Main features from lib.rs, but feature flags not fully documented
-Confidence: MEDIUM
-Reason: Core features known, but complete feature matrix not found
-```
+### 示例
 
 ```
-Query: "Compare tokio and async-std"
-Finding: General characteristics of both, no benchmarks
-Confidence: MEDIUM
-Reason: Qualitative comparison possible, quantitative data missing
-```
-
----
-
-## LOW Confidence
-
-### Definition
-
-Agent found limited information with significant gaps. Answer may be incomplete or unreliable.
-
-### Criteria (any of these)
-
-- [ ] Minimal authoritative sources
-- [ ] Core data incomplete
-- [ ] Significant gaps that affect usefulness
-- [ ] Information may be outdated
-- [ ] Single non-authoritative source
-
-### Common LOW Scenarios
-
-| Scenario | Why LOW |
-|----------|---------|
-| Only found crate name, no docs | Missing core info |
-| Found outdated information | Currency concern |
-| Third-party source only | Authority concern |
-| Conflicting information found | Reliability concern |
-
-### Examples
-
-```
-Query: "Best practices for async error handling"
-Finding: A few blog posts with different recommendations
-Confidence: LOW
-Reason: No authoritative source, opinions vary
+查询：“tokio 有哪些特性？”
+发现：来自 lib.rs 的主要特性，但特性标志未完整记录
+置信度：中
+原因：核心特性已知，但完整特性矩阵未找到
 ```
 
 ```
-Query: "What's new in obscure-crate 2.0?"
-Finding: Only found GitHub issues mentioning 2.0
-Confidence: LOW
-Reason: No official changelog, incomplete information
+查询：“比较 tokio 和 async-std”
+发现：两者的基本特征，无基准测试
+置信度：中
+原因：可进行定性比较，定量数据缺失
 ```
 
 ---
 
-## UNCERTAIN Confidence
+## 低置信度
 
-### Definition
+### 定义
 
-Agent couldn't find reliable information or encountered errors that prevent a trustworthy answer.
+Agent 找到有限信息，存在显著差距。答案可能不完整或不可靠。
 
-### Criteria (any of these)
+### 标准（满足任一即可）
 
-- [ ] No sources found
-- [ ] Fetch/access errors
-- [ ] Contradictory information
-- [ ] Source clearly unreliable
-- [ ] Request outside agent capability
+- [ ] 权威来源极少
+- [ ] 核心数据不完整
+- [ ] 影响可用性的显著差距
+- [ ] 信息可能已过时
+- [ ] 单一非权威来源
 
-### Common UNCERTAIN Scenarios
+### 常见的低置信度场景
 
-| Scenario | Why UNCERTAIN |
-|----------|---------------|
-| 404 errors on docs | Cannot verify |
-| Crate doesn't exist | No data |
-| Conflicting official sources | Cannot determine truth |
-| Request for future features | Speculation |
+| 场景 | 为什么是低 |
+|------|------------|
+| 只找到 crate 名称，无文档 | 核心信息缺失 |
+| 找到过时信息 | 时效性问题 |
+| 仅有第三方来源 | 权威性问题 |
+| 发现矛盾信息 | 可靠性问题 |
 
-### Examples
-
-```
-Query: "What is nonexistent-crate?"
-Finding: Crate not found on any registry
-Confidence: UNCERTAIN
-Reason: Crate does not exist or is private
-```
+### 示例
 
 ```
-Query: "What will Rust 2.0 include?"
-Finding: No official roadmap
-Confidence: UNCERTAIN
-Reason: Future features are speculative
+查询：“异步错误处理的最佳实践”
+发现：几篇博客文章，推荐各不相同
+置信度：低
+原因：无权威来源，观点不一致
+```
+
+```
+查询：“obscure-crate 2.0 有什么新内容？”
+发现：只找到 GitHub issue 提到 2.0
+置信度：低
+原因：无官方更新日志，信息不完整
 ```
 
 ---
 
-## Agent-Specific Rubrics
+## 不确定置信度
+
+### 定义
+
+Agent 找不到可靠信息，或遇到阻止可信答案的错误。
+
+### 标准（满足任一即可）
+
+- [ ] 未找到来源
+- [ ] 获取/访问错误
+- [ ] 矛盾信息
+- [ ] 来源明显不可靠
+- [ ] 请求超出 agent 能力范围
+
+### 常见的不确定场景
+
+| 场景 | 为什么是不确定 |
+|------|----------------|
+| 文档的 404 错误 | 无法验证 |
+| Crate 不存在 | 无数据 |
+| 官方来源冲突 | 无法判断真相 |
+| 请求未来特性 | 推测性内容 |
+
+### 示例
+
+```
+查询：“nonexistent-crate 是什么？”
+发现：在任何注册表中都找不到该 crate
+置信度：不确定
+原因：Crate 不存在或是私有的
+```
+
+```
+查询：“Rust 2.0 将包含什么？”
+发现：无官方路线图
+置信度：不确定
+原因：未来特性属于推测
+```
+
+---
+
+## Agent 特定评估标准
 
 ### crate-researcher
 
-| Data Found | Confidence |
-|------------|------------|
-| Version + description + features + docs | HIGH |
-| Version + description + features | HIGH |
-| Version + description | MEDIUM |
-| Version only | LOW |
-| Not found or error | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 版本 + 描述 + 特性 + 文档 | 高 |
+| 版本 + 描述 + 特性 | 高 |
+| 版本 + 描述 | 中 |
+| 仅有版本 | 低 |
+| 未找到或错误 | 不确定 |
 
-**Degrading factors:**
+**降级因素：**
 
-- Last update > 2 years: -1 level
-- No README: -1 level
-- Yanked versions: mention in gaps
+- 最后更新超过 2 年：降 1 级
+- 无 README：降 1 级
+- 已撤销版本：在差距中注明
 
 ### docs-researcher
 
-| Data Found | Confidence |
-|------------|------------|
-| Signature + description + examples | HIGH |
-| Signature + description | MEDIUM |
-| Signature only | LOW |
-| 404 or empty | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 签名 + 描述 + 示例 | 高 |
+| 签名 + 描述 | 中 |
+| 仅有签名 | 低 |
+| 404 或为空 | 不确定 |
 
-**Degrading factors:**
+**降级因素：**
 
-- docs.rs build failed: -1 level
-- No examples: note in gaps
-- Deprecated item: mention in gaps
+- docs.rs 构建失败：降 1 级
+- 无示例：在差距中注明
+- 已废弃项：在差距中注明
 
 ### std-docs-researcher
 
-| Data Found | Confidence |
-|------------|------------|
-| Full documentation | HIGH |
-| Basic documentation | MEDIUM |
-| Minimal/stub docs | LOW |
-| Not found | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 完整文档 | 高 |
+| 基本文档 | 中 |
+| 最小/存根文档 | 低 |
+| 未找到 | 不确定 |
 
-**Note:** std docs are generally HIGH confidence when found.
+**注意：** std 文档找到后通常为高置信度。
 
 ### clippy-researcher
 
-| Data Found | Confidence |
-|------------|------------|
-| Full lint info with examples | HIGH |
-| Lint info, no examples | MEDIUM |
-| Lint exists, minimal info | LOW |
-| Lint not found | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 完整 lint 信息含示例 | 高 |
+| Lint 信息无示例 | 中 |
+| Lint 存在，信息极少 | 低 |
+| Lint 未找到 | 不确定 |
 
 ### rust-changelog
 
-| Data Found | Confidence |
-|------------|------------|
-| Full release notes | HIGH |
-| Partial notes (some sections) | MEDIUM |
-| Minimal info | LOW |
-| Version not found | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 完整发布说明 | 高 |
+| 部分说明（某些章节） | 中 |
+| 极少信息 | 低 |
+| 版本未找到 | 不确定 |
 
 ---
 
-## Confidence Adjustments
+## 置信度调整
 
-### Upgrade Conditions
+### 升级条件
 
-| Condition | Adjustment |
-|-----------|------------|
-| Multiple sources agree | +1 level (max HIGH) |
-| Official source confirms | +1 level (max HIGH) |
-| Recent verification | +1 level (max HIGH) |
+| 条件 | 调整 |
+|------|------|
+| 多个来源一致 | +1 级（最高为高） |
+| 官方来源确认 | +1 级（最高为高） |
+| 近期验证 | +1 级（最高为高） |
 
-### Downgrade Conditions
+### 降级条件
 
-| Condition | Adjustment |
-|-----------|------------|
-| Information outdated (> 1 year) | -1 level |
-| Single non-official source | -1 level |
-| Partial data only | -1 level |
-| Any fetch errors | -1 level |
-
----
-
-## Decision Matrix
-
-| Confidence | Orchestrator Action |
-|------------|---------------------|
-| HIGH | Accept, synthesize answer |
-| MEDIUM | Evaluate gaps; accept if gaps don't block intent |
-| LOW | Refine query with context; or try alternative |
-| UNCERTAIN | Try alternative source/agent; or report limitation |
+| 条件 | 调整 |
+|------|------|
+| 信息过时（超过 1 年） | -1 级 |
+| 单一非官方来源 | -1 级 |
+| 仅部分数据 | -1 级 |
+| 任何获取错误 | -1 级 |
 
 ---
 
-## Reporting Format
+## 决策矩阵
+
+| 置信度 | 编排器行动 |
+|--------|------------|
+| 高 | 接受，综合答案 |
+| 中 | 评估差距；若差距不妨碍意图则接受 |
+| 低 | 用上下文优化查询；或尝试替代方案 |
+| 不确定 | 尝试替代来源/agent；或报告限制 |
+
+---
+
+## 报告格式
 
 ```markdown
 ### Confidence
@@ -281,28 +281,28 @@ Reason: Future features are speculative
 - **Reason**: [Specific reason following this rubric]
 ```
 
-### Good Reasons
+### 好的原因
 
 ```
-HIGH - Official docs complete with examples
-MEDIUM - Found on lib.rs but changelog unavailable
-LOW - Only found GitHub issues, no official docs
-UNCERTAIN - Crate does not exist on any registry
+高 - 官方文档完整含示例
+中 - 在 lib.rs 上找到但更新日志不可用
+低 - 只找到 GitHub issue，无官方文档
+不确定 - Crate 在任何注册表中都不存在
 ```
 
-### Bad Reasons
+### 不好的原因
 
 ```
-HIGH - Looks good (vague)
-MEDIUM - Some info (doesn't explain what's missing)
-LOW - Not great (doesn't explain why)
-UNCERTAIN - Didn't work (doesn't explain what failed)
+高 - 看起来不错（模糊）
+中 - 有些信息（未说明缺失内容）
+低 - 不太好（未说明原因）
+不确定 - 没找到（未说明什么失败了）
 ```
 
 ---
 
-## Related Documents
+## 相关文档
 
-- `response-format.md` - Full response structure
-- `_meta/negotiation-protocol.md` - Protocol specification
-- `_meta/error-protocol.md` - 3-Strike escalation
+- `response-format.md` - 完整响应结构
+- `_meta/negotiation-protocol.md` - 协议规范
+- `_meta/error-protocol.md` - 三振出局升级规则

@@ -6,23 +6,23 @@
 
 ## 错误码 → Skill
 
-| Error Code | Description | Route To |
-|------------|-------------|----------|
-| E0382 | Use of moved value | m01-ownership |
-| E0597 | Lifetime too short | m01-ownership |
-| E0506 | Cannot assign to borrowed | m01-ownership |
-| E0507 | Cannot move out of borrowed | m01-ownership |
-| E0515 | Return local reference | m01-ownership |
-| E0716 | Temporary value dropped | m01-ownership |
-| E0106 | Missing lifetime specifier | m01-ownership |
-| E0596 | Cannot borrow as mutable | m03-mutability |
-| E0499 | Multiple mutable borrows | m03-mutability |
-| E0502 | Borrow conflict | m03-mutability |
-| E0277 | Trait bound not satisfied | m04-zero-cost / m07-concurrency |
-| E0308 | Type mismatch | m04-zero-cost |
-| E0599 | No method found | m04-zero-cost |
-| E0038 | Trait not object-safe | m04-zero-cost |
-| E0433 | Cannot find crate/module | m11-ecosystem |
+| 错误码 | 描述 | 路由到 |
+|--------|------|--------|
+| E0382 | 使用了已移动的值 | m01-ownership |
+| E0597 | 生命周期太短 | m01-ownership |
+| E0506 | 不能对借用值赋值 | m01-ownership |
+| E0507 | 不能移出借用值 | m01-ownership |
+| E0515 | 返回局部引用 | m01-ownership |
+| E0716 | 临时值被丢弃 | m01-ownership |
+| E0106 | 缺少生命周期标注 | m01-ownership |
+| E0596 | 不能借用为可变 | m03-mutability |
+| E0499 | 多次可变借用 | m03-mutability |
+| E0502 | 借用冲突 | m03-mutability |
+| E0277 | Trait 约束未满足 | m04-zero-cost / m07-concurrency |
+| E0308 | 类型不匹配 | m04-zero-cost |
+| E0599 | 未找到方法 | m04-zero-cost |
+| E0038 | Trait 非对象安全 | m04-zero-cost |
+| E0433 | 找不到 crate/模块 | m11-ecosystem |
 
 ---
 
@@ -30,8 +30,8 @@
 
 ### Layer 1：语言机制
 
-| Keywords | Route To |
-|----------|----------|
+| 关键词 | 路由到 |
+|--------|--------|
 | ownership, borrow, lifetime, move, moved value | m01-ownership |
 | Box, Rc, Arc, RefCell, Cell, smart pointer | m02-resource |
 | mut, mutable, interior mutability | m03-mutability |
@@ -43,8 +43,8 @@
 
 ### Layer 2：设计选择
 
-| Keywords | Route To |
-|----------|----------|
+| 关键词 | 路由到 |
+|--------|--------|
 | domain model, DDD, business logic | m09-domain |
 | performance, optimization, benchmark, profiling | m10-performance |
 | crate, dependency, interop, ecosystem | m11-ecosystem |
@@ -55,8 +55,8 @@
 
 ### Layer 3：领域约束
 
-| Keywords | Route To |
-|----------|----------|
+| 关键词 | 路由到 |
+|--------|--------|
 | fintech, trading, decimal, currency, payment | domain-fintech |
 | web, HTTP, REST, axum, actix, handler | domain-web |
 | CLI, command line, clap, terminal | domain-cli |
@@ -91,52 +91,52 @@
 
 ## 查询模式 → 行动
 
-| Pattern | Action |
-|---------|--------|
-| "比较 X 和 Y" / "compare" / "vs" | Enable Negotiation Protocol |
-| "最佳实践" / "best practice" | Enable Negotiation Protocol |
-| Domain + Error (e.g., "交易系统 E0382") | Enable Negotiation Protocol |
-| Single error code (e.g., "E0382") | Direct lookup, no negotiation |
-| Single version query (e.g., "tokio 版本") | Direct lookup, no negotiation |
+| 模式 | 行动 |
+|------|------|
+| “比较 X 和 Y” / “compare” / “vs” | 启用协商协议 |
+| “最佳实践” / “best practice” | 启用协商协议 |
+| 领域 + 错误（如“交易系统 E0382”）| 启用协商协议 |
+| 单一错误码（如“E0382”）| 直接查找，不协商 |
+| 单一版本查询（如“tokio 版本”）| 直接查找，不协商 |
 
 ---
 
 ## 优先级规则
 
-When multiple skills match, use this priority:
+当多个技能匹配时，使用此优先级：
 
-1. **Error codes** take highest priority (direct mapping)
-2. **Domain keywords** + error → load BOTH domain skill and error skill
-3. **Comparison queries** → enable negotiation, load multiple skills
-4. **General keywords** → route to most specific skill
+1. **错误码**优先级最高（直接映射）
+2. **领域关键词** + 错误→同时加载领域技能和错误技能
+3. **比较查询**→启用协商，加载多个技能
+4. **通用关键词**→路由到最具体的技能
 
 ### 冲突解决
 
-| Conflict | Resolution |
-|----------|------------|
-| unsafe in m11 vs unsafe-checker | unsafe-checker (more specific) |
-| error in m06 vs m13 | m06 for general, m13 for domain-specific |
-| RAII in m01 vs m12 | m12 for design, m01 for implementation |
+| 冲突 | 解决方案 |
+|------|----------|
+| m11 中的 unsafe 与 unsafe-checker | unsafe-checker（更具体） |
+| m06 与 m13 中的错误 | m06 用于通用，m13 用于领域特定 |
+| m01 与 m12 中的 RAII | m12 用于设计，m01 用于实现 |
 
 ---
 
 ## 相关文档
 
-| Document | Purpose |
-|----------|---------|
-| [skills-index.md](./skills-index.md) | Complete skill catalog with descriptions |
-| [meta-questions.md](./meta-questions.md) | Meta-question category definitions |
-| [domain-extensions.md](./domain-extensions.md) | Domain-specific code ranges |
+| 文档 | 用途 |
+|------|------|
+| [skills-index.md](./skills-index.md) | 包含描述的完整技能目录 |
+| [meta-questions.md](./meta-questions.md) | 元问题类别定义 |
+| [domain-extensions.md](./domain-extensions.md) | 领域特定代码范围 |
 
-### Framework
+### 框架
 
-| File | Purpose |
-|------|---------|
-| [../_meta/reasoning-framework.md](../_meta/reasoning-framework.md) | How to trace through cognitive layers |
-| [../_meta/negotiation-protocol.md](../_meta/negotiation-protocol.md) | When negotiation triggers |
+| 文件 | 用途 |
+|------|------|
+| [../_meta/reasoning-framework.md](../_meta/reasoning-framework.md) | 如何追溯认知层级 |
+| [../_meta/negotiation-protocol.md](../_meta/negotiation-protocol.md) | 何时触发协商 |
 
-### Router
+### 路由器
 
-| File | Purpose |
-|------|---------|
-| [../skills/rust-router/SKILL.md](../skills/rust-router/SKILL.md) | Implements these routing rules |
+| 文件 | 用途 |
+|------|------|
+| [../skills/rust-router/SKILL.md](../skills/rust-router/SKILL.md) | 实现这些路由规则 |

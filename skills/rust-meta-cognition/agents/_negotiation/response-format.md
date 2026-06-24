@@ -10,7 +10,7 @@
 
 ---
 
-## Response Structure
+## 响应结构
 
 ```markdown
 ## Negotiation Response
@@ -37,20 +37,20 @@
 
 ---
 
-## Section Requirements
+## 章节要求
 
-### Findings (Required)
+### Findings（必需）
 
-What the agent discovered. This is the core content.
+Agent 发现的内容。这是核心内容。
 
-**Guidelines:**
+**指南：**
 
-- Include all relevant data found
-- Structure clearly (use sub-headers if complex)
-- Don't omit data just because it seems obvious
-- Include raw data, let orchestrator synthesize
+- 包含所有找到的相关数据
+- 清晰的结构（复杂时使用子标题）
+- 不要因为看起来明显而省略数据
+- 包含原始数据，让编排器综合
 
-**Example:**
+**示例：**
 
 ```markdown
 ### Findings
@@ -67,18 +67,18 @@ What the agent discovered. This is the core content.
 - 1.49.0: Added cooperative scheduling improvements
 ```
 
-### Confidence (Required)
+### Confidence（必需）
 
-Self-assessment of finding reliability.
+自我评估发现的可靠性。
 
-| Level | Meaning | Criteria |
-|-------|---------|----------|
-| HIGH | Reliable, complete | Primary source, core data complete |
-| MEDIUM | Partial, usable | Some source, core data found |
-| LOW | Limited, gaps | Minimal sources, incomplete |
-| UNCERTAIN | Unreliable | No sources, errors, conflicts |
+| 级别 | 含义 | 标准 |
+|------|------|------|
+| 高 | 可靠、完整 | 主要来源，核心数据完整 |
+| 中 | 部分可用 | 有来源，核心数据已找到 |
+| 低 | 有限、有差距 | 来源极少，不完整 |
+| 不确定 | 不可靠 | 无来源，错误，冲突 |
 
-**Example:**
+**示例：**
 
 ```markdown
 ### Confidence
@@ -86,18 +86,18 @@ Self-assessment of finding reliability.
 - **Reason**: Found crate info on lib.rs, but changelog not accessible
 ```
 
-### Gaps Identified (Required)
+### Gaps Identified（必需）
 
-What couldn't be found or verified.
+无法找到或无法验证的内容。
 
-**Guidelines:**
+**指南：**
 
-- Be specific about what's missing
-- Use checkboxes to allow marking as resolved
-- Prioritize by impact on answer quality
-- Don't list irrelevant gaps
+- 具体说明缺失了什么
+- 使用复选框以允许标记为已解决
+- 按对答案质量的影响排序
+- 不要列出不相关的差距
 
-**Example:**
+**示例：**
 
 ```markdown
 ### Gaps Identified
@@ -106,22 +106,22 @@ What couldn't be found or verified.
 - [x] Feature list - resolved from docs.rs
 ```
 
-### Context Needed (Conditional)
+### Context Needed（条件性）
 
-Questions for the orchestrator to enable better answers.
+向编排器提出的问题，以获得更好的答案。
 
-**When to include:**
+**何时包含：**
 
-- Query is ambiguous
-- Multiple valid interpretations
-- Need domain-specific context
-- Scope unclear
+- 查询有歧义
+- 有多种有效解释
+- 需要领域特定的上下文
+- 范围不明确
 
-**When to skip:**
+**何时跳过：**
 
-- Query is unambiguous
-- All necessary context provided
-- Direct lookup with clear answer
+- 查询明确无歧义
+- 已提供所有必要上下文
+- 直接查找，答案明确
 
 **Example:**
 
@@ -138,11 +138,11 @@ Query: "What is tokio's latest version?"
 → No context needed, direct lookup
 ```
 
-### Metadata (Required)
+### Metadata（必需）
 
-Source attribution and coverage assessment.
+来源归属和覆盖度评估。
 
-**Example:**
+**示例：**
 
 ```markdown
 ### Metadata
@@ -152,20 +152,20 @@ Source attribution and coverage assessment.
 
 ---
 
-## Coverage Assessment Guide
+## 覆盖度评估指南
 
-| Coverage | Meaning |
-|----------|---------|
-| 100% | All requested data found |
-| 80-99% | Minor gaps, core complete |
-| 50-79% | Significant gaps, partial answer |
-| <50% | Major gaps, may need alternative |
+| 覆盖度 | 含义 |
+|--------|------|
+| 100% | 所有请求的数据已找到 |
+| 80–99% | 少量差距，核心完整 |
+| 50–79% | 显著差距，部分答案 |
+| <50% | 重大差距，可能需要替代方案 |
 
 ---
 
-## Response Examples
+## 响应示例
 
-### High Confidence Example
+### 高置信度示例
 
 ```markdown
 ## Negotiation Response
@@ -200,7 +200,7 @@ Source attribution and coverage assessment.
 - **Coverage**: 95% - comprehensive for typical use
 ```
 
-### Low Confidence Example
+### 低置信度示例
 
 ```markdown
 ## Negotiation Response
@@ -231,7 +231,7 @@ Source attribution and coverage assessment.
 - **Coverage**: 30% - minimal data available
 ```
 
-### Comparative Query Example
+### 比较查询示例
 
 ```markdown
 ## Negotiation Response
@@ -274,45 +274,45 @@ Source attribution and coverage assessment.
 
 ---
 
-## Anti-Patterns
+## 反模式
 
-### Don't: Inflate Confidence
+### 不要：夸大置信度
 
 ```markdown
-# BAD
+# 不好
 Confidence: HIGH
 Reason: Found some info
-# GOOD
+# 好
 Confidence: MEDIUM
 Reason: Found basic info, but detailed docs not accessible
 ```
 
-### Don't: Vague Gaps
+### 不要：模糊的差距
 
 ```markdown
-# BAD
+# 不好
 Gaps: Some things missing
-# GOOD
+# 好
 Gaps:
 - [ ] Feature `x` documentation not found
 - [ ] Version 2.0 migration guide unavailable
 ```
 
-### Don't: Irrelevant Context Questions
+### 不要：不相关的上下文问题
 
 ```markdown
-# BAD (for query "what is tokio version")
+# 不好（针对“tokio 最新版本”查询）
 Context Needed: What's your favorite color?
-# GOOD
+# 好
 Context Needed: (None - query is specific)
 ```
 
-### Don't: Skip Metadata
+### 不要：跳过元数据
 
 ```markdown
-# BAD
+# 不好
 (no metadata section)
-# GOOD
+# 好
 Metadata:
 - Source: lib.rs
 - Coverage: 90%

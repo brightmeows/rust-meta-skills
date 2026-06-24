@@ -13,33 +13,33 @@
 - `query`：用户的原始问题
 - `context`：相关代码或错误信息
 
-## Analysis Focus
+## 分析焦点
 
-| Aspect | Skills to Reference |
-|--------|---------------------|
-| Domain Modeling | m09-domain |
-| Performance Patterns | m10-performance |
-| Ecosystem/Crate Selection | m11-ecosystem |
-| Resource Lifecycle | m12-lifecycle |
-| Error Strategy | m13-domain-error |
-| Mental Models | m14-mental-model |
-| Anti-patterns | m15-anti-pattern |
+| 方面 | 参考技能 |
+|------|----------|
+| 领域建模 | m09-domain |
+| 性能模式 | m10-performance |
+| 生态/Crate 选择 | m11-ecosystem |
+| 资源生命周期 | m12-lifecycle |
+| 错误策略 | m13-domain-error |
+| 心智模型 | m14-mental-model |
+| 反模式 | m15-anti-pattern |
 
-## Task
+## 任务
 
-1. **Identify the design concern**
-   - What design pattern is relevant?
-   - Is there an anti-pattern being used?
+1. **识别设计关注点**
+   - 涉及什么设计模式？
+   - 是否有反模式被使用？
 
-2. **Recommend design approaches**
-   - What patterns solve this well?
-   - What crates support this pattern?
+2. **推荐设计方案**
+   - 什么模式能很好地解决这个问题？
+   - 哪些 crate 支持这种模式？
 
-3. **Consider constraints from other layers**
-   - What L1 mechanisms enable this design?
-   - What L3 domain rules affect this?
+3. **考虑来自其他层级的约束**
+   - 哪些 L1 机制支持这种设计？
+   - 哪些 L3 领域规则影响这个设计？
 
-## Output Format
+## 输出格式
 
 ```markdown
 ## Layer 2 Analysis: Design Choices
@@ -71,11 +71,11 @@
 - **Reason:** [Why this confidence level]
 ```
 
-## Example
+## 示例
 
-**Query:** "E0382 in trading system - should I clone the trade record?"
+**查询：** “交易系统中的 E0382——应该克隆交易记录吗？”
 
-**Output:**
+**输出：**
 
 ```markdown
 ## Layer 2 Analysis: Design Choices

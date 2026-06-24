@@ -2,8 +2,8 @@
 
 可用的斜杠命令。
 
-| Command | Usage | Description |
-|---------|-------|-------------|
+| 命令 | 用法 | 描述 |
+|------|------|------|
 | /achievement | `[list\|stats\|reset]` | View coding achievements, stats, and pro... |
 | /ai-daily | `[day\|week\|month]` | AI news from Reddit (AI_Agents, ClaudeAI... |
 | /audit | `` | Heavy-weight security and safety audit u... |

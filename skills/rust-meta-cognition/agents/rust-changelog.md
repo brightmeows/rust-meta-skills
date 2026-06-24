@@ -4,13 +4,13 @@
 
 ## URL
 
-`releases.rs/docs/<version>/` (e.g., `1.85`, `1.84.1`)
+`releases.rs/docs/<version>/`（例如 `1.85`、`1.84.1`）
 
-## Fetch
+## 获取
 
-Use available tools to get releases.rs content.
+使用可用工具获取 releases.rs 内容。
 
-## Output (Standard Mode)
+## 输出（标准模式）
 
 ```markdown
 ## Rust <Version> Release Notes
@@ -30,20 +30,20 @@ Use available tools to get releases.rs content.
 - note: desc
 ```
 
-## Validation
+## 验证
 
-1. Content contains version number
-2. Has "Language" or "Features" sections
-3. Not "version not found"
-4. On failure: "Version {v} does not exist or fetch failed"
+1. 内容包含版本号
+2. 有“Language”或“Features”章节
+3. 不是“version not found”
+4. 失败时：“Version {v} does not exist or fetch failed”
 
 ---
 
-## Negotiation Mode
+## 协商模式
 
-When `negotiation: true`, return structured response per `_negotiation/response-format.md`.
+当 `negotiation: true` 时，按照 `_negotiation/response-format.md` 返回结构化响应。
 
-### Confidence Assessment
+### 置信度评估
 
 | Data Found | Confidence |
 |------------|------------|
@@ -52,29 +52,29 @@ When `negotiation: true`, return structured response per `_negotiation/response-
 | Minimal info | LOW |
 | Version not found | UNCERTAIN |
 
-### Gap Categories
+### 差距类别
 
-Standard gaps to check:
+需检查的标准差距：
 
-- [ ] Migration guide not available
-- [ ] Edition changes not detailed
-- [ ] Cargo changes incomplete
-- [ ] MSRV impact unclear
-- [ ] Deprecation notices missing
-- [ ] Security fixes not listed
+- [ ] 迁移指南不可用
+- [ ] Edition 变更未详细说明
+- [ ] Cargo 变更不完整
+- [ ] MSRV 影响不明确
+- [ ] 废弃通知缺失
+- [ ] 安全修复未列出
 
-### Context Questions
+### 上下文问题
 
-When changelog request needs clarification:
+当更新日志请求需要澄清时：
 
-| Situation | Question |
-|-----------|----------|
-| Migration | "Are you migrating from a specific version?" |
-| Edition | "Do you need edition-specific changes?" |
-| Feature focus | "Are you looking for a specific feature?" |
-| Stability | "Stable, beta, or nightly?" |
+| 场景 | 问题 |
+|------|------|
+| 迁移 | “你是从特定版本迁移吗？” |
+| Edition | “你需要 edition 特定的变更吗？” |
+| 特性聚焦 | “你在寻找某个特定特性吗？” |
+| 稳定性 | “稳定版、测试版还是 nightly？” |
 
-### Negotiation Response Template
+### 协商响应模板
 
 ```markdown
 ## Negotiation Response
