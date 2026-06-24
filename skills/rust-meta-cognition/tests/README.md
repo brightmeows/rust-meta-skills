@@ -9,6 +9,8 @@
 ```
 tests/
 ├── README.md
+├── trigger-checklist.md    # 全量触发测试清单（手工）
+├── trigger-test.sh         # 触发测试脚本（自动化）
 ├── scenarios/              # 按类别划分的测试场景
 │   ├── ownership.md        # m01-m04 所有权/资源测试
 │   ├── layer2-skills.md    # m05, m09-m15 设计类 skill
@@ -28,7 +30,7 @@ tests/
 
 ## 快速测试参考
 
-项目根目录下的 `test-triggers.md` 包含完整的触发测试清单。
+同目录下的 `trigger-checklist.md` 包含完整的触发测试清单。
 
 ## 运行测试
 
@@ -128,5 +130,5 @@ claude -p "tokio 最新版本"                # rust-learner
     - 测试提示词
     - 期望触发的 Skill
     - 期望的响应要素
-3. 更新项目根目录的 `test-triggers.md`
+3. 更新 `trigger-checklist.md`
 4. 根据需要更新验证脚本

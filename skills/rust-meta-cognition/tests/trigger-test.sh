@@ -3,10 +3,10 @@
 # Tests if the Forced Eval Hook is working
 #
 # Usage:
-#   ./test-triggers.sh              # Run all tests
-#   ./test-triggers.sh -v           # Verbose mode (show full output)
-#   ./test-triggers.sh "query"      # Test single query
-#   ./test-triggers.sh -v "query"   # Single query with verbose
+#   ./tests/trigger-test.sh              # Run all tests
+#   ./tests/trigger-test.sh -v           # Verbose mode (show full output)
+#   ./tests/trigger-test.sh "query"      # Test single query
+#   ./tests/trigger-test.sh -v "query"   # Single query with verbose
 
 set -e
 
