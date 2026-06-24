@@ -5,13 +5,13 @@ argument-hint: [list|stats|reset] [--category bug|test|streak|safety|learning]
 
 # 成就系统
 
-View and manage your coding achievements and statistics.
+查看和管理你的编程成就与统计数据。
 
-Arguments: $ARGUMENTS
-- `list` (default): Show all achievements with unlock status
-- `stats`: Show detailed statistics
-- `reset`: Reset all stats and achievements (requires confirmation)
-- `--category`: Filter by category (bug, test, streak, safety, learning, review, docs)
+参数：$ARGUMENTS
+- `list`（默认）：显示所有成就及其解锁状态
+- `stats`：显示详细统计
+- `reset`：重置所有统计和成就（需确认）
+- `--category`：按分类过滤（bug、test、streak、safety、learning、review、docs）
 
 ---
 

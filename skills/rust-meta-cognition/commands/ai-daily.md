@@ -5,7 +5,7 @@ argument-hint: [day|week|month] [--save [path]]
 
 # AI 每日报道
 
-Generate a summarized report of AI news from Reddit communities.
+生成 Reddit 社区 AI 新闻的汇总报告。
 
 Arguments: $ARGUMENTS
 - `time_range` (optional): `day` | `week` | `month` (default: `day`)

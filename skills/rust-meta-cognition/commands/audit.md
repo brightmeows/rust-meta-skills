@@ -1,6 +1,6 @@
 # /audit：审计
 
-Heavy-weight security and safety audit using os-checker tools.
+使用 os-checker 工具进行重量级安全审计。
 
 ## Usage
 

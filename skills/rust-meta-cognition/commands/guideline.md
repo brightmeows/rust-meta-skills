@@ -1,6 +1,6 @@
 # /guideline：编码规范查询
 
-Query Rust coding guidelines and best practices.
+查询 Rust 编码规范与最佳实践。
 
 ## Usage
 

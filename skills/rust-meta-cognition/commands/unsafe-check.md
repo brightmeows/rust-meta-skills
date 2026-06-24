@@ -1,6 +1,6 @@
 # /unsafe-check：Unsafe 检查
 
-Check a file for unsafe code issues and potential safety violations.
+检查文件的 unsafe 代码问题和潜在安全违规。
 
 ## Usage
 

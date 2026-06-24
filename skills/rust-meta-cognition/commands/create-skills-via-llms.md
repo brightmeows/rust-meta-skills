@@ -3,7 +3,7 @@ description: Create high-quality Rust crate skills from llms.txt
 argument-hint: <crate_name> <llms_path> [version] [description]
 ---
 
-Create high-quality skills for a Rust crate based on llms.txt documentation.
+基于 llms.txt 文档为 Rust crate 创建高质量 skills。
 
 Arguments: $ARGUMENTS
 - First argument: crate_name (required) - the Rust crate name (e.g., tokio, serde)

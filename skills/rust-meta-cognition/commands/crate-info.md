@@ -1,6 +1,6 @@
 # /crate-info：Crate 信息
 
-Get information about a Rust crate including latest version, features, and changelog.
+获取 Rust crate 信息，包括最新版本、特性和更新日志。
 
 ## Usage
 
