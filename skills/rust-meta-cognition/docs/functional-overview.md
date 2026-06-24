@@ -237,7 +237,7 @@
 - 规则复用：共享 `rust-defaults.md`
 - 上下文节省：只加载需要的子 Skill
 
-详见 `docs/architecture-zh.md` 中的"Skill 继承模式"章节。
+详见 `docs/architecture.md` 中的"Skill 继承模式"章节。
 
 ---
 

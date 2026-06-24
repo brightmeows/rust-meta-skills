@@ -147,9 +147,8 @@ rust-skills/
 │
 ├── docs/                        # 文档
 │   ├── capabilities-summary.md
-│   ├── capabilities-summary-zh.md
-│   ├── functional-overview-zh.md
-│   ├── architecture-zh.md
+│   ├── functional-overview.md
+│   ├── architecture.md
 │   ├── what-is-a-skill.md
 │   ├── problem-solved.md
 │   └── skills-design-lessons.md

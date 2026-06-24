@@ -149,8 +149,8 @@ Layer 1: 语言机制 (HOW - 怎么做)
 
 ## 文档
 
-- [架构设计](./skills/rust-meta-cognition/docs/architecture-zh.md)
-- [功能概览](./skills/rust-meta-cognition/docs/functional-overview-zh.md)
+- [架构设计](./skills/rust-meta-cognition/docs/architecture.md)
+- [功能概览](./skills/rust-meta-cognition/docs/functional-overview.md)
 - [元认知示例：E0382](./skills/rust-meta-cognition/docs/meta-cognition-example-e0382.md)
 
 ## 基于项目

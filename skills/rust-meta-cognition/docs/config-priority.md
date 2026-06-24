@@ -71,5 +71,5 @@ Claude 最先看到这个指令，所以在加载任何 Rust skill 时都会先�
 
 ## 相关文档
 
-- [Hook 机制详解](./hook-mechanism-zh.md)
+- [Hook 机制详解](./hook-mechanism.md)
 - [Skills 最佳实践](./skills-best-practices.md)
