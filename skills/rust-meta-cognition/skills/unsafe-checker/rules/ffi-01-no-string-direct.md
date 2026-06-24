@@ -7,18 +7,18 @@ impact: HIGH
 
 # Avoid Passing Strings Directly to C from Public Rust API
 
-## Summary
+## 概要
 
 Use `CString` and `CStr` for string handling at FFI boundaries. Never pass Rust `String` or `&str` directly to C.
 
-## Rationale
+## 理由
 
 - Rust strings are UTF-8, not null-terminated
 - C strings require null terminator
 - Rust strings may contain interior null bytes
 - Memory layout differs between Rust String and C char*
 
-## Bad Example
+## 错误示例
 
 ```rust
 extern "C" {
@@ -46,7 +46,7 @@ extern "C" fn bad_callback(s: String) {  // Wrong!
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::ffi::{CString, CStr};
@@ -109,14 +109,14 @@ extern "C" fn good_callback(s: *const c_char) {
 | `*const c_char` | Yes | Byte | FFI pointer |
 | `OsString` | Platform | Platform | Paths, env |
 
-## Checklist
+## 检查清单
 
 - [ ] Am I passing Rust strings to C? → Use CString
 - [ ] Am I receiving C strings? → Use CStr
 - [ ] Does my string contain null bytes? → Handle NulError
 - [ ] Am I checking for null pointers from C?
 
-## Related Rules
+## 相关规则
 
 - `ffi-02`: Read documentation for std::ffi types
 - `ffi-06`: Ensure C-ABI string compatibility

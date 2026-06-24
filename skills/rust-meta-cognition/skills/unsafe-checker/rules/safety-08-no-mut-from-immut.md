@@ -6,17 +6,17 @@ impact: CRITICAL
 clippy: mut_from_ref
 ---
 
-# Mutable Return from Immutable Parameter is Wrong
+# 从不可变参数返回可变引用是错误的
 
-## Summary
+## 概要
 
 A function taking `&self` or `&T` must not return `&mut T` to the same data without interior mutability.
 
-## Rationale
+## 理由
 
 Returning `&mut` from `&` violates Rust's aliasing rules. The caller has an immutable borrow, so they can create additional `&` references. Returning `&mut` creates mutable aliasing, which is undefined behavior.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Return &mut from &self
@@ -40,7 +40,7 @@ fn bad_transmute<T>(reference: &T) -> &mut T {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::cell::{Cell, RefCell, UnsafeCell};
@@ -111,14 +111,14 @@ impl ValidInteriorMut {
 }
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Am I trying to return &mut from a & method?
 - [ ] If yes, am I using UnsafeCell or a type built on it?
 - [ ] Am I guaranteeing exclusive access before creating &mut?
 - [ ] Would Cell, RefCell, or Mutex solve my problem safely?
 
-## Related Rules
+## 相关规则
 
 - `ptr-05`: Don't manually convert *const to *mut
 - `safety-02`: Verify safety invariants

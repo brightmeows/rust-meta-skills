@@ -6,17 +6,17 @@ impact: CRITICAL
 clippy: uninit_assumed_init
 ---
 
-# Do Not Expose Uninitialized Memory in Public APIs
+# 不要在公共 API 中暴露未初始化的内存
 
-## Summary
+## 概要
 
 Public APIs must never return or expose uninitialized memory to callers.
 
-## Rationale
+## 理由
 
 Reading uninitialized memory is undefined behavior in Rust. Safe code should never be able to access uninitialized memory through your API.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Expose uninitialized memory
@@ -43,7 +43,7 @@ impl Buffer {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::mem::MaybeUninit;
@@ -109,13 +109,13 @@ boxed.write([0u8; 1024]);
 let boxed = unsafe { boxed.assume_init() };
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Does my API ever return references to uninitialized memory?
 - [ ] Are length/capacity invariants properly maintained?
 - [ ] Is MaybeUninit used instead of transmute for uninitialized data?
 
-## Related Rules
+## 相关规则
 
 - `mem-06`: Use MaybeUninit<T> for uninitialized memory
 - `safety-01`: Panic safety with partial initialization

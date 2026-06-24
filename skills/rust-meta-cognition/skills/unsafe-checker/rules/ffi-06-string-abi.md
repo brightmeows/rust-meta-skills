@@ -7,11 +7,11 @@ impact: HIGH
 
 # Ensure C-ABI Compatibility for Strings Between Rust and C
 
-## Summary
+## 概要
 
 When passing strings across FFI, ensure both sides agree on encoding, null-termination, and memory ownership.
 
-## Rationale
+## 理由
 
 - Rust strings are UTF-8, C strings are byte arrays
 - C expects null termination, Rust strings don't have it
@@ -138,14 +138,14 @@ fn to_wide_string(s: &str) -> Vec<u16> {
 }
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Is the string null-terminated when passed to C?
 - [ ] Who allocates the memory? Who frees it?
 - [ ] Is the encoding (UTF-8, ASCII, platform) documented?
 - [ ] Am I handling conversion errors (interior nulls, invalid UTF-8)?
 
-## Related Rules
+## 相关规则
 
 - `ffi-01`: Use CString/CStr at FFI boundaries
 - `ffi-02`: Read std::ffi documentation

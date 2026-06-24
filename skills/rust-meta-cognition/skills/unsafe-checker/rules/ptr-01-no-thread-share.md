@@ -5,17 +5,17 @@ level: P
 impact: CRITICAL
 ---
 
-# Do Not Share Raw Pointers Across Threads
+# 不要跨线程共享裸指针
 
-## Summary
+## 概要
 
 Raw pointers (`*const T`, `*mut T`) are not `Send` or `Sync` by default. Do not share them across threads without ensuring proper synchronization.
 
-## Rationale
+## 理由
 
 Raw pointers have no synchronization guarantees. Sharing them across threads can lead to data races, which are undefined behavior.
 
-## Bad Example
+## 错误示例
 
 ```rust
 use std::thread;
@@ -41,7 +41,7 @@ struct UnsafePtr(*mut i32);
 unsafe impl Send for UnsafePtr {}  // Unsound without synchronization!
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::sync::{Arc, Mutex, atomic::{AtomicPtr, Ordering}};
@@ -100,14 +100,14 @@ Only with proper synchronization:
 - Protected by a `Mutex` (don't share the pointer, share the Mutex)
 - Using lock-free algorithms with careful memory ordering
 
-## Checklist
+## 检查清单
 
 - [ ] Does my pointer cross thread boundaries?
 - [ ] Is there synchronization preventing concurrent access?
 - [ ] Can I use a higher-level abstraction (Arc, Mutex)?
 - [ ] If implementing Send/Sync, is thread safety proven?
 
-## Related Rules
+## 相关规则
 
 - `safety-05`: Consider safety when implementing Send/Sync
 - `safety-02`: Verify safety invariants

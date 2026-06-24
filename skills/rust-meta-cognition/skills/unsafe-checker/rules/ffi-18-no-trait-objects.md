@@ -7,18 +7,18 @@ impact: HIGH
 
 # Avoid Passing Trait Objects to C Interfaces
 
-## Summary
+## 概要
 
 Trait objects (`dyn Trait`) have Rust-specific layout (fat pointers with vtable) that is not compatible with C.
 
-## Rationale
+## 理由
 
 - Trait objects are "fat pointers": data ptr + vtable ptr
 - C expects thin pointers (single pointer)
 - Vtable layout is not stable across Rust versions
 - C cannot call Rust vtable methods
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Pass trait objects to C
@@ -38,7 +38,7 @@ struct BadCallback {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::os::raw::{c_int, c_void};
@@ -152,14 +152,14 @@ The sizes don't match!
 | `&dyn Trait` | C-compatible vtable struct |
 | `Arc<dyn Trait>` | Reference counting wrapper |
 
-## Checklist
+## 检查清单
 
 - [ ] Am I passing trait objects across FFI?
 - [ ] Can I use concrete types instead?
 - [ ] Have I used the trampoline pattern for callbacks?
 - [ ] If vtable is needed, is it C-compatible?
 
-## Related Rules
+## 相关规则
 
 - `ffi-16`: Closure to C with trampoline pattern
 - `ffi-14`: Types should have stable layout

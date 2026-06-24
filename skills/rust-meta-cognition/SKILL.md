@@ -12,7 +12,7 @@ description: >-
   默认设置, ownership, borrow, lifetime, async, concurrency.
 ---
 
-# Rust Meta-Cognition Skills
+# Rust 元认知技能集
 
 ## 概述
 

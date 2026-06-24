@@ -5,19 +5,19 @@ level: P
 impact: HIGH
 ---
 
-# Ensure Consistent Data Layout for Custom Types
+# 确保自定义类型的数据布局一致性
 
-## Summary
+## 概要
 
 Types shared between Rust and C must have `#[repr(C)]` to ensure the memory layout matches what C expects.
 
-## Rationale
+## 理由
 
 - Rust's default layout is unspecified and may change
 - C has specific, standardized layout rules
 - Mismatched layouts cause memory corruption
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Rust layout for FFI types
@@ -42,7 +42,7 @@ enum BadEnum {
 // Rust enum layout is complex and not C-compatible
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use repr(C) for FFI structs
@@ -133,14 +133,14 @@ fn verify_layout() {
 | `#[repr(transparent)]` | Same layout as single field |
 | `#[repr(u8)]` etc. | Enum discriminant type |
 
-## Checklist
+## 检查清单
 
 - [ ] Is every FFI struct marked `#[repr(C)]`?
 - [ ] Is every FFI enum using explicit discriminants?
 - [ ] Have I verified the layout matches the C header?
 - [ ] Have I added compile-time assertions?
 
-## Related Rules
+## 相关规则
 
 - `mem-01`: Choose appropriate data layout
 - `ffi-14`: Types in FFI should have stable layout

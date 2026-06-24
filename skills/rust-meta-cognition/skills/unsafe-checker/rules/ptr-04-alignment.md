@@ -6,17 +6,17 @@ impact: HIGH
 clippy: cast_ptr_alignment
 ---
 
-# Do Not Dereference Pointers Cast to Misaligned Types
+# 不要解引用转换为未对齐类型的指针
 
-## Summary
+## 概要
 
 When casting a pointer to a different type, ensure the resulting pointer is properly aligned for the target type.
 
-## Rationale
+## 理由
 
 Misaligned pointer dereferences are undefined behavior on most architectures. Even on architectures that support unaligned access, it may cause performance penalties or subtle bugs.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Cast without checking alignment
@@ -41,7 +41,7 @@ fn bad_field_access(bytes: &[u8]) -> u32 {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use read_unaligned for potentially misaligned data
@@ -104,14 +104,14 @@ fn align_up<T>(ptr: *const u8) -> *const u8 {
 | RISC-V | UB, may trap |
 | WASM | UB |
 
-## Checklist
+## 检查清单
 
 - [ ] Is my pointer cast changing alignment requirements?
 - [ ] Is the source pointer guaranteed to be aligned?
 - [ ] Should I use read_unaligned instead?
 - [ ] Can I use safe conversion methods (from_ne_bytes)?
 
-## Related Rules
+## 相关规则
 
 - `mem-01`: Choose appropriate data layout
 - `ffi-13`: Ensure consistent data layout

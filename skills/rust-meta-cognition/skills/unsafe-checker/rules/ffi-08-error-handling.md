@@ -5,19 +5,19 @@ level: P
 impact: HIGH
 ---
 
-# Handle Errors Properly in FFI
+# 在 FFI 中正确处理错误
 
-## Summary
+## 概要
 
 FFI functions must use C-compatible error handling (return codes, errno, out parameters). Rust's Result/Option don't cross FFI boundaries.
 
-## Rationale
+## 理由
 
 - C doesn't have Result or Option
 - Exceptions don't exist in C
 - Must use patterns C code understands
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Return Result across FFI
@@ -35,7 +35,7 @@ pub extern "C" fn bad_find(id: i32) -> Option<*mut Data> {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::os::raw::{c_char, c_int};
@@ -133,14 +133,14 @@ pub extern "C" fn get_error_message(buf: *mut c_char, len: usize) -> c_int {
 | Error message function | Detailed error info |
 | Last-error thread-local | Windows-style APIs |
 
-## Checklist
+## 检查清单
 
 - [ ] Am I returning C-compatible error indicators?
 - [ ] Are output parameters used for return values?
 - [ ] Is there a way to get detailed error info?
 - [ ] Am I documenting all possible error codes?
 
-## Related Rules
+## 相关规则
 
 - `ffi-04`: Handle panics at FFI boundary
 - `safety-10`: Document safety requirements

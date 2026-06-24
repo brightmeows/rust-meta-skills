@@ -1,4 +1,4 @@
-# Rule Template
+# 规则模板
 
 Use this template for all unsafe-checker rules.
 
@@ -15,39 +15,39 @@ clippy: <clippy_lint_name> (if applicable)
 
 # {Rule Title}
 
-## Summary
+## 概要
 
 One-sentence description of what this rule requires.
 
-## Rationale
+## 理由
 
 Why this rule matters for safety/soundness.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Description of the anti-pattern
 <code that violates the rule>
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Description of the correct pattern
 <code that follows the rule>
 ```
 
-## Common Violations
+## 常见违反模式
 
 1. Violation pattern 1
 2. Violation pattern 2
 
-## Checklist
+## 检查清单
 
 - [ ] Check item 1
 - [ ] Check item 2
 
-## Related Rules
+## 相关规则
 
 - `{other-rule-id}`: Brief description
 ```

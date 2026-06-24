@@ -7,17 +7,17 @@ impact: HIGH
 
 # Separate Data and Code When Passing Rust Closures to C
 
-## Summary
+## 概要
 
 C callbacks are function pointers without captured state. To pass Rust closures to C, separate the function pointer from the closure data using a "trampoline" pattern.
 
-## Rationale
+## 理由
 
 - Rust closures can capture state (like lambdas)
 - C function pointers are just addresses, no state
 - Must pass state separately via `void*` user_data
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Try to pass closure directly
@@ -41,7 +41,7 @@ fn bad_transmute() {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::os::raw::c_void;
@@ -128,14 +128,14 @@ Rust Closure: |x| x * captured_value
 C sees: function pointer + void* user_data
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Does my closure capture any state?
 - [ ] Am I using the trampoline pattern?
 - [ ] Does the closure data live long enough?
 - [ ] Am I unregistering before dropping the closure?
 
-## Related Rules
+## 相关规则
 
 - `ffi-03`: Implement Drop for resource wrappers
 - `ffi-10`: Thread safety for callbacks

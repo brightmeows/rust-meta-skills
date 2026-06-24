@@ -5,13 +5,13 @@ level: P
 impact: CRITICAL
 ---
 
-# Unsafe Code Authors Must Verify Safety Invariants
+# Unsafe 代码作者必须验证安全不变量
 
-## Summary
+## 概要
 
 When writing unsafe code, you are taking responsibility for upholding all safety invariants that the compiler normally enforces.
 
-## Rationale
+## 理由
 
 Unsafe blocks don't disable safety requirements - they transfer responsibility from the compiler to the programmer. You must manually verify what the compiler normally checks.
 
@@ -24,7 +24,7 @@ Unsafe blocks don't disable safety requirements - they transfer responsibility f
 5. **Type validity**: Data matches the expected type's invariants
 6. **Thread safety**: Proper synchronization for concurrent access
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Blindly trust inputs
@@ -37,7 +37,7 @@ unsafe fn process(ptr: *const Data, len: usize) {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Document and verify invariants
@@ -77,14 +77,14 @@ fn process_slice(data: &[Data]) {
 /// - [Explain why each matters]
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Have I listed all safety invariants?
 - [ ] Can I prove each invariant holds at the call site?
 - [ ] Have I added debug assertions where possible?
 - [ ] Have I documented invariants in /// # Safety section?
 
-## Related Rules
+## 相关规则
 
 - `safety-09`: Add SAFETY comment before any unsafe block
 - `safety-10`: Add Safety section in docs for public unsafe functions

@@ -7,7 +7,7 @@ impact: MEDIUM
 
 # Read Documentation Carefully When Using std::ffi Types
 
-## Summary
+## 概要
 
 The `std::ffi` module has many types with subtle differences. Read their documentation carefully to avoid misuse.
 
@@ -120,14 +120,14 @@ unsafe {
 | Opaque C pointers | Newtype over `*mut c_void` |
 | C integers | `c_int`, `c_long`, etc. |
 
-## Checklist
+## 检查清单
 
 - [ ] Have I read the docs for the std::ffi type I'm using?
 - [ ] Am I aware of the lifetime constraints?
 - [ ] Am I handling potential errors (NulError, UTF-8 errors)?
 - [ ] Is there a better type for my use case?
 
-## Related Rules
+## 相关规则
 
 - `ffi-01`: Use CString/CStr for strings
 - `ffi-17`: Use opaque types instead of c_void

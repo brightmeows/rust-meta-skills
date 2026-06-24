@@ -6,17 +6,17 @@ impact: CRITICAL
 clippy: undocumented_unsafe_blocks
 ---
 
-# Add SAFETY Comment Before Any Unsafe Block
+# 在每个 Unsafe 块前添加 SAFETY 注释
 
-## Summary
+## 概要
 
 Every `unsafe` block or `unsafe impl` must have a `// SAFETY:` comment explaining why the operation is safe.
 
-## Rationale
+## 理由
 
 SAFETY comments force the author to think about invariants and help reviewers verify correctness. They serve as documentation for future maintainers.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Unsafe without explanation
@@ -37,7 +37,7 @@ fn bad_comments(ptr: *const i32) -> i32 {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Explain the safety invariant
@@ -109,14 +109,14 @@ accept-comment-above-statement = true
 accept-comment-above-attributes = true
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Does every unsafe block have a SAFETY comment?
 - [ ] Does the comment explain WHY it's safe, not just WHAT it does?
 - [ ] Are all relevant invariants mentioned?
 - [ ] Would a reviewer understand the safety argument?
 
-## Related Rules
+## 相关规则
 
 - `safety-02`: Verify safety invariants
 - `safety-10`: Add Safety section in docs for public unsafe functions

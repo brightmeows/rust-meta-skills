@@ -5,19 +5,19 @@ level: P
 impact: HIGH
 ---
 
-# Use Portable Type Aliases from std or libc
+# 使用 std 或 libc 的可移植类型别名
 
-## Summary
+## 概要
 
 Use type aliases from `std::os::raw` or the `libc` crate for C-compatible types. Don't assume sizes of C types.
 
-## Rationale
+## 理由
 
 - C types have platform-dependent sizes (`int` is not always 32 bits)
 - `long` is 32 bits on Windows, 64 bits on Unix
 - Using Rust primitives directly causes portability bugs
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Use Rust types directly for C interop
@@ -34,7 +34,7 @@ struct BadStruct {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::os::raw::{c_int, c_long, c_char, c_void};
@@ -100,14 +100,14 @@ type PtrDiff = i32;
 let diff: isize = ptr1 as isize - ptr2 as isize;
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Am I using std::os::raw or libc types for FFI?
 - [ ] Have I avoided assuming c_long is 64 bits?
 - [ ] Am I using size_t/usize for sizes?
 - [ ] Have I tested on multiple platforms?
 
-## Related Rules
+## 相关规则
 
 - `ffi-13`: Ensure consistent data layout
 - `ffi-14`: Types in FFI should have stable layout

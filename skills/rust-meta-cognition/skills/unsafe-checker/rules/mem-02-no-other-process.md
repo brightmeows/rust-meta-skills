@@ -7,18 +7,18 @@ impact: CRITICAL
 
 # Do Not Modify Memory Variables of Other Processes or Dynamic Libraries
 
-## Summary
+## 概要
 
 Do not directly manipulate memory belonging to other processes or dynamically loaded libraries. Use proper IPC or FFI mechanisms.
 
-## Rationale
+## 理由
 
 - Other processes have separate address spaces; direct access is impossible on modern OSes
 - Shared memory requires explicit setup and synchronization
 - Dynamic library memory has ownership rules that must be respected
 - Violating these causes undefined behavior or security vulnerabilities
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Try to access another process's memory directly
@@ -38,7 +38,7 @@ fn bad_library_access() {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use proper IPC for cross-process communication
@@ -100,14 +100,14 @@ fn dynamic_library() -> Result<(), Box<dyn std::error::Error>> {
 | Library memory | Library | Through library API |
 | FFI-allocated | C allocator | Through C free functions |
 
-## Checklist
+## 检查清单
 
 - [ ] Who allocated this memory?
 - [ ] Who is responsible for freeing it?
 - [ ] Is proper synchronization in place for shared access?
 - [ ] Am I using the correct API for cross-boundary access?
 
-## Related Rules
+## 相关规则
 
 - `mem-03`: Don't let String/Vec drop other process's memory
 - `ffi-03`: Implement Drop for wrapped C pointers

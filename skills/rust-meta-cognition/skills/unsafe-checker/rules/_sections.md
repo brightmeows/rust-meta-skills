@@ -1,6 +1,6 @@
-# Unsafe Checker - Section Definitions
+# Unsafe Checker - 章节定义
 
-## Section Overview
+## 章节概览
 
 | # | Section | Prefix | Level | Count | Impact |
 |---|---------|--------|-------|-------|--------|
@@ -12,7 +12,7 @@
 | 6 | FFI | `ffi-` | CRITICAL | 18 | C interoperability safety |
 | 7 | I/O Safety | `io-` | MEDIUM | 1 | Handle/resource safety |
 
-## Section Details
+## 章节详情
 
 ### 1. General Principles (`general-`)
 

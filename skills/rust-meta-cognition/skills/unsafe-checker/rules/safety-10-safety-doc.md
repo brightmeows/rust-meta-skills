@@ -6,17 +6,17 @@ impact: HIGH
 clippy: missing_safety_doc
 ---
 
-# Add Safety Section in Docs for Public Unsafe Functions
+# 为公共 Unsafe 函数在文档中添加 Safety 章节
 
-## Summary
+## 概要
 
 Public `unsafe` functions must have a `# Safety` section in their documentation explaining the caller's obligations.
 
-## Rationale
+## 理由
 
 Unlike SAFETY comments (which explain why an unsafe block is sound), `# Safety` docs tell callers what they must guarantee. Without this, users cannot safely call the function.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Unsafe function without safety docs
@@ -33,7 +33,7 @@ pub unsafe fn process_buffer(ptr: *const u8, len: usize) {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 /// Processes a buffer of bytes.
@@ -114,14 +114,14 @@ pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Vec
 | Thread safety | "must not be called concurrently with..." |
 | Invariants | "len must not exceed isize::MAX" |
 
-## Checklist
+## 检查清单
 
 - [ ] Does the function have a `# Safety` section?
 - [ ] Are ALL caller obligations listed?
 - [ ] Is each requirement specific and verifiable?
 - [ ] Does the example show correct usage with SAFETY comment?
 
-## Related Rules
+## 相关规则
 
 - `safety-09`: SAFETY comments for unsafe blocks
 - `safety-02`: Verify safety invariants

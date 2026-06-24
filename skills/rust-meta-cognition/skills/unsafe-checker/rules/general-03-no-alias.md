@@ -5,17 +5,17 @@ level: G
 impact: MEDIUM
 ---
 
-# Do Not Create Aliases for Types/Methods Named "Unsafe"
+# 不要为名为 "Unsafe" 的类型/方法创建别名
 
-## Summary
+## 概要
 
 Do not create type aliases, re-exports, or wrapper methods that hide the "unsafe" nature of operations.
 
-## Rationale
+## 理由
 
 The word "unsafe" in Rust is a signal to developers that extra scrutiny is required. Hiding this signal makes code review harder and can lead to accidental misuse.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Hide unsafe behind an alias
@@ -30,7 +30,7 @@ pub fn get_value(ptr: *const i32) -> i32 {
 pub use std::mem::transmute as convert;
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Keep "unsafe" visible in the API
@@ -56,19 +56,19 @@ pub fn get_value_checked(ptr: *const i32) -> Option<i32> {
 type RawHandle = *mut c_void;  // "Raw" signals potential unsafety
 ```
 
-## Common Violations
+## 常见违反模式
 
 1. Creating type aliases that hide pointer types
 2. Wrapping unsafe functions in safe-looking functions without proper safety analysis
 3. Re-exporting unsafe functions with "friendlier" names
 
-## Checklist
+## 检查清单
 
 - [ ] Does my API preserve visibility of unsafe operations?
 - [ ] If wrapping unsafe code in safe API, is the safety invariant enforced?
 - [ ] Are type aliases clearly named to indicate their nature?
 
-## Related Rules
+## 相关规则
 
 - `safety-06`: Don't expose raw pointers in public APIs
 - `safety-09`: Add SAFETY comment before any unsafe block

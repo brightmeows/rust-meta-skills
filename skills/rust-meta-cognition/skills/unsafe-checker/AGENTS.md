@@ -1,4 +1,4 @@
-# Unsafe Checker - Quick Reference
+# Unsafe Checker - 快速参考
 
 **Auto-generated from rules/**
 

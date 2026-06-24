@@ -7,18 +7,18 @@ impact: CRITICAL
 
 # Exported Rust Functions Must Be Designed for Thread-Safety
 
-## Summary
+## 概要
 
 Functions exported to C with `#[no_mangle] extern "C"` may be called from multiple threads. Ensure they are thread-safe.
 
-## Rationale
+## 理由
 
 - C code doesn't know about Rust's thread safety guarantees
 - C may call your function from any thread
 - Global state must be synchronized
 - Race conditions are undefined behavior
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Unsynchronized global state
@@ -48,7 +48,7 @@ pub extern "C" fn set_config(value: i32) {
 static mut HANDLE: Option<Rc<Data>> = None;  // Rc is not Send!
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::sync::atomic::{AtomicI32, Ordering};
@@ -119,14 +119,14 @@ struct SingleThreadHandle {
 | `OnceLock<T>` | Lazy one-time init |
 | `thread_local!` | Per-thread state (document!) |
 
-## Checklist
+## 检查清单
 
 - [ ] Does my exported function access global state?
 - [ ] Is that state properly synchronized?
 - [ ] Have I documented thread-safety guarantees?
 - [ ] Are any types !Send/!Sync exposed across FFI?
 
-## Related Rules
+## 相关规则
 
 - `ptr-01`: Don't share raw pointers across threads
 - `safety-05`: Send/Sync implementation safety

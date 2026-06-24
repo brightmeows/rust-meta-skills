@@ -6,17 +6,17 @@ impact: CRITICAL
 clippy: cast_ref_to_mut
 ---
 
-# Do Not Manually Convert Immutable Pointer to Mutable
+# 不要手动将不可变指针转换为可变
 
-## Summary
+## 概要
 
 Never cast `*const T` to `*mut T` and dereference it to write. This violates aliasing rules and is undefined behavior.
 
-## Rationale
+## 理由
 
 Creating `*const T` from `&T` implies immutability. Other references might exist. Writing through a `*mut T` created from `*const T` creates mutable aliasing, which is UB.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Cast *const to *mut
@@ -39,7 +39,7 @@ fn bad_claim(value: &i32) {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Take &mut if you need to mutate
@@ -107,14 +107,14 @@ When you mutate through cast pointer:
 2. Compiler may cache/eliminate reads
 3. Results are unpredictable
 
-## Checklist
+## 检查清单
 
 - [ ] Am I trying to mutate through `&`?
 - [ ] Should I use `&mut` instead?
 - [ ] Should I use `Cell`, `RefCell`, or `UnsafeCell`?
 - [ ] Is the original type designed for interior mutability?
 
-## Related Rules
+## 相关规则
 
 - `safety-08`: Mutable return from immutable parameter is wrong
 - `safety-02`: Verify safety invariants

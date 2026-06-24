@@ -8,17 +8,17 @@ clippy: unaligned_references
 
 # Be Careful with UB When Referencing #[repr(packed)] Struct Fields
 
-## Summary
+## 概要
 
 Creating references to fields in `#[repr(packed)]` structs is undefined behavior if the field is misaligned. Use raw pointers and `read_unaligned`/`write_unaligned` instead.
 
-## Rationale
+## 理由
 
 - Packed structs have no padding, so fields may be misaligned
 - References must be aligned; misaligned references are UB
 - Even implicit references (method calls, match) can cause UB
 
-## Bad Example
+## 错误示例
 
 ```rust
 #[repr(C, packed)]
@@ -49,7 +49,7 @@ fn bad_borrow(p: &mut Packet) {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 #[repr(C, packed)]
@@ -129,14 +129,14 @@ struct AlignedPacket {
 // use bytemuck::{Pod, Zeroable};
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Am I creating references to packed struct fields?
 - [ ] Am I using addr_of! / addr_of_mut! for field access?
 - [ ] Am I using read_unaligned / write_unaligned?
 - [ ] Would a byte array representation be safer?
 
-## Related Rules
+## 相关规则
 
 - `ptr-04`: Don't dereference misaligned pointers
 - `mem-01`: Choose appropriate data layout

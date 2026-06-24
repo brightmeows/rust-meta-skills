@@ -5,20 +5,20 @@ level: P
 impact: MEDIUM
 ---
 
-# Prefer NonNull<T> Over *mut T
+# 优先使用 NonNull<T> 而非 *mut T
 
-## Summary
+## 概要
 
 Use `NonNull<T>` instead of `*mut T` when the pointer should never be null. This enables null pointer optimization and makes the intent clear.
 
-## Rationale
+## 理由
 
 - `NonNull<T>` guarantees non-null at the type level
 - Enables niche optimization: `Option<NonNull<T>>` is the same size as `*mut T`
 - Makes invariants explicit in the type system
 - Covariant over `T` (like `&T`), which is usually what you want
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Use *mut when pointer is always non-null
@@ -40,7 +40,7 @@ impl<T> MyBox<T> {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::ptr::NonNull;
@@ -102,13 +102,13 @@ let ptr: NonNull<u8> = ptr.cast::<u8>();
 - FFI with C code that may return null
 - When variance matters (NonNull is covariant, sometimes you need invariance)
 
-## Checklist
+## 检查清单
 
 - [ ] Is my pointer ever null? If no, use NonNull
 - [ ] Do I need null pointer optimization?
 - [ ] Is the variance correct for my use case?
 
-## Related Rules
+## 相关规则
 
 - `ptr-03`: Use PhantomData for variance and ownership
 - `safety-06`: Don't expose raw pointers in public APIs

@@ -1,4 +1,4 @@
-# OS-Checker Integration
+# OS-Checker 集成
 
 > 代码审查和安全审计工具集成
 

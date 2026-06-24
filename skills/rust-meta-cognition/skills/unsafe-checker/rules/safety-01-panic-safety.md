@@ -6,17 +6,17 @@ impact: CRITICAL
 clippy: panic_in_result_fn
 ---
 
-# Be Aware of Memory Safety Issues from Panics
+# 注意 Panic 引起的内存安全问题
 
-## Summary
+## 概要
 
 Panics in unsafe code can leave data structures in an inconsistent state, leading to undefined behavior when the panic is caught.
 
-## Rationale
+## 理由
 
 When a panic occurs, Rust unwinds the stack and runs destructors. If unsafe code has partially modified data, the destructors may observe invalid state.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Panic can leave Vec in invalid state
@@ -36,7 +36,7 @@ impl<T> MyVec<T> {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Ensure panic safety by ordering operations correctly
@@ -101,13 +101,13 @@ impl<T> Drop for PanicGuard<'_, T> {
 2. **Use panic guards**: RAII types that clean up on panic
 3. **Order operations carefully**: Ensure invariants hold if panic occurs at any point
 
-## Checklist
+## 检查清单
 
 - [ ] What happens if this code panics at each line?
 - [ ] Are all invariants maintained if we unwind from here?
 - [ ] Do I need a panic guard for cleanup?
 
-## Related Rules
+## 相关规则
 
 - `safety-04`: Avoid double-free from panic safety issues
 - `safety-02`: Verify safety invariants

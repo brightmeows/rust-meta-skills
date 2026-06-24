@@ -5,20 +5,20 @@ level: P
 impact: HIGH
 ---
 
-# Ensure I/O Safety When Using Raw Handles
+# 使用原始句柄时确保 I/O 安全
 
-## Summary
+## 概要
 
 When working with raw file descriptors or handles, ensure they are valid for the duration of use and properly ownership-tracked.
 
-## Rationale
+## 理由
 
 - Raw handles can be closed by other code
 - Using a closed handle is undefined behavior
 - Handle reuse can cause data corruption
 - Rust 1.63+ provides I/O safety traits
 
-## Bad Example
+## 错误示例
 
 ```rust
 #[cfg(unix)]
@@ -47,7 +47,7 @@ mod bad_example {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 #[cfg(unix)]
@@ -138,14 +138,14 @@ use std::os::windows::io::{
 };
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Am I using BorrowedFd/OwnedFd instead of RawFd?
 - [ ] Is ownership of handles clear?
 - [ ] Am I using the AsFd trait for generic code?
 - [ ] Is the fd guaranteed valid for the duration of use?
 
-## Related Rules
+## 相关规则
 
 - `ffi-03`: Implement Drop for resource wrappers
 - `safety-02`: Verify safety invariants

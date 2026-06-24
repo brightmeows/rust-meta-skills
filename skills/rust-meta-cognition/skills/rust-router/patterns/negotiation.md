@@ -1,4 +1,4 @@
-# Negotiation Protocol
+# 协商协议
 
 > 比较查询和跨领域问题的处理协议
 

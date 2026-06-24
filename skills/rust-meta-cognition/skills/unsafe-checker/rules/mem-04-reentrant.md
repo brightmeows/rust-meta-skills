@@ -5,17 +5,17 @@ level: P
 impact: HIGH
 ---
 
-# Prefer Reentrant Versions of C-API or Syscalls
+# 优先使用 C-API 或系统调用的可重入版本
 
-## Summary
+## 概要
 
 When calling C functions or system calls, use reentrant (`_r`) versions to avoid data races from global state.
 
-## Rationale
+## 理由
 
 Many C library functions use static buffers or global state, making them unsafe in multithreaded programs. Reentrant versions use caller-provided buffers instead.
 
-## Bad Example
+## 错误示例
 
 ```rust
 use std::ffi::CStr;
@@ -49,7 +49,7 @@ fn bad_random() -> i32 {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 extern "C" {
@@ -108,14 +108,14 @@ fn best_random() -> u32 {
 | `readdir` | `readdir_r` | `std::fs::read_dir` |
 | `gethostbyname` | `getaddrinfo` | `std::net::ToSocketAddrs` |
 
-## Checklist
+## 检查清单
 
 - [ ] Am I calling a C function that might use global state?
 - [ ] Is there a `_r` reentrant version available?
 - [ ] Is there a Rust standard library alternative?
 - [ ] If neither, do I need synchronization?
 
-## Related Rules
+## 相关规则
 
 - `ffi-10`: Exported functions must be thread-safe
 - `ptr-01`: Don't share raw pointers across threads

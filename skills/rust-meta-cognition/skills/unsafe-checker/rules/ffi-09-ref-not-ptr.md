@@ -7,18 +7,18 @@ impact: MEDIUM
 
 # Use References Instead of Raw Pointers When Calling Safe C Functions
 
-## Summary
+## 概要
 
 When wrapping C functions that don't need null pointers, use Rust references in the safe wrapper to enforce non-null at compile time.
 
-## Rationale
+## 理由
 
 - References guarantee non-null
 - References have lifetime tracking
 - Raw pointers should stay in the unsafe FFI layer
 - Safe Rust API should use safe types
 
-## Bad Example
+## 错误示例
 
 ```rust
 extern "C" {
@@ -38,7 +38,7 @@ pub unsafe fn process_unsafe(data: *const u8, len: usize) {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 extern "C" {
@@ -123,14 +123,14 @@ unsafe fn ptr_to_mut<'a>(p: *mut Data) -> &'a mut Data {
 - When null is a valid value
 - When the pointee might not be valid Rust (e.g., uninitialized)
 
-## Checklist
+## 检查清单
 
 - [ ] Can this parameter be a reference instead of a pointer?
 - [ ] Am I checking for null in the unsafe layer?
 - [ ] Is the safe API free of raw pointers?
 - [ ] Do I use Option<&T> for nullable references?
 
-## Related Rules
+## 相关规则
 
 - `safety-06`: Don't expose raw pointers in public APIs
 - `ffi-02`: Read std::ffi documentation

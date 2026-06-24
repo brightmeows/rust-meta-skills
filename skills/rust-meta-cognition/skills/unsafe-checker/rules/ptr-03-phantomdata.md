@@ -7,18 +7,18 @@ impact: HIGH
 
 # Use PhantomData<T> for Variance and Ownership with Pointer Generics
 
-## Summary
+## 概要
 
 When a struct contains raw pointers but logically owns or borrows the pointed-to data, use `PhantomData<T>` to tell the compiler about the relationship.
 
-## Rationale
+## 理由
 
 Raw pointers don't carry ownership or lifetime information. `PhantomData` lets you:
 - Indicate ownership (for `Drop` check)
 - Control variance (covariant, contravariant, invariant)
 - Participate in lifetime elision
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Raw pointer without PhantomData
@@ -34,7 +34,7 @@ struct MyVec<T> {
 // 3. Drop check may allow dangling references
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::marker::PhantomData;
@@ -112,14 +112,14 @@ impl<T> Drop for MyVec<T> {
 // drop(x);      // Tries to access dropped local
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Does my pointer type logically own the pointed-to data?
 - [ ] Do I need to express a lifetime relationship?
 - [ ] What variance do I need for my generic parameter?
 - [ ] Will the type be dropped, and does it need drop check?
 
-## Related Rules
+## 相关规则
 
 - `ptr-02`: Prefer NonNull over *mut T
 - `safety-05`: Send/Sync implementation safety

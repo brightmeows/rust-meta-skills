@@ -5,20 +5,20 @@ level: P
 impact: HIGH
 ---
 
-# Avoid Union Except for C Interop
+# 避免使用联合体，除非用于 C 互操作
 
-## Summary
+## 概要
 
 Only use `union` for FFI with C code. For Rust-only code, use `enum` with explicit tags.
 
-## Rationale
+## 理由
 
 - Unions require unsafe to read (any field access is unsafe)
 - Easy to read wrong field, causing undefined behavior
 - Enums are type-safe and the compiler tracks the active variant
 - Unions don't run destructors properly
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Use union for space optimization in Rust-only code
@@ -46,7 +46,7 @@ union Variant {
 // 3. Easy to have memory leaks or double-free
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use enum for variant types in Rust
@@ -104,14 +104,14 @@ impl SafeUnion {
 | Type punning | union | `transmute` or `from_ne_bytes` |
 | Uninitialized memory | union | `MaybeUninit<T>` |
 
-## Checklist
+## 检查清单
 
 - [ ] Is this for C FFI? If not, use enum
 - [ ] If union is necessary, is there a tag tracking active variant?
 - [ ] Are destructors handled correctly for Drop types?
 - [ ] Is the union #[repr(C)] for FFI?
 
-## Related Rules
+## 相关规则
 
 - `union-02`: Don't use union variants across lifetimes
 - `ffi-13`: Ensure consistent data layout

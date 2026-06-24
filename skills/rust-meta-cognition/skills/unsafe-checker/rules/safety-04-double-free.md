@@ -5,17 +5,17 @@ level: P
 impact: CRITICAL
 ---
 
-# Avoid Double-Free from Panic Safety Issues
+# 避免因 Panic 安全导致的重复释放
 
-## Summary
+## 概要
 
 Ensure that resources are not freed twice, especially when panics can occur during operations.
 
-## Rationale
+## 理由
 
 Double-free is undefined behavior. Panics during unsafe operations can cause destructors to run on already-freed or partially-constructed data.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Potential double-free on panic
@@ -44,7 +44,7 @@ fn bad_swap<T>(a: &mut T, b: &mut T) {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use std::mem::take or swap
@@ -96,14 +96,14 @@ fn safe_operation<T: Clone>(data: &mut [T], source: &[T]) {
 3. **Use std::mem::replace/swap**: Safe alternatives for move semantics
 4. **Panic guards**: RAII cleanup on unwind
 
-## Checklist
+## 检查清单
 
 - [ ] After reading memory, is it marked as "moved"?
 - [ ] Will Drop run on this memory? Should it?
 - [ ] What happens if this code panics at each point?
 - [ ] Are length/count bookkeeping updates ordered correctly?
 
-## Related Rules
+## 相关规则
 
 - `safety-01`: Panic safety in unsafe code
 - `ptr-01`: Don't share raw pointers across threads

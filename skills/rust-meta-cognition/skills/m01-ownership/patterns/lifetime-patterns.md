@@ -1,4 +1,4 @@
-# Lifetime Patterns
+# 生命周期模式
 
 ## Basic Lifetime Annotation
 

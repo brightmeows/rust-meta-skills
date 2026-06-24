@@ -5,17 +5,17 @@ level: P
 impact: CRITICAL
 ---
 
-# Do Not Use Union Variants Across Different Lifetimes
+# 不要跨不同生命周期使用联合体变体
 
-## Summary
+## 概要
 
 Do not write to one union field and read from another field that has a different lifetime or references data with a different lifetime.
 
-## Rationale
+## 理由
 
 Union fields share the same memory. If one field stores a reference with lifetime `'a` and you read it as a reference with lifetime `'b`, you bypass lifetime checking and can create dangling references.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Extend lifetime through union
@@ -42,7 +42,7 @@ fn exploit() {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use same lifetime for all reference fields
@@ -109,13 +109,13 @@ union OwnedUnion {
 }
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Do all reference fields have the same lifetime parameter?
 - [ ] Am I trying to extend a lifetime through union? (If yes, stop!)
 - [ ] For owned types, am I handling Drop correctly?
 
-## Related Rules
+## 相关规则
 
 - `union-01`: Avoid union except for C interop
 - `safety-02`: Verify safety invariants

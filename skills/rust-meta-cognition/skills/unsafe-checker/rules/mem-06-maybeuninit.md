@@ -6,20 +6,20 @@ impact: HIGH
 clippy: uninit_assumed_init, uninit_vec
 ---
 
-# Use MaybeUninit<T> for Uninitialized Memory
+# 使用 MaybeUninit<T> 处理未初始化内存
 
-## Summary
+## 概要
 
 Use `MaybeUninit<T>` instead of `mem::uninitialized()` or `mem::zeroed()` when working with uninitialized memory.
 
-## Rationale
+## 理由
 
 - `mem::uninitialized()` is deprecated and unsound
 - `mem::zeroed()` is UB for types where zero is invalid (references, NonZero, bool)
 - `MaybeUninit<T>` clearly marks memory as potentially uninitialized
 - Compiler can optimize based on initialization state
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Use deprecated uninitialized
@@ -49,7 +49,7 @@ fn bad_vec() -> Vec<String> {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::mem::MaybeUninit;
@@ -133,14 +133,14 @@ let ptr: *const T = uninit.as_ptr();
 let mut_ptr: *mut T = uninit.as_mut_ptr();
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Am I using `mem::uninitialized()`? → Replace with `MaybeUninit`
 - [ ] Am I using `mem::zeroed()` for non-POD types? → Use `MaybeUninit`
 - [ ] Am I setting Vec length without initialization? → Use proper initialization
 - [ ] Have I initialized all MaybeUninit before assume_init?
 
-## Related Rules
+## 相关规则
 
 - `safety-03`: Don't expose uninitialized memory in APIs
 - `safety-01`: Panic safety with partial initialization

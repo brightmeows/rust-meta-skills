@@ -5,17 +5,17 @@ level: P
 impact: CRITICAL
 ---
 
-# Do Not Abuse Unsafe to Escape Compiler Safety Checks
+# 不要滥用 Unsafe 逃避编译器安全检查
 
-## Summary
+## 概要
 
 Unsafe Rust should not be used as an escape hatch from the borrow checker or other compiler safety mechanisms.
 
-## Rationale
+## 理由
 
 The borrow checker exists to prevent memory safety bugs. Using `unsafe` to bypass it defeats Rust's safety guarantees and introduces potential undefined behavior.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Using unsafe to bypass borrow checker
@@ -33,7 +33,7 @@ fn bad_alias() {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Work with the borrow checker, not against it
@@ -52,20 +52,20 @@ fn good_interior_mut() {
 }
 ```
 
-## Legitimate Uses of Unsafe
+## Unsafe 的合法用途
 
 1. **FFI**: Calling C functions or implementing C-compatible interfaces
 2. **Low-level abstractions**: Implementing collections, synchronization primitives
 3. **Performance**: Only after profiling shows measurable improvement, and with careful safety analysis
 
-## Checklist
+## 检查清单
 
 - [ ] Have I tried all safe alternatives first?
 - [ ] Is the borrow checker preventing a genuine design need?
 - [ ] Can I restructure the code to satisfy the borrow checker?
 - [ ] If unsafe is necessary, have I documented the safety invariants?
 
-## Related Rules
+## 相关规则
 
 - `general-02`: Don't blindly use unsafe for performance
 - `safety-02`: Unsafe code authors must verify safety invariants

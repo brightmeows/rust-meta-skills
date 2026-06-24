@@ -6,20 +6,20 @@ impact: LOW
 clippy: ptr_as_ptr
 ---
 
-# Prefer pointer::cast Over `as` for Pointer Casting
+# 优先使用 pointer::cast 而非 `as` 进行指针转换
 
-## Summary
+## 概要
 
 Use the `cast()` method instead of `as` for pointer type conversions. It's clearer and prevents accidental provenance loss.
 
-## Rationale
+## 理由
 
 - `cast()` only changes the pointed-to type, not pointer properties
 - `as` can accidentally convert to integer and back, losing provenance
 - `cast()` is more explicit about intent
 - Better tooling support (clippy, miri)
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Use `as` for pointer casts
@@ -39,7 +39,7 @@ fn bad_chain(ptr: *const u8) -> *mut i32 {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use cast() for pointer type changes
@@ -98,13 +98,13 @@ let addr = ptr.expose_addr();  // "Expose" the provenance
 let ptr2 = std::ptr::from_exposed_addr(addr);  // Recover it
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Am I using `as` where `cast()` would be clearer?
 - [ ] Am I accidentally converting through `usize`?
 - [ ] Do I need to preserve provenance?
 
-## Related Rules
+## 相关规则
 
 - `ptr-04`: Alignment considerations when casting
 - `ptr-05`: Don't convert const to mut improperly

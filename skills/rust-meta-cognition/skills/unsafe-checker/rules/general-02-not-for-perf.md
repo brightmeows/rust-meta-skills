@@ -5,19 +5,19 @@ level: P
 impact: CRITICAL
 ---
 
-# Do Not Blindly Use Unsafe for Performance
+# 不要盲目为性能使用 Unsafe
 
-## Summary
+## 概要
 
 Do not assume that using `unsafe` will automatically improve performance. Always measure first and verify the safety invariants.
 
-## Rationale
+## 理由
 
 1. Modern Rust optimizers often eliminate bounds checks when they can prove safety
 2. Unsafe code may prevent optimizations by breaking aliasing assumptions
 3. Unmeasured "optimizations" often provide no real benefit while introducing risk
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Blind unsafe for "performance"
@@ -33,7 +33,7 @@ fn sum_bad(slice: &[i32]) -> i32 {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use safe iteration - compiler optimizes bounds checks away
@@ -77,14 +77,14 @@ cargo flamegraph --bench my_bench
 # 3. Only then consider unsafe, with measurements
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Have I benchmarked the safe version?
 - [ ] Does profiling show this specific code as a bottleneck?
 - [ ] Have I measured the actual improvement from unsafe?
 - [ ] Is the performance gain worth the safety risk?
 
-## Related Rules
+## 相关规则
 
 - `general-01`: Don't abuse unsafe to escape safety checks
 - `safety-02`: Unsafe code authors must verify safety invariants

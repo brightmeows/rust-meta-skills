@@ -5,17 +5,17 @@ level: P
 impact: MEDIUM
 ---
 
-# Provide Unsafe Counterparts for Performance Alongside Safe Methods
+# 在安全方法旁提供 Unsafe 对应版本以优化性能
 
-## Summary
+## 概要
 
 When providing performance-critical operations that skip safety checks, offer both a safe checked version and an unsafe unchecked version.
 
-## Rationale
+## 理由
 
 Users who need maximum performance can opt into unsafe, while others get safety by default. This follows the "safe by default, unsafe opt-in" principle.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Only provide unsafe version
@@ -42,7 +42,7 @@ impl<T> MySlice<T> {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Provide both versions
@@ -94,14 +94,14 @@ impl<T> MySlice<T> {
 - Unsafe: `method_name_unchecked()`
 - Or: `get()` vs `get_unchecked()`
 
-## Checklist
+## 检查清单
 
 - [ ] Does my safe method have an unsafe counterpart for hot paths?
 - [ ] Does my unsafe method have a safe alternative for normal use?
 - [ ] Are both methods documented with their trade-offs?
 - [ ] Does the unsafe version include debug assertions?
 
-## Related Rules
+## 相关规则
 
 - `general-02`: Don't blindly use unsafe for performance
 - `safety-09`: Add SAFETY comments

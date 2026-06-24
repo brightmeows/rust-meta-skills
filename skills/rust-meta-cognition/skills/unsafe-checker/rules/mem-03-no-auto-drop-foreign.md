@@ -5,17 +5,17 @@ level: P
 impact: CRITICAL
 ---
 
-# Do Not Let String/Vec Auto-Drop Other Process's Memory
+# 不要让 String/Vec 自动释放其他进程的内存
 
-## Summary
+## 概要
 
 Never create `String`, `Vec`, or `Box` from memory allocated outside Rust's allocator. They will try to free the memory with the wrong deallocator.
 
-## Rationale
+## 理由
 
 `String`, `Vec`, and `Box` assume memory was allocated by Rust's global allocator. When dropped, they call `dealloc`. If the memory came from C's `malloc`, a different allocator, or shared memory, this causes undefined behavior.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Create String from C-allocated memory
@@ -44,7 +44,7 @@ fn bad_box(shared_ptr: *mut Data) -> Box<Data> {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::ffi::CStr;
@@ -113,14 +113,14 @@ impl Drop for SharedBuffer {
 | mmap/shared memory | No - use munmap |
 | Stack/static | No - never "free" |
 
-## Checklist
+## 检查清单
 
 - [ ] Who allocated this memory?
 - [ ] Is it from Rust's global allocator?
 - [ ] If not, do I have a custom Drop that frees correctly?
 - [ ] Am I copying data or taking ownership?
 
-## Related Rules
+## 相关规则
 
 - `mem-02`: Don't modify other process's memory
 - `ffi-03`: Implement Drop for wrapped C pointers

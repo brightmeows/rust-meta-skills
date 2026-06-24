@@ -5,19 +5,19 @@ level: P
 impact: HIGH
 ---
 
-# Do Not Implement Drop for Types Passed to External Code
+# 不要为传递给外部代码的类型实现 Drop
 
-## Summary
+## 概要
 
 If a type will be passed to external code that manages its lifetime, don't implement `Drop`. Otherwise, both Rust and the external code will try to free it.
 
-## Rationale
+## 理由
 
 - External code (C library) may take ownership of the data
 - If Rust also tries to drop it, you get double-free
 - Need clear ownership boundaries
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Drop on type that external code will free
@@ -49,7 +49,7 @@ fn bad_register() {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: No Drop for types whose lifetime is managed externally
@@ -118,14 +118,14 @@ fn explicit_ownership() {
 | C creates, C frees | C | No (use wrapper) |
 | C creates, Rust frees | Rust | Yes (in wrapper) |
 
-## Checklist
+## 检查清单
 
 - [ ] Who will free this type's memory?
 - [ ] If external code frees it, am I avoiding Drop?
 - [ ] If ownership is conditional, do I track it?
 - [ ] Am I using ManuallyDrop or forget() when transferring ownership?
 
-## Related Rules
+## 相关规则
 
 - `ffi-03`: Implement Drop for wrapped C pointers (opposite case)
 - `mem-03`: Don't let String/Vec drop foreign memory

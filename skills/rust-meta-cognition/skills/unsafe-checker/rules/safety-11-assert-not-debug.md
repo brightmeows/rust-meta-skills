@@ -6,17 +6,17 @@ impact: MEDIUM
 clippy: debug_assert_with_mut_call
 ---
 
-# Use assert! Instead of debug_assert! in Unsafe Functions
+# 在 Unsafe 函数中使用 assert! 而非 debug_assert!
 
-## Summary
+## 概要
 
 In `unsafe` functions or functions containing unsafe blocks, prefer `assert!` over `debug_assert!` for checking safety invariants.
 
-## Rationale
+## 理由
 
 `debug_assert!` is compiled out in release builds. If an invariant is important enough to check for safety, it should be checked in all builds to catch violations.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Use debug_assert for safety-critical checks
@@ -32,7 +32,7 @@ pub unsafe fn call_c_function(ptr: *const Data) {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use assert! for safety checks (when performance allows)
@@ -92,14 +92,14 @@ pub unsafe fn process(slice: &[u8], index: usize) {
 }
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Is this a safety-critical invariant?
 - [ ] Who is responsible for upholding it (caller or this function)?
 - [ ] Can the assertion be optimized away when provably true?
 - [ ] What's the performance impact of the assertion?
 
-## Related Rules
+## 相关规则
 
 - `safety-02`: Verify safety invariants
 - `safety-09`: SAFETY comments

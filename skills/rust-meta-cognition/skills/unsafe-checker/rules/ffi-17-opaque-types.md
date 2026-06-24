@@ -7,18 +7,18 @@ impact: MEDIUM
 
 # Use Dedicated Opaque Type Pointers Instead of c_void for C Opaque Types
 
-## Summary
+## 概要
 
 Instead of using `*mut c_void` for opaque C handles, create dedicated marker types that provide type safety.
 
-## Rationale
+## 理由
 
 - `*mut c_void` accepts any pointer, easy to mix up handles
 - Dedicated types catch mistakes at compile time
 - Self-documenting code
 - Prevents accidental use of wrong free function
 
-## Bad Example
+## 错误示例
 
 ```rust
 use std::ffi::c_void;
@@ -44,7 +44,7 @@ fn bad_usage() {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::marker::PhantomData;
@@ -139,14 +139,14 @@ pub struct OpaqueHandle {
 }
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Am I using `*mut c_void` for distinct handle types?
 - [ ] Would dedicated types prevent bugs?
 - [ ] Have I wrapped opaque pointers in safe Rust types?
 - [ ] Do my types enforce correct handle/function pairing?
 
-## Related Rules
+## 相关规则
 
 - `ffi-02`: Read std::ffi documentation
 - `ffi-03`: Implement Drop for wrapped pointers

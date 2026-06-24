@@ -7,17 +7,17 @@ impact: MEDIUM
 
 # Document Invariant Assumptions for C-Provided Parameters
 
-## Summary
+## 概要
 
 When receiving parameters from C, document what invariants you assume (non-null, alignment, validity, lifetime) and verify them when possible.
 
-## Rationale
+## 理由
 
 - C doesn't enforce invariants at compile time
 - Rust code needs to validate or document assumptions
 - Debugging FFI bugs is hard without clear documentation
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Undocumented assumptions
@@ -47,7 +47,7 @@ pub extern "C" fn process(data: *const Data, len: usize) {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 /// Retrieves data from the C library.
@@ -151,14 +151,14 @@ pub extern "C" fn process_documented(data: *const Data, len: usize) -> i32 {
 /// - Condition 1: error code
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Have I documented all assumptions about C parameters?
 - [ ] Which invariants can I verify at runtime?
 - [ ] Which must I trust the C caller to uphold?
 - [ ] Have I documented error conditions and return values?
 
-## Related Rules
+## 相关规则
 
 - `safety-02`: Verify safety invariants
 - `safety-10`: Document safety requirements

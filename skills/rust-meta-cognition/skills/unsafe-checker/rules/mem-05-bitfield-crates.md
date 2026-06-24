@@ -5,20 +5,20 @@ level: P
 impact: MEDIUM
 ---
 
-# Use Third-Party Crates for Bitfields
+# 使用第三方 Crate 处理位域
 
-## Summary
+## 概要
 
 Use crates like `bitflags`, `bitvec`, or `modular-bitfield` instead of manual bit manipulation for complex bitfield operations.
 
-## Rationale
+## 理由
 
 - Manual bit manipulation is error-prone
 - Easy to get offsets, masks, or endianness wrong
 - Crates provide type-safe, tested abstractions
 - Proc-macro crates generate efficient code
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Manual bitfield manipulation
@@ -64,7 +64,7 @@ impl PackedHeader {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use bitflags for flag sets
@@ -134,14 +134,14 @@ fn use_bitvec() {
 | `packed_struct` | Binary protocol structs | Endianness, derive |
 | `deku` | Binary parsing | Derive, read/write |
 
-## Checklist
+## 检查清单
 
 - [ ] Am I manipulating multiple bit flags? → Use `bitflags`
 - [ ] Am I packing fields into bytes? → Use `modular-bitfield` or `packed_struct`
 - [ ] Am I doing binary protocol work? → Consider `deku`
 - [ ] Is the manual approach really simpler?
 
-## Related Rules
+## 相关规则
 
 - `mem-01`: Choose appropriate data layout
 - `ffi-13`: Ensure consistent data layout

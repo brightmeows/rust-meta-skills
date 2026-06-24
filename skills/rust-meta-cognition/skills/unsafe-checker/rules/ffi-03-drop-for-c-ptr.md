@@ -7,17 +7,17 @@ impact: CRITICAL
 
 # Implement Drop for Rust Types Wrapping Memory-Managing C Pointers
 
-## Summary
+## 概要
 
 When wrapping a C pointer that owns memory, implement `Drop` to call the appropriate C deallocation function.
 
-## Rationale
+## 理由
 
 - C allocated memory must be freed with the matching C function
 - Rust's default drop won't clean up foreign memory
 - Resource leaks and double-frees are common FFI bugs
 
-## Bad Example
+## 错误示例
 
 ```rust
 extern "C" {
@@ -49,7 +49,7 @@ impl Drop for BadHandle {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::ptr::NonNull;
@@ -148,7 +148,7 @@ impl Drop for Statement<'_> {
 }
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Does my wrapper own the C resource?
 - [ ] Did I implement Drop with the correct C free function?
@@ -156,7 +156,7 @@ impl Drop for Statement<'_> {
 - [ ] Did I prevent Clone/Copy to avoid double-free?
 - [ ] Did I consider ownership transfer methods (into_raw/from_raw)?
 
-## Related Rules
+## 相关规则
 
 - `mem-03`: Don't let String/Vec drop foreign memory
 - `ffi-07`: Don't implement Drop for types passed to external code

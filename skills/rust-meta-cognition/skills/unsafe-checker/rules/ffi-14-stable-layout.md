@@ -7,17 +7,17 @@ impact: HIGH
 
 # Types Used in FFI Should Have Stable Layout
 
-## Summary
+## 概要
 
 FFI types should not change layout between versions. Use `#[repr(C)]` and avoid types with unstable layout like generic `std` types.
 
-## Rationale
+## 理由
 
 - ABI compatibility requires stable layout
 - Dynamic libraries may be loaded with different compiler versions
 - Layout changes break binary compatibility
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Use Rust std types with unstable layout in FFI
@@ -46,7 +46,7 @@ struct BadOption {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::os::raw::{c_int, c_char, c_void};
@@ -122,14 +122,14 @@ impl From<Option<u32>> for OptionalU32 {
 | `Box<T>` | `*mut T` |
 | `bool` | `c_int` or explicit `u8` |
 
-## Checklist
+## 检查清单
 
 - [ ] Am I using only C-compatible primitive types?
 - [ ] Am I avoiding std collection types in FFI signatures?
 - [ ] Have I created stable wrappers for Rust types?
 - [ ] Is the layout documented for other languages?
 
-## Related Rules
+## 相关规则
 
 - `ffi-13`: Ensure consistent data layout
 - `ffi-05`: Use portable type aliases

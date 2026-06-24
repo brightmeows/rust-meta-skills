@@ -5,13 +5,13 @@ level: P
 impact: HIGH
 ---
 
-# Choose Appropriate Data Layout for Struct/Tuple/Enum
+# 为结构体/元组/枚举选择适当的数据布局
 
-## Summary
+## 概要
 
 Use `#[repr(...)]` attributes to control data layout when interfacing with C, doing memory mapping, or needing specific guarantees.
 
-## Rationale
+## 理由
 
 Rust's default layout is unspecified and may change between compiler versions. For FFI, persistence, or low-level memory operations, you need predictable layout.
 
@@ -25,7 +25,7 @@ Rust's default layout is unspecified and may change between compiler versions. F
 | `#[repr(align(N))]` | Minimum alignment of N bytes |
 | `#[repr(u8)]`, `#[repr(i32)]`, etc. | Enum discriminant type |
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Assume Rust struct layout matches C
@@ -48,7 +48,7 @@ fn bad_ref(d: &Dangerous) -> &u32 {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use repr(C) for FFI
@@ -116,14 +116,14 @@ assert_eq!(align_of::<Example>(), 4);
 // repr(Rust) might reorder to: b, a, c -> size 8
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Is this type used in FFI? → Use `#[repr(C)]`
 - [ ] Is this a newtype wrapper? → Consider `#[repr(transparent)]`
 - [ ] Do I need specific alignment? → Use `#[repr(align(N))]`
 - [ ] Am I using packed? → Never create references to packed fields
 
-## Related Rules
+## 相关规则
 
 - `ffi-13`: Ensure consistent data layout for custom types
 - `ffi-14`: Types in FFI should have stable layout

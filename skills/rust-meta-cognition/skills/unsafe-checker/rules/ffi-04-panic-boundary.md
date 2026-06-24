@@ -6,20 +6,20 @@ impact: CRITICAL
 clippy: panic_in_result_fn
 ---
 
-# Handle Panics When Crossing FFI Boundaries
+# 处理跨 FFI 边界时的 Panic
 
-## Summary
+## 概要
 
 Panics must not unwind across FFI boundaries. Use `catch_unwind` or mark functions as `extern "C-unwind"`.
 
-## Rationale
+## 理由
 
 - Unwinding across C code is undefined behavior
 - C has no concept of Rust panics
 - Can corrupt C stack frames and cause crashes
 - Even with `panic=abort`, still UB to attempt unwinding in `extern "C"`
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Allow panics to escape to C
@@ -43,7 +43,7 @@ pub extern "C" fn parse_config(path: *const c_char) -> i32 {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::panic::{catch_unwind, AssertUnwindSafe};
@@ -132,14 +132,14 @@ pub extern "C" fn get_last_error() -> *const c_char {
 }
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Does my extern "C" function use catch_unwind?
 - [ ] Am I avoiding unwrap/expect in FFI functions?
 - [ ] Do I return error codes for error conditions?
 - [ ] Have I considered using "C-unwind" for Rust-to-Rust through C?
 
-## Related Rules
+## 相关规则
 
 - `ffi-08`: Handle errors properly in FFI
 - `safety-01`: Panic safety

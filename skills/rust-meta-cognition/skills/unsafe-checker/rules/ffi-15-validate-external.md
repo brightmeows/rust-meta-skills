@@ -5,19 +5,19 @@ level: P
 impact: HIGH
 ---
 
-# Validate Non-Robust External Values
+# 验证不可靠的外部值
 
-## Summary
+## 概要
 
 Data received from external sources (FFI, files, network) may be invalid. Validate before using it as Rust types with stricter invariants.
 
-## Rationale
+## 理由
 
 - External data can be malicious or corrupted
 - Rust types have invariants (e.g., valid UTF-8 for str)
 - Invalid data causes undefined behavior
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Trust external data
@@ -49,7 +49,7 @@ fn bad_size(ptr: *const u8, len: usize) -> Vec<u8> {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Validate enum values
@@ -132,14 +132,14 @@ fn good_size(ptr: *const u8, len: usize) -> Result<Vec<u8>, ValidationError> {
 | Boolean | Explicit 0/1 check or treat any non-zero as true |
 | Float | Check for NaN, infinity if problematic |
 
-## Checklist
+## 检查清单
 
 - [ ] Am I validating external enum values?
 - [ ] Am I handling potential invalid UTF-8?
 - [ ] Am I checking sizes against reasonable limits?
 - [ ] Am I using TryFrom instead of transmute?
 
-## Related Rules
+## 相关规则
 
 - `ffi-12`: Document invariant assumptions
 - `safety-02`: Verify safety invariants

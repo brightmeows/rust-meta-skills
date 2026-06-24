@@ -5,17 +5,17 @@ level: P
 impact: HIGH
 ---
 
-# Do Not Expose Raw Pointers in Public APIs
+# 不要在公共 API 中暴露裸指针
 
-## Summary
+## 概要
 
 Public APIs should use safe abstractions (references, slices, smart pointers) instead of exposing raw pointers.
 
-## Rationale
+## 理由
 
 Raw pointers bypass Rust's safety guarantees. Exposing them in public APIs forces users into unsafe code and makes it easy to create undefined behavior.
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Expose raw pointers in public API
@@ -42,7 +42,7 @@ impl Buffer {
 }
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 // DO: Use safe abstractions
@@ -124,14 +124,14 @@ impl Buffer {
 }
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Can this API use references instead of pointers?
 - [ ] Can this API use slices instead of pointer + length?
 - [ ] If pointers are necessary, is the API marked `unsafe`?
 - [ ] Are safety requirements documented?
 
-## Related Rules
+## 相关规则
 
 - `general-03`: Don't create aliases for unsafe items
 - `safety-10`: Document safety requirements for public unsafe functions

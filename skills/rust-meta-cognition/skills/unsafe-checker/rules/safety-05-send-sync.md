@@ -6,13 +6,13 @@ impact: CRITICAL
 clippy: non_send_fields_in_send_ty
 ---
 
-# Consider Safety When Manually Implementing Auto Traits
+# 手动实现自动 trait 时考虑安全性
 
-## Summary
+## 概要
 
 When manually implementing `Send` or `Sync`, you must ensure thread safety invariants are upheld.
 
-## Rationale
+## 理由
 
 `Send` and `Sync` are unsafe traits because incorrect implementations cause data races, which are undefined behavior. The compiler auto-implements them conservatively, but manual implementations require careful analysis.
 
@@ -21,7 +21,7 @@ When manually implementing `Send` or `Sync`, you must ensure thread safety invar
 - **`Send`**: Safe to transfer ownership to another thread
 - **`Sync`**: Safe to share references (`&T`) between threads (i.e., `&T: Send`)
 
-## Bad Example
+## 错误示例
 
 ```rust
 // DON'T: Unsafe Send/Sync without thread safety
@@ -47,7 +47,7 @@ struct RcInner<T> {
 unsafe impl<T: Send> Sync for MyRc<T> {}
 ```
 
-## Good Example
+## 正确示例
 
 ```rust
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -100,14 +100,14 @@ To manually implement:
   - Sync: Can multiple threads safely call &self methods?
 ```
 
-## Checklist
+## 检查清单
 
 - [ ] Does my type contain any non-Send/Sync fields?
 - [ ] Is interior mutability properly synchronized (Mutex, atomic)?
 - [ ] Would concurrent access cause data races?
 - [ ] Have I documented why the implementation is safe?
 
-## Related Rules
+## 相关规则
 
 - `ptr-01`: Don't share raw pointers across threads
 - `safety-02`: Verify safety invariants

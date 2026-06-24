@@ -1,4 +1,4 @@
-# Ownership Best Practices
+# 所有权最佳实践
 
 ## API Design Patterns
 
