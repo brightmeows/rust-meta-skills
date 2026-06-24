@@ -6,161 +6,110 @@ user-invocable: false
 
 # 云原生领域
 
-> **Layer 3: Domain Constraints**
+> **第 3 层：领域约束**
 
-## Domain Constraints → Design Implications
+## 领域约束 → 设计含义
 
-| Domain Rule | Design Constraint | Rust Implication |
+| 领域规则 | 设计约束 | Rust 实现 |
 |-------------|-------------------|------------------|
-| 12-Factor | Config from env | Environment-based config |
-| Observability | Metrics + traces | tracing + opentelemetry |
-| Health checks | Liveness/readiness | Dedicated endpoints |
-| Graceful shutdown | Clean termination | Signal handling |
-| Horizontal scale | Stateless design | No local state |
-| Container-friendly | Small binaries | Release optimization |
+| 12 因素 | 从环境变量读配置 | 基于环境变量的配置 |
+| 可观测性 | 指标 + 追踪 | tracing + opentelemetry |
+| 健康检查 | 存活/就绪 | 专用端点 |
+| 优雅关闭 | 干净终止 | 信号处理 |
+| 水平扩展 | 无状态设计 | 无本地状态 |
+| 容器友好 | 小体积二进制 | 发布优化 |
 
----
+## 关键约束
 
-## Critical Constraints
-
-### Stateless Design
+### 无状态设计
 
 ```
-RULE: No local persistent state
-WHY: Pods can be killed/rescheduled anytime
-RUST: External state (Redis, DB), no static mut
+规则：无本地持久状态
+原因：Pod 随时可能被杀死/重新调度
+实现：外部状态（Redis、DB），禁止 static mut
 ```
 
-### Graceful Shutdown
+### 优雅关闭
 
 ```
-RULE: Handle SIGTERM, drain connections
-WHY: Zero-downtime deployments
-RUST: tokio::signal + graceful shutdown
+规则：处理 SIGTERM，排空连接
+原因：零停机部署
+实现：tokio::signal + 优雅关闭
 ```
 
-### Observability
+### 可观测性
 
 ```
-RULE: Every request must be traceable
-WHY: Debugging distributed systems
-RUST: tracing spans, opentelemetry export
+规则：每个请求必须可追踪
+原因：调试分布式系统
+实现：tracing spans、opentelemetry 导出
 ```
 
 ---
 
-## Trace Down ↓
+## 向下追溯 ↓
 
-From constraints to design (Layer 2):
+从约束到设计（第 2 层）：
 
 ```
-"Need distributed tracing"
-    ↓ m12-lifecycle: Span lifecycle
+“需要分布式追踪”
+    ↓ m12-lifecycle：Span 生命周期
     ↓ tracing + opentelemetry
 
-"Need graceful shutdown"
-    ↓ m07-concurrency: Signal handling
-    ↓ m12-lifecycle: Connection draining
+“需要优雅关闭”
+    ↓ m07-concurrency：信号处理
+    ↓ m12-lifecycle：连接排空
 
-"Need health checks"
-    ↓ domain-web: HTTP endpoints
-    ↓ m06-error-handling: Health status
+“需要健康检查”
+    ↓ domain-web：HTTP 端点
+    ↓ m06-error-handling：健康状态
 ```
 
----
+## 主要 Crates
 
-## Key Crates
-
-| Purpose | Crate |
+| 用途 | Crate |
 |---------|-------|
 | gRPC | tonic |
 | Kubernetes | kube, kube-runtime |
 | Docker | bollard |
-| Tracing | tracing, opentelemetry |
-| Metrics | prometheus, metrics |
-| Config | config, figment |
-| Health | HTTP endpoints |
+| 追踪 | tracing, opentelemetry |
+| 指标 | prometheus, metrics |
+| 配置 | config, figment |
+| 健康 | HTTP 端点 |
 
-## Design Patterns
+## 设计模式
 
-| Pattern | Purpose | Implementation |
+| 模式 | 用途 | 实现 |
 |---------|---------|----------------|
-| gRPC services | Service mesh | tonic + tower |
-| K8s operators | Custom resources | kube-runtime Controller |
-| Observability | Debugging | tracing + OTEL |
-| Health checks | Orchestration | `/health`, `/ready` |
-| Config | 12-factor | Env vars + secrets |
+| gRPC 服务 | 服务网格 | tonic + tower |
+| K8s 操作器 | 自定义资源 | kube-runtime Controller |
+| 可观测性 | 调试 | tracing + OTEL |
+| 健康检查 | 编排 | `/health`、`/ready` |
+| 配置 | 12 因素 | 环境变量 + 密钥 |
 
-## Code Pattern: Graceful Shutdown
+## 常见错误
 
-```rust
-use tokio::signal;
-
-async fn run_server() -> anyhow::Result<()> {
-    let app = Router::new()
-        .route("/health", get(health))
-        .route("/ready", get(ready));
-
-    let addr = SocketAddr::from(([0, 0, 0, 0], 8080));
-
-    axum::Server::bind(&addr)
-        .serve(app.into_make_service())
-        .with_graceful_shutdown(shutdown_signal())
-        .await?;
-
-    Ok(())
-}
-
-async fn shutdown_signal() {
-    signal::ctrl_c().await.expect("failed to listen for ctrl+c");
-    tracing::info!("shutdown signal received");
-}
-```
-
-## Health Check Pattern
-
-```rust
-async fn health() -> StatusCode {
-    StatusCode::OK
-}
-
-async fn ready(State(db): State<Arc<DbPool>>) -> StatusCode {
-    match db.ping().await {
-        Ok(_) => StatusCode::OK,
-        Err(_) => StatusCode::SERVICE_UNAVAILABLE,
-    }
-}
-```
-
----
-
-## Common Mistakes
-
-| Mistake | Domain Violation | Fix |
+| 错误 | 领域违规 | 修复 |
 |---------|-----------------|-----|
-| Local file state | Not stateless | External storage |
-| No SIGTERM handling | Hard kills | Graceful shutdown |
-| No tracing | Can't debug | tracing spans |
-| Static config | Not 12-factor | Env vars |
+| 本地文件状态 | 非无状态 | 外部存储 |
+| 无 SIGTERM 处理 | 硬杀死 | 优雅关闭 |
+| 无追踪 | 无法调试 | tracing spans |
+| 静态配置 | 不符合 12 因素 | 环境变量 |
 
----
+## 追溯到第 1 层
 
-## Trace to Layer 1
-
-| Constraint | Layer 2 Pattern | Layer 1 Implementation |
+| 约束 | 第 2 层模式 | 第 1 层实现 |
 |------------|-----------------|------------------------|
-| Stateless | External state | Arc<Client> for external |
-| Graceful shutdown | Signal handling | tokio::signal |
-| Tracing | Span lifecycle | tracing + OTEL |
-| Health checks | HTTP endpoints | Dedicated routes |
+| 无状态 | 外部状态 | Arc<Client> 用于外部 |
+| 优雅关闭 | 信号处理 | tokio::signal |
+| 追踪 | Span 生命周期 | tracing + OTEL |
+| 健康检查 | HTTP 端点 | 专用路由 |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Async patterns | m07-concurrency |
-| HTTP endpoints | domain-web |
-| Error handling | m13-domain-error |
-| Resource lifecycle | m12-lifecycle |
+| 异步模式 | m07-concurrency |
+| HTTP 端点 | domain-web |
+| 错误处理 | m13-domain-error |
+| 资源生命周期 | m12-lifecycle |

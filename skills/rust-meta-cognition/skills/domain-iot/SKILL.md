@@ -6,163 +6,115 @@ user-invocable: false
 
 # 物联网领域
 
-> **Layer 3: Domain Constraints**
+> **第 3 层：领域约束**
 
-## Domain Constraints → Design Implications
+## 领域约束 → 设计含义
 
-| Domain Rule | Design Constraint | Rust Implication |
+| 领域规则 | 设计约束 | Rust 实现 |
 |-------------|-------------------|------------------|
-| Unreliable network | Offline-first | Local buffering |
-| Power constraints | Efficient code | Sleep modes, minimal alloc |
-| Resource limits | Small footprint | no_std where needed |
-| Security | Encrypted comms | TLS, signed firmware |
-| Reliability | Self-recovery | Watchdog, error handling |
-| OTA updates | Safe upgrades | Rollback capability |
+| 网络不可靠 | 离线优先 | 本地缓冲 |
+| 功耗约束 | 高效代码 | 睡眠模式，最少分配 |
+| 资源限制 | 小体积 | 必要时用 no_std |
+| 安全性 | 加密通信 | TLS、签名固件 |
+| 可靠性 | 自我恢复 | 看门狗、错误处理 |
+| OTA 更新 | 安全升级 | 回滚能力 |
 
----
+## 关键约束
 
-## Critical Constraints
-
-### Network Unreliability
+### 网络不可靠
 
 ```
-RULE: Network can fail at any time
-WHY: Wireless, remote locations
-RUST: Local queue, retry with backoff
+规则：网络随时可能故障
+原因：无线、偏远位置
+实现：本地队列、退避重试
 ```
 
-### Power Management
+### 电源管理
 
 ```
-RULE: Minimize power consumption
-WHY: Battery life, energy costs
-RUST: Sleep modes, efficient algorithms
+规则：最小化功耗
+原因：电池寿命、能源成本
+实现：睡眠模式、高效算法
 ```
 
-### Device Security
+### 设备安全
 
 ```
-RULE: All communication encrypted
-WHY: Physical access possible
-RUST: TLS, signed messages
+规则：所有通信必须加密
+原因：可能存在物理访问
+实现：TLS、签名消息
 ```
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-From constraints to design (Layer 2):
+从约束到设计（第 2 层）：
 
 ```
-"Need offline-first design"
-    ↓ m12-lifecycle: Local buffer with persistence
-    ↓ m13-domain-error: Retry with backoff
+“需要离线优先设计”
+    ↓ m12-lifecycle：带持久化的本地缓冲区
+    ↓ m13-domain-error：退避重试
 
-"Need power efficiency"
-    ↓ domain-embedded: no_std patterns
-    ↓ m10-performance: Minimal allocations
+“需要能效”
+    ↓ domain-embedded：no_std 模式
+    ↓ m10-performance：最小分配
 
-"Need reliable messaging"
-    ↓ m07-concurrency: Async with timeout
-    ↓ MQTT: QoS levels
+“需要可靠消息传递”
+    ↓ m07-concurrency：带超时的异步
+    ↓ MQTT：QoS 级别
 ```
 
----
+## 环境对比
 
-## Environment Comparison
-
-| Environment | Stack | Crates |
+| 环境 | 技术栈 | Crates |
 |-------------|-------|--------|
-| Linux gateway | tokio + std | rumqttc, reqwest |
-| MCU device | embassy + no_std | embedded-hal |
-| Hybrid | Split workloads | Both |
+| Linux 网关 | tokio + std | rumqttc, reqwest |
+| MCU 设备 | embassy + no_std | embedded-hal |
+| 混合 | 拆分工作负载 | 两者都用 |
 
-## Key Crates
+## 主要 Crates
 
-| Purpose | Crate |
+| 用途 | Crate |
 |---------|-------|
-| MQTT (std) | rumqttc, paho-mqtt |
-| Embedded | embedded-hal, embassy |
-| Async (std) | tokio |
-| Async (no_std) | embassy |
-| Logging (no_std) | defmt |
-| Logging (std) | tracing |
+| MQTT（std） | rumqttc, paho-mqtt |
+| 嵌入式 | embedded-hal, embassy |
+| 异步（std） | tokio |
+| 异步（no_std） | embassy |
+| 日志（no_std） | defmt |
+| 日志（std） | tracing |
 
-## Design Patterns
+## 设计模式
 
-| Pattern | Purpose | Implementation |
+| 模式 | 用途 | 实现 |
 |---------|---------|----------------|
-| Pub/Sub | Device comms | MQTT topics |
-| Edge compute | Local processing | Filter before upload |
-| OTA updates | Firmware upgrade | Signed + rollback |
-| Power mgmt | Battery life | Sleep + wake events |
-| Store & forward | Network reliability | Local queue |
+| 发布/订阅 | 设备通信 | MQTT 主题 |
+| 边缘计算 | 本地处理 | 上传前过滤 |
+| OTA 更新 | 固件升级 | 签名 + 回滚 |
+| 电源管理 | 电池续航 | 睡眠 + 唤醒事件 |
+| 存储转发 | 网络可靠性 | 本地队列 |
 
-## Code Pattern: MQTT Client
+## 常见错误
 
-```rust
-use rumqttc::{AsyncClient, MqttOptions, QoS};
-
-async fn run_mqtt() -> anyhow::Result<()> {
-    let mut options = MqttOptions::new("device-1", "broker.example.com", 1883);
-    options.set_keep_alive(Duration::from_secs(30));
-
-    let (client, mut eventloop) = AsyncClient::new(options, 10);
-
-    // Subscribe to commands
-    client.subscribe("devices/device-1/commands", QoS::AtLeastOnce).await?;
-
-    // Publish telemetry
-    tokio::spawn(async move {
-        loop {
-            let data = read_sensor().await;
-            client.publish("devices/device-1/telemetry", QoS::AtLeastOnce, false, data).await.ok();
-            tokio::time::sleep(Duration::from_secs(60)).await;
-        }
-    });
-
-    // Process events
-    loop {
-        match eventloop.poll().await {
-            Ok(event) => handle_event(event).await,
-            Err(e) => {
-                tracing::error!("MQTT error: {}", e);
-                tokio::time::sleep(Duration::from_secs(5)).await;
-            }
-        }
-    }
-}
-```
-
----
-
-## Common Mistakes
-
-| Mistake | Domain Violation | Fix |
+| 错误 | 领域违规 | 修复 |
 |---------|-----------------|-----|
-| No retry logic | Lost data | Exponential backoff |
-| Always-on radio | Battery drain | Sleep between sends |
-| Unencrypted MQTT | Security risk | TLS |
-| No local buffer | Network outage = data loss | Persist locally |
+| 无重试逻辑 | 数据丢失 | 指数退避 |
+| 始终开启无线 | 电池耗尽 | 发送间睡眠 |
+| 未加密 MQTT | 安全风险 | TLS |
+| 无本地缓冲 | 网络中断 = 数据丢失 | 本地持久化 |
 
----
+## 追溯到第 1 层
 
-## Trace to Layer 1
-
-| Constraint | Layer 2 Pattern | Layer 1 Implementation |
+| 约束 | 第 2 层模式 | 第 1 层实现 |
 |------------|-----------------|------------------------|
-| Offline-first | Store & forward | Local queue + flush |
-| Power efficiency | Sleep patterns | Timer-based wake |
-| Network reliability | Retry | tokio-retry, backoff |
-| Security | TLS | rustls, native-tls |
+| 离线优先 | 存储转发 | 本地队列 + 刷新 |
+| 能效 | 睡眠模式 | 定时器唤醒 |
+| 网络可靠性 | 重试 | tokio-retry、指数退避 |
+| 安全 | TLS | rustls、native-tls |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Embedded patterns | domain-embedded |
-| Async patterns | m07-concurrency |
-| Error recovery | m13-domain-error |
-| Performance | m10-performance |
+| 嵌入式模式 | domain-embedded |
+| 异步模式 | m07-concurrency |
+| 错误恢复 | m13-domain-error |
+| 性能 | m10-performance |

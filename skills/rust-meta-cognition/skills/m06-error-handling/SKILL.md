@@ -6,161 +6,149 @@ user-invocable: false
 
 # 错误处理
 
-> **Layer 1: Language Mechanics**
+> **第 1 层：语言机制**
 
-## Core Question
+## 核心问题
 
-**Is this failure expected or a bug?**
+**这个失败是预期的还是 Bug？**
 
-Before choosing error handling strategy:
-- Can this fail in normal operation?
-- Who should handle this failure?
-- What context does the caller need?
+在选择错误处理策略之前：
+- 正常运行时可能失败吗？
+- 谁应该处理这个失败？
+- 调用者需要什么上下文？
 
 ---
 
-## Error → Design Question
+## 错误 → 设计问题
 
-| Pattern | Don't Just Say | Ask Instead |
+| 模式 | 不要只说 | 而要问 |
 |---------|----------------|-------------|
-| unwrap panics | "Use ?" | Is None/Err actually possible here? |
-| Type mismatch on ? | "Use anyhow" | Are error types designed correctly? |
-| Lost error context | "Add .context()" | What does the caller need to know? |
-| Too many error variants | "Use Box<dyn Error>" | Is error granularity right? |
+| unwrap 恐慌 | “用 ?” | 这里真的可能出现 None/Err 吗？ |
+| ? 类型不匹配 | “用 anyhow” | 错误类型设计正确吗？ |
+| 丢失错误上下文 | “加 .context()” | 调用者需要知道什么？ |
+| 错误变体过多 | “用 Box<dyn Error>” | 错误粒度合适吗？ |
+
+## 思考提示
+
+处理错误之前：
+
+1. **这属于哪种失败？**
+   - 预期 → Result<T, E>
+   - 缺失是正常的 → Option<T>
+   - Bug/不变量违反 → panic!
+   - 不可恢复 → panic!
+
+2. **谁来处理？**
+   - 调用者 → 用 ? 传播
+   - 当前函数 → match/if-let
+   - 用户 → 友好的错误信息
+   - 程序员 → 带消息的 panic
+
+3. **需要什么上下文？**
+   - 错误类型 → thiserror 变体
+   - 调用链 → anyhow::Context
+   - 调试信息 → anyhow 或 tracing
 
 ---
 
-## Thinking Prompt
+## 向上追溯 ↑
 
-Before handling an error:
-
-1. **What kind of failure is this?**
-   - Expected → Result<T, E>
-   - Absence normal → Option<T>
-   - Bug/invariant → panic!
-   - Unrecoverable → panic!
-
-2. **Who handles this?**
-   - Caller → propagate with ?
-   - Current function → match/if-let
-   - User → friendly error message
-   - Programmer → panic with message
-
-3. **What context is needed?**
-   - Type of error → thiserror variants
-   - Call chain → anyhow::Context
-   - Debug info → anyhow or tracing
-
----
-
-## Trace Up ↑
-
-When error strategy is unclear:
+错误策略不明确时：
 
 ```
-"Should I return Result or Option?"
-    ↑ Ask: Is absence/failure normal or exceptional?
-    ↑ Check: m09-domain (what does domain say?)
-    ↑ Check: domain-* (error handling requirements)
+“应该返回 Result 还是 Option？”
+    ↑ 问：缺失/失败是正常还是异常？
+    ↑ 检查：m09-domain（领域怎么说？）
+    ↑ 检查：domain-*（错误处理需求）
 ```
 
-| Situation | Trace To | Question |
+| 场景 | 追溯到 | 问题 |
 |-----------|----------|----------|
-| Too many unwraps | m09-domain | Is the data model right? |
-| Error context design | m13-domain-error | What recovery is needed? |
-| Library vs app errors | m11-ecosystem | Who are the consumers? |
+| 太多 unwrap | m09-domain | 数据模型正确吗？ |
+| 错误上下文设计 | m13-domain-error | 需要什么恢复策略？ |
+| 库与应用错误处理 | m11-ecosystem | 消费者是谁？ |
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-From design to implementation:
+从设计到实现：
 
 ```
-"Expected failure, library code"
-    ↓ Use: thiserror for typed errors
+“预期失败，库代码”
+    ↓ 使用：thiserror 实现类型化错误
 
-"Expected failure, application code"
-    ↓ Use: anyhow for ergonomic errors
+“预期失败，应用代码”
+    ↓ 使用：anyhow 实现易用错误
 
-"Absence is normal (find, get, lookup)"
-    ↓ Use: Option<T>
+“缺失是正常的（find、get、lookup）”
+    ↓ 使用：Option<T>
 
-"Bug or invariant violation"
-    ↓ Use: panic!, assert!, unreachable!
+“Bug 或不变量违反”
+    ↓ 使用：panic!、assert!、unreachable!
 
-"Need to propagate with context"
-    ↓ Use: .context("what was happening")
+“需要带上下文传播”
+    ↓ 使用：.context(“正在做什么”)
 ```
 
----
+## 快速参考
 
-## Quick Reference
-
-| Pattern | When | Example |
+| 模式 | 时机 | 示例 |
 |---------|------|---------|
-| `Result<T, E>` | Recoverable error | `fn read() -> Result<String, io::Error>` |
-| `Option<T>` | Absence is normal | `fn find() -> Option<&Item>` |
-| `?` | Propagate error | `let data = file.read()?;` |
-| `unwrap()` | Dev/test only | `config.get("key").unwrap()` |
-| `expect()` | Invariant holds | `env.get("HOME").expect("HOME set")` |
-| `panic!` | Unrecoverable | `panic!("critical failure")` |
+| `Result<T, E>` | 可恢复错误 | `fn read() -> Result<String, io::Error>` |
+| `Option<T>` | 缺失是正常的 | `fn find() -> Option<&Item>` |
+| `?` | 传播错误 | `let data = file.read()?;` |
+| `unwrap()` | 仅开发/测试 | `config.get("key").unwrap()` |
+| `expect()` | 不变量成立 | `env.get("HOME").expect("HOME 已设置")` |
+| `panic!` | 不可恢复 | `panic!("致命失败")` |
 
-## Library vs Application
+## 库 vs 应用
 
-| Context | Error Crate | Why |
+| 场景 | 错误 Crate | 原因 |
 |---------|-------------|-----|
-| Library | `thiserror` | Typed errors for consumers |
-| Application | `anyhow` | Ergonomic error handling |
-| Mixed | Both | thiserror at boundaries, anyhow internally |
+| 库 | `thiserror` | 为消费者提供类型化错误 |
+| 应用 | `anyhow` | 便捷的错误处理 |
+| 混合 | 两者都用 | 边界用 thiserror，内部用 anyhow |
 
-## Decision Flowchart
+## 决策流程图
 
 ```
-Is failure expected?
-├─ Yes → Is absence the only "failure"?
-│        ├─ Yes → Option<T>
-│        └─ No → Result<T, E>
-│                 ├─ Library → thiserror
-│                 └─ Application → anyhow
-└─ No → Is it a bug?
-        ├─ Yes → panic!, assert!
-        └─ No → Consider if really unrecoverable
+失败是预期的吗？
+├─ 是 → 缺失是唯一的“失败”吗？
+│        ├─ 是 → Option<T>
+│        └─ 否 → Result<T, E>
+│                 ├─ 库 → thiserror
+│                 └─ 应用 → anyhow
+└─ 否 → 是 Bug 吗？
+        ├─ 是 → panic!、assert!
+        └─ 否 → 考虑是否真的不可恢复
 
-Use ? → Need context?
-├─ Yes → .context("message")
-└─ No → Plain ?
+用 ? → 需要上下文？
+├─ 是 → .context("消息")
+└─ 否 → 普通 ?
 ```
 
----
+## 常见错误
 
-## Common Errors
-
-| Error | Cause | Fix |
+| 错误 | 原因 | 修复 |
 |-------|-------|-----|
-| `unwrap()` panic | Unhandled None/Err | Use `?` or match |
-| Type mismatch | Different error types | Use `anyhow` or `From` |
-| Lost context | `?` without context | Add `.context()` |
-| `cannot use ?` | Missing Result return | Return `Result<(), E>` |
+| `unwrap()` 恐慌 | 未处理 None/Err | 用 `?` 或 match |
+| 类型不匹配 | 不同错误类型 | 用 `anyhow` 或 `From` |
+| 丢失上下文 | `?` 不带上下文 | 加 `.context()` |
+| `不能使用 ?` | 缺少 Result 返回 | 返回 `Result<(), E>` |
 
----
+## 反模式
 
-## Anti-Patterns
-
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| `.unwrap()` everywhere | Panics in production | `.expect("reason")` or `?` |
-| Ignore errors silently | Bugs hidden | Handle or propagate |
-| `panic!` for expected errors | Bad UX, no recovery | Result |
-| Box<dyn Error> everywhere | Lost type info | thiserror |
+| 到处用 `.unwrap()` | 生产环境恐慌 | `.expect("原因")` 或 `?` |
+| 静默忽略错误 | 隐藏 Bug | 处理或传播 |
+| 对预期错误用 `panic!` | 糟糕的用户体验，无法恢复 | Result |
+| 到处用 `Box<dyn Error>` | 丢失类型信息 | thiserror |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Domain error strategy | m13-domain-error |
-| Crate boundaries | m11-ecosystem |
-| Type-safe errors | m05-type-driven |
-| Mental models | m14-mental-model |
+| 领域错误策略 | m13-domain-error |
+| Crate 边界 | m11-ecosystem |
+| 类型安全错误 | m05-type-driven |
+| 心智模型 | m14-mental-model |

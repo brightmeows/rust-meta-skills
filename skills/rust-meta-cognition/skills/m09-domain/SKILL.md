@@ -6,103 +6,97 @@ user-invocable: false
 
 # 领域建模
 
-> **Layer 2: Design Choices**
+> **第 2 层：设计选择**
 
-## Core Question
+## 核心问题
 
-**What is this concept's role in the domain?**
+**这个概念在领域中的角色是什么？**
 
-Before modeling in code, understand:
-- Is it an Entity (identity matters) or Value Object (interchangeable)?
-- What invariants must be maintained?
-- Where are the aggregate boundaries?
+在用代码建模之前，先理解：
+- 它是实体（身份重要）还是值对象（可互换）？
+- 哪些不变量必须维持？
+- 聚合边界在哪里？
 
 ---
 
-## Domain Concept → Rust Pattern
+## 领域概念 → Rust 模式
 
-| Domain Concept | Rust Pattern | Ownership Implication |
+| 领域概念 | Rust 模式 | 所有权含义 |
 |----------------|--------------|----------------------|
-| Entity | struct + Id | Owned, unique identity |
-| Value Object | struct + Clone/Copy | Shareable, immutable |
-| Aggregate Root | struct owns children | Clear ownership tree |
-| Repository | trait | Abstracts persistence |
-| Domain Event | enum | Captures state changes |
-| Service | impl block / free fn | Stateless operations |
+| 实体（Entity） | struct + Id | 拥有所有权，唯一身份 |
+| 值对象（Value Object） | struct + Clone/Copy | 可共享，不可变 |
+| 聚合根（Aggregate Root） | struct 拥有子对象 | 清晰的所有权树 |
+| 仓储（Repository） | trait | 抽象持久化 |
+| 领域事件（Domain Event） | enum | 捕获状态变更 |
+| 服务（Service） | impl 块/自由函数 | 无状态操作 |
+
+## 思考提示
+
+在创建领域类型之前：
+
+1. **概念的标识是什么？**
+   - 需要唯一标识 → 实体（Id 字段）
+   - 按值可互换 → 值对象（Clone/Copy）
+
+2. **哪些不变量必须保持？**
+   - 永远有效 → 私有字段 + 验证后的构造函数
+   - 转换规则 → 类型状态模式
+
+3. **谁拥有这份数据？**
+   - 单一所有者（父级）→ 拥有的字段
+   - 共享引用 → Arc/Rc
+   - 弱引用 → Weak
 
 ---
 
-## Thinking Prompt
+## 向上追溯 ↑
 
-Before creating a domain type:
-
-1. **What's the concept's identity?**
-   - Needs unique identity → Entity (Id field)
-   - Interchangeable by value → Value Object (Clone/Copy)
-
-2. **What invariants must hold?**
-   - Always valid → private fields + validated constructor
-   - Transition rules → type state pattern
-
-3. **Who owns this data?**
-   - Single owner (parent) → owned field
-   - Shared reference → Arc/Rc
-   - Weak reference → Weak
-
----
-
-## Trace Up ↑
-
-To domain constraints (Layer 3):
+到领域约束（第 3 层）：
 
 ```
-"How should I model a Transaction?"
-    ↑ Ask: What domain rules govern transactions?
-    ↑ Check: domain-fintech (audit, precision requirements)
-    ↑ Check: Business stakeholders (what invariants?)
+“如何对交易（Transaction）建模？”
+    ↑ 问：哪些领域规则支配交易？
+    ↑ 检查：domain-fintech（审计、精度要求）
+    ↑ 检查：业务干系人（哪些不变量？）
 ```
 
-| Design Question | Trace To | Ask |
+| 设计问题 | 追溯到 | 问 |
 |-----------------|----------|-----|
-| Entity vs Value Object | domain-* | What makes two instances "the same"? |
-| Aggregate boundaries | domain-* | What must be consistent together? |
-| Validation rules | domain-* | What business rules apply? |
+| 实体 vs 值对象 | domain-* | 什么让两个实例“相同”？ |
+| 聚合边界 | domain-* | 哪些必须一起保持一致？ |
+| 验证规则 | domain-* | 哪些业务规则适用？ |
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-To implementation (Layer 1):
+到实现（第 1 层）：
 
 ```
-"Model as Entity"
-    ↓ m01-ownership: Owned, unique
-    ↓ m05-type-driven: Newtype for Id
+“建模为实体”
+    ↓ m01-ownership：拥有所有权，唯一
+    ↓ m05-type-driven：Id 用 Newtype
 
-"Model as Value Object"
-    ↓ m01-ownership: Clone/Copy OK
-    ↓ m05-type-driven: Validate at construction
+“建模为值对象”
+    ↓ m01-ownership：可 Clone/Copy
+    ↓ m05-type-driven：构造时验证
 
-"Model as Aggregate"
-    ↓ m01-ownership: Parent owns children
-    ↓ m02-resource: Consider Rc for shared within aggregate
+“建模为聚合”
+    ↓ m01-ownership：父级拥有子对象
+    ↓ m02-resource：聚合内共享考虑 Rc
 ```
 
----
+## 快速参考
 
-## Quick Reference
-
-| DDD Concept | Rust Pattern | Example |
+| DDD 概念 | Rust 模式 | 示例 |
 |-------------|--------------|---------|
-| Value Object | Newtype | `struct Email(String);` |
-| Entity | Struct + ID | `struct User { id: UserId, ... }` |
-| Aggregate | Module boundary | `mod order { ... }` |
-| Repository | Trait | `trait UserRepo { fn find(...) }` |
-| Domain Event | Enum | `enum OrderEvent { Created, ... }` |
+| 值对象 | Newtype | `struct Email(String);` |
+| 实体 | Struct + ID | `struct User { id: UserId, ... }` |
+| 聚合 | 模块边界 | `mod order { ... }` |
+| 仓储 | Trait | `trait UserRepo { fn find(...) }` |
+| 领域事件 | Enum | `enum OrderEvent { Created, ... }` |
 
-## Pattern Templates
+## 模式模板
 
-### Value Object
+### 值对象
 
 ```rust
 struct Email(String);
@@ -115,7 +109,7 @@ impl Email {
 }
 ```
 
-### Entity
+### 实体
 
 ```rust
 struct UserId(Uuid);
@@ -123,52 +117,48 @@ struct UserId(Uuid);
 struct User {
     id: UserId,
     email: Email,
-    // ... other fields
+    // ... 其他字段
 }
 
 impl PartialEq for User {
     fn eq(&self, other: &Self) -> bool {
-        self.id == other.id  // Identity equality
+        self.id == other.id  // 按身份比较
     }
 }
 ```
 
-### Aggregate
+### 聚合
 
 ```rust
 mod order {
     pub struct Order {
         id: OrderId,
-        items: Vec<OrderItem>,  // Owned children
+        items: Vec<OrderItem>,  // 拥有的子对象
         // ...
     }
 
     impl Order {
         pub fn add_item(&mut self, item: OrderItem) {
-            // Enforce aggregate invariants
+            // 维护聚合不变量
         }
     }
 }
 ```
 
----
+## 常见错误
 
-## Common Mistakes
-
-| Mistake | Why Wrong | Better |
+| 错误 | 为什么不对 | 更好的做法 |
 |---------|-----------|--------|
-| Primitive obsession | No type safety | Newtype wrappers |
-| Public fields with invariants | Invariants violated | Private + accessor |
-| Leaked aggregate internals | Broken encapsulation | Methods on root |
-| String for semantic types | No validation | Validated newtype |
+| 基本类型迷恋 | 无类型安全 | Newtype 包装 |
+| 公开带不变量的字段 | 不变量被破坏 | 私有 + 访问器 |
+| 泄露聚合内部 | 封装被破坏 | 在根上操作 |
+| 用字符串表示语义类型 | 无验证 | 验证过的 Newtype |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Type-driven implementation | m05-type-driven |
-| Ownership for aggregates | m01-ownership |
-| Domain error handling | m13-domain-error |
-| Specific domain rules | domain-* |
+| 类型驱动实现 | m05-type-driven |
+| 聚合的所有权 | m01-ownership |
+| 领域错误处理 | m13-domain-error |
+| 具体领域规则 | domain-* |

@@ -5,174 +5,136 @@ globs: ["**/Cargo.toml", "**/.cargo/config.toml"]
 user-invocable: false
 ---
 
-## Project Context (Auto-Injected)
+## Project Context（自动注入）
 
-**Target configuration:**
+**目标配置：**
 !`cat .cargo/config.toml 2>/dev/null || echo "No .cargo/config.toml found"`
 
 ---
 
 # 嵌入式领域
 
-> **Layer 3: Domain Constraints**
+> **第 3 层：领域约束**
 
-## Domain Constraints → Design Implications
+## 领域约束 → 设计含义
 
-| Domain Rule | Design Constraint | Rust Implication |
+| 领域规则 | 设计约束 | Rust 实现 |
 |-------------|-------------------|------------------|
-| No heap | Stack allocation | heapless, no Box/Vec |
-| No std | Core only | #![no_std] |
-| Real-time | Predictable timing | No dynamic alloc |
-| Resource limited | Minimal memory | Static buffers |
-| Hardware safety | Safe peripheral access | HAL + ownership |
-| Interrupt safe | No blocking in ISR | Atomic, critical sections |
+| 无堆 | 栈分配 | heapless，不用 Box/Vec |
+| 无标准库 | 仅 core | `#![no_std]` |
+| 实时 | 可预测定时 | 无动态分配 |
+| 资源有限 | 最小内存 | 静态缓冲区 |
+| 硬件安全 | 安全外设访问 | HAL + 所有权 |
+| 中断安全 | ISR 中不阻塞 | Atomic、临界区 |
 
 ---
 
-## Critical Constraints
+## 关键约束
 
-### No Dynamic Allocation
-
-```
-RULE: Cannot use heap (no allocator)
-WHY: Deterministic memory, no OOM
-RUST: heapless::Vec<T, N>, arrays
-```
-
-### Interrupt Safety
+### 无动态分配
 
 ```
-RULE: Shared state must be interrupt-safe
-WHY: ISR can preempt at any time
-RUST: Mutex<RefCell<T>> + critical section
+规则：不能使用堆（无分配器）
+原因：确定性的内存，不会 OOM
+实现：heapless::Vec<T, N>、数组
 ```
 
-### Hardware Ownership
+### 中断安全
 
 ```
-RULE: Peripherals must have clear ownership
-WHY: Prevent conflicting access
-RUST: HAL takes ownership, singletons
+规则：共享状态必须中断安全
+原因：ISR 可能随时抢占
+实现：Mutex<RefCell<T>> + 临界区
 ```
 
----
-
-## Trace Down ↓
-
-From constraints to design (Layer 2):
+### 硬件所有权
 
 ```
-"Need no_std compatible data structures"
-    ↓ m02-resource: heapless collections
-    ↓ Static sizing: heapless::Vec<T, N>
-
-"Need interrupt-safe state"
-    ↓ m03-mutability: Mutex<RefCell<Option<T>>>
-    ↓ m07-concurrency: Critical sections
-
-"Need peripheral ownership"
-    ↓ m01-ownership: Singleton pattern
-    ↓ m12-lifecycle: RAII for hardware
+规则：外设必须有清晰的所有权
+原因：防止冲突访问
+实现：HAL 获取所有权，单例
 ```
 
 ---
 
-## Layer Stack
+## 向下追溯 ↓
 
-| Layer | Examples | Purpose |
+从约束到设计（第 2 层）：
+
+```
+“需要与 no_std 兼容的数据结构”
+    ↓ m02-resource：heapless 集合
+    ↓ 静态大小：heapless::Vec<T, N>
+
+“需要中断安全的状态”
+    ↓ m03-mutability：Mutex<RefCell<Option<T>>>
+    ↓ m07-concurrency：临界区
+
+“需要外设所有权”
+    ↓ m01-ownership：单例模式
+    ↓ m12-lifecycle：硬件 RAII
+```
+
+## 层栈
+
+| 层级 | 示例 | 用途 |
 |-------|----------|---------|
-| PAC | stm32f4, esp32c3 | Register access |
-| HAL | stm32f4xx-hal | Hardware abstraction |
-| Framework | RTIC, Embassy | Concurrency |
-| Traits | embedded-hal | Portable drivers |
+| PAC | stm32f4, esp32c3 | 寄存器访问 |
+| HAL | stm32f4xx-hal | 硬件抽象 |
+| 框架 | RTIC, Embassy | 并发 |
+| Trait | embedded-hal | 可移植驱动 |
 
-## Framework Comparison
+## 框架对比
 
-| Framework | Style | Best For |
+| 框架 | 风格 | 最适合 |
 |-----------|-------|----------|
-| RTIC | Priority-based | Interrupt-driven apps |
-| Embassy | Async | Complex state machines |
-| Bare metal | Manual | Simple apps |
+| RTIC | 基于优先级 | 中断驱动应用 |
+| Embassy | 异步 | 复杂状态机 |
+| 裸机 | 手动 | 简单应用 |
 
-## Key Crates
+## 主要 Crates
 
-| Purpose | Crate |
+| 用途 | Crate |
 |---------|-------|
-| Runtime (ARM) | cortex-m-rt |
-| Panic handler | panic-halt, panic-probe |
-| Collections | heapless |
-| HAL traits | embedded-hal |
-| Logging | defmt |
-| Flash/debug | probe-run |
+| 运行时（ARM） | cortex-m-rt |
+| 恐慌处理 | panic-halt, panic-probe |
+| 集合 | heapless |
+| HAL trait | embedded-hal |
+| 日志 | defmt |
+| 烧录/调试 | probe-run |
 
-## Design Patterns
+## 设计模式
 
-| Pattern | Purpose | Implementation |
+| 模式 | 用途 | 实现 |
 |---------|---------|----------------|
-| no_std setup | Bare metal | `#![no_std]` + `#![no_main]` |
-| Entry point | Startup | `#[entry]` or embassy |
-| Static state | ISR access | `Mutex<RefCell<Option<T>>>` |
-| Fixed buffers | No heap | `heapless::Vec<T, N>` |
+| no_std 配置 | 裸机 | `#![no_std]` + `#![no_main]` |
+| 入口点 | 启动 | `#[entry]` 或 embassy |
+| 静态状态 | ISR 访问 | `Mutex<RefCell<Option<T>>>` |
+| 固定缓冲区 | 无堆 | `heapless::Vec<T, N>` |
 
-## Code Pattern: Static Peripheral
+## 常见错误
 
-```rust
-#![no_std]
-#![no_main]
-
-use cortex_m::interrupt::{self, Mutex};
-use core::cell::RefCell;
-
-static LED: Mutex<RefCell<Option<Led>>> = Mutex::new(RefCell::new(None));
-
-#[entry]
-fn main() -> ! {
-    let dp = pac::Peripherals::take().unwrap();
-    let led = Led::new(dp.GPIOA);
-
-    interrupt::free(|cs| {
-        LED.borrow(cs).replace(Some(led));
-    });
-
-    loop {
-        interrupt::free(|cs| {
-            if let Some(led) = LED.borrow(cs).borrow_mut().as_mut() {
-                led.toggle();
-            }
-        });
-    }
-}
-```
-
----
-
-## Common Mistakes
-
-| Mistake | Domain Violation | Fix |
+| 错误 | 领域违规 | 修复 |
 |---------|-----------------|-----|
-| Using Vec | Heap allocation | heapless::Vec |
-| No critical section | Race with ISR | Mutex + interrupt::free |
-| Blocking in ISR | Missed interrupts | Defer to main loop |
-| Unsafe peripheral | Hardware conflict | HAL ownership |
+| 使用 Vec | 堆分配 | heapless::Vec |
+| 无临界区 | ISR 竞态 | Mutex + interrupt::free |
+| ISR 中阻塞 | 错过中断 | 推迟到主循环 |
+| Unsafe 外设 | 硬件冲突 | HAL 所有权 |
 
----
+## 追溯到第 1 层
 
-## Trace to Layer 1
-
-| Constraint | Layer 2 Pattern | Layer 1 Implementation |
+| 约束 | 第 2 层模式 | 第 1 层实现 |
 |------------|-----------------|------------------------|
-| No heap | Static collections | heapless::Vec<T, N> |
-| ISR safety | Critical sections | Mutex<RefCell<T>> |
-| Hardware ownership | Singleton | take().unwrap() |
-| no_std | Core-only | #![no_std], #![no_main] |
+| 无堆 | 静态集合 | heapless::Vec<T, N> |
+| ISR 安全 | 临界区 | Mutex<RefCell<T>> |
+| 硬件所有权 | 单例 | take().unwrap() |
+| no_std | 仅 core | `#![no_std]`, `#![no_main]` |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Static memory | m02-resource |
-| Interior mutability | m03-mutability |
-| Interrupt patterns | m07-concurrency |
-| Unsafe for hardware | unsafe-checker |
+| 静态内存 | m02-resource |
+| 内部可变性 | m03-mutability |
+| 中断模式 | m07-concurrency |
+| 硬件 Unsafe | unsafe-checker |

@@ -8,139 +8,104 @@ user-invocable: false
 
 > **Layer 3: Domain Constraints**
 
-## Domain Constraints → Design Implications
+## 领域约束 → 设计含义
 
-| Domain Rule | Design Constraint | Rust Implication |
+| 领域规则 | 设计约束 | Rust 实现 |
 |-------------|-------------------|------------------|
-| Audit trail | Immutable records | Arc<T>, no mutation |
-| Precision | No floating point | rust_decimal |
-| Consistency | Transaction boundaries | Clear ownership |
-| Compliance | Complete logging | Structured tracing |
-| Reproducibility | Deterministic execution | No race conditions |
+| 审计追踪 | 不可变记录 | Arc<T>，不可变 |
+| 精度 | 禁止浮点数 | rust_decimal |
+| 一致性 | 事务边界 | 清晰的所有权 |
+| 合规 | 完整日志 | 结构化 tracing |
+| 可复现性 | 确定性执行 | 无竞态条件 |
 
----
+## 关键约束
 
-## Critical Constraints
-
-### Financial Precision
+### 金融精度
 
 ```
-RULE: Never use f64 for money
-WHY: Floating point loses precision
-RUST: Use rust_decimal::Decimal
+规则：处理金钱永远不用 f64
+原因：浮点数会丢失精度
+实现：使用 rust_decimal::Decimal
 ```
 
-### Audit Requirements
+### 审计需求
 
 ```
-RULE: All transactions must be immutable and traceable
-WHY: Regulatory compliance, dispute resolution
-RUST: Arc<T> for sharing, event sourcing pattern
+规则：所有交易必须不可变且可追踪
+原因：监管合规，争议解决
+实现：用 Arc<T> 共享，事件溯源模式
 ```
 
-### Consistency
+### 一致性
 
 ```
-RULE: Money can't disappear or appear
-WHY: Double-entry accounting principles
-RUST: Transaction types with validated totals
+规则：钱不能凭空消失或出现
+原因：复式记账原则
+实现：带验证总额的交易类型
 ```
 
 ---
 
-## Trace Down ↓
+## 向下追溯 ↓
 
-From constraints to design (Layer 2):
+从约束到设计（第 2 层）：
 
 ```
-"Need immutable transaction records"
-    ↓ m09-domain: Model as Value Objects
-    ↓ m01-ownership: Use Arc for shared immutable data
+“需要不可变的交易记录”
+    ↓ m09-domain：建模为值对象
+    ↓ m01-ownership：共享不可变数据用 Arc
 
-"Need precise decimal math"
-    ↓ m05-type-driven: Newtype for Currency/Amount
-    ↓ rust_decimal: Use Decimal type
+“需要精确的十进制运算”
+    ↓ m05-type-driven：用 Newtype 包装 Currency/Amount
+    ↓ rust_decimal：使用 Decimal 类型
 
-"Need transaction boundaries"
-    ↓ m12-lifecycle: RAII for transaction scope
-    ↓ m09-domain: Aggregate boundaries
+“需要事务边界”
+    ↓ m12-lifecycle：事务范围用 RAII
+    ↓ m09-domain：聚合边界
 ```
 
----
+## 主要 Crates
 
-## Key Crates
-
-| Purpose | Crate |
+| 用途 | Crate |
 |---------|-------|
-| Decimal math | rust_decimal |
-| Date/time | chrono, time |
+| 十进制运算 | rust_decimal |
+| 日期/时间 | chrono, time |
 | UUID | uuid |
-| Serialization | serde |
-| Validation | validator |
+| 序列化 | serde |
+| 验证 | validator |
 
-## Design Patterns
+## 设计模式
 
-| Pattern | Purpose | Implementation |
+| 模式 | 用途 | 实现 |
 |---------|---------|----------------|
-| Currency newtype | Type safety | `struct Amount(Decimal);` |
-| Transaction | Atomic operations | Event sourcing |
-| Audit log | Traceability | Structured logging with trace IDs |
-| Ledger | Double-entry | Debit/credit balance |
+| 货币 Newtype | 类型安全 | `struct Amount(Decimal);` |
+| 交易 | 原子操作 | 事件溯源 |
+| 审计日志 | 可追踪性 | 带追踪 ID 的结构化日志 |
+| 账簿 | 复式记账 | 借方/贷方余额 |
 
-## Code Pattern: Currency Type
+## 常见错误
 
-```rust
-use rust_decimal::Decimal;
-
-#[derive(Clone, Debug, PartialEq)]
-pub struct Amount {
-    value: Decimal,
-    currency: Currency,
-}
-
-impl Amount {
-    pub fn new(value: Decimal, currency: Currency) -> Self {
-        Self { value, currency }
-    }
-
-    pub fn add(&self, other: &Amount) -> Result<Amount, CurrencyMismatch> {
-        if self.currency != other.currency {
-            return Err(CurrencyMismatch);
-        }
-        Ok(Amount::new(self.value + other.value, self.currency))
-    }
-}
-```
-
----
-
-## Common Mistakes
-
-| Mistake | Domain Violation | Fix |
+| 错误 | 领域违规 | 修复 |
 |---------|-----------------|-----|
-| Using f64 | Precision loss | rust_decimal |
-| Mutable transaction | Audit trail broken | Immutable + events |
-| String for amount | No validation | Validated newtype |
-| Silent overflow | Money disappears | Checked arithmetic |
+| 使用 f64 | 精度丢失 | rust_decimal |
+| 可变交易 | 审计链断裂 | 不可变 + 事件 |
+| 用字符串表示金额 | 无验证 | 验证过的 Newtype |
+| 静默溢出 | 钱消失 | 检查运算 |
 
----
+## 追溯到第 1 层
 
-## Trace to Layer 1
-
-| Constraint | Layer 2 Pattern | Layer 1 Implementation |
+| 约束 | 第 2 层模式 | 第 1 层实现 |
 |------------|-----------------|------------------------|
-| Immutable records | Event sourcing | Arc<T>, Clone |
-| Transaction scope | Aggregate | Owned children |
-| Precision | Value Object | rust_decimal newtype |
-| Thread-safe sharing | Shared immutable | Arc (not Rc) |
+| 不可变记录 | 事件溯源 | Arc<T>, Clone |
+| 事务范围 | 聚合 | 拥有的子对象 |
+| 精度 | 值对象 | rust_decimal Newtype |
+| 线程安全共享 | 共享不可变 | Arc（非 Rc） |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Value Object design | m09-domain |
-| Ownership for immutable | m01-ownership |
-| Arc for sharing | m02-resource |
-| Error handling | m13-domain-error |
+| 值对象设计 | m09-domain |
+| 不可变的所有权 | m01-ownership |
+| Arc 共享 | m02-resource |
+| 错误处理 | m13-domain-error |

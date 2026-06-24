@@ -6,152 +6,138 @@ user-invocable: false
 
 # 性能优化
 
-> **Layer 2: Design Choices**
+> **第 2 层：设计选择**
 
-## Core Question
+## 核心问题
 
-**What's the bottleneck, and is optimization worth it?**
+**瓶颈在哪里，优化是否值得？**
 
-Before optimizing:
-- Have you measured? (Don't guess)
-- What's the acceptable performance?
-- Will optimization add complexity?
+在优化之前：
+- 你测量了吗？（不要猜）
+- 可接受的性能是多少？
+- 优化会增加复杂度吗？
 
 ---
 
-## Performance Decision → Implementation
+## 性能决策 → 实现
 
-| Goal | Design Choice | Implementation |
+| 目标 | 设计选择 | 实现 |
 |------|---------------|----------------|
-| Reduce allocations | Pre-allocate, reuse | `with_capacity`, object pools |
-| Improve cache | Contiguous data | `Vec`, `SmallVec` |
-| Parallelize | Data parallelism | `rayon`, threads |
-| Avoid copies | Zero-copy | References, `Cow<T>` |
-| Reduce indirection | Inline data | `smallvec`, arrays |
+| 减少分配 | 预分配、复用 | `with_capacity`、对象池 |
+| 改善缓存 | 连续数据 | `Vec`、`SmallVec` |
+| 并行化 | 数据并行 | `rayon`、线程 |
+| 避免拷贝 | 零拷贝 | 引用、`Cow<T>` |
+| 减少间接引用 | 内联数据 | `smallvec`、数组 |
 
----
+## 思考提示
 
-## Thinking Prompt
+在优化之前：
 
-Before optimizing:
+1. **你测量了吗？**
+   - 先性能分析 → flamegraph、perf
+   - 基准测试 → criterion、cargo bench
+   - 识别真正的热点
 
-1. **Have you measured?**
-   - Profile first → flamegraph, perf
-   - Benchmark → criterion, cargo bench
-   - Identify actual hotspots
+2. **优先级是什么？**
+   - 算法（10x-1000x 提升）
+   - 数据结构（2x-10x）
+   - 分配（2x-5x）
+   - 缓存（1.5x-3x）
 
-2. **What's the priority?**
-   - Algorithm (10x-1000x improvement)
-   - Data structure (2x-10x)
-   - Allocation (2x-5x)
-   - Cache (1.5x-3x)
+3. **权衡是什么？**
+   - 复杂度 vs 速度
+   - 内存 vs CPU
+   - 延迟 vs 吞吐量
 
-3. **What's the trade-off?**
-   - Complexity vs speed
-   - Memory vs CPU
-   - Latency vs throughput
+## 向上追溯 ↑
 
----
-
-## Trace Up ↑
-
-To domain constraints (Layer 3):
+到领域约束（第 3 层）：
 
 ```
-"How fast does this need to be?"
-    ↑ Ask: What's the performance SLA?
-    ↑ Check: domain-* (latency requirements)
-    ↑ Check: Business requirements (acceptable response time)
+“这个需要多快？”
+    ↑ 问：性能 SLA 是什么？
+    ↑ 检查：domain-*（延迟要求）
+    ↑ 检查：业务需求（可接受的响应时间）
 ```
 
-| Question | Trace To | Ask |
+| 问题 | 追溯到 | 问 |
 |----------|----------|-----|
-| Latency requirements | domain-* | What's acceptable response time? |
-| Throughput needs | domain-* | How many requests per second? |
-| Memory constraints | domain-* | What's the memory budget? |
+| 延迟要求 | domain-* | 可接受的响应时间是多少？ |
+| 吞吐量需求 | domain-* | 每秒请求数？ |
+| 内存约束 | domain-* | 内存预算是多少？ |
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-To implementation (Layer 1):
+到实现（第 1 层）：
 
 ```
-"Need to reduce allocations"
-    ↓ m01-ownership: Use references, avoid clone
-    ↓ m02-resource: Pre-allocate with_capacity
+“需要减少分配”
+    ↓ m01-ownership：用引用，避免 clone
+    ↓ m02-resource：预分配 with_capacity
 
-"Need to parallelize"
-    ↓ m07-concurrency: Choose rayon or threads
-    ↓ m07-concurrency: Consider async for I/O-bound
+“需要并行化”
+    ↓ m07-concurrency：选 rayon 或线程
+    ↓ m07-concurrency：I/O 密集型考虑异步
 
-"Need cache efficiency"
-    ↓ Data layout: Prefer Vec over HashMap when possible
-    ↓ Access patterns: Sequential over random access
+“需要缓存效率”
+    ↓ 数据布局：能 Vec 就不 HashMap
+    ↓ 访问模式：顺序访问优于随机访问
 ```
 
----
+## 快速参考
 
-## Quick Reference
-
-| Tool | Purpose |
+| 工具 | 用途 |
 |------|---------|
-| `cargo bench` | Micro-benchmarks |
-| `criterion` | Statistical benchmarks |
-| `perf` / `flamegraph` | CPU profiling |
-| `heaptrack` | Allocation tracking |
-| `valgrind` / `cachegrind` | Cache analysis |
+| `cargo bench` | 微基准测试 |
+| `criterion` | 统计基准测试 |
+| `perf` / `flamegraph` | CPU 性能分析 |
+| `heaptrack` | 分配追踪 |
+| `valgrind` / `cachegrind` | 缓存分析 |
 
-## Optimization Priority
+## 优化优先级
 
 ```
-1. Algorithm choice     (10x - 1000x)
-2. Data structure       (2x - 10x)
-3. Allocation reduction (2x - 5x)
-4. Cache optimization   (1.5x - 3x)
-5. SIMD/Parallelism     (2x - 8x)
+1. 算法选择         (10x - 1000x)
+2. 数据结构         (2x - 10x)
+3. 减少分配         (2x - 5x)
+4. 缓存优化         (1.5x - 3x)
+5. SIMD/并行        (2x - 8x)
 ```
 
-## Common Techniques
+## 常用技巧
 
-| Technique | When | How |
+| 技巧 | 时机 | 方法 |
 |-----------|------|-----|
-| Pre-allocation | Known size | `Vec::with_capacity(n)` |
-| Avoid cloning | Hot paths | Use references or `Cow<T>` |
-| Batch operations | Many small ops | Collect then process |
-| SmallVec | Usually small | `smallvec::SmallVec<[T; N]>` |
-| Inline buffers | Fixed-size data | Arrays over Vec |
+| 预分配 | 大小已知 | `Vec::with_capacity(n)` |
+| 避免克隆 | 热路径 | 用引用或 `Cow<T>` |
+| 批量操作 | 多次小操作 | 收集后统一处理 |
+| SmallVec | 通常很小 | `smallvec::SmallVec<[T; N]>` |
+| 内联缓冲区 | 固定大小数据 | 用数组代替 Vec |
 
----
+## 常见错误
 
-## Common Mistakes
-
-| Mistake | Why Wrong | Better |
+| 错误 | 为什么不对 | 更好的做法 |
 |---------|-----------|--------|
-| Optimize without profiling | Wrong target | Profile first |
-| Benchmark in debug mode | Meaningless | Always `--release` |
-| Use LinkedList | Cache unfriendly | `Vec` or `VecDeque` |
-| Hidden `.clone()` | Unnecessary allocs | Use references |
-| Premature optimization | Wasted effort | Make it work first |
+| 未分析就优化 | 目标错误 | 先性能分析 |
+| Debug 模式基准测试 | 无意义 | 始终用 `--release` |
+| 用 LinkedList | 缓存不友好 | `Vec` 或 `VecDeque` |
+| 隐藏的 `.clone()` | 不必要的分配 | 用引用 |
+| 过早优化 | 白费力气 | 先让它正常工作 |
 
----
+## 反模式
 
-## Anti-Patterns
-
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| Clone to avoid lifetimes | Performance cost | Proper ownership |
-| Box everything | Indirection cost | Stack when possible |
-| HashMap for small sets | Overhead | Vec with linear search |
-| String concat in loop | O(n^2) | `String::with_capacity` or `format!` |
+| 为避免生命周期而 Clone | 性能代价 | 正确的所有权 |
+| 到处用 Box | 间接引用代价 | 尽量用栈 |
+| 小集合用 HashMap | 开销 | Vec 线性搜索 |
+| 循环中拼接字符串 | O(n^2) | `String::with_capacity` 或 `format!` |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Reducing clones | m01-ownership |
-| Concurrency options | m07-concurrency |
-| Smart pointer choice | m02-resource |
-| Domain requirements | domain-* |
+| 减少克隆 | m01-ownership |
+| 并发选项 | m07-concurrency |
+| 智能指针选择 | m02-resource |
+| 领域需求 | domain-* |

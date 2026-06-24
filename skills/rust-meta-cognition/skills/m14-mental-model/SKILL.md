@@ -6,172 +6,162 @@ user-invocable: false
 
 # 心智模型
 
-> **Layer 2: Design Choices**
+> **第 2 层：设计选择**
 
-## Core Question
+## 核心问题
 
-**What's the right way to think about this Rust concept?**
+**如何正确理解这个 Rust 概念？**
 
-When learning or explaining Rust:
-- What's the correct mental model?
-- What misconceptions should be avoided?
-- What analogies help understanding?
+在学习和解释 Rust 时：
+- 正确的心智模型是什么？
+- 应该避免哪些误解？
+- 什么类比有助于理解？
 
 ---
 
-## Key Mental Models
+## 关键心智模型
 
-| Concept | Mental Model | Analogy |
+| 概念 | 心智模型 | 类比 |
 |---------|--------------|---------|
-| Ownership | Unique key | Only one person has the house key |
-| Move | Key handover | Giving away your key |
-| `&T` | Lending for reading | Lending a book |
-| `&mut T` | Exclusive editing | Only you can edit the doc |
-| Lifetime `'a` | Valid scope | "Ticket valid until..." |
-| `Box<T>` | Heap pointer | Remote control to TV |
-| `Rc<T>` | Shared ownership | Multiple remotes, last turns off |
-| `Arc<T>` | Thread-safe Rc | Remotes from any room |
+| 所有权（Ownership） | 唯一钥匙 | 只有一个人有房钥匙 |
+| 移动（Move） | 钥匙移交 | 把钥匙给别人 |
+| `&T` | 出借阅读 | 借书给别人看 |
+| `&mut T` | 独占编辑 | 只有你能编辑文档 |
+| 生命周期 `'a` | 有效范围 | “票证有效期至……” |
+| `Box<T>` | 堆指针 | 电视遥控器 |
+| `Rc<T>` | 共享所有权 | 多个遥控器，最后一个关电视 |
+| `Arc<T>` | 线程安全 Rc | 从任何房间都可用的遥控器 |
 
----
+## 从其他语言过渡
 
-## Coming From Other Languages
-
-| From | Key Shift |
+| 来自 | 关键转变 |
 |------|-----------|
-| Java/C# | Values are owned, not references by default |
-| C/C++ | Compiler enforces safety rules |
-| Python/Go | No GC, deterministic destruction |
-| Functional | Mutability is safe via ownership |
-| JavaScript | No null, use Option instead |
+| Java/C# | 值默认是拥有的，而非引用 |
+| C/C++ | 编译器强制执行安全规则 |
+| Python/Go | 无 GC，确定性析构 |
+| 函数式语言 | 通过所有权实现安全可变性 |
+| JavaScript | 无 null，用 Option 代替 |
 
 ---
 
-## Thinking Prompt
+## 思考提示
 
-When confused about Rust:
+对 Rust 感到困惑时：
 
-1. **What's the ownership model?**
-   - Who owns this data?
-   - How long does it live?
-   - Who can access it?
+1. **所有权模型是什么？**
+   - 谁拥有这份数据？
+   - 它存活多久？
+   - 谁能访问它？
 
-2. **What guarantee is Rust providing?**
-   - No data races
-   - No dangling pointers
-   - No use-after-free
+2. **Rust 在提供什么保证？**
+   - 无数据竞争
+   - 无悬垂指针
+   - 无释放后使用
 
-3. **What's the compiler telling me?**
-   - Error = violation of safety rule
-   - Solution = work with the rules
+3. **编译器在告诉我什么？**
+   - 错误 = 违反了安全规则
+   - 解决 = 与规则合作
 
----
+## 向上追溯 ↑
 
-## Trace Up ↑
-
-To design understanding (Layer 2):
+到设计层理解（第 2 层）：
 
 ```
-"Why can't I do X in Rust?"
-    ↑ Ask: What safety guarantee would be violated?
-    ↑ Check: m01-m07 for the rule being enforced
-    ↑ Ask: What's the intended design pattern?
+“为什么我在 Rust 中不能做 X？”
+    ↑ 问：这会违反什么安全保证？
+    ↑ 检查：m01-m07 中对应的规则
+    ↑ 问：正确的设计模式是什么？
 ```
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-To implementation (Layer 1):
+到实现（第 1 层）：
 
 ```
-"I understand the concept, now how do I implement?"
-    ↓ m01-ownership: Ownership patterns
-    ↓ m02-resource: Smart pointer choice
-    ↓ m07-concurrency: Thread safety
+“我理解了概念，现在怎么实现？”
+    ↓ m01-ownership：所有权模式
+    ↓ m02-resource：智能指针选择
+    ↓ m07-concurrency：线程安全
 ```
 
 ---
 
-## Common Misconceptions
+## 常见误解
 
-| Error | Wrong Model | Correct Model |
+| 错误 | 错误模型 | 正确模型 |
 |-------|-------------|---------------|
-| E0382 use after move | GC cleans up | Ownership = unique key transfer |
-| E0502 borrow conflict | Multiple writers OK | Only one writer at a time |
-| E0499 multiple mut borrows | Aliased mutation | Exclusive access for mutation |
-| E0106 missing lifetime | Ignoring scope | References have validity scope |
-| E0507 cannot move from `&T` | Implicit clone | References don't own data |
+| E0382 移动后使用 | GC 会清理 | 所有权 = 唯一钥匙转移 |
+| E0502 借用冲突 | 多个写入者没问题 | 一次只能有一个写入者 |
+| E0499 多个可变借用 | 别名修改 | 修改需要独占访问 |
+| E0106 缺少生命周期 | 忽略作用域 | 引用有有效期作用域 |
+| E0507 不能从 `&T` 移出 | 隐式 Clone | 引用不拥有数据 |
 
-## Deprecated Thinking
+## 已过时的思维方式
 
-| Deprecated | Better |
+| 过时 | 更好的 |
 |------------|--------|
-| "Rust is like C++" | Different ownership model |
-| "Lifetimes are GC" | Compile-time validity scope |
-| "Clone solves everything" | Restructure ownership |
-| "Fight the borrow checker" | Work with the compiler |
-| "`unsafe` to avoid rules" | Understand safe patterns first |
+| “Rust 像 C++” | 所有权模型完全不同 |
+| “生命周期就是 GC” | 编译时有效范围 |
+| “Clone 解决一切” | 重构所有权 |
+| “与借用检查器战斗” | 与编译器合作 |
+| “用 `unsafe` 绕过规则” | 先理解安全模式 |
 
 ---
 
-## Ownership Visualization
+## 所有权可视化
 
 ```
-Stack                          Heap
+栈                              堆
 +----------------+            +----------------+
 | main()         |            |                |
 |   s1 ─────────────────────> │ "hello"        |
 |                |            |                |
 | fn takes(s) {  |            |                |
 |   s2 (moved) ─────────────> │ "hello"        |
-| }              |            | (s1 invalid)   |
+| }              |            | (s1 失效)      |
 +----------------+            +----------------+
 
-After move: s1 is no longer valid
+移动后：s1 不再有效
 ```
 
-## Reference Visualization
+## 引用可视化
 
 ```
 +----------------+
-| data: String   |────────────> "hello"
+| data: String   │────────────> "hello"
 +----------------+
        ↑
-       │ &data (immutable borrow)
+       │ &data（不可变借用）
        │
 +------+------+
-| reader1    reader2    (multiple OK)
+| reader1    reader2    （多个 OK）
 +------+------+
 
 +----------------+
-| data: String   |────────────> "hello"
+| data: String   │────────────> "hello"
 +----------------+
        ↑
-       │ &mut data (mutable borrow)
+       │ &mut data（可变借用）
        │
 +------+
-| writer (only one)
+| writer（仅一个）
 +------+
 ```
 
----
+## 学习路径
 
-## Learning Path
-
-| Stage | Focus | Skills |
+| 阶段 | 重点 | Skills |
 |-------|-------|--------|
-| Beginner | Ownership basics | m01-ownership, m14-mental-model |
-| Intermediate | Smart pointers, error handling | m02, m06 |
-| Advanced | Concurrency, unsafe | m07, unsafe-checker |
-| Expert | Design patterns | m09-m15, domain-* |
+| 初学者 | 所有权基础 | m01-ownership, m14-mental-model |
+| 中级 | 智能指针、错误处理 | m02, m06 |
+| 高级 | 并发、unsafe | m07, unsafe-checker |
+| 专家 | 设计模式 | m09-m15, domain-* |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Ownership errors | m01-ownership |
-| Smart pointers | m02-resource |
-| Concurrency | m07-concurrency |
-| Anti-patterns | m15-anti-pattern |
+| 所有权错误 | m01-ownership |
+| 智能指针 | m02-resource |
+| 并发 | m07-concurrency |
+| 反模式 | m15-anti-pattern |

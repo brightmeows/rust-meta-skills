@@ -6,116 +6,112 @@ user-invocable: false
 
 # 领域错误策略
 
-> **Layer 2: Design Choices**
+> **第 2 层：设计选择**
 
-## Core Question
+## 核心问题
 
-**Who needs to handle this error, and how should they recover?**
+**谁需要处理这个错误，他们应该如何恢复？**
 
-Before designing error types:
-- Is this user-facing or internal?
-- Is recovery possible?
-- What context is needed for debugging?
+在设计错误类型之前：
+- 是面向用户的还是内部的？
+- 能否恢复？
+- 调试需要什么上下文？
 
 ---
 
-## Error Categorization
+## 错误分类
 
-| Error Type | Audience | Recovery | Example |
+| 错误类型 | 受众 | 恢复策略 | 示例 |
 |------------|----------|----------|---------|
-| User-facing | End users | Guide action | `InvalidEmail`, `NotFound` |
-| Internal | Developers | Debug info | `DatabaseError`, `ParseError` |
-| System | Ops/SRE | Monitor/alert | `ConnectionTimeout`, `RateLimited` |
-| Transient | Automation | Retry | `NetworkError`, `ServiceUnavailable` |
-| Permanent | Human | Investigate | `ConfigInvalid`, `DataCorrupted` |
+| 面向用户 | 最终用户 | 指导操作 | `InvalidEmail`、`NotFound` |
+| 内部错误 | 开发者 | 调试信息 | `DatabaseError`、`ParseError` |
+| 系统错误 | 运维/SRE | 监控/告警 | `ConnectionTimeout`、`RateLimited` |
+| 临时错误 | 自动化 | 重试 | `NetworkError`、`ServiceUnavailable` |
+| 永久错误 | 人工 | 调查 | `ConfigInvalid`、`DataCorrupted` |
+
+## 思考提示
+
+在设计错误类型之前：
+
+1. **谁会看到这个错误？**
+   - 最终用户 → 友好的、可操作的消息
+   - 开发者 → 详细的、可调试的信息
+   - 运维 → 结构化的、可告警的信息
+
+2. **能否恢复？**
+   - 临时 → 退避重试
+   - 可降级 → 回退值
+   - 永久 → 快速失败、告警
+
+3. **需要什么上下文？**
+   - 调用链 → anyhow::Context
+   - 请求 ID → 结构化日志
+   - 输入数据 → 错误载荷
 
 ---
 
-## Thinking Prompt
+## 向上追溯 ↑
 
-Before designing error types:
-
-1. **Who sees this error?**
-   - End user → friendly message, actionable
-   - Developer → detailed, debuggable
-   - Ops → structured, alertable
-
-2. **Can we recover?**
-   - Transient → retry with backoff
-   - Degradable → fallback value
-   - Permanent → fail fast, alert
-
-3. **What context is needed?**
-   - Call chain → anyhow::Context
-   - Request ID → structured logging
-   - Input data → error payload
-
----
-
-## Trace Up ↑
-
-To domain constraints (Layer 3):
+到领域约束（第 3 层）：
 
 ```
-"How should I handle payment failures?"
-    ↑ Ask: What are the business rules for retries?
-    ↑ Check: domain-fintech (transaction requirements)
-    ↑ Check: SLA (availability requirements)
+“如何处理支付失败？”
+    ↑ 问：业务层面重试规则是什么？
+    ↑ 检查：domain-fintech（交易要求）
+    ↑ 检查：SLA（可用性要求）
 ```
 
-| Question | Trace To | Ask |
+| 问题 | 追溯到 | 问 |
 |----------|----------|-----|
-| Retry policy | domain-* | What's acceptable latency for retry? |
-| User experience | domain-* | What message should users see? |
-| Compliance | domain-* | What must be logged for audit? |
+| 重试策略 | domain-* | 重试可接受延迟是多少？ |
+| 用户体验 | domain-* | 用户应该看到什么消息？ |
+| 合规 | domain-* | 审计需要记录什么？ |
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-To implementation (Layer 1):
+到实现（第 1 层）：
 
 ```
-"Need typed errors"
-    ↓ m06-error-handling: thiserror for library
-    ↓ m04-zero-cost: Error enum design
+“需要类型化错误”
+    ↓ m06-error-handling：库用 thiserror
+    ↓ m04-zero-cost：错误枚举设计
 
-"Need error context"
-    ↓ m06-error-handling: anyhow::Context
-    ↓ Logging: tracing with fields
+“需要错误上下文”
+    ↓ m06-error-handling：anyhow::Context
+    ↓ 日志：带字段的 tracing
 
-"Need retry logic"
-    ↓ m07-concurrency: async retry patterns
-    ↓ Crates: tokio-retry, backoff
+“需要重试逻辑”
+    ↓ m07-concurrency：异步重试模式
+    ↓ Crates：tokio-retry、backoff
 ```
 
 ---
 
-## Quick Reference
+## 快速参考
 
-| Recovery Pattern | When | Implementation |
+| 恢复模式 | 时机 | 实现 |
 |------------------|------|----------------|
-| Retry | Transient failures | exponential backoff |
-| Fallback | Degraded mode | cached/default value |
-| Circuit Breaker | Cascading failures | failsafe-rs |
-| Timeout | Slow operations | `tokio::time::timeout` |
-| Bulkhead | Isolation | separate thread pools |
+| 重试 | 临时故障 | 指数退避 |
+| 回退 | 降级模式 | 缓存/默认值 |
+| 熔断器 | 级联故障 | failsafe-rs |
+| 超时 | 慢操作 | `tokio::time::timeout` |
+| 舱壁 | 隔离 | 独立线程池 |
 
-## Error Hierarchy
+## 错误层级
 
 ```rust
 #[derive(thiserror::Error, Debug)]
 pub enum AppError {
-    // User-facing
-    #[error("Invalid input: {0}")]
+    // 面向用户
+    #[error("输入无效：{0}")]
     Validation(String),
 
-    // Transient (retryable)
-    #[error("Service temporarily unavailable")]
+    // 可重试的临时错误
+    #[error("服务暂时不可用")]
     ServiceUnavailable(#[source] reqwest::Error),
 
-    // Internal (log details, show generic)
-    #[error("Internal error")]
+    // 内部错误（记录详情，显示通用信息）
+    #[error("内部错误")]
     Internal(#[source] anyhow::Error),
 }
 
@@ -126,7 +122,7 @@ impl AppError {
 }
 ```
 
-## Retry Pattern
+## 重试模式
 
 ```rust
 use tokio_retry::{Retry, strategy::ExponentialBackoff};
@@ -144,37 +140,31 @@ where
 }
 ```
 
----
+## 常见错误
 
-## Common Mistakes
-
-| Mistake | Why Wrong | Better |
+| 错误 | 为什么不对 | 更好的做法 |
 |---------|-----------|--------|
-| Same error for all | No actionability | Categorize by audience |
-| Retry everything | Wasted resources | Only transient errors |
-| Infinite retry | DoS self | Max attempts + backoff |
-| Expose internal errors | Security risk | User-friendly messages |
-| No context | Hard to debug | .context() everywhere |
+| 所有错误用同一类型 | 无法针对性处理 | 按受众分类 |
+| 所有错误都重试 | 浪费资源 | 仅临时错误 |
+| 无限重试 | 自攻击 | 最大次数 + 退避 |
+| 暴露内部错误 | 安全风险 | 用户友好消息 |
+| 无上下文 | 难以调试 | 到处用 .context() |
 
----
+## 反模式
 
-## Anti-Patterns
-
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| String errors | No structure | thiserror types |
-| panic! for recoverable | Bad UX | Result with context |
-| Ignore errors | Silent failures | Log or propagate |
-| Box<dyn Error> everywhere | Lost type info | thiserror |
-| Error in happy path | Performance | Early validation |
+| 字符串错误 | 无结构 | thiserror 类型 |
+| 可恢复错误用 panic! | 糟糕用户体验 | 带上下文的 Result |
+| 忽略错误 | 静默失败 | 记录或传播 |
+| 到处用 Box<dyn Error> | 丢失类型信息 | thiserror |
+| 快乐路径中的错误 | 性能开销 | 尽早验证 |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Error handling basics | m06-error-handling |
-| Retry implementation | m07-concurrency |
-| Domain modeling | m09-domain |
-| User-facing APIs | domain-* |
+| 错误处理基础 | m06-error-handling |
+| 重试实现 | m07-concurrency |
+| 领域建模 | m09-domain |
+| 面向用户 API | domain-* |

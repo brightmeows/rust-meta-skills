@@ -6,154 +6,148 @@ user-invocable: false
 
 # 资源管理
 
-> **Layer 1: Language Mechanics**
+> **第 1 层：语言机制**
 
-## Core Question
+## 核心问题
 
-**What ownership pattern does this resource need?**
+**这个资源需要什么样的所有权模式？**
 
-Before choosing a smart pointer, understand:
-- Is ownership single or shared?
-- Is access single-threaded or multi-threaded?
-- Are there potential cycles?
+在选择智能指针之前，先理解：
+- 所有权是独占的还是共享的？
+- 访问是单线程的还是多线程的？
+- 是否存在潜在的循环引用？
 
 ---
 
-## Error → Design Question
+## 错误 → 设计问题
 
-| Error | Don't Just Say | Ask Instead |
+| 错误 | 不要只说 | 而要问 |
 |-------|----------------|-------------|
-| "Need heap allocation" | "Use Box" | Why can't this be on stack? |
-| Rc memory leak | "Use Weak" | Is the cycle necessary in design? |
-| RefCell panic | "Use try_borrow" | Is runtime check the right approach? |
-| Arc overhead complaint | "Accept it" | Is multi-thread access actually needed? |
+| “需要堆分配” | “用 Box” | 为什么不能在栈上？ |
+| Rc 内存泄漏 | “用 Weak” | 循环引用在设计层面是否必要？ |
+| RefCell 运行时恐慌 | “用 try_borrow” | 运行时检查是正确的方法吗？ |
+| Arc 开销过大 | “接受它” | 真的需要多线程访问吗？ |
 
 ---
 
-## Thinking Prompt
+## 思考提示
 
-Before choosing a smart pointer:
+选择智能指针之前：
 
-1. **What's the ownership model?**
-   - Single owner → Box or owned value
-   - Shared ownership → Rc/Arc
-   - Weak reference → Weak
+1. **所有权模型是什么？**
+   - 单一所有者 → Box 或拥有的值
+   - 共享所有权 → Rc/Arc
+   - 弱引用 → Weak
 
-2. **What's the thread context?**
-   - Single-thread → Rc, Cell, RefCell
-   - Multi-thread → Arc, Mutex, RwLock
+2. **线程上下文是什么？**
+   - 单线程 → Rc, Cell, RefCell
+   - 多线程 → Arc, Mutex, RwLock
 
-3. **Are there cycles?**
-   - Yes → One direction must be Weak
-   - No → Regular Rc/Arc is fine
+3. **是否存在循环引用？**
+   - 是 → 其中一侧必须用 Weak
+   - 否 → 普通 Rc/Arc 即可
 
 ---
 
-## Trace Up ↑
+## 向上追溯 ↑
 
-When pointer choice is unclear, trace to design:
+指针选择不明确时，向上追溯到设计：
 
 ```
-"Should I use Arc or Rc?"
-    ↑ Ask: Is this data shared across threads?
-    ↑ Check: m07-concurrency (thread model)
-    ↑ Check: domain-* (performance constraints)
+“该用 Arc 还是 Rc？”
+    ↑ 问：这份数据是否跨线程共享？
+    ↑ 检查：m07-concurrency（线程模型）
+    ↑ 检查：domain-*（性能约束）
 ```
 
-| Situation | Trace To | Question |
+| 场景 | 追溯到 | 问题 |
 |-----------|----------|----------|
-| Rc vs Arc confusion | m07-concurrency | What's the concurrency model? |
-| RefCell panics | m03-mutability | Is interior mutability right here? |
-| Memory leaks | m12-lifecycle | Where should cleanup happen? |
+| Rc 与 Arc 混淆 | m07-concurrency | 并发模型是什么？ |
+| RefCell 运行时恐慌 | m03-mutability | 这里适合用内部可变性吗？ |
+| 内存泄漏 | m12-lifecycle | 清理工作应该在何处发生？ |
 
 ---
 
-## Trace Down ↓
+## 向下追溯 ↓
 
-From design to implementation:
+从设计到实现：
 
 ```
-"Need single-owner heap data"
-    ↓ Use: Box<T>
+“需要单一所有者堆数据”
+    ↓ 使用：Box<T>
 
-"Need shared immutable data (single-thread)"
-    ↓ Use: Rc<T>
+“需要共享不可变数据（单线程）”
+    ↓ 使用：Rc<T>
 
-"Need shared immutable data (multi-thread)"
-    ↓ Use: Arc<T>
+“需要共享不可变数据（多线程）”
+    ↓ 使用：Arc<T>
 
-"Need to break reference cycle"
-    ↓ Use: Weak<T>
+“需要打破循环引用”
+    ↓ 使用：Weak<T>
 
-"Need shared mutable data"
-    ↓ Single-thread: Rc<RefCell<T>>
-    ↓ Multi-thread: Arc<Mutex<T>> or Arc<RwLock<T>>
+“需要共享可变数据”
+    ↓ 单线程：Rc<RefCell<T>>
+    ↓ 多线程：Arc<Mutex<T>> 或 Arc<RwLock<T>>
 ```
 
 ---
 
-## Quick Reference
+## 快速参考
 
-| Type | Ownership | Thread-Safe | Use When |
+| 类型 | 所有权模型 | 线程安全 | 使用场景 |
 |------|-----------|-------------|----------|
-| `Box<T>` | Single | Yes | Heap allocation, recursive types |
-| `Rc<T>` | Shared | No | Single-thread shared ownership |
-| `Arc<T>` | Shared | Yes | Multi-thread shared ownership |
-| `Weak<T>` | Weak ref | Same as Rc/Arc | Break reference cycles |
-| `Cell<T>` | Single | No | Interior mutability (Copy types) |
-| `RefCell<T>` | Single | No | Interior mutability (runtime check) |
+| `Box<T>` | 单一 | 是 | 堆分配、递归类型 |
+| `Rc<T>` | 共享 | 否 | 单线程共享所有权 |
+| `Arc<T>` | 共享 | 是 | 多线程共享所有权 |
+| `Weak<T>` | 弱引用 | 同 Rc/Arc | 打破循环引用 |
+| `Cell<T>` | 单一 | 否 | 内部可变性（Copy 类型） |
+| `RefCell<T>` | 单一 | 否 | 内部可变性（运行时检查） |
 
-## Decision Flowchart
+## 决策流程图
 
 ```
-Need heap allocation?
-├─ Yes → Single owner?
-│        ├─ Yes → Box<T>
-│        └─ No → Multi-thread?
-│                ├─ Yes → Arc<T>
-│                └─ No → Rc<T>
-└─ No → Stack allocation (default)
+需要堆分配？
+├─ 是 → 单一所有者？
+│        ├─ 是 → Box<T>
+│        └─ 否 → 多线程？
+│                ├─ 是 → Arc<T>
+│                └─ 否 → Rc<T>
+└─ 否 → 栈分配（默认）
 
-Have reference cycles?
-├─ Yes → Use Weak for one direction
-└─ No → Regular Rc/Arc
+有循环引用？
+├─ 是 → 一侧使用 Weak
+└─ 否 → 普通 Rc/Arc
 
-Need interior mutability?
-├─ Yes → Thread-safe needed?
-│        ├─ Yes → Mutex<T> or RwLock<T>
-│        └─ No → T: Copy? → Cell<T> : RefCell<T>
-└─ No → Use &mut T
+需要内部可变性？
+├─ 是 → 需要线程安全？
+│        ├─ 是 → Mutex<T> 或 RwLock<T>
+│        └─ 否 → T: Copy? → Cell<T> : RefCell<T>
+└─ 否 → 使用 &mut T
 ```
 
----
+## 常见错误
 
-## Common Errors
-
-| Problem | Cause | Fix |
+| 问题 | 原因 | 修复 |
 |---------|-------|-----|
-| Rc cycle leak | Mutual strong refs | Use Weak for one direction |
-| RefCell panic | Borrow conflict at runtime | Use try_borrow or restructure |
-| Arc overhead | Atomic ops in hot path | Consider Rc if single-threaded |
-| Box unnecessary | Data fits on stack | Remove Box |
+| Rc 循环泄漏 | 相互强引用 | 一侧使用 Weak |
+| RefCell 运行时恐慌 | 运行时借用冲突 | 用 try_borrow 或重构 |
+| Arc 开销过大 | 热路径中的原子操作 | 如果是单线程，考虑 Rc |
+| Box 不必要 | 数据可在栈上存放 | 移除 Box |
 
----
+## 反模式
 
-## Anti-Patterns
-
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| Arc everywhere | Unnecessary atomic overhead | Use Rc for single-thread |
-| RefCell everywhere | Runtime panics | Design clear ownership |
-| Box for small types | Unnecessary allocation | Stack allocation |
-| Ignore Weak for cycles | Memory leaks | Design parent-child with Weak |
+| 到处用 Arc | 不必要的原子开销 | 单线程用 Rc |
+| 到处用 RefCell | 运行时恐慌 | 设计清晰的所有权 |
+| 小类型用 Box | 不必要的分配 | 栈分配 |
+| 循环引用不用 Weak | 内存泄漏 | 用 Weak 设计父子关系 |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Ownership errors | m01-ownership |
-| Interior mutability details | m03-mutability |
-| Multi-thread context | m07-concurrency |
-| Resource lifecycle | m12-lifecycle |
+| 所有权错误 | m01-ownership |
+| 内部可变性细节 | m03-mutability |
+| 多线程上下文 | m07-concurrency |
+| 资源生命周期 | m12-lifecycle |

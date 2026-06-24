@@ -6,129 +6,129 @@ user-invocable: false
 
 # 所有权与生命周期
 
-> **Layer 1: Language Mechanics**
+> **第 1 层：语言机制**
 
-## Core Question
+## 核心问题
 
-**Who should own this data, and for how long?**
+**这份数据该由谁拥有，拥有多久？**
 
-Before fixing ownership errors, understand the data's role:
-- Is it shared or exclusive?
-- Is it short-lived or long-lived?
-- Is it transformed or just read?
+在修复所有权错误之前，先理解数据的角色：
+- 是共享的还是独占的？
+- 是短生命期还是长生命期的？
+- 是需要转换的还是只读的？
 
 ---
 
-## Error → Design Question
+## 错误 → 设计问题
 
-| Error | Don't Just Say | Ask Instead |
+| 错误 | 不要只说 | 而要问 |
 |-------|----------------|-------------|
-| E0382 | "Clone it" | Who should own this data? |
-| E0597 | "Extend lifetime" | Is the scope boundary correct? |
-| E0506 | "End borrow first" | Should mutation happen elsewhere? |
-| E0507 | "Clone before move" | Why are we moving from a reference? |
-| E0515 | "Return owned" | Should caller own the data? |
-| E0716 | "Bind to variable" | Why is this temporary? |
-| E0106 | "Add 'a" | What is the actual lifetime relationship? |
+| E0382 | “Clone 一下” | 这份数据该由谁拥有？ |
+| E0597 | “延长生命周期” | 作用域边界是否正确？ |
+| E0506 | “先结束借用” | 是否应该在别处修改？ |
+| E0507 | “移动前 Clone” | 为什么要从引用中移出？ |
+| E0515 | “返回所有权” | 调用者是否应拥有数据？ |
+| E0716 | “绑定到变量” | 为什么这是临时值？ |
+| E0106 | “加上 ‘a” | 实际的周期关系是什么？ |
 
 ---
 
-## Thinking Prompt
+## 思考提示
 
-Before fixing an ownership error, ask:
+修复所有权错误之前，先问自己：
 
-1. **What is this data's domain role?**
-   - Entity (unique identity) → owned
-   - Value Object (interchangeable) → clone/copy OK
-   - Temporary (computation result) → maybe restructure
+1. **这份数据的领域角色是什么？**
+   - 实体（唯一身份）→ 拥有所有权
+   - 值对象（可互换）→ 可 clone/copy
+   - 临时值（计算结果）→ 也许需要重构
 
-2. **Is the ownership design intentional?**
-   - By design → work within constraints
-   - Accidental → consider redesign
+2. **所有权设计是刻意的吗？**
+   - 刻意设计 → 在约束内工作
+   - 偶然产生 → 考虑重新设计
 
-3. **Fix symptom or redesign?**
-   - If Strike 3 (3rd attempt) → escalate to Layer 2
+3. **治标还是治本？**
+   - 如果第三次（第 3 次尝试）→ 升级到第 2 层
 
 ---
 
-## Trace Up ↑
+## 向上追溯 ↑
 
-When errors persist, trace to design layer:
+当错误持续出现时，向上追溯到设计层：
 
 ```
-E0382 (moved value)
-    ↑ Ask: What design choice led to this ownership pattern?
-    ↑ Check: m09-domain (is this Entity or Value Object?)
-    ↑ Check: domain-* (what constraints apply?)
+E0382（值被移动）
+    ↑ 问：什么设计选择导致了这个所有权模式？
+    ↑ 检查：m09-domain（这是实体还是值对象？）
+    ↑ 检查：domain-*（有哪些约束？）
 ```
 
-| Persistent Error | Trace To | Question |
+| 持久错误 | 追溯到 | 问题 |
 |-----------------|----------|----------|
-| E0382 repeated | m02-resource | Should use Arc/Rc for sharing? |
-| E0597 repeated | m09-domain | Is scope boundary at right place? |
-| E0506/E0507 | m03-mutability | Should use interior mutability? |
+| E0382 反复出现 | m02-resource | 应该用 Arc/Rc 共享吗？ |
+| E0597 反复出现 | m09-domain | 作用域边界设置正确吗？ |
+| E0506/E0507 | m03-mutability | 应该用内部可变性吗？ |
 
 ---
 
-## Trace Down ↓
+## 向下追溯 ↓
 
-From design decisions to implementation:
+从设计决策到实现：
 
 ```
-"Data needs to be shared immutably"
-    ↓ Use: Arc<T> (multi-thread) or Rc<T> (single-thread)
+“数据需要不可变地共享”
+    ↓ 使用：Arc<T>（多线程）或 Rc<T>（单线程）
 
-"Data needs exclusive ownership"
-    ↓ Use: move semantics, take ownership
+“数据需要独占所有权”
+    ↓ 使用：移动语义，获取所有权
 
-"Data is read-only view"
-    ↓ Use: &T (immutable borrow)
+“数据是只读视图”
+    ↓ 使用：&T（不可变借用）
 ```
 
 ---
 
-## Quick Reference
+## 快速参考
 
-| Pattern | Ownership | Cost | Use When |
+| 模式 | 所有权类型 | 代价 | 使用场景 |
 |---------|-----------|------|----------|
-| Move | Transfer | Zero | Caller doesn't need data |
-| `&T` | Borrow | Zero | Read-only access |
-| `&mut T` | Exclusive borrow | Zero | Need to modify |
-| `clone()` | Duplicate | Alloc + copy | Actually need a copy |
-| `Rc<T>` | Shared (single) | Ref count | Single-thread sharing |
-| `Arc<T>` | Shared (multi) | Atomic ref count | Multi-thread sharing |
-| `Cow<T>` | Clone-on-write | Alloc if mutated | Might modify |
+| Move（移动） | 转移 | 零 | 调用者不再需要数据 |
+| `&T` | 借用 | 零 | 只读访问 |
+| `&mut T` | 独占借用 | 零 | 需要修改 |
+| `clone()` | 复制 | 分配+拷贝 | 确实需要一份副本 |
+| `Rc<T>` | 共享（单线程） | 引用计数 | 单线程共享 |
+| `Arc<T>` | 共享（多线程） | 原子引用计数 | 多线程共享 |
+| `Cow<T>` | 写时复制 | 修改时分配 | 可能修改 |
 
-## Error Code Reference
+## 错误码参考
 
-| Error | Cause | Quick Fix |
+| 错误 | 原因 | 快速修复 |
 |-------|-------|-----------|
-| E0382 | Value moved | Clone, reference, or redesign ownership |
-| E0597 | Reference outlives owner | Extend owner scope or restructure |
-| E0506 | Assign while borrowed | End borrow before mutation |
-| E0507 | Move out of borrowed | Clone or use reference |
-| E0515 | Return local reference | Return owned value |
-| E0716 | Temporary dropped | Bind to variable |
-| E0106 | Missing lifetime | Add `'a` annotation |
+| E0382 | 值被移动 | Clone、引用或重新设计所有权 |
+| E0597 | 引用的生命周期超出所有者 | 延长所有者作用域或重构 |
+| E0506 | 在借用期间赋值 | 修改前结束借用 |
+| E0507 | 从借用的内容中移出 | Clone 或使用引用 |
+| E0515 | 返回局部引用 | 返回拥有的值 |
+| E0716 | 临时值被丢弃 | 绑定到变量 |
+| E0106 | 缺少生命周期标注 | 添加 `'a` 标注 |
 
 ---
 
-## Anti-Patterns
+## 反模式
 
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| `.clone()` everywhere | Hides design issues | Design ownership properly |
-| Fight borrow checker | Increases complexity | Work with the compiler |
-| `'static` for everything | Restricts flexibility | Use appropriate lifetimes |
-| Leak with `Box::leak` | Memory leak | Proper lifetime design |
+| 到处用 `.clone()` | 掩盖设计问题 | 正确设计所有权 |
+| 与借用检查器对抗 | 增加复杂度 | 与编译器合作 |
+| 到处用 `'static` | 限制灵活性 | 使用合适的生命周期 |
+| 用 `Box::leak` 泄露内存 | 内存泄漏 | 正确的生命周期设计 |
 
 ---
 
-## Related Skills
+## 相关 Skills
 
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Need smart pointers | m02-resource |
-| Need interior mutability | m03-mutability |
-| Data is domain entity | m09-domain |
-| Learning ownership concepts | m14-mental-model |
+| 需要智能指针 | m02-resource |
+| 需要内部可变性 | m03-mutability |
+| 数据是领域实体 | m09-domain |
+| 学习所有权概念 | m14-mental-model |

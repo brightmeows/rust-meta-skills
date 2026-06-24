@@ -6,155 +6,143 @@ user-invocable: false
 
 # 反模式
 
-> **Layer 2: Design Choices**
+> **第 2 层：设计选择**
 
-## Core Question
+## 核心问题
 
-**Is this pattern hiding a design problem?**
+**这个模式是否在隐藏设计问题？**
 
-When reviewing code:
-- Is this solving the symptom or the cause?
-- Is there a more idiomatic approach?
-- Does this fight or flow with Rust?
+审查代码时：
+- 这是治标还是治本？
+- 有更地道的做法吗？
+- 这是在对抗 Rust 还是顺应 Rust？
 
 ---
 
-## Anti-Pattern → Better Pattern
+## 反模式 → 更好的模式
 
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| `.clone()` everywhere | Hides ownership issues | Proper references or ownership |
-| `.unwrap()` in production | Runtime panics | `?`, `expect`, or handling |
-| `Rc` when single owner | Unnecessary overhead | Simple ownership |
-| `unsafe` for convenience | UB risk | Find safe pattern |
-| OOP via `Deref` | Misleading API | Composition, traits |
-| Giant match arms | Unmaintainable | Extract to methods |
-| `String` everywhere | Allocation waste | `&str`, `Cow<str>` |
-| Ignoring `#[must_use]` | Lost errors | Handle or `let _ =` |
+| 到处用 `.clone()` | 掩盖所有权问题 | 正确的引用或所有权 |
+| 生产环境用 `.unwrap()` | 运行时恐慌 | `?`、`expect` 或正确处理 |
+| 单一所有者用 `Rc` | 不必要的开销 | 简单的所有权 |
+| 为方便用 `unsafe` | UB 风险 | 找安全模式 |
+| 用 `Deref` 模拟 OOP | 误导的 API | 组合、trait |
+| 巨大的 match 分支 | 难以维护 | 提取为方法 |
+| 到处用 `String` | 分配浪费 | `&str`、`Cow<str>` |
+| 忽略 `#[must_use]` | 丢失错误 | 处理或 `let _ =` |
+
+## 思考提示
+
+看到可疑代码时：
+
+1. **这是症状还是原因？**
+   - 为逃避借用而 Clone？→ 所有权设计问题
+   - 因为“不会失败”而 Unwrap？→ 未处理的情况
+
+2. **地道的代码应该什么样？**
+   - 引用代替克隆
+   - 迭代器代替索引循环
+   - 模式匹配代替标志位
+
+3. **这是在对抗 Rust 吗？**
+   - 对抗借用检查器 → 重构
+   - 过度使用 unsafe → 找安全模式
 
 ---
 
-## Thinking Prompt
+## 向上追溯 ↑
 
-When seeing suspicious code:
-
-1. **Is this symptom or cause?**
-   - Clone to avoid borrow? → Ownership design issue
-   - Unwrap "because it won't fail"? → Unhandled case
-
-2. **What would idiomatic code look like?**
-   - References instead of clones
-   - Iterators instead of index loops
-   - Pattern matching instead of flags
-
-3. **Does this fight Rust?**
-   - Fighting borrow checker → restructure
-   - Excessive unsafe → find safe pattern
-
----
-
-## Trace Up ↑
-
-To design understanding:
+到设计层理解：
 
 ```
-"Why does my code have so many clones?"
-    ↑ Ask: Is the ownership model correct?
-    ↑ Check: m09-domain (data flow design)
-    ↑ Check: m01-ownership (reference patterns)
+“为什么我的代码有这么多 clone？”
+    ↑ 问：所有权模型正确吗？
+    ↑ 检查：m09-domain（数据流设计）
+    ↑ 检查：m01-ownership（引用模式）
 ```
 
-| Anti-Pattern | Trace To | Question |
+| 反模式 | 追溯到 | 问题 |
 |--------------|----------|----------|
-| Clone everywhere | m01-ownership | Who should own this data? |
-| Unwrap everywhere | m06-error-handling | What's the error strategy? |
-| Rc everywhere | m09-domain | Is ownership clear? |
-| Fighting lifetimes | m09-domain | Should data structure change? |
+| 到处 Clone | m01-ownership | 谁该拥有这份数据？ |
+| 到处 Unwrap | m06-error-handling | 错误策略是什么？ |
+| 到处 Rc | m09-domain | 所有权清晰吗？ |
+| 与生命周期对抗 | m09-domain | 数据结构应该变化吗？ |
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-To implementation (Layer 1):
+到实现（第 1 层）：
 
 ```
-"Replace clone with proper ownership"
-    ↓ m01-ownership: Reference patterns
-    ↓ m02-resource: Smart pointer if needed
+“用正确的所有权替代 Clone”
+    ↓ m01-ownership：引用模式
+    ↓ m02-resource：必要时用智能指针
 
-"Replace unwrap with proper handling"
-    ↓ m06-error-handling: ? operator
-    ↓ m06-error-handling: expect with message
+“用正确的处理替代 Unwrap”
+    ↓ m06-error-handling：? 运算符
+    ↓ m06-error-handling：带消息的 expect
 ```
 
 ---
 
-## Top 5 Beginner Mistakes
+## 初学者 Top 5 错误
 
-| Rank | Mistake | Fix |
+| 排名 | 错误 | 修复 |
 |------|---------|-----|
-| 1 | Clone to escape borrow checker | Use references |
-| 2 | Unwrap in production | Propagate with `?` |
-| 3 | String for everything | Use `&str` |
-| 4 | Index loops | Use iterators |
-| 5 | Fighting lifetimes | Restructure to own data |
+| 1 | 用 Clone 逃避借用检查器 | 使用引用 |
+| 2 | 生产环境用 Unwrap | 用 `?` 传播 |
+| 3 | 凡事都用 String | 用 `&str` |
+| 4 | 索引循环 | 用迭代器 |
+| 5 | 与生命周期对抗 | 重构为拥有数据 |
 
-## Code Smell → Refactoring
+## 代码异味 → 重构
 
-| Smell | Indicates | Refactoring |
+| 异味 | 指示 | 重构 |
 |-------|-----------|-------------|
-| Many `.clone()` | Ownership unclear | Clarify data flow |
-| Many `.unwrap()` | Error handling missing | Add proper handling |
-| Many `pub` fields | Encapsulation broken | Private + accessors |
-| Deep nesting | Complex logic | Extract methods |
-| Long functions | Multiple responsibilities | Split |
-| Giant enums | Missing abstraction | Trait + types |
+| 大量 `.clone()` | 所有权不清晰 | 理清数据流 |
+| 大量 `.unwrap()` | 缺少错误处理 | 添加正确处理 |
+| 大量 `pub` 字段 | 封装被破坏 | 私有 + 访问器 |
+| 深层嵌套 | 逻辑复杂 | 提取方法 |
+| 长函数 | 职责过多 | 拆分 |
+| 巨型枚举 | 缺少抽象 | Trait + 类型 |
 
----
+## 常见错误模式
 
-## Common Error Patterns
-
-| Error | Anti-Pattern Cause | Fix |
+| 错误 | 反模式原因 | 修复 |
 |-------|-------------------|-----|
-| E0382 use after move | Cloning vs ownership | Proper references |
-| Panic in production | Unwrap everywhere | ?, matching |
-| Slow performance | String for all text | &str, Cow |
-| Borrow checker fights | Wrong structure | Restructure |
-| Memory bloat | Rc/Arc everywhere | Simple ownership |
+| E0382 移动后使用 | 克隆 vs 所有权 | 正确的引用 |
+| 生产环境恐慌 | 到处 Unwrap | ?、match |
+| 性能慢 | 用 String 处理所有文本 | &str、Cow |
+| 借用检查器对抗 | 结构不正确 | 重构 |
+| 内存膨胀 | 到处用 Rc/Arc | 简单的所有权 |
 
----
+## 已过时 → 更好的做法
 
-## Deprecated → Better
-
-| Deprecated | Better |
+| 过时 | 更好 |
 |------------|--------|
-| Index-based loops | `.iter()`, `.enumerate()` |
-| `collect::<Vec<_>>()` then iterate | Chain iterators |
-| Manual unsafe cell | `Cell`, `RefCell` |
-| `mem::transmute` for casts | `as` or `TryFrom` |
-| Custom linked list | `Vec`, `VecDeque` |
+| 索引循环 | `.iter()`、`.enumerate()` |
+| 先 `collect::<Vec<_>>()` 再迭代 | 链式迭代器 |
+| 手动 unsafe cell | `Cell`、`RefCell` |
+| 用 `mem::transmute` 转换 | `as` 或 `TryFrom` |
+| 自定义链表 | `Vec`、`VecDeque` |
 | `lazy_static!` | `std::sync::OnceLock` |
 
----
+## 快速审查清单
 
-## Quick Review Checklist
+- [ ] 没有无故的 `.clone()`
+- [ ] 库代码中没有 `.unwrap()`
+- [ ] 没有带不变量的 `pub` 字段
+- [ ] 没有能用迭代器却用索引循环的情况
+- [ ] 没有能用 `&str` 却用 `String` 的情况
+- [ ] 没有忽略的 `#[must_use]` 警告
+- [ ] 没有不带 SAFETY 注释的 `unsafe`
+- [ ] 没有巨型函数（>50 行）
 
-- [ ] No `.clone()` without justification
-- [ ] No `.unwrap()` in library code
-- [ ] No `pub` fields with invariants
-- [ ] No index loops when iterator works
-- [ ] No `String` where `&str` suffices
-- [ ] No ignored `#[must_use]` warnings
-- [ ] No `unsafe` without SAFETY comment
-- [ ] No giant functions (>50 lines)
+## 相关 Skills
 
----
-
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Ownership patterns | m01-ownership |
-| Error handling | m06-error-handling |
-| Mental models | m14-mental-model |
-| Performance | m10-performance |
+| 所有权模式 | m01-ownership |
+| 错误处理 | m06-error-handling |
+| 心智模型 | m14-mental-model |
+| 性能 | m10-performance |

@@ -12,151 +12,139 @@ user-invocable: false
 
 # 生态集成
 
-> **Layer 2: Design Choices**
+> **第 2 层：设计选择**
 
-## Core Question
+## 核心问题
 
-**What's the right crate for this job, and how should it integrate?**
+**这个任务该用哪个 crate，如何集成？**
 
-Before adding dependencies:
-- Is there a standard solution?
-- What's the maintenance status?
-- What's the API stability?
+在添加依赖之前：
+- 有标准方案吗？
+- 维护状态如何？
+- API 稳定性如何？
 
 ---
 
-## Integration Decision → Implementation
+## 集成决策 → 实现
 
-| Need | Choice | Crates |
+| 需求 | 选择 | Crates |
 |------|--------|--------|
-| Serialization | Derive-based | serde, serde_json |
-| Async runtime | tokio or async-std | tokio (most popular) |
-| HTTP client | Ergonomic | reqwest |
-| HTTP server | Modern | axum, actix-web |
-| Database | SQL or ORM | sqlx, diesel |
-| CLI parsing | Derive-based | clap |
-| Error handling | App vs lib | anyhow, thiserror |
-| Logging | Facade | tracing, log |
+| 序列化 | 派生方式 | serde, serde_json |
+| 异步运行时 | tokio 或 async-std | tokio（最流行） |
+| HTTP 客户端 | 易用 | reqwest |
+| HTTP 服务端 | 现代化 | axum, actix-web |
+| 数据库 | SQL 或 ORM | sqlx, diesel |
+| CLI 解析 | 派生方式 | clap |
+| 错误处理 | 应用 vs 库 | anyhow, thiserror |
+| 日志 | 门面 | tracing, log |
+
+## 思考提示
+
+添加依赖之前：
+
+1. **维护良好吗？**
+   - 近期有提交吗？
+   - issue 有响应吗？
+   - 破坏性变更频率如何？
+
+2. **使用范围多大？**
+   - 需要完整 crate 还是某个 feature？
+   - feature 标志能减少体积吗？
+
+3. **如何集成？**
+   - 基于 trait 还是具体类型？
+   - 同步还是异步？
+   - 需要什么约束？
 
 ---
 
-## Thinking Prompt
+## 向上追溯 ↑
 
-Before adding a dependency:
-
-1. **Is it well-maintained?**
-   - Recent commits?
-   - Active issue response?
-   - Breaking changes frequency?
-
-2. **What's the scope?**
-   - Do you need the full crate or just a feature?
-   - Can feature flags reduce bloat?
-
-3. **How does it integrate?**
-   - Trait-based or concrete types?
-   - Sync or async?
-   - What bounds does it require?
-
----
-
-## Trace Up ↑
-
-To domain constraints (Layer 3):
+到领域约束（第 3 层）：
 
 ```
-"Which HTTP framework should I use?"
-    ↑ Ask: What are the performance requirements?
-    ↑ Check: domain-web (latency, throughput needs)
-    ↑ Check: Team expertise (familiarity with framework)
+“该用哪个 HTTP 框架？”
+    ↑ 问：性能要求是什么？
+    ↑ 检查：domain-web（延迟、吞吐量需求）
+    ↑ 检查：团队经验（对框架的熟悉程度）
 ```
 
-| Question | Trace To | Ask |
+| 问题 | 追溯到 | 问 |
 |----------|----------|-----|
-| Framework choice | domain-* | What constraints matter? |
-| Library vs build | domain-* | What's the deployment model? |
-| API design | domain-* | Who are the consumers? |
+| 框架选择 | domain-* | 哪些约束重要？ |
+| 库还是自建 | domain-* | 部署模型是什么？ |
+| API 设计 | domain-* | 消费者是谁？ |
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-To implementation (Layer 1):
+到实现（第 1 层）：
 
 ```
-"Integrate external crate"
-    ↓ m04-zero-cost: Trait bounds and generics
-    ↓ m06-error-handling: Error type compatibility
+“集成外部 crate”
+    ↓ m04-zero-cost：Trait 约束和泛型
+    ↓ m06-error-handling：错误类型兼容性
 
-"FFI integration"
-    ↓ unsafe-checker: Safety requirements
-    ↓ m12-lifecycle: Resource cleanup
+“FFI 集成”
+    ↓ unsafe-checker：安全要求
+    ↓ m12-lifecycle：资源清理
 ```
 
----
+## 快速参考
 
-## Quick Reference
+### 语言互操作
 
-### Language Interop
-
-| Integration | Crate/Tool | Use Case |
+| 集成方式 | Crate/工具 | 使用场景 |
 |-------------|------------|----------|
-| C/C++ → Rust | `bindgen` | Auto-generate bindings |
-| Rust → C | `cbindgen` | Export C headers |
-| Python ↔ Rust | `pyo3` | Python extensions |
-| Node.js ↔ Rust | `napi-rs` | Node addons |
-| WebAssembly | `wasm-bindgen` | Browser/WASI |
+| C/C++ → Rust | `bindgen` | 自动生成绑定 |
+| Rust → C | `cbindgen` | 导出 C 头文件 |
+| Python ↔ Rust | `pyo3` | Python 扩展 |
+| Node.js ↔ Rust | `napi-rs` | Node 插件 |
+| WebAssembly | `wasm-bindgen` | 浏览器/WASI |
 
 ### Cargo Features
 
-| Feature | Purpose |
+| 功能 | 用途 |
 |---------|---------|
-| `[features]` | Optional functionality |
-| `default = [...]` | Default features |
-| `feature = "serde"` | Conditional deps |
-| `[workspace]` | Multi-crate projects |
+| `[features]` | 可选功能 |
+| `default = [...]` | 默认功能 |
+| `feature = "serde"` | 条件依赖 |
+| `[workspace]` | 多 crate 项目 |
 
-## Error Code Reference
+## 错误码参考
 
-| Error | Cause | Fix |
+| 错误 | 原因 | 修复 |
 |-------|-------|-----|
-| E0433 | Can't find crate | Add to Cargo.toml |
-| E0603 | Private item | Check crate docs |
-| Feature not enabled | Optional feature | Enable in `features` |
-| Version conflict | Incompatible deps | `cargo update` or pin |
-| Duplicate types | Different crate versions | Unify in workspace |
+| E0433 | 找不到 crate | 加入 Cargo.toml |
+| E0603 | 私有项 | 查看 crate 文档 |
+| Feature 未启用 | 可选 feature | 在 `features` 中启用 |
+| 版本冲突 | 不兼容的依赖 | `cargo update` 或锁定 |
+| 类型重复 | 不同 crate 版本 | 在 workspace 中统一 |
 
----
+## Crate 选择标准
 
-## Crate Selection Criteria
-
-| Criterion | Good Sign | Warning Sign |
+| 标准 | 好的信号 | 警告信号 |
 |-----------|-----------|--------------|
-| Maintenance | Recent commits | Years inactive |
-| Community | Active issues/PRs | No response |
-| Documentation | Examples, API docs | Minimal docs |
-| Stability | Semantic versioning | Frequent breaking |
-| Dependencies | Minimal, well-known | Heavy, obscure |
+| 维护 | 近期有提交 | 数年未活动 |
+| 社区 | 活跃的 issue/PR | 无响应 |
+| 文档 | 示例、API 文档 | 文档极少 |
+| 稳定性 | 语义化版本 | 频繁破坏性变更 |
+| 依赖 | 少量、知名 | 大量、冷门 |
 
----
+## 反模式
 
-## Anti-Patterns
-
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| `extern crate` | Outdated (2018+) | Just `use` |
-| `#[macro_use]` | Global pollution | Explicit import |
-| Wildcard deps `*` | Unpredictable | Specific versions |
-| Too many deps | Supply chain risk | Evaluate necessity |
-| Vendoring everything | Maintenance burden | Trust crates.io |
+| `extern crate` | 过时（2018+） | 直接用 `use` |
+| `#[macro_use]` | 全局污染 | 显式导入 |
+| 通配符依赖 `*` | 不可预测 | 指定版本 |
+| 依赖过多 | 供应链风险 | 评估必要性 |
+| 全部 vendor | 维护负担 | 信任 crates.io |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Error type design | m06-error-handling |
-| Trait integration | m04-zero-cost |
-| FFI safety | unsafe-checker |
-| Resource management | m12-lifecycle |
+| 错误类型设计 | m06-error-handling |
+| Trait 集成 | m04-zero-cost |
+| FFI 安全 | unsafe-checker |
+| 资源管理 | m12-lifecycle |

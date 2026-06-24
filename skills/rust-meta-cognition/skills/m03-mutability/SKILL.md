@@ -6,148 +6,136 @@ user-invocable: false
 
 # 可变性
 
-> **Layer 1: Language Mechanics**
+> **第 1 层：语言机制**
 
-## Core Question
+## 核心问题
 
-**Why does this data need to change, and who can change it?**
+**这份数据为什么需要改变，谁能改变它？**
 
-Before adding interior mutability, understand:
-- Is mutation essential or accidental complexity?
-- Who should control mutation?
-- Is the mutation pattern safe?
+在添加内部可变性之前，先理解：
+- 可变性是必要的还是偶然的复杂度？
+- 谁应该控制可变性？
+- 可变模式安全吗？
 
 ---
 
-## Error → Design Question
+## 错误 → 设计问题
 
-| Error | Don't Just Say | Ask Instead |
+| 错误 | 不要只说 | 而要问 |
 |-------|----------------|-------------|
-| E0596 | "Add mut" | Should this really be mutable? |
-| E0499 | "Split borrows" | Is the data structure right? |
-| E0502 | "Separate scopes" | Why do we need both borrows? |
-| RefCell panic | "Use try_borrow" | Is runtime check appropriate? |
+| E0596 | “加上 mut” | 这里真的需要可变吗？ |
+| E0499 | “拆分借用” | 数据结构是否正确？ |
+| E0502 | “分离作用域” | 为什么同时需要两种借用？ |
+| RefCell 运行时恐慌 | “用 try_borrow” | 运行时检查是否合适？ |
+
+## 思考提示
+
+在添加可变性之前：
+
+1. **可变性是否必要？**
+   - 也许转换 → 返回新值
+   - 也许 Builder → 不可变地构造
+
+2. **谁控制可变性？**
+   - 外部调用者 → `&mut T`
+   - 内部逻辑 → 内部可变性
+   - 并发访问 → 同步可变性
+
+3. **线程上下文是什么？**
+   - 单线程 → Cell/RefCell
+   - 多线程 → Mutex/RwLock/Atomic
 
 ---
 
-## Thinking Prompt
+## 向上追溯 ↑
 
-Before adding mutability:
-
-1. **Is mutation necessary?**
-   - Maybe transform → return new value
-   - Maybe builder → construct immutably
-
-2. **Who controls mutation?**
-   - External caller → `&mut T`
-   - Internal logic → interior mutability
-   - Concurrent access → synchronized mutability
-
-3. **What's the thread context?**
-   - Single-thread → Cell/RefCell
-   - Multi-thread → Mutex/RwLock/Atomic
-
----
-
-## Trace Up ↑
-
-When mutability conflicts persist:
+可变性冲突持续出现时：
 
 ```
-E0499/E0502 (borrow conflicts)
-    ↑ Ask: Is the data structure designed correctly?
-    ↑ Check: m09-domain (should data be split?)
-    ↑ Check: m07-concurrency (is async involved?)
+E0499/E0502（借用冲突）
+    ↑ 问：数据结构设计正确吗？
+    ↑ 检查：m09-domain（数据是否应该拆分？）
+    ↑ 检查：m07-concurrency（是否涉及异步？）
 ```
 
-| Persistent Error | Trace To | Question |
+| 持久错误 | 追溯到 | 问题 |
 |-----------------|----------|----------|
-| Repeated borrow conflicts | m09-domain | Should data be restructured? |
-| RefCell in async | m07-concurrency | Is Send/Sync needed? |
-| Mutex deadlocks | m07-concurrency | Is the lock design right? |
+| 反复借用冲突 | m09-domain | 数据应该重构吗？ |
+| 异步中的 RefCell | m07-concurrency | 需要 Send/Sync 吗？ |
+| Mutex 死锁 | m07-concurrency | 锁设计正确吗？ |
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-From design to implementation:
+从设计到实现：
 
 ```
-"Need mutable access from &self"
+“需要从 &self 中获得可变访问”
     ↓ T: Copy → Cell<T>
     ↓ T: !Copy → RefCell<T>
 
-"Need thread-safe mutation"
-    ↓ Simple counters → AtomicXxx
-    ↓ Complex data → Mutex<T> or RwLock<T>
+“需要线程安全的可变操作”
+    ↓ 简单计数器 → AtomicXxx
+    ↓ 复杂数据 → Mutex<T> 或 RwLock<T>
 
-"Need shared mutable state"
-    ↓ Single-thread: Rc<RefCell<T>>
-    ↓ Multi-thread: Arc<Mutex<T>>
+“需要共享可变状态”
+    ↓ 单线程：Rc<RefCell<T>>
+    ↓ 多线程：Arc<Mutex<T>>
 ```
 
----
-
-## Borrow Rules
+## 借用规则
 
 ```
-At any time, you can have EITHER:
-├─ Multiple &T (immutable borrows)
-└─ OR one &mut T (mutable borrow)
+任何时候，你只能拥有 EITHER：
+├─ 多个 &T（不可变借用）
+└─ OR 一个 &mut T（可变借用）
 
-Never both simultaneously.
+两者不能同时存在。
 ```
 
-## Quick Reference
+## 快速参考
 
-| Pattern | Thread-Safe | Runtime Cost | Use When |
+| 模式 | 线程安全 | 运行时开销 | 使用场景 |
 |---------|-------------|--------------|----------|
-| `&mut T` | N/A | Zero | Exclusive mutable access |
-| `Cell<T>` | No | Zero | Copy types, no refs needed |
-| `RefCell<T>` | No | Runtime check | Non-Copy, need runtime borrow |
-| `Mutex<T>` | Yes | Lock contention | Thread-safe mutation |
-| `RwLock<T>` | Yes | Lock contention | Many readers, few writers |
-| `Atomic*` | Yes | Minimal | Simple types (bool, usize) |
+| `&mut T` | 不适用 | 零 | 独占可变访问 |
+| `Cell<T>` | 否 | 零 | Copy 类型，无需引用 |
+| `RefCell<T>` | 否 | 运行时检查 | 非 Copy，需运行时借用 |
+| `Mutex<T>` | 是 | 锁竞争 | 线程安全可变操作 |
+| `RwLock<T>` | 是 | 锁竞争 | 读多写少 |
+| `Atomic*` | 是 | 极低 | 简单类型（bool, usize） |
 
-## Error Code Reference
+## 错误码参考
 
-| Error | Cause | Quick Fix |
+| 错误 | 原因 | 快速修复 |
 |-------|-------|-----------|
-| E0596 | Borrowing immutable as mutable | Add `mut` or redesign |
-| E0499 | Multiple mutable borrows | Restructure code flow |
-| E0502 | &mut while & exists | Separate borrow scopes |
+| E0596 | 借用不可变的变量为可变 | 加 `mut` 或重新设计 |
+| E0499 | 多个可变借用 | 重构代码流程 |
+| E0502 | 存在 & 时使用 &mut | 分离借用作用域 |
 
----
+## 内部可变性决策
 
-## Interior Mutability Decision
-
-| Scenario | Choose |
+| 场景 | 选择 |
 |----------|--------|
-| T: Copy, single-thread | `Cell<T>` |
-| T: !Copy, single-thread | `RefCell<T>` |
-| T: Copy, multi-thread | `AtomicXxx` |
-| T: !Copy, multi-thread | `Mutex<T>` or `RwLock<T>` |
-| Read-heavy, multi-thread | `RwLock<T>` |
-| Simple flags/counters | `AtomicBool`, `AtomicUsize` |
+| T: Copy，单线程 | `Cell<T>` |
+| T: !Copy，单线程 | `RefCell<T>` |
+| T: Copy，多线程 | `AtomicXxx` |
+| T: !Copy，多线程 | `Mutex<T>` 或 `RwLock<T>` |
+| 读多写少，多线程 | `RwLock<T>` |
+| 简单标志/计数器 | `AtomicBool`、`AtomicUsize` |
 
----
+## 反模式
 
-## Anti-Patterns
-
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| RefCell everywhere | Runtime panics | Clear ownership design |
-| Mutex for single-thread | Unnecessary overhead | RefCell |
-| Ignore RefCell panic | Hard to debug | Handle or restructure |
-| Lock inside hot loop | Performance killer | Batch operations |
+| 到处用 RefCell | 运行时恐慌 | 清晰的所有权设计 |
+| 单线程用 Mutex | 不必要的开销 | RefCell |
+| 忽略 RefCell 恐慌 | 难以调试 | 处理或重构 |
+| 热循环中加锁 | 性能杀手 | 批量操作 |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Smart pointer choice | m02-resource |
-| Thread safety | m07-concurrency |
-| Data structure design | m09-domain |
-| Anti-patterns | m15-anti-pattern |
+| 智能指针选择 | m02-resource |
+| 线程安全 | m07-concurrency |
+| 数据结构设计 | m09-domain |
+| 反模式 | m15-anti-pattern |

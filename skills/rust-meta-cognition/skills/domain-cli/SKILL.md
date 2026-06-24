@@ -9,153 +9,106 @@ user-invocable: false
 
 > **Layer 3: Domain Constraints**
 
-## Domain Constraints → Design Implications
+## 领域约束 → 设计含义
 
-| Domain Rule | Design Constraint | Rust Implication |
+| 领域规则 | 设计约束 | Rust 实现 |
 |-------------|-------------------|------------------|
-| User ergonomics | Clear help, errors | clap derive macros |
-| Config precedence | CLI > env > file | Layered config loading |
-| Exit codes | Non-zero on error | Proper Result handling |
-| Stdout/stderr | Data vs errors | eprintln! for errors |
-| Interruptible | Handle Ctrl+C | Signal handling |
+| 用户友好性 | 清晰的帮助和错误信息 | clap derive 宏 |
+| 配置优先级 | CLI > 环境变量 > 配置文件 | 分层配置加载 |
+| 退出码 | 出错时非零退出 | 正确的 Result 处理 |
+| stdout/stderr | 数据与错误分离 | 错误用 eprintln! |
+| 可中断 | 处理 Ctrl+C | 信号处理 |
 
----
+## 关键约束
 
-## Critical Constraints
-
-### User Communication
+### 用户通信
 
 ```
-RULE: Errors to stderr, data to stdout
-WHY: Pipeable output, scriptability
-RUST: eprintln! for errors, println! for data
+规则：错误输出到 stderr，数据输出到 stdout
+原因：可管道输出，可脚本化
+实现：错误用 eprintln!，数据用 println!
 ```
 
-### Configuration Priority
+### 配置优先级
 
 ```
-RULE: CLI args > env vars > config file > defaults
-WHY: User expectation, override capability
-RUST: Layered config with clap + figment/config
+规则：CLI 参数 > 环境变量 > 配置文件 > 默认值
+原因：用户预期，覆盖能力
+实现：用 clap + figment/config 分层配置
 ```
 
-### Exit Codes
+### 退出码
 
 ```
-RULE: Return non-zero on any error
-WHY: Script integration, automation
-RUST: main() -> Result<(), Error> or explicit exit()
+规则：任何错误都返回非零退出码
+原因：脚本集成，自动化
+实现：main() -> Result<(), Error> 或显式 exit()
 ```
 
 ---
 
-## Trace Down ↓
+## 向下追溯 ↓
 
-From constraints to design (Layer 2):
+从约束到设计（第 2 层）：
 
 ```
-"Need argument parsing"
-    ↓ m05-type-driven: Derive structs for args
-    ↓ clap: #[derive(Parser)]
+“需要参数解析”
+    ↓ m05-type-driven：参数用派生结构体
+    ↓ clap：#[derive(Parser)]
 
-"Need config layering"
-    ↓ m09-domain: Config as domain object
-    ↓ figment/config: Layer sources
+“需要配置分层”
+    ↓ m09-domain：配置作为领域对象
+    ↓ figment/config：分层数据源
 
-"Need progress display"
-    ↓ m12-lifecycle: Progress bar as RAII
-    ↓ indicatif: ProgressBar
+“需要进度显示”
+    ↓ m12-lifecycle：进度条作为 RAII
+    ↓ indicatif：ProgressBar
 ```
 
----
+## 主要 Crates
 
-## Key Crates
-
-| Purpose | Crate |
+| 用途 | Crate |
 |---------|-------|
-| Argument parsing | clap |
-| Interactive prompts | dialoguer |
-| Progress bars | indicatif |
-| Colored output | colored |
-| Terminal UI | ratatui |
-| Terminal control | crossterm |
-| Console utilities | console |
+| 参数解析 | clap |
+| 交互式提示 | dialoguer |
+| 进度条 | indicatif |
+| 彩色输出 | colored |
+| 终端 UI | ratatui |
+| 终端控制 | crossterm |
+| 控制台工具 | console |
 
-## Design Patterns
+## 设计模式
 
-| Pattern | Purpose | Implementation |
+| 模式 | 用途 | 实现 |
 |---------|---------|----------------|
-| Args struct | Type-safe args | `#[derive(Parser)]` |
-| Subcommands | Command hierarchy | `#[derive(Subcommand)]` |
-| Config layers | Override precedence | CLI > env > file |
-| Progress | User feedback | `ProgressBar::new(len)` |
+| Args 结构体 | 类型安全参数 | `#[derive(Parser)]` |
+| 子命令 | 命令层级 | `#[derive(Subcommand)]` |
+| 配置分层 | 覆盖优先级 | CLI > env > 文件 |
+| 进度条 | 用户反馈 | `ProgressBar::new(len)` |
 
-## Code Pattern: CLI Structure
+## 常见错误
 
-```rust
-use clap::{Parser, Subcommand};
-
-#[derive(Parser)]
-#[command(name = "myapp", about = "My CLI tool")]
-struct Cli {
-    /// Enable verbose output
-    #[arg(short, long)]
-    verbose: bool,
-
-    #[command(subcommand)]
-    command: Commands,
-}
-
-#[derive(Subcommand)]
-enum Commands {
-    /// Initialize a new project
-    Init { name: String },
-    /// Run the application
-    Run {
-        #[arg(short, long)]
-        port: Option<u16>,
-    },
-}
-
-fn main() -> anyhow::Result<()> {
-    let cli = Cli::parse();
-    match cli.command {
-        Commands::Init { name } => init_project(&name)?,
-        Commands::Run { port } => run_server(port.unwrap_or(8080))?,
-    }
-    Ok(())
-}
-```
-
----
-
-## Common Mistakes
-
-| Mistake | Domain Violation | Fix |
+| 错误 | 领域违规 | 修复 |
 |---------|-----------------|-----|
-| Errors to stdout | Breaks piping | eprintln! |
-| No help text | Poor UX | #[arg(help = "...")] |
-| Panic on error | Bad exit code | Result + proper handling |
-| No progress for long ops | User uncertainty | indicatif |
+| 错误输出到 stdout | 破坏管道 | eprintln! |
+| 没有帮助文本 | 用户体验差 | `#[arg(help = "...")]` |
+| 出错时恐慌 | 退出码错误 | Result + 正确处理 |
+| 长时间操作无进度 | 用户不确定 | indicatif |
 
----
+## 追溯到第 1 层
 
-## Trace to Layer 1
-
-| Constraint | Layer 2 Pattern | Layer 1 Implementation |
+| 约束 | 第 2 层模式 | 第 1 层实现 |
 |------------|-----------------|------------------------|
-| Type-safe args | Derive macros | clap Parser |
-| Error handling | Result propagation | anyhow + exit codes |
-| User feedback | Progress RAII | indicatif ProgressBar |
-| Config precedence | Builder pattern | Layered sources |
+| 类型安全参数 | 派生宏 | clap Parser |
+| 错误处理 | Result 传播 | anyhow + 退出码 |
+| 用户反馈 | 进度 RAII | indicatif ProgressBar |
+| 配置优先级 | Builder 模式 | 分层数据源 |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Error handling | m06-error-handling |
-| Type-driven args | m05-type-driven |
-| Progress lifecycle | m12-lifecycle |
-| Async CLI | m07-concurrency |
+| 错误处理 | m06-error-handling |
+| 类型驱动参数 | m05-type-driven |
+| 进度生命周期 | m12-lifecycle |
+| 异步 CLI | m07-concurrency |

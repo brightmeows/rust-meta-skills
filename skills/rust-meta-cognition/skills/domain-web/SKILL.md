@@ -9,148 +9,115 @@ user-invocable: false
 
 > **Layer 3: Domain Constraints**
 
-## Domain Constraints → Design Implications
+## 领域约束 → 设计含义
 
-| Domain Rule | Design Constraint | Rust Implication |
+| 领域规则 | 设计约束 | Rust 实现 |
 |-------------|-------------------|------------------|
-| Stateless HTTP | No request-local globals | State in extractors |
-| Concurrency | Handle many connections | Async, Send + Sync |
-| Latency SLA | Fast response | Efficient ownership |
-| Security | Input validation | Type-safe extractors |
-| Observability | Request tracing | tracing + tower layers |
+| 无状态 HTTP | 无请求局部全局变量 | State 在提取器中 |
+| 高并发 | 处理大量连接 | 异步、Send + Sync |
+| 延迟 SLA | 快速响应 | 高效的所有权管理 |
+| 安全性 | 输入验证 | 类型安全提取器 |
+| 可观测性 | 请求追踪 | tracing + tower 层 |
 
----
+## 关键约束
 
-## Critical Constraints
-
-### Async by Default
+### 默认异步
 
 ```
-RULE: Web handlers must not block
-WHY: Block one task = block many requests
-RUST: async/await, spawn_blocking for CPU work
+规则：Web 处理器不能阻塞
+原因：阻塞一个任务 = 阻塞多个请求
+实现：async/await，CPU 密集任务用 spawn_blocking
 ```
 
-### State Management
+### 状态管理
 
 ```
-RULE: Shared state must be thread-safe
-WHY: Handlers run on any thread
-RUST: Arc<T>, Arc<RwLock<T>> for mutable
+规则：共享状态必须线程安全
+原因：处理器可能在任意线程运行
+实现：Arc<T>，可变状态用 Arc<RwLock<T>>
 ```
 
-### Request Lifecycle
+### 请求生命周期
 
 ```
-RULE: Resources live only for request duration
-WHY: Memory management, no leaks
-RUST: Extractors, proper ownership
+规则：资源仅在请求期间存在
+原因：内存管理，无泄漏
+实现：提取器、正确的所有权
 ```
 
 ---
 
-## Trace Down ↓
+## 向下追溯 ↓
 
-From constraints to design (Layer 2):
+从约束到设计（第 2 层）：
 
 ```
-"Need shared application state"
-    ↓ m07-concurrency: Use Arc for thread-safe sharing
-    ↓ m02-resource: Arc<RwLock<T>> for mutable state
+“需要共享应用状态”
+    ↓ m07-concurrency：用 Arc 线程安全共享
+    ↓ m02-resource：可变状态用 Arc<RwLock<T>>
 
-"Need request validation"
-    ↓ m05-type-driven: Validated extractors
-    ↓ m06-error-handling: IntoResponse for errors
+“需要请求验证”
+    ↓ m05-type-driven：验证过的提取器
+    ↓ m06-error-handling：错误用 IntoResponse
 
-"Need middleware stack"
-    ↓ m12-lifecycle: Tower layers
-    ↓ m04-zero-cost: Trait-based composition
+“需要中间件栈”
+    ↓ m12-lifecycle：Tower 层
+    ↓ m04-zero-cost：基于 trait 的组合
 ```
 
----
+## 框架对比
 
-## Framework Comparison
-
-| Framework | Style | Best For |
+| 框架 | 风格 | 最适合 |
 |-----------|-------|----------|
-| axum | Functional, tower | Modern APIs |
-| actix-web | Actor-based | High performance |
-| warp | Filter composition | Composable APIs |
-| rocket | Macro-driven | Rapid development |
+| axum | 函数式，tower | 现代化 API |
+| actix-web | 基于 Actor | 高性能 |
+| warp | 过滤器组合 | 可组合 API |
+| rocket | 宏驱动 | 快速开发 |
 
-## Key Crates
+## 主要 Crates
 
-| Purpose | Crate |
+| 用途 | Crate |
 |---------|-------|
-| HTTP server | axum, actix-web |
-| HTTP client | reqwest |
+| HTTP 服务端 | axum, actix-web |
+| HTTP 客户端 | reqwest |
 | JSON | serde_json |
-| Auth/JWT | jsonwebtoken |
+| 认证/JWT | jsonwebtoken |
 | Session | tower-sessions |
-| Database | sqlx, diesel |
-| Middleware | tower |
+| 数据库 | sqlx, diesel |
+| 中间件 | tower |
 
-## Design Patterns
+## 设计模式
 
-| Pattern | Purpose | Implementation |
+| 模式 | 用途 | 实现 |
 |---------|---------|----------------|
-| Extractors | Request parsing | `State(db)`, `Json(payload)` |
-| Error response | Unified errors | `impl IntoResponse` |
-| Middleware | Cross-cutting | Tower layers |
-| Shared state | App config | `Arc<AppState>` |
+| 提取器 | 请求解析 | `State(db)`、`Json(payload)` |
+| 错误响应 | 统一错误 | `impl IntoResponse` |
+| 中间件 | 横切关注点 | Tower 层 |
+| 共享状态 | 应用配置 | `Arc<AppState>` |
 
-## Code Pattern: Axum Handler
+## 常见错误
 
-```rust
-async fn handler(
-    State(db): State<Arc<DbPool>>,
-    Json(payload): Json<CreateUser>,
-) -> Result<Json<User>, AppError> {
-    let user = db.create_user(&payload).await?;
-    Ok(Json(user))
-}
-
-// Error handling
-impl IntoResponse for AppError {
-    fn into_response(self) -> Response {
-        let (status, message) = match self {
-            Self::NotFound => (StatusCode::NOT_FOUND, "Not found"),
-            Self::Internal(_) => (StatusCode::INTERNAL_SERVER_ERROR, "Internal error"),
-        };
-        (status, Json(json!({"error": message}))).into_response()
-    }
-}
-```
-
----
-
-## Common Mistakes
-
-| Mistake | Domain Violation | Fix |
+| 错误 | 领域违规 | 修复 |
 |---------|-----------------|-----|
-| Blocking in handler | Latency spike | spawn_blocking |
-| Rc in state | Not Send + Sync | Use Arc |
-| No validation | Security risk | Type-safe extractors |
-| No error response | Bad UX | IntoResponse impl |
+| 处理器中阻塞 | 延迟飙升 | spawn_blocking |
+| 状态中使用 Rc | 不是 Send + Sync | 用 Arc |
+| 无验证 | 安全风险 | 类型安全提取器 |
+| 无错误响应 | 用户体验差 | IntoResponse 实现 |
 
----
+## 追溯到第 1 层
 
-## Trace to Layer 1
-
-| Constraint | Layer 2 Pattern | Layer 1 Implementation |
+| 约束 | 第 2 层模式 | 第 1 层实现 |
 |------------|-----------------|------------------------|
-| Async handlers | Async/await | tokio runtime |
-| Thread-safe state | Shared state | Arc<T>, Arc<RwLock<T>> |
-| Request lifecycle | Extractors | Ownership via From<Request> |
-| Middleware | Tower layers | Trait-based composition |
+| 异步处理器 | async/await | tokio 运行时 |
+| 线程安全状态 | 共享状态 | Arc<T>, Arc<RwLock<T>> |
+| 请求生命周期 | 提取器 | 通过 From<Request> 获取所有权 |
+| 中间件 | Tower 层 | 基于 trait 的组合 |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Async patterns | m07-concurrency |
-| State management | m02-resource |
-| Error handling | m06-error-handling |
-| Middleware design | m12-lifecycle |
+| 异步模式 | m07-concurrency |
+| 状态管理 | m02-resource |
+| 错误处理 | m06-error-handling |
+| 中间件设计 | m12-lifecycle |

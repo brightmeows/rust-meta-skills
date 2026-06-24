@@ -6,176 +6,117 @@ user-invocable: false
 
 # 机器学习领域
 
-> **Layer 3: Domain Constraints**
+> **第 3 层：领域约束**
 
-## Domain Constraints → Design Implications
+## 领域约束 → 设计含义
 
-| Domain Rule | Design Constraint | Rust Implication |
+| 领域规则 | 设计约束 | Rust 实现 |
 |-------------|-------------------|------------------|
-| Large data | Efficient memory | Zero-copy, streaming |
-| GPU acceleration | CUDA/Metal support | candle, tch-rs |
-| Model portability | Standard formats | ONNX |
-| Batch processing | Throughput over latency | Batched inference |
-| Numerical precision | Float handling | ndarray, careful f32/f64 |
-| Reproducibility | Deterministic | Seeded random, versioning |
+| 大数据 | 高效内存 | 零拷贝、流式处理 |
+| GPU 加速 | CUDA/Metal 支持 | candle、tch-rs |
+| 模型可移植 | 标准格式 | ONNX |
+| 批量处理 | 吞吐量优先于延迟 | 批量推理 |
+| 数值精度 | 浮点处理 | ndarray、谨慎使用 f32/f64 |
+| 可复现性 | 确定性 | 固定随机种子、版本控制 |
 
----
+## 关键约束
 
-## Critical Constraints
-
-### Memory Efficiency
+### 内存效率
 
 ```
-RULE: Avoid copying large tensors
-WHY: Memory bandwidth is bottleneck
-RUST: References, views, in-place ops
+规则：避免复制大张量
+原因：内存带宽是瓶颈
+实现：引用、视图、原地操作
 ```
 
-### GPU Utilization
+### GPU 利用
 
 ```
-RULE: Batch operations for GPU efficiency
-WHY: GPU overhead per kernel launch
-RUST: Batch sizes, async data loading
+规则：批量操作以提高 GPU 效率
+原因：每次核启动有 GPU 开销
+实现：批量大小、异步数据加载
 ```
 
-### Model Portability
+### 模型可移植
 
 ```
-RULE: Use standard model formats
-WHY: Train in Python, deploy in Rust
-RUST: ONNX via tract or candle
+规则：使用标准模型格式
+原因：用 Python 训练，用 Rust 部署
+实现：通过 tract 或 candle 加载 ONNX
 ```
 
 ---
 
-## Trace Down ↓
+## 向下追溯 ↓
 
-From constraints to design (Layer 2):
+从约束到设计（第 2 层）：
 
 ```
-"Need efficient data pipelines"
-    ↓ m10-performance: Streaming, batching
-    ↓ polars: Lazy evaluation
+“需要高效数据管道”
+    ↓ m10-performance：流式、批处理
+    ↓ polars：惰性求值
 
-"Need GPU inference"
-    ↓ m07-concurrency: Async data loading
-    ↓ candle/tch-rs: CUDA backend
+“需要 GPU 推理”
+    ↓ m07-concurrency：异步数据加载
+    ↓ candle/tch-rs：CUDA 后端
 
-"Need model loading"
-    ↓ m12-lifecycle: Lazy init, caching
-    ↓ tract: ONNX runtime
+“需要模型加载”
+    ↓ m12-lifecycle：惰性初始化、缓存
+    ↓ tract：ONNX 运行时
 ```
 
----
+## 用例 → 框架
 
-## Use Case → Framework
-
-| Use Case | Recommended | Why |
+| 用例 | 推荐 | 原因 |
 |----------|-------------|-----|
-| Inference only | tract (ONNX) | Lightweight, portable |
-| Training + inference | candle, burn | Pure Rust, GPU |
-| PyTorch models | tch-rs | Direct bindings |
-| Data pipelines | polars | Fast, lazy eval |
+| 仅推理 | tract（ONNX） | 轻量、可移植 |
+| 训练 + 推理 | candle、burn | 纯 Rust、GPU |
+| PyTorch 模型 | tch-rs | 直接绑定 |
+| 数据管道 | polars | 快速、惰性求值 |
 
-## Key Crates
+## 主要 Crates
 
-| Purpose | Crate |
+| 用途 | Crate |
 |---------|-------|
-| Tensors | ndarray |
-| ONNX inference | tract |
-| ML framework | candle, burn |
-| PyTorch bindings | tch-rs |
-| Data processing | polars |
-| Embeddings | fastembed |
+| 张量 | ndarray |
+| ONNX 推理 | tract |
+| ML 框架 | candle, burn |
+| PyTorch 绑定 | tch-rs |
+| 数据处理 | polars |
+| 词嵌入 | fastembed |
 
-## Design Patterns
+## 设计模式
 
-| Pattern | Purpose | Implementation |
+| 模式 | 用途 | 实现 |
 |---------|---------|----------------|
-| Model loading | Once, reuse | `OnceLock<Model>` |
-| Batching | Throughput | Collect then process |
-| Streaming | Large data | Iterator-based |
-| GPU async | Parallelism | Data loading parallel to compute |
+| 模型加载 | 一次加载，复用 | `OnceLock<Model>` |
+| 批处理 | 吞吐量 | 收集后处理 |
+| 流式 | 大数据 | 基于迭代器 |
+| GPU 异步 | 并行 | 数据加载与计算并行 |
 
-## Code Pattern: Inference Server
+## 常见错误
 
-```rust
-use std::sync::OnceLock;
-use tract_onnx::prelude::*;
-
-static MODEL: OnceLock<SimplePlan<TypedFact, Box<dyn TypedOp>, Graph<TypedFact, Box<dyn TypedOp>>>> = OnceLock::new();
-
-fn get_model() -> &'static SimplePlan<...> {
-    MODEL.get_or_init(|| {
-        tract_onnx::onnx()
-            .model_for_path("model.onnx")
-            .unwrap()
-            .into_optimized()
-            .unwrap()
-            .into_runnable()
-            .unwrap()
-    })
-}
-
-async fn predict(input: Vec<f32>) -> anyhow::Result<Vec<f32>> {
-    let model = get_model();
-    let input = tract_ndarray::arr1(&input).into_shape((1, input.len()))?;
-    let result = model.run(tvec!(input.into()))?;
-    Ok(result[0].to_array_view::<f32>()?.iter().copied().collect())
-}
-```
-
-## Code Pattern: Batched Inference
-
-```rust
-async fn batch_predict(inputs: Vec<Vec<f32>>, batch_size: usize) -> Vec<Vec<f32>> {
-    let mut results = Vec::with_capacity(inputs.len());
-
-    for batch in inputs.chunks(batch_size) {
-        // Stack inputs into batch tensor
-        let batch_tensor = stack_inputs(batch);
-
-        // Run inference on batch
-        let batch_output = model.run(batch_tensor).await;
-
-        // Unstack results
-        results.extend(unstack_outputs(batch_output));
-    }
-
-    results
-}
-```
-
----
-
-## Common Mistakes
-
-| Mistake | Domain Violation | Fix |
+| 错误 | 领域违规 | 修复 |
 |---------|-----------------|-----|
-| Clone tensors | Memory waste | Use views |
-| Single inference | GPU underutilized | Batch processing |
-| Load model per request | Slow | Singleton pattern |
-| Sync data loading | GPU idle | Async pipeline |
+| 克隆张量 | 内存浪费 | 使用视图 |
+| 单次推理 | GPU 利用不足 | 批处理 |
+| 每次请求加载模型 | 慢 | 单例模式 |
+| 同步数据加载 | GPU 空闲 | 异步管道 |
 
----
+## 追溯到第 1 层
 
-## Trace to Layer 1
-
-| Constraint | Layer 2 Pattern | Layer 1 Implementation |
+| 约束 | 第 2 层模式 | 第 1 层实现 |
 |------------|-----------------|------------------------|
-| Memory efficiency | Zero-copy | ndarray views |
-| Model singleton | Lazy init | OnceLock<Model> |
-| Batch processing | Chunked iteration | chunks() + parallel |
-| GPU async | Concurrent loading | tokio::spawn + GPU |
+| 内存效率 | 零拷贝 | ndarray 视图 |
+| 模型单例 | 惰性初始化 | OnceLock<Model> |
+| 批处理 | 分块迭代 | chunks() + 并行 |
+| GPU 异步 | 并发加载 | tokio::spawn + GPU |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Performance | m10-performance |
-| Lazy initialization | m12-lifecycle |
-| Async patterns | m07-concurrency |
-| Memory efficiency | m01-ownership |
+| 性能 | m10-performance |
+| 惰性初始化 | m12-lifecycle |
+| 异步模式 | m07-concurrency |
+| 内存效率 | m01-ownership |

@@ -6,121 +6,117 @@ user-invocable: false
 
 # 类型驱动设计
 
-> **Layer 1: Language Mechanics**
+> **第 1 层：语言机制**
 
-## Core Question
+## 核心问题
 
-**How can the type system prevent invalid states?**
+**类型系统如何阻止无效状态？**
 
-Before reaching for runtime checks:
-- Can the compiler catch this error?
-- Can invalid states be unrepresentable?
-- Can the type encode the invariant?
+在求助于运行时检查之前：
+- 编译器能捕获这个错误吗？
+- 能否让无效状态无法表达？
+- 类型能否编码不变量？
 
 ---
 
-## Error → Design Question
+## 错误 → 设计问题
 
-| Pattern | Don't Just Say | Ask Instead |
+| 模式 | 不要只说 | 而要问 |
 |---------|----------------|-------------|
-| Primitive obsession | "It's just a string" | What does this value represent? |
-| Boolean flags | "Add an is_valid flag" | Can states be types? |
-| Optional everywhere | "Check for None" | Is absence really possible? |
-| Validation at runtime | "Return Err if invalid" | Can we validate at construction? |
+| 基本类型迷恋 | “就是个字符串而已” | 这个值代表什么？ |
+| 布尔标志 | “加个 is_valid 标志” | 状态能变成类型吗？ |
+| 到处用 Option | “检查 None” | 缺失状态真的可能吗？ |
+| 运行时验证 | “无效就返回 Err” | 能否在构造时验证？ |
+
+## 思考提示
+
+在添加运行时验证之前：
+
+1. **类型能否编码约束？**
+   - 数值范围 → 有界类型或 newtype
+   - 有效状态 → 类型状态模式
+   - 语义含义 → newtype
+
+2. **验证何时可行？**
+   - 构造时 → 验证过的 newtype
+   - 状态转换时 → 类型状态
+   - 仅运行时 → 带清晰错误的 Result
+
+3. **谁需要知道不变量？**
+   - 编译器 → 类型层面的编码
+   - API 使用者 → 清晰的类型签名
+   - 仅运行时 → 文档
 
 ---
 
-## Thinking Prompt
+## 向上追溯 ↑
 
-Before adding runtime validation:
-
-1. **Can the type encode the constraint?**
-   - Numeric range → bounded types or newtypes
-   - Valid states → type state pattern
-   - Semantic meaning → newtype
-
-2. **When is validation possible?**
-   - At construction → validated newtype
-   - At state transition → type state
-   - Only at runtime → Result with clear error
-
-3. **Who needs to know the invariant?**
-   - Compiler → type-level encoding
-   - API users → clear type signatures
-   - Runtime only → documentation
-
----
-
-## Trace Up ↑
-
-When type design is unclear:
+类型设计不明确时：
 
 ```
-"Need to validate email format"
-    ↑ Ask: Is this a domain value object?
-    ↑ Check: m09-domain (Email as Value Object)
-    ↑ Check: domain-* (validation requirements)
+“需要验证邮箱格式”
+    ↑ 问：这是领域值对象吗？
+    ↑ 检查：m09-domain（Email 作为值对象）
+    ↑ 检查：domain-*（验证需求）
 ```
 
-| Situation | Trace To | Question |
+| 场景 | 追溯到 | 问题 |
 |-----------|----------|----------|
-| What types to create | m09-domain | What's the domain model? |
-| State machine design | m09-domain | What are valid transitions? |
-| Marker trait usage | m04-zero-cost | Static or dynamic dispatch? |
+| 创建什么类型 | m09-domain | 领域模型是什么？ |
+| 状态机设计 | m09-domain | 哪些转换是有效的？ |
+| 使用 Marker trait | m04-zero-cost | 静态还是动态分发？ |
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-From design to implementation:
+从设计到实现：
 
 ```
-"Need type-safe wrapper for primitives"
-    ↓ Newtype: struct UserId(u64);
+“需要基本类型的类型安全包装”
+    ↓ Newtype：struct UserId(u64);
 
-"Need compile-time state validation"
-    ↓ Type State: Connection<Connected>
+“需要编译时状态验证”
+    ↓ 类型状态：Connection<Connected>
 
-"Need to track phantom type parameters"
-    ↓ PhantomData: PhantomData<T>
+“需要追踪幻象类型参数”
+    ↓ PhantomData：PhantomData<T>
 
-"Need capability markers"
-    ↓ Marker Trait: trait Validated {}
+“需要能力标记”
+    ↓ 标记 Trait：trait Validated {}
 
-"Need gradual construction"
-    ↓ Builder: Builder::new().field(x).build()
+“需要逐步构造”
+    ↓ Builder：Builder::new().field(x).build()
 ```
 
 ---
 
-## Quick Reference
+## 快速参考
 
-| Pattern | Purpose | Example |
+| 模式 | 用途 | 示例 |
 |---------|---------|---------|
-| Newtype | Type safety | `struct UserId(u64);` |
-| Type State | State machine | `Connection<Connected>` |
-| PhantomData | Variance/lifetime | `PhantomData<&'a T>` |
-| Marker Trait | Capability flag | `trait Validated {}` |
-| Builder | Gradual construction | `Builder::new().name("x").build()` |
-| Sealed Trait | Prevent external impl | `mod private { pub trait Sealed {} }` |
+| Newtype | 类型安全 | `struct UserId(u64);` |
+| 类型状态 | 状态机 | `Connection<Connected>` |
+| PhantomData | 变体/生命周期 | `PhantomData<&'a T>` |
+| 标记 Trait | 能力标志 | `trait Validated {}` |
+| Builder | 逐步构造 | `Builder::new().name("x").build()` |
+| Sealed Trait | 防止外部实现 | `mod private { pub trait Sealed {} }` |
 
-## Pattern Examples
+## 模式示例
 
 ### Newtype
 
 ```rust
-struct Email(String);  // Not just any string
+struct Email(String);  // 不只是任意字符串
 
 impl Email {
     pub fn new(s: &str) -> Result<Self, ValidationError> {
-        // Validate once, trust forever
+        // 验证一次，永远信任
         validate_email(s)?;
         Ok(Self(s.to_string()))
     }
 }
 ```
 
-### Type State
+### 类型状态
 
 ```rust
 struct Connection<State>(TcpStream, PhantomData<State>);
@@ -138,38 +134,32 @@ impl Connection<Connected> {
 }
 ```
 
----
+## 决策指南
 
-## Decision Guide
-
-| Need | Pattern |
+| 需求 | 模式 |
 |------|---------|
-| Type safety for primitives | Newtype |
-| Compile-time state validation | Type State |
-| Lifetime/variance markers | PhantomData |
-| Capability flags | Marker Trait |
-| Gradual construction | Builder |
-| Closed set of impls | Sealed Trait |
-| Zero-sized type marker | ZST struct |
+| 基本类型安全 | Newtype |
+| 编译时状态验证 | 类型状态 |
+| 生命周期/变体标记 | PhantomData |
+| 能力标记 | 标记 Trait |
+| 逐步构造 | Builder |
+| 封闭实现集合 | Sealed Trait |
+| 零大小类型标记 | ZST struct |
 
----
+## 反模式
 
-## Anti-Patterns
-
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| Boolean flags for states | Runtime errors | Type state |
-| String for semantic types | No type safety | Newtype |
-| Option for uninitialized | Unclear invariant | Builder |
-| Public fields with invariants | Invariant violation | Private + validated new() |
+| 用布尔标志表示状态 | 运行时错误 | 类型状态 |
+| 用字符串表示语义类型 | 无类型安全 | Newtype |
+| 用 Option 表示未初始化 | 不变量不清晰 | Builder |
+| 公开带不变量的字段 | 不变量被破坏 | 私有 + 验证过的 new() |
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Domain modeling | m09-domain |
-| Trait design | m04-zero-cost |
-| Error handling in constructors | m06-error-handling |
-| Anti-patterns | m15-anti-pattern |
+| 领域建模 | m09-domain |
+| Trait 设计 | m04-zero-cost |
+| 构造器错误处理 | m06-error-handling |
+| 反模式 | m15-anti-pattern |

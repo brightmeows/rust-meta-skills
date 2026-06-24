@@ -6,217 +6,205 @@ user-invocable: false
 
 # 并发
 
-> **Layer 1: Language Mechanics**
+> **第 1 层：语言机制**
 
-## Core Question
+## 核心问题
 
-**Is this CPU-bound or I/O-bound, and what's the sharing model?**
+**这是 CPU 密集型还是 I/O 密集型，共享模型是什么？**
 
-Before choosing concurrency primitives:
-- What's the workload type?
-- What data needs to be shared?
-- What's the thread safety requirement?
+在选择并发原语之前：
+- 工作负载类型是什么？
+- 需要共享哪些数据？
+- 线程安全要求是什么？
 
 ---
 
-## Error → Design Question
+## 错误 → 设计问题
 
-| Error | Don't Just Say | Ask Instead |
+| 错误 | 不要只说 | 而要问 |
 |-------|----------------|-------------|
-| E0277 Send | "Add Send bound" | Should this type cross threads? |
-| E0277 Sync | "Wrap in Mutex" | Is shared access really needed? |
-| Future not Send | "Use spawn_local" | Is async the right choice? |
-| Deadlock | "Reorder locks" | Is the locking design correct? |
+| E0277 Send | “加 Send 约束” | 这个类型应该跨线程吗？ |
+| E0277 Sync | “用 Mutex 包裹” | 真的需要共享访问吗？ |
+| Future 不是 Send | “用 spawn_local” | 异步是正确的选择吗？ |
+| 死锁 | “重新排序锁” | 锁设计正确吗？ |
+
+## 思考提示
+
+在添加并发之前：
+
+1. **工作负载是什么？**
+   - CPU 密集型 → 线程（std::thread、rayon）
+   - I/O 密集型 → 异步（tokio、async-std）
+   - 混合 → 混合方案
+
+2. **共享模型是什么？**
+   - 不共享 → 消息传递（channel）
+   - 不可变共享 → Arc<T>
+   - 可变共享 → Arc<Mutex<T>> 或 Arc<RwLock<T>>
+
+3. **Send/Sync 要求是什么？**
+   - 跨线程所有权 → Send
+   - 跨线程引用 → Sync
+   - 单线程异步 → spawn_local
 
 ---
 
-## Thinking Prompt
+## 向上追溯 ↑（强制）
 
-Before adding concurrency:
+**关键**：不要仅仅修复错误。向上追溯，找到领域约束。
 
-1. **What's the workload?**
-   - CPU-bound → threads (std::thread, rayon)
-   - I/O-bound → async (tokio, async-std)
-   - Mixed → hybrid approach
+### 领域检测表
 
-2. **What's the sharing model?**
-   - No sharing → message passing (channels)
-   - Immutable sharing → Arc<T>
-   - Mutable sharing → Arc<Mutex<T>> or Arc<RwLock<T>>
-
-3. **What are the Send/Sync requirements?**
-   - Cross-thread ownership → Send
-   - Cross-thread references → Sync
-   - Single-thread async → spawn_local
-
----
-
-## Trace Up ↑ (MANDATORY)
-
-**CRITICAL**: Don't just fix the error. Trace UP to find domain constraints.
-
-### Domain Detection Table
-
-| Context Keywords | Load Domain Skill | Key Constraint |
+| 上下文关键词 | 加载领域 Skill | 关键约束 |
 |-----------------|-------------------|----------------|
-| Web API, HTTP, axum, actix, handler | **domain-web** | Handlers run on any thread |
-| 交易, 支付, trading, payment | **domain-fintech** | Audit + thread safety |
-| gRPC, kubernetes, microservice | **domain-cloud-native** | Distributed tracing |
-| CLI, terminal, clap | **domain-cli** | Usually single-thread OK |
+| Web API、HTTP、axum、actix、handler | **domain-web** | 处理器运行在任何线程 |
+| 交易、支付、trading、payment | **domain-fintech** | 审计 + 线程安全 |
+| gRPC、kubernetes、microservice | **domain-cloud-native** | 分布式追踪 |
+| CLI、terminal、clap | **domain-cli** | 通常单线程即可 |
 
-### Example: Web API + Rc Error
-
-```
-"Rc cannot be sent between threads" in Web API context
-    ↑ DETECT: "Web API" → Load domain-web
-    ↑ FIND: domain-web says "Shared state must be thread-safe"
-    ↑ FIND: domain-web says "Rc in state" is Common Mistake
-    ↓ DESIGN: Use Arc<T> with State extractor
-    ↓ IMPL: axum::extract::State<Arc<AppConfig>>
-```
-
-### Generic Trace
+### 示例：Web API + Rc 错误
 
 ```
-"Send not satisfied for my type"
-    ↑ Ask: What domain is this? Load domain-* skill
-    ↑ Ask: Does this type need to cross thread boundaries?
-    ↑ Check: m09-domain (is the data model correct?)
+“Rc 不能在线程间发送”出现在 Web API 上下文中
+    ↑ 检测：“Web API”→ 加载 domain-web
+    ↑ 查找：domain-web 说“共享状态必须线程安全”
+    ↑ 查找：domain-web 说“状态中的 Rc”是常见错误
+    ↓ 设计：使用 Arc<T> + State 提取器
+    ↓ 实现：axum::extract::State<Arc<AppConfig>>
 ```
 
-| Situation | Trace To | Question |
+### 通用溯源
+
+```
+“我的类型不满足 Send”
+    ↑ 问：这是什么领域？加载 domain-* skill
+    ↑ 问：这个类型需要跨越线程边界吗？
+    ↑ 检查：m09-domain（数据模型正确吗？）
+```
+
+| 场景 | 追溯到 | 问题 |
 |-----------|----------|----------|
-| Send/Sync in Web | **domain-web** | What's the state management pattern? |
-| Send/Sync in CLI | **domain-cli** | Is multi-thread really needed? |
-| Mutex vs channels | m09-domain | Shared state or message passing? |
-| Async vs threads | m10-performance | What's the workload profile? |
+| Web 中的 Send/Sync | **domain-web** | 状态管理模式是什么？ |
+| CLI 中的 Send/Sync | **domain-cli** | 真的需要多线程吗？ |
+| Mutex 还是 channel | m09-domain | 共享状态还是消息传递？ |
+| 异步还是线程 | m10-performance | 工作负载特征是什么？ |
 
----
+## 向下追溯 ↓
 
-## Trace Down ↓
-
-From design to implementation:
+从设计到实现：
 
 ```
-"Need parallelism for CPU work"
-    ↓ Use: std::thread or rayon
+“需要 CPU 密集任务的并行”
+    ↓ 使用：std::thread 或 rayon
 
-"Need concurrency for I/O"
-    ↓ Use: async/await with tokio
+“需要 I/O 密集型并发”
+    ↓ 使用：async/await + tokio
 
-"Need to share immutable data across threads"
-    ↓ Use: Arc<T>
+“需要跨线程共享不可变数据”
+    ↓ 使用：Arc<T>
 
-"Need to share mutable data across threads"
-    ↓ Use: Arc<Mutex<T>> or Arc<RwLock<T>>
-    ↓ Or: channels for message passing
+“需要跨线程共享可变数据”
+    ↓ 使用：Arc<Mutex<T>> 或 Arc<RwLock<T>>
+    ↓ 或：用 channel 做消息传递
 
-"Need simple atomic operations"
-    ↓ Use: AtomicBool, AtomicUsize, etc.
+“需要简单原子操作”
+    ↓ 使用：AtomicBool、AtomicUsize 等
 ```
 
 ---
 
-## Send/Sync Markers
+## Send/Sync 标记
 
-| Marker | Meaning | Example |
+| 标记 | 含义 | 示例 |
 |--------|---------|---------|
-| `Send` | Can transfer ownership between threads | Most types |
-| `Sync` | Can share references between threads | `Arc<T>` |
-| `!Send` | Must stay on one thread | `Rc<T>` |
-| `!Sync` | No shared refs across threads | `RefCell<T>` |
+| `Send` | 可在线程间转移所有权 | 大多数类型 |
+| `Sync` | 可在线程间共享引用 | `Arc<T>` |
+| `!Send` | 必须留在同一线程 | `Rc<T>` |
+| `!Sync` | 不能跨线程共享引用 | `RefCell<T>` |
 
-## Quick Reference
+## 快速参考
 
-| Pattern | Thread-Safe | Blocking | Use When |
+| 模式 | 线程安全 | 阻塞 | 使用场景 |
 |---------|-------------|----------|----------|
-| `std::thread` | Yes | Yes | CPU-bound parallelism |
-| `async/await` | Yes | No | I/O-bound concurrency |
-| `Mutex<T>` | Yes | Yes | Shared mutable state |
-| `RwLock<T>` | Yes | Yes | Read-heavy shared state |
-| `mpsc::channel` | Yes | Optional | Message passing |
-| `Arc<Mutex<T>>` | Yes | Yes | Shared mutable across threads |
+| `std::thread` | 是 | 是 | CPU 密集型并行 |
+| `async/await` | 是 | 否 | I/O 密集型并发 |
+| `Mutex<T>` | 是 | 是 | 共享可变状态 |
+| `RwLock<T>` | 是 | 是 | 读多写少共享状态 |
+| `mpsc::channel` | 是 | 可选 | 消息传递 |
+| `Arc<Mutex<T>>` | 是 | 是 | 跨线程共享可变数据 |
 
-## Decision Flowchart
+## 决策流程图
 
 ```
-What type of work?
-├─ CPU-bound → std::thread or rayon
-├─ I/O-bound → async/await
-└─ Mixed → hybrid (spawn_blocking)
+什么类型的工作？
+├─ CPU 密集型 → std::thread 或 rayon
+├─ I/O 密集型 → async/await
+└─ 混合 → 混合方案（spawn_blocking）
 
-Need to share data?
-├─ No → message passing (channels)
-├─ Immutable → Arc<T>
-└─ Mutable →
-   ├─ Read-heavy → Arc<RwLock<T>>
-   └─ Write-heavy → Arc<Mutex<T>>
-   └─ Simple counter → AtomicUsize
+需要共享数据？
+├─ 否 → 消息传递（channel）
+├─ 不可变 → Arc<T>
+└─ 可变 →
+   ├─ 读多写少 → Arc<RwLock<T>>
+   └─ 写多 → Arc<Mutex<T>>
+   └─ 简单计数器 → AtomicUsize
 
-Async context?
-├─ Type is Send → tokio::spawn
-├─ Type is !Send → spawn_local
-└─ Blocking code → spawn_blocking
+异步上下文？
+├─ 类型是 Send → tokio::spawn
+├─ 类型是 !Send → spawn_local
+└─ 阻塞代码 → spawn_blocking
 ```
 
----
+## 常见错误
 
-## Common Errors
-
-| Error | Cause | Fix |
+| 错误 | 原因 | 修复 |
 |-------|-------|-----|
-| E0277 `Send` not satisfied | Non-Send in async | Use Arc or spawn_local |
-| E0277 `Sync` not satisfied | Non-Sync shared | Wrap with Mutex |
-| Deadlock | Lock ordering | Consistent lock order |
-| `future is not Send` | Non-Send across await | Drop before await |
-| `MutexGuard` across await | Guard held during suspend | Scope guard properly |
+| E0277 `Send` 未满足 | 异步中的非 Send | 用 Arc 或 spawn_local |
+| E0277 `Sync` 未满足 | 共享非 Sync | 用 Mutex 包裹 |
+| 死锁 | 锁顺序 | 一致的锁顺序 |
+| `future is not Send` | 跨 await 的非 Send | 在 await 前 drop |
+| `MutexGuard` 跨 await | 挂起期间持有 Guard | 正确限定作用域 |
 
----
+## 反模式
 
-## Anti-Patterns
-
-| Anti-Pattern | Why Bad | Better |
+| 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| Arc<Mutex<T>> everywhere | Contention, complexity | Message passing |
-| thread::sleep in async | Blocks executor | tokio::time::sleep |
-| Holding locks across await | Blocks other tasks | Scope locks tightly |
-| Ignoring deadlock risk | Hard to debug | Lock ordering, try_lock |
+| 到处用 Arc<Mutex<T>> | 竞争、复杂 | 消息传递 |
+| 异步中用 thread::sleep | 阻塞执行器 | tokio::time::sleep |
+| 跨 await 持有锁 | 阻塞其他任务 | 严格限定锁作用域 |
+| 忽略死锁风险 | 难以调试 | 锁顺序、try_lock |
 
----
+## 异步特定模式
 
-## Async-Specific Patterns
-
-### Avoid MutexGuard Across Await
+### 避免跨 Await 持有 MutexGuard
 
 ```rust
-// Bad: guard held across await
+// 不好：guard 跨 await 持有
 let guard = mutex.lock().await;
-do_async().await;  // guard still held!
+do_async().await;  // guard 仍然持有！
 
-// Good: scope the lock
+// 好：限定锁的作用域
 {
     let guard = mutex.lock().await;
-    // use guard
-}  // guard dropped
+    // 使用 guard
+}  // guard 被释放
 do_async().await;
 ```
 
-### Non-Send Types in Async
+### 异步中的非 Send 类型
 
 ```rust
-// Rc is !Send, can't cross await in spawned task
-// Option 1: use Arc instead
-// Option 2: use spawn_local (single-thread runtime)
-// Option 3: ensure Rc is dropped before .await
+// Rc 是 !Send，不能在 spawn 的任务中跨 await
+// 方案 1：改用 Arc
+// 方案 2：用 spawn_local（单线程运行时）
+// 方案 3：确保 Rc 在 .await 前被 drop
 ```
 
----
+## 相关 Skills
 
-## Related Skills
-
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Smart pointer choice | m02-resource |
-| Interior mutability | m03-mutability |
-| Performance tuning | m10-performance |
-| Domain concurrency needs | domain-* |
+| 智能指针选择 | m02-resource |
+| 内部可变性 | m03-mutability |
+| 性能调优 | m10-performance |
+| 领域并发需求 | domain-* |
