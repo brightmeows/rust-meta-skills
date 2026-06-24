@@ -1,18 +1,18 @@
-# Findings Template
+# 发现模板
 
-> Use this template to record discoveries during problem-solving.
-> Copy to `_reasoning/findings.md` when starting a complex problem.
-
----
-
-# Findings
-
-## Problem Context
-<!-- Brief reminder of what problem is being solved -->
+> 使用此模板记录问题求解过程中的发现。
+> 开始复杂问题时，复制到 `_reasoning/findings.md`。
 
 ---
 
-## Layer 3: Domain Constraints
+# 发现
+
+## 问题上下文
+<!-- 简要提醒要解决什么问题 -->
+
+---
+
+## Layer 3：领域约束
 
 <!-- Constraints discovered from domain-* skills or domain analysis -->
 
@@ -21,16 +21,16 @@
 | <!-- constraint --> | <!-- domain-* skill or analysis --> | <!-- what this means for design --> |
 | <!-- constraint --> | <!-- domain-* skill or analysis --> | <!-- what this means for design --> |
 
-### Domain Rules Identified
+### 已识别的领域规则
 - [ ] <!-- Rule 1 -->
 - [ ] <!-- Rule 2 -->
 - [ ] <!-- Rule 3 -->
 
 ---
 
-## Layer 2: Design Patterns
+## Layer 2：设计模式
 
-### Patterns Considered
+### 考虑的模式
 
 | Pattern | Appropriate? | Reason |
 |---------|--------------|--------|
@@ -38,14 +38,14 @@
 | <!-- pattern name --> | Yes / No / Maybe | <!-- why --> |
 | <!-- pattern name --> | Yes / No / Maybe | <!-- why --> |
 
-### Selected Pattern
+### 选定的模式
 - **Pattern**: <!-- chosen pattern -->
 - **Skill Source**: <!-- m09-m15 -->
 - **Rationale**: <!-- why this pattern fits the constraints -->
 
 ---
 
-## Layer 1: Implementation Details
+## Layer 1：实现细节
 
 ### Rust Mechanisms Involved
 
@@ -65,16 +65,16 @@
 
 ---
 
-## Cross-References
+## 交叉引用
 
-### Skills Consulted
+### 已查阅的 Skill
 
 | Skill | Section | Key Takeaway |
 |-------|---------|--------------|
 | <!-- skill --> | <!-- section --> | <!-- takeaway --> |
 | <!-- skill --> | <!-- section --> | <!-- takeaway --> |
 
-### External References
+### 外部引用
 
 | Source | Link/Location | Relevant Info |
 |--------|---------------|---------------|
@@ -83,7 +83,7 @@
 
 ---
 
-## Trade-offs Identified
+## 已识别的权衡
 
 ### Option A: <!-- name -->
 | Aspect | Evaluation |
@@ -111,23 +111,23 @@
 
 ---
 
-## Constraints Summary
+## 约束总结
 
-### Must Have (Non-negotiable)
-1. <!-- constraint from domain rules -->
-2. <!-- constraint from domain rules -->
+### 必须有的（不可协商）
+1. <!-- 来自领域规则的约束 -->
+2. <!-- 来自领域规则的约束 -->
 
-### Should Have (Important)
-1. <!-- preferred but flexible -->
-2. <!-- preferred but flexible -->
+### 应该有的（重要）
+1. <!-- 首选但可灵活 -->
+2. <!-- 首选但可灵活 -->
 
-### Nice to Have (Optional)
-1. <!-- bonus if achievable -->
-2. <!-- bonus if achievable -->
+### 锦上添花（可选）
+1. <!-- 如果可实现则更佳 -->
+2. <!-- 如果可实现则更佳 -->
 
 ---
 
-## Open Questions
+## 开放问题
 
 - [ ] <!-- Question 1 -->
 - [ ] <!-- Question 2 -->
@@ -135,10 +135,10 @@
 
 ---
 
-## Key Insights
+## 关键见解
 
-<!-- Summary of most important discoveries -->
+<!-- 最重要发现的总结 -->
 
-1. **Domain Insight**: <!-- key domain learning -->
-2. **Design Insight**: <!-- key pattern learning -->
-3. **Implementation Insight**: <!-- key Rust learning -->
+1. **领域见解**：<!-- 关键领域学习 -->
+2. **设计见解**：<!-- 关键模式学习 -->
+3. **实现见解**：<!-- 关键 Rust 学习 -->

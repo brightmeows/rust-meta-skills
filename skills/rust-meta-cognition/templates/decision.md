@@ -1,174 +1,174 @@
-# Decision Record Template
+# 决策记录模板
 
-> Use this template to document final decisions and their rationale.
-> Copy to `_reasoning/decision.md` when a significant design decision is made.
-> This serves as an Architecture Decision Record (ADR) for the problem.
-
----
-
-# Decision Record
-
-## Metadata
-- **Date**: <!-- YYYY-MM-DD -->
-- **Status**: <!-- Proposed / Accepted / Deprecated / Superseded -->
-- **Decision Makers**: <!-- who was involved -->
+> 使用此模板记录最终决策及其理由。
+> 当做出重要的设计决策时，复制到 `_reasoning/decision.md`。
+> 这作为问题的架构决策记录（ADR）。
 
 ---
 
-## Context
+# 决策记录
 
-### Problem Statement
-<!-- What is the problem being addressed? -->
-
-### Background
-<!-- What led to this decision being needed? -->
-
-### Constraints
-<!-- What constraints must be satisfied? -->
-- Domain: <!-- from Layer 3 -->
-- Technical: <!-- from Layer 1-2 -->
-- Other: <!-- time, resources, etc. -->
+## 元数据
+- **日期**：<!-- YYYY-MM-DD -->
+- **状态**：<!-- 提议 / 已接受 / 已弃用 / 已取代 -->
+- **决策者**：<!-- 谁参与了 -->
 
 ---
 
-## Decision
+## 上下文
 
-### Summary
-<!-- One-sentence summary of the decision -->
+### 问题陈述
+<!-- 要解决什么问题？ -->
 
-### Details
-<!-- Detailed description of what was decided -->
+### 背景
+<!-- 为什么需要这个决策？ -->
+
+### 约束
+<!-- 必须满足哪些约束？ -->
+- 领域：<!-- 来自 Layer 3 -->
+- 技术：<!-- 来自 Layer 1-2 -->
+- 其他：<!-- 时间、资源等 -->
 
 ---
 
-## Rationale
+## 决策
 
-### Layer 3 (Domain Constraints)
+### 摘要
+<!-- 一句话总结决策 -->
 
-| Domain Rule | How Decision Satisfies |
+### 详情
+<!-- 对决策的详细描述 -->
+
+---
+
+## 理由
+
+### Layer 3（领域约束）
+
+| 领域规则 | 决策如何满足 |
 |-------------|----------------------|
 | <!-- rule --> | <!-- how it's satisfied --> |
 | <!-- rule --> | <!-- how it's satisfied --> |
 
-**Domain Fit Score**: <!-- Low / Medium / High -->
+**领域契合度**：<!-- 低 / 中 / 高 -->
 
-### Layer 2 (Design Choice)
+### Layer 2（设计选择）
 
-| Design Principle | How Decision Applies |
+| 设计原则 | 决策如何应用 |
 |------------------|---------------------|
 | <!-- principle --> | <!-- application --> |
 | <!-- principle --> | <!-- application --> |
 
-**Pattern Used**: <!-- pattern name from m09-m15 -->
-**Skill Reference**: <!-- skill file and section -->
+**使用的模式**：<!-- 来自 m09-m15 的模式名称 -->
+**Skill 参考**：<!-- skill 文件和章节 -->
 
-### Layer 1 (Implementation)
+### Layer 1（实现）
 
-| Rust Mechanism | Usage |
+| Rust 机制 | 用法 |
 |----------------|-------|
 | <!-- mechanism --> | <!-- how used --> |
 | <!-- mechanism --> | <!-- how used --> |
 
-**Implementation Approach**: <!-- brief description -->
-**Skill Reference**: <!-- skill file and section -->
+**实现方法**：<!-- 简要描述 -->
+**Skill 参考**：<!-- skill 文件和章节 -->
 
 ---
 
-## Consequences
+## 后果
 
-### Positive
-- <!-- benefit 1 -->
-- <!-- benefit 2 -->
-- <!-- benefit 3 -->
+### 正面
+- <!-- 好处 1 -->
+- <!-- 好处 2 -->
+- <!-- 好处 3 -->
 
-### Negative (Accepted Trade-offs)
-- <!-- trade-off 1 -->
-- <!-- trade-off 2 -->
+### 负面（已接受的权衡）
+- <!-- 权衡 1 -->
+- <!-- 权衡 2 -->
 
-### Neutral (Side Effects)
-- <!-- side effect 1 -->
-- <!-- side effect 2 -->
-
----
-
-## Alternatives Considered
-
-### Alternative 1: <!-- name -->
-- **Description**: <!-- what it would involve -->
-- **Why Rejected**: <!-- reason -->
-- **When Might Reconsider**: <!-- future scenario -->
-
-### Alternative 2: <!-- name -->
-- **Description**: <!-- what it would involve -->
-- **Why Rejected**: <!-- reason -->
-- **When Might Reconsider**: <!-- future scenario -->
-
-### Alternative 3: <!-- name -->
-- **Description**: <!-- what it would involve -->
-- **Why Rejected**: <!-- reason -->
-- **When Might Reconsider**: <!-- future scenario -->
+### 中性（副作用）
+- <!-- 副作用 1 -->
+- <!-- 副作用 2 -->
 
 ---
 
-## Implementation Notes
+## 考虑的替代方案
 
-### Key Files to Modify
-| File | Change |
+### 替代方案 1：<!-- 名称 -->
+- **描述**：<!-- 涉及什么 -->
+- **拒绝原因**：<!-- 原因 -->
+- **何时可能重新考虑**：<!-- 未来场景 -->
+
+### 替代方案 2：<!-- 名称 -->
+- **描述**：<!-- 涉及什么 -->
+- **拒绝原因**：<!-- 原因 -->
+- **何时可能重新考虑**：<!-- 未来场景 -->
+
+### 替代方案 3：<!-- 名称 -->
+- **描述**：<!-- 涉及什么 -->
+- **拒绝原因**：<!-- 原因 -->
+- **何时可能重新考虑**：<!-- 未来场景 -->
+
+---
+
+## 实现说明
+
+### 需要修改的关键文件
+| 文件 | 变更 |
 |------|--------|
-| <!-- file path --> | <!-- what changes --> |
-| <!-- file path --> | <!-- what changes --> |
+| <!-- 文件路径 --> | <!-- 什么变更 --> |
+| <!-- 文件路径 --> | <!-- 什么变更 --> |
 
-### Code Pattern
+### 代码模式
 ```rust
 // Key implementation pattern
 // code example
 ```
 
-### Testing Strategy
-- <!-- how to verify the decision works -->
-- <!-- edge cases to test -->
+### 测试策略
+- <!-- 如何验证决策有效 -->
+- <!-- 需要测试的边缘情况 -->
 
 ---
 
-## Validation Criteria
+## 验证标准
 
-### Success Metrics
-- [ ] <!-- criterion 1 -->
-- [ ] <!-- criterion 2 -->
-- [ ] <!-- criterion 3 -->
+### 成功指标
+- [ ] <!-- 标准 1 -->
+- [ ] <!-- 标准 2 -->
+- [ ] <!-- 标准 3 -->
 
-### Failure Indicators
-- <!-- what would indicate this decision was wrong -->
-- <!-- when to reconsider -->
+### 失败指标
+- <!-- 什么表明这个决策是错误的 -->
+- <!-- 何时重新考虑 -->
 
 ---
 
-## Related Decisions
+## 相关决策
 
-| Decision | Relationship |
+| 决策 | 关系 |
 |----------|-------------|
-| <!-- link to other decision --> | <!-- how related --> |
-| <!-- link to other decision --> | <!-- how related --> |
+| <!-- 链接到其他决策 --> | <!-- 如何关联 --> |
+| <!-- 链接到其他决策 --> | <!-- 如何关联 --> -->
 
 ---
 
-## Review Notes
+## 评审说明
 
-### Lessons Learned
-<!-- What was learned from this decision process? -->
+### 经验教训
+<!-- 从这个决策过程中学到了什么？ -->
 
-### Process Improvements
-<!-- How could the decision-making process be improved? -->
+### 流程改进
+<!-- 决策流程可以如何改进？ -->
 
-### Skills to Revisit
-<!-- Which skills should be updated based on this experience? -->
+### 需要重新审视的 Skill
+<!-- 基于此经验，哪些 Skill 应该更新？ -->
 
 ---
 
-## Approval
+## 批准
 
-- [ ] Domain constraints verified
-- [ ] Design pattern appropriate
-- [ ] Implementation feasible
-- [ ] Trade-offs acceptable
-- [ ] Decision documented
+- [ ] 领域约束已验证
+- [ ] 设计模式适当
+- [ ] 实现可行
+- [ ] 权衡可接受
+- [ ] 决策已文档化

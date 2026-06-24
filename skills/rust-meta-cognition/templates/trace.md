@@ -1,117 +1,117 @@
-# Reasoning Trace Template
+# 推理追溯模板
 
-> Use this template to track your reasoning process through the three-layer cognitive model.
-> Copy to `_reasoning/trace.md` when starting a complex problem.
-
----
-
-# Reasoning Trace
-
-## Problem Statement
-<!-- Brief description of the problem -->
-
-## Entry Point
-- **Signal**: <!-- error code / question type / user request -->
-- **Entry Layer**: <!-- 1 (Mechanics) / 2 (Design) / 3 (Domain) -->
-- **Initial Skill**: <!-- m0x / m1x / domain-* -->
+> 使用此模板通过三层认知模型追踪推理过程。
+> 开始复杂问题时，复制到 `_reasoning/trace.md`。
 
 ---
 
-## Trace UP ↑
+# 推理追溯
 
-<!-- Use when starting from an error or implementation question -->
+## 问题陈述
+<!-- 问题的简要描述 -->
+
+## 入口点
+- **信号**：<!-- 错误码 / 问题类型 / 用户请求 -->
+- **入口层级**：<!-- 1（机制）/ 2（设计）/ 3（领域） -->
+- **初始 Skill**：<!-- m0x / m1x / domain-* -->
+
+---
+
+## 向上追溯 ↑
+
+<!-- 从错误或实现问题开始时使用 -->
 
 ### Layer 1 → Layer 2
-- **Question**: What design choice led to this?
-- **Skill Consulted**: <!-- m09-m15 -->
-- **Finding**: <!-- discovered pattern or design issue -->
+- **问题**：什么设计选择导致了这种情况？
+- **查阅的 Skill**：<!-- m09-m15 -->
+- **发现**：<!-- 发现的模式或设计问题 -->
 
 ### Layer 2 → Layer 3
-- **Question**: What domain constraint requires this design?
-- **Skill Consulted**: <!-- domain-* -->
-- **Finding**: <!-- discovered constraint -->
+- **问题**：什么领域约束要求这种设计？
+- **查阅的 Skill**：<!-- domain-* -->
+- **发现**：<!-- 发现的约束 -->
 
 ---
 
-## Trace DOWN ↓
+## 向下追溯 ↓
 
-<!-- Use when starting from domain constraints or design questions -->
+<!-- 从领域约束或设计问题时开始使用 -->
 
 ### Layer 3 → Layer 2
-- **Constraint**: <!-- domain rule that applies -->
-- **Skill Consulted**: <!-- m09-m15 -->
-- **Design Implication**: <!-- pattern choice based on constraint -->
+- **约束**：<!-- 适用的领域规则 -->
+- **查阅的 Skill**：<!-- m09-m15 -->
+- **设计含义**：<!-- 基于约束的模式选择 -->
 
 ### Layer 2 → Layer 1
-- **Pattern**: <!-- chosen design pattern -->
-- **Skill Consulted**: <!-- m01-m07 -->
-- **Implementation**: <!-- Rust mechanism to use -->
+- **模式**：<!-- 选择的设计模式 -->
+- **查阅的 Skill**：<!-- m01-m07 -->
+- **实现**：<!-- 要使用的 Rust 机制 -->
 
 ---
 
-## Attempts Log
+## 尝试日志
 
-### Attempt 1
-- **Time**: <!-- timestamp -->
-- **Approach**: <!-- what was tried -->
-- **Result**: <!-- success / failure + details -->
-- **Learning**: <!-- what was learned -->
+### 尝试 1
+- **时间**：<!-- 时间戳 -->
+- **方法**：<!-- 尝试了什么 -->
+- **结果**：<!-- 成功 / 失败 + 详情 -->
+- **学到的**：<!-- 学到了什么 -->
 
-### Attempt 2
-- **Time**: <!-- timestamp -->
-- **Approach**: <!-- what was tried -->
-- **Result**: <!-- success / failure + details -->
-- **Learning**: <!-- what was learned -->
+### 尝试 2
+- **时间**：<!-- 时间戳 -->
+- **方法**：<!-- 尝试了什么 -->
+- **结果**：<!-- 成功 / 失败 + 详情 -->
+- **学到的**：<!-- 学到了什么 -->
 
-### Attempt 3 (Escalation Point)
-<!-- If reaching 3 attempts, escalate per error-protocol.md -->
-- **Time**: <!-- timestamp -->
-- **Escalation**: <!-- which direction: L1→L2 or L2→L3 -->
-- **New Approach**: <!-- approach after escalation -->
-- **Result**: <!-- outcome -->
-
----
-
-## Error Log
-
-<!-- Keep errors visible for learning -->
-
-### Error 1
-- **Code**: <!-- E0xxx or error type -->
-- **Message**: <!-- full error message -->
-- **Analysis**: <!-- what went wrong -->
-- **Fix**: <!-- how resolved or pending -->
-
-### Error 2
-- **Code**: <!-- E0xxx or error type -->
-- **Message**: <!-- full error message -->
-- **Analysis**: <!-- what went wrong -->
-- **Fix**: <!-- how resolved or pending -->
+### 尝试 3（升级点）
+<!-- 如果达到 3 次尝试，按照 error-protocol.md 升级 -->
+- **时间**：<!-- 时间戳 -->
+- **升级方向**：<!-- L1→L2 或 L2→L3 -->
+- **新方法**：<!-- 升级后的方法 -->
+- **结果**：<!-- 结果 -->
 
 ---
 
-## Current Status
+## 错误日志
 
-- [ ] Problem understood
-- [ ] Entry layer identified
-- [ ] Trace direction chosen (UP/DOWN)
-- [ ] Related constraints found
-- [ ] Design pattern selected
-- [ ] Implementation approach decided
-- [ ] Solution implemented
-- [ ] Solution verified
+<!-- 保持错误可见以供学习 -->
+
+### 错误 1
+- **代码**：<!-- E0xxx 或错误类型 -->
+- **消息**：<!-- 完整错误信息 -->
+- **分析**：<!-- 出了什么问题 -->
+- **修复**：<!-- 如何解决或待定 -->
+
+### 错误 2
+- **代码**：<!-- E0xxx 或错误类型 -->
+- **消息**：<!-- 完整错误信息 -->
+- **分析**：<!-- 出了什么问题 -->
+- **修复**：<!-- 如何解决或待定 -->
 
 ---
 
-## Skills Referenced
+## 当前状态
 
-| Skill | Section | Key Insight |
+- [ ] 问题已理解
+- [ ] 入口层级已识别
+- [ ] 追溯方向已选择（向上/向下）
+- [ ] 相关约束已发现
+- [ ] 设计模式已选定
+- [ ] 实现方法已确定
+- [ ] 解决方案已实现
+- [ ] 解决方案已验证
+
+---
+
+## 引用的 Skill
+
+| Skill | 章节 | 关键见解 |
 |-------|---------|-------------|
 | <!-- skill name --> | <!-- section --> | <!-- what was learned --> |
 | <!-- skill name --> | <!-- section --> | <!-- what was learned --> |
 
 ---
 
-## Notes
+## 备注
 
-<!-- Any additional observations or context -->
+<!-- 任何额外的观察或上下文 -->

@@ -1,33 +1,33 @@
-# Achievement Definitions
+# 成就定义
 
-Complete list of all achievements with unlock requirements.
+所有成就的完整列表及解锁条件。
 
 ---
 
-## Categories Overview
+## 类别概览
 
-| Category | Count | Theme |
+| 类别 | 数量 | 主题 |
 |----------|-------|-------|
-| Bug Fixing | 4 | Debugging and fixing issues |
-| Testing | 4 | Writing tests |
-| Consistency | 4 | Daily coding streaks |
-| Safety | 3 | Avoiding unsafe code |
-| Error Resolution | 3 | Fixing compiler errors |
-| Code Review | 2 | Code quality checks |
-| Documentation | 2 | Writing doc comments |
-| Refactoring | 2 | Code improvement |
-| Learning | 3 | Asking questions |
-| Sessions | 3 | Coding sessions |
+| Bug 修复 | 4 | 调试和修复问题 |
+| 测试 | 4 | 编写测试 |
+| 持续 | 4 | 每日编码连续天数 |
+| 安全 | 3 | 避免 unsafe 代码 |
+| 错误解决 | 3 | 修复编译器错误 |
+| 代码审查 | 2 | 代码质量检查 |
+| 文档 | 2 | 编写文档注释 |
+| 重构 | 2 | 代码改进 |
+| 学习 | 3 | 提问 |
+| 会话 | 3 | 编码会话 |
 | **Total** | **30** | |
 
 ---
 
-## Bug Fixing 🐛
+## Bug 修复 🐛
 
-| ID | Name | Icon | Requirement | Description |
+| ID | 名称 | 图标 | 要求 | 描述 |
 |----|------|------|-------------|-------------|
-| `first_blood` | First Blood | 🩸 | Fix 1 bug | Fixed your first bug |
-| `bug_hunter` | Bug Hunter | 🐛 | Fix 10 bugs | Becoming proficient at debugging |
+| `first_blood` | 初试锋芒 | 🩸 | 修复 1 个 bug | 修复了第一个 bug |
+| `bug_hunter` | Bug 猎人 | 🐛 | 修复 10 个 bug | 逐步精通调试 |
 | `bug_slayer` | Bug Slayer | ⚔️ | Fix 50 bugs | Expert bug fixer |
 | `bug_terminator` | Bug Terminator | 🤖 | Fix 100 bugs | Legendary debugger |
 
