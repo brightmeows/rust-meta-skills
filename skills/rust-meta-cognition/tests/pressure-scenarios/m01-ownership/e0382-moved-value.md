@@ -1,9 +1,9 @@
-# Pressure Scenario: E0382 Moved Value
+# 压力场景：E0382 值被移动
 
-## Skill Under Test
+## 测试的 Skill
 m01-ownership
 
-## User Question
+## 用户问题
 "Why am I getting E0382 error: use of moved value?"
 
 ## Code Context
@@ -15,40 +15,40 @@ fn main() {
 }
 ```
 
-## Expected Behavior
-- [x] Explain move semantics (ownership transfer)
-- [x] Show that String is not Copy
-- [x] Provide fix options (clone, reference, restructure)
-- [x] Quick reference table for ownership patterns
-- [x] Reference to P.VAR.01, P.VAR.02 guidelines
+## 期望行为
+- [x] 解释移动语义（所有权转移）
+- [x] 说明 String 不是 Copy
+- [x] 提供修复选项（clone、reference、restructure）
+- [x] 所有权模式的快速参考表
+- [x] 引用 P.VAR.01、P.VAR.02 规范
 
-## Baseline Test (without skill)
-Date: [To be filled]
+## 基线测试（无 skill）
+日期：[待填写]
 
-Result:
-- [ ] Move semantics: [PASS/FAIL]
-- [ ] Not Copy explanation: [PASS/FAIL]
-- [ ] Fix options: [PASS/FAIL]
-- [ ] Quick reference: [PASS/FAIL]
-- [ ] Guidelines: [PASS/FAIL]
+结果：
+- [ ] 移动语义：[通过/失败]
+- [ ] 非 Copy 解释：[通过/失败]
+- [ ] 修复选项：[通过/失败]
+- [ ] 快速参考：[通过/失败]
+- [ ] 规范：[通过/失败]
 
-Notes:
-[To be filled after test]
+备注：
+[测试后填写]
 
-## Post-Skill Test
-Date: [To be filled]
+## 安装 Skill 后测试
+日期：[待填写]
 
-Result:
-- [ ] Move semantics: [PASS/FAIL]
-- [ ] Not Copy explanation: [PASS/FAIL]
-- [ ] Fix options: [PASS/FAIL]
-- [ ] Quick reference: [PASS/FAIL]
-- [ ] Guidelines: [PASS/FAIL]
+结果：
+- [ ] 移动语义：[通过/失败]
+- [ ] 非 Copy 解释：[通过/失败]
+- [ ] 修复选项：[通过/失败]
+- [ ] 快速参考：[通过/失败]
+- [ ] 规范：[通过/失败]
 
-Notes:
-[To be filled after test]
+备注：
+[测试后填写]
 
-## Edge Cases
-1. "Why does i32 work but String doesn't?" → Should explain Copy trait
-2. "Can I just use unsafe to ignore this?" → Should discourage, explain risks
-3. "Is clone always the solution?" → Should explain performance implications
+## 边界情况
+1. "为什么 i32 可以但 String 不行？" → 应解释 Copy trait
+2. "我可以用 unsafe 忽略这个吗？" → 应劝阻并解释风险
+3. "clone 总是解决方案吗？" → 应解释性能影响

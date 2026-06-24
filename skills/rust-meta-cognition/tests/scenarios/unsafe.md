@@ -1,6 +1,6 @@
-# Unsafe-Checker Test Scenarios
+# Unsafe-Checker 测试场景
 
-## Skill Triggering Tests
+## Skill 触发测试
 
 ### Test 1: Unsafe Keyword Trigger
 **Prompt:** "Review this unsafe code block"

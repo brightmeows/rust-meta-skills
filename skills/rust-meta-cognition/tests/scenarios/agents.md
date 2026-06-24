@@ -1,6 +1,6 @@
-# Agent Integration Test Scenarios
+# Agent 集成测试场景
 
-## Crate-Researcher Tests
+## Crate-Researcher 测试
 
 ### Test 1: Popular Crate Query
 **Prompt:** "What's the latest version of tokio?"

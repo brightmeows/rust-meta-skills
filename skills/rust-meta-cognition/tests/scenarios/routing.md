@@ -1,6 +1,6 @@
-# Rust-Router Test Scenarios
+# Rust-Router 测试场景
 
-## Meta-Question Routing Tests
+## 元问题路由测试
 
 ### Test 1: Ownership Route
 **Prompt:** "E0382 use of moved value"

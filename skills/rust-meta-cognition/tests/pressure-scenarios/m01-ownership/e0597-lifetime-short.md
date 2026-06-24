@@ -1,6 +1,6 @@
-# Pressure Scenario: E0597 Lifetime Too Short
+# 压力场景：E0597 生命周期过短
 
-## Skill Under Test
+## 测试的 Skill
 m01-ownership
 
 ## User Question

@@ -1,6 +1,6 @@
-# Domain Skills Test Scenarios
+# 领域 Skill 测试场景
 
-> Layer 3: Domain Constraints
+> Layer 3：领域约束
 
 ## domain-fintech
 

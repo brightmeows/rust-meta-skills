@@ -1,34 +1,34 @@
-# Ownership (m01) Test Scenarios
+# 所有权（m01）测试场景
 
-## Skill Triggering Tests
+## Skill 触发测试
 
-### Test 1: Error Code Trigger
-**Prompt:** "Why am I getting E0382 error?"
-**Expected Skill:** m01-ownership
-**Expected Response Elements:**
-- [ ] Explanation of "use of moved value"
-- [ ] Code example showing the error
-- [ ] Fix options (clone, borrow, restructure)
+### 测试 1：错误码触发
+**提示词：** "Why am I getting E0382 error?"
+**期望 Skill：** m01-ownership
+**期望的响应要素：**
+- [ ] 解释"use of moved value"
+- [ ] 展示错误的代码示例
+- [ ] 修复选项（clone、borrow、restructure）
 
-### Test 2: Symptom Trigger
-**Prompt:** "Value moved here after borrow"
-**Expected Skill:** m01-ownership
-**Expected Response Elements:**
-- [ ] Borrow checker explanation
-- [ ] Lifetime implications
-- [ ] Solution patterns
+### 测试 2：症状触发
+**提示词：** "Value moved here after borrow"
+**期望 Skill：** m01-ownership
+**期望的响应要素：**
+- [ ] 借用检查器解释
+- [ ] 生命周期影响
+- [ ] 解决方案模式
 
-### Test 3: Concept Trigger
-**Prompt:** "How does ownership work in Rust?"
-**Expected Skill:** m01-ownership
-**Expected Response Elements:**
-- [ ] Ownership rules (3 rules)
-- [ ] Move semantics
-- [ ] Borrowing explanation
+### 测试 3：概念触发
+**提示词：** "How does ownership work in Rust?"
+**期望 Skill：** m01-ownership
+**期望的响应要素：**
+- [ ] 所有权规则（3 条规则）
+- [ ] 移动语义
+- [ ] 借用解释
 
 ---
 
-## Content Accuracy Tests
+## 内容准确性测试
 
 ### Test 4: E0382 Detailed Explanation
 **Prompt:**
@@ -74,7 +74,7 @@ println!("{}", first);
 
 ---
 
-## Deep Dive Tests
+## 深入测试
 
 ### Test 7: Reference Deep Dive Request
 **Prompt:** "Show me common ownership error patterns and fixes"
@@ -94,7 +94,7 @@ println!("{}", first);
 
 ---
 
-## Edge Cases
+## 边界情况
 
 ### Test 9: Complex Lifetime
 **Prompt:**

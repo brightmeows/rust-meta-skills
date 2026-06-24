@@ -1,6 +1,6 @@
-# Layer 2 Skills Test Scenarios
+# Layer 2 Skill 测试场景
 
-> Layer 2: Design Choices
+> Layer 2：设计选择
 
 ## m05-type-driven
 

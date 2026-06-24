@@ -1,6 +1,6 @@
-# Pressure Scenario: Send/Sync Trait Bounds
+# 压力场景：Send/Sync Trait 约束
 
-## Skill Under Test
+## 测试的 Skill
 m07-concurrency
 
 ## User Question
