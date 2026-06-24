@@ -3,7 +3,7 @@ description: Show Rust docs cache status
 argument-hint: [--verbose]
 ---
 
-# Cache Status
+# 缓存状态
 
 Show the status of cached Rust documentation.
 

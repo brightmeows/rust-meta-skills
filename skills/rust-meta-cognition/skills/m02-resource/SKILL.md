@@ -4,7 +4,7 @@ description: "CRITICAL: Use for smart pointers and resource management. Triggers
 user-invocable: false
 ---
 
-# Resource Management
+# 资源管理
 
 > **Layer 1: Language Mechanics**
 

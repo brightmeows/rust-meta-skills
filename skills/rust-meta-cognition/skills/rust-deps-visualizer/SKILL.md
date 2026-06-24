@@ -5,7 +5,7 @@ argument-hint: "[--depth N] [--features]"
 allowed-tools: ["Bash", "Read", "Glob"]
 ---
 
-# Rust Dependencies Visualizer
+# Rust 依赖可视化
 
 Generate ASCII art visualizations of your Rust project's dependency tree.
 

@@ -4,7 +4,7 @@ description: "CRITICAL: Use for performance optimization. Triggers: performance,
 user-invocable: false
 ---
 
-# Performance Optimization
+# 性能优化
 
 > **Layer 2: Design Choices**
 

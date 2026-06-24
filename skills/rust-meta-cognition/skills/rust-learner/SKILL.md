@@ -4,7 +4,7 @@ description: "Use when asking about Rust versions or crate info. Keywords: lates
 allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 ---
 
-# Rust Learner
+# Rust 学习者
 
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 

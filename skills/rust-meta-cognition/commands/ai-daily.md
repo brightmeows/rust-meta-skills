@@ -3,7 +3,7 @@ description: Generate AI daily/weekly news report from Reddit communities
 argument-hint: [day|week|month] [--save [path]]
 ---
 
-# AI Daily Report
+# AI 每日报道
 
 Generate a summarized report of AI news from Reddit communities.
 

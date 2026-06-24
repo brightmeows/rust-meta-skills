@@ -5,7 +5,7 @@ argument-hint: "<symbol> [in file.rs:line]"
 allowed-tools: ["LSP", "Read", "Glob"]
 ---
 
-# Rust Code Navigator
+# Rust 代码导航器
 
 Navigate large Rust codebases efficiently using Language Server Protocol.
 

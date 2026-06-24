@@ -5,7 +5,7 @@ argument-hint: "[file.rs] [--type struct|trait|fn|mod]"
 allowed-tools: ["LSP", "Read", "Glob"]
 ---
 
-# Rust Symbol Analyzer
+# Rust 符号分析器
 
 Analyze project structure by examining symbols across your Rust codebase.
 

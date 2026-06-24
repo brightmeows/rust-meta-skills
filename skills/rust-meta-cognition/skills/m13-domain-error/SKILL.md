@@ -4,7 +4,7 @@ description: "Use when designing domain error handling. Keywords: domain error, 
 user-invocable: false
 ---
 
-# Domain Error Strategy
+# 领域错误策略
 
 > **Layer 2: Design Choices**
 

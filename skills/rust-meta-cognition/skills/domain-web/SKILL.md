@@ -5,7 +5,7 @@ globs: ["**/Cargo.toml"]
 user-invocable: false
 ---
 
-# Web Domain
+# Web 领域
 
 > **Layer 3: Domain Constraints**
 

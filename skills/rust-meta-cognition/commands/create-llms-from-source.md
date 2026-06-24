@@ -3,7 +3,7 @@ description: Generate llms.txt from local Rust source code
 argument-hint: [source_path] [output_path]
 ---
 
-# Create llms.txt from Rust Source Code
+# 从 Rust 源代码创建 llms.txt
 
 Generate comprehensive llms.txt documentation from local Rust project source code.
 

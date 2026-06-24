@@ -4,7 +4,7 @@ description: "Use when building cloud-native apps. Keywords: kubernetes, k8s, do
 user-invocable: false
 ---
 
-# Cloud-Native Domain
+# 云原生领域
 
 > **Layer 3: Domain Constraints**
 

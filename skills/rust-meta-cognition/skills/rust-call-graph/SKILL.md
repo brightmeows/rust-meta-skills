@@ -5,7 +5,7 @@ argument-hint: "<function_name> [--depth N] [--direction in|out|both]"
 allowed-tools: ["LSP", "Read", "Glob"]
 ---
 
-# Rust Call Graph
+# Rust 调用图
 
 Visualize function call relationships using LSP call hierarchy.
 

@@ -6,7 +6,7 @@ context: fork
 agent: general-purpose
 ---
 
-# Rust Skill Creator
+# Rust Skill 创建器
 
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 >

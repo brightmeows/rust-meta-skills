@@ -4,7 +4,7 @@ description: "CRITICAL: Use for type-driven design. Triggers: type state, Phanto
 user-invocable: false
 ---
 
-# Type-Driven Design
+# 类型驱动设计
 
 > **Layer 1: Language Mechanics**
 

@@ -1,4 +1,4 @@
-# /guideline
+# /guideline：编码规范查询
 
 Query Rust coding guidelines and best practices.
 

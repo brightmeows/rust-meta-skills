@@ -5,7 +5,7 @@ user-invocable: false
 disable-model-invocation: true
 ---
 
-# Browser Automation with agent-browser
+# 浏览器自动化（agent-browser）
 
 ## Priority Note
 

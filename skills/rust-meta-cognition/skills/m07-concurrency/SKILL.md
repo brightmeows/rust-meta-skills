@@ -4,7 +4,7 @@ description: "CRITICAL: Use for concurrency/async. Triggers: E0277 Send Sync, ca
 user-invocable: false
 ---
 
-# Concurrency
+# 并发
 
 > **Layer 1: Language Mechanics**
 

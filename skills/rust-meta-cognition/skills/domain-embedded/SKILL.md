@@ -12,7 +12,7 @@ user-invocable: false
 
 ---
 
-# Embedded Domain
+# 嵌入式领域
 
 > **Layer 3: Domain Constraints**
 

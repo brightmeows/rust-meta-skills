@@ -3,7 +3,7 @@ description: Sync dynamic skills for Cargo.toml dependencies or local source
 argument-hint: [--force] [--from-source <path>] [crate_names...]
 ---
 
-# Sync Crate Skills
+# 同步 Crate Skill
 
 Scan Cargo.toml and generate skills for dependencies that don't have local skills yet.
 Supports both remote crates (docs.rs) and local Rust source code.

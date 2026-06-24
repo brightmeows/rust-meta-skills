@@ -4,7 +4,7 @@ description: "CRITICAL: Use for ownership/borrow/lifetime issues. Triggers: E038
 user-invocable: false
 ---
 
-# Ownership & Lifetimes
+# 所有权与生命周期
 
 > **Layer 1: Language Mechanics**
 

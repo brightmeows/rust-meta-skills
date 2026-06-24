@@ -5,7 +5,7 @@ argument-hint: "<action> <target> [--dry-run]"
 allowed-tools: ["LSP", "Read", "Glob", "Grep", "Edit"]
 ---
 
-# Rust Refactor Helper
+# Rust 重构助手
 
 Perform safe refactoring with comprehensive impact analysis.
 

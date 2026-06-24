@@ -1,4 +1,4 @@
-# /skill-index
+# /skill-index：Skill 索引查询
 
 Query Rust skills by meta-question category or technical subcategory.
 

@@ -7,7 +7,7 @@ context: fork
 agent: general-purpose
 ---
 
-# Dynamic Skills Manager
+# 动态 Skill 管理器
 
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 

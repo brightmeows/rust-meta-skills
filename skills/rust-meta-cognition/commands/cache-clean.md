@@ -3,7 +3,7 @@ description: Clean Rust docs cache
 argument-hint: [--all | --expired | crate_name]
 ---
 
-# Cache Clean
+# 缓存清理
 
 Clean cached Rust documentation.
 

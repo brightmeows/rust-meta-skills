@@ -4,7 +4,7 @@ description: "EXPERIMENTAL: Three-layer parallel meta-cognition analysis. Trigge
 argument-hint: "<rust_question>"
 ---
 
-# Meta-Cognition Parallel Analysis (Experimental)
+# 元认知并行分析（实验性）
 
 > **Status:** Experimental | **Version:** 0.2.0 | **Last Updated:** 2025-01-27
 >

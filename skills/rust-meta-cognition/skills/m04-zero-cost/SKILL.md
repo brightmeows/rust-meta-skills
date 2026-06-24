@@ -4,7 +4,7 @@ description: "CRITICAL: Use for generics, traits, zero-cost abstraction. Trigger
 user-invocable: false
 ---
 
-# Zero-Cost Abstraction
+# 零成本抽象
 
 > **Layer 1: Language Mechanics**
 

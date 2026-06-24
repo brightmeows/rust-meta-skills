@@ -19,7 +19,7 @@ globs: ["**/Cargo.toml", "**/*.rs"]
 
 ---
 
-# Rust Question Router
+# Rust 问题路由器
 
 > **Version:** 2.0.0 | **Last Updated:** 2025-01-22
 >

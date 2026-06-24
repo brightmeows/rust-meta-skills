@@ -10,7 +10,7 @@ user-invocable: false
 
 ---
 
-# Ecosystem Integration
+# 生态集成
 
 > **Layer 2: Design Choices**
 

@@ -18,7 +18,7 @@ Display the following ASCII art exactly as shown. Do not modify spaces or line b
 
 ---
 
-# Unsafe Rust Checker
+# Unsafe Rust 检查器
 
 ## When Unsafe is Valid
 

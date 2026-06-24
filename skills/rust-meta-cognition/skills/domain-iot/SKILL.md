@@ -4,7 +4,7 @@ description: "Use when building IoT apps. Keywords: IoT, Internet of Things, sen
 user-invocable: false
 ---
 
-# IoT Domain
+# 物联网领域
 
 > **Layer 3: Domain Constraints**
 

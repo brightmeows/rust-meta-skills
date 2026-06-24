@@ -5,7 +5,7 @@ argument-hint: "<TraitName|StructName>"
 allowed-tools: ["LSP", "Read", "Glob", "Grep"]
 ---
 
-# Rust Trait Explorer
+# Rust Trait 探索器
 
 Discover trait implementations and understand polymorphic designs.
 

@@ -3,7 +3,7 @@ description: Update a specific crate skill to latest version
 argument-hint: <crate_name> [version]
 ---
 
-# Update Crate Skill
+# 更新 Crate Skill
 
 Force regenerate a crate skill with the latest documentation.
 

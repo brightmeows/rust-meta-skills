@@ -3,7 +3,7 @@ description: View coding achievements, stats, and progress
 argument-hint: [list|stats|reset] [--category bug|test|streak|safety|learning]
 ---
 
-# Achievement System
+# 成就系统
 
 View and manage your coding achievements and statistics.
 

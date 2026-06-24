@@ -7,7 +7,7 @@ context: fork
 agent: general-purpose
 ---
 
-# Fix Skill Documentation
+# 修复 Skill 文档
 
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 

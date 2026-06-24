@@ -4,7 +4,7 @@ description: "CRITICAL: Use for error handling. Triggers: Result, Option, Error,
 user-invocable: false
 ---
 
-# Error Handling
+# 错误处理
 
 > **Layer 1: Language Mechanics**
 

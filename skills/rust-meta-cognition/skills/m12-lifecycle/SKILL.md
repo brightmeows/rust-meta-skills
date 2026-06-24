@@ -4,7 +4,7 @@ description: "Use when designing resource lifecycles. Keywords: RAII, Drop, reso
 user-invocable: false
 ---
 
-# Resource Lifecycle
+# 资源生命周期
 
 > **Layer 2: Design Choices**
 

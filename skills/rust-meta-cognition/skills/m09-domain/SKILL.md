@@ -4,7 +4,7 @@ description: "CRITICAL: Use for domain modeling. Triggers: domain model, DDD, do
 user-invocable: false
 ---
 
-# Domain Modeling
+# 领域建模
 
 > **Layer 2: Design Choices**
 

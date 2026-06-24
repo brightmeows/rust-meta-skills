@@ -3,7 +3,7 @@ description: Remove local dynamic crate skills
 argument-hint: [crate_names...] [--all]
 ---
 
-# Clean Crate Skills
+# 清理 Crate Skill
 
 Remove dynamically generated crate skills from the local skills directory.
 

@@ -4,7 +4,7 @@ description: "Use when learning Rust concepts. Keywords: mental model, how to th
 user-invocable: false
 ---
 
-# Mental Models
+# 心智模型
 
 > **Layer 2: Design Choices**
 

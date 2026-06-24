@@ -5,7 +5,7 @@ user-invocable: false
 disable-model-invocation: true
 ---
 
-# Actionbook
+# Actionbook：行动手册
 
 Pre-computed action manuals for browser automation. Agents receive structured page information instead of parsing entire HTML.
 

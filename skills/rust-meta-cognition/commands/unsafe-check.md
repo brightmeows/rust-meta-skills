@@ -1,4 +1,4 @@
-# /unsafe-check
+# /unsafe-check：Unsafe 检查
 
 Check a file for unsafe code issues and potential safety violations.
 

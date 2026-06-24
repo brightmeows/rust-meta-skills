@@ -3,7 +3,7 @@ description: Generate comprehensive llms.txt from URLs using agent-browser
 argument-hint: <urls> [requirements]
 ---
 
-# Create llms.txt from URLs
+# 从 URL 创建 llms.txt
 
 Use agent-browser CLI to access target URLs, extract content, and generate comprehensive llms.txt files.
 

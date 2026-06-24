@@ -4,7 +4,7 @@ description: "Use when reviewing code for anti-patterns. Keywords: anti-pattern,
 user-invocable: false
 ---
 
-# Anti-Patterns
+# 反模式
 
 > **Layer 2: Design Choices**
 

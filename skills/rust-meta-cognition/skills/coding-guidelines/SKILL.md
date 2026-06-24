@@ -5,7 +5,7 @@ source: https://rust-coding-guidelines.github.io/rust-coding-guidelines-zh/
 user-invocable: false
 ---
 
-# Rust Coding Guidelines (50 Core Rules)
+# Rust 编码规范（50 条核心规则）
 
 ## Naming (Rust-Specific)
 

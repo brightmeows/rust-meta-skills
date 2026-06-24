@@ -1,4 +1,4 @@
-# /crate-info
+# /crate-info：Crate 信息
 
 Get information about a Rust crate including latest version, features, and changelog.
 

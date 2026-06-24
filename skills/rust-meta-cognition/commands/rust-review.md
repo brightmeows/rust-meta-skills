@@ -1,4 +1,4 @@
-# /rust-review
+# /rust-review：Rust 代码审查
 
 Lightweight Rust code review using clippy.
 

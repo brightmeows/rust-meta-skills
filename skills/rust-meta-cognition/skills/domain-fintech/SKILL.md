@@ -4,7 +4,7 @@ description: "Use when building fintech apps. Keywords: fintech, trading, decima
 user-invocable: false
 ---
 
-# FinTech Domain
+# 金融科技领域
 
 > **Layer 3: Domain Constraints**
 

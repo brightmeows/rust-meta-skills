@@ -9,7 +9,7 @@ context: fork
 agent: Explore
 ---
 
-# Rust Daily Report
+# Rust 每日报道
 
 > **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 

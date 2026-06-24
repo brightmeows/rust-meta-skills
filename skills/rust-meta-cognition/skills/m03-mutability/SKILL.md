@@ -4,7 +4,7 @@ description: "CRITICAL: Use for mutability issues. Triggers: E0596, E0499, E0502
 user-invocable: false
 ---
 
-# Mutability
+# 可变性
 
 > **Layer 1: Language Mechanics**
 

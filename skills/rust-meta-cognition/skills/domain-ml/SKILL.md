@@ -4,7 +4,7 @@ description: "Use when building ML/AI apps in Rust. Keywords: machine learning, 
 user-invocable: false
 ---
 
-# Machine Learning Domain
+# 机器学习领域
 
 > **Layer 3: Domain Constraints**
 

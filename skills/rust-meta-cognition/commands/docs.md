@@ -10,7 +10,7 @@ arguments:
     required: false
 ---
 
-# /docs Command
+# /docs 命令：API 文档查询
 
 Fetch API documentation for Rust crates from docs.rs.
 

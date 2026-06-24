@@ -3,7 +3,7 @@ description: Generate Rust daily/weekly/monthly news report
 argument-hint: [day|week|month] [--category ecosystem|official|foundation] [--save [path]]
 ---
 
-# Rust Daily Report
+# Rust 每日报道
 
 Generate a summarized report of Rust news from multiple sources.
 

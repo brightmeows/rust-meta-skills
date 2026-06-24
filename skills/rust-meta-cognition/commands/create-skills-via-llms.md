@@ -34,7 +34,7 @@ description: |
   {中文关键词1}, {中文关键词2}, {中文问题}
 ---
 
-# {CrateName} {Feature} Skill
+# {CrateName} {Feature} Skill：通过 llms.txt 创建 Skill
 
 > **Version:** {crate_name} {version} | **Last Updated:** {YYYY-MM-DD}
 >
