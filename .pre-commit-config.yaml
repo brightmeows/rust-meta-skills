@@ -1,0 +1,16 @@
+# pre-commit 配置
+# 安装: pre-commit install
+# 手动运行: pre-commit run --all-files
+# 跳过验证: git commit --no-verify
+repos:
+  # 本地 markdownlint（系统已全局安装 markdownlint-cli）
+  - repo: local
+    hooks:
+      - id: markdownlint
+        name: markdownlint
+        description: 对暂存的 Markdown 文件运行 markdownlint 检查
+        entry: markdownlint
+        args: ["--config", ".markdownlint.toml", "--dot"]
+        language: system
+        types: [markdown]
+        require_serial: false

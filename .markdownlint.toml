@@ -1,0 +1,20 @@
+# markdownlint 配置
+# 参考: https://github.com/DavidAnson/markdownlint/blob/main/schema/.markdownlint.yaml
+
+# 启用所有规则，然后选择性禁用噪音大的
+default = true
+
+# 行长度 — doc 允许较长行
+MD013 = { line_length = 120, code_blocks = false, tables = false }
+
+# 允许重复标题（不同层级下相同标题很常见）
+MD024 = { siblings_only = true }
+
+# 允许内联 HTML（文档中偶尔需要）
+MD033 = { allowed_elements = ["br", "details", "summary", "kbd", "sup", "sub"] }
+
+# 允许无语言标识的代码块（纯文本/输出块常见）
+MD040 = false
+
+# 表格列风格 — 紧凑表格是项目中常用风格，不禁用但允许
+MD060 = false
