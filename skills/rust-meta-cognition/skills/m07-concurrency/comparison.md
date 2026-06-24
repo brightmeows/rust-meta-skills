@@ -1,17 +1,17 @@
-# Concurrency: Comparison with Other Languages
+# 并发：与其他语言对比
 
 ## Rust vs Go
 
-### Concurrency Model
+### 并发模型
 
-| Aspect | Rust | Go |
+| 方面 | Rust | Go |
 |--------|------|-----|
-| Model | Ownership + Send/Sync | CSP (Communicating Sequential Processes) |
-| Primitives | Arc, Mutex, channels | goroutines, channels |
-| Safety | Compile-time | Runtime (race detector) |
-| Async | async/await + runtime | Built-in scheduler |
+| 模型 | 所有权 + Send/Sync | CSP（通信顺序进程） |
+| 原语 | Arc、Mutex、channel | goroutine、channel |
+| 安全 | 编译时 | 运行时（竞态检测器） |
+| 异步 | async/await + 运行时 | 内置调度器 |
 
-### Goroutines vs Rust Tasks
+### Goroutine vs Rust 任务
 
 ```rust
 // Rust: explicit about thread safety
@@ -33,7 +33,7 @@ tokio::spawn(async move {
 // }()
 ```
 
-### Channel Comparison
+### 信道对比
 
 ```rust
 // Rust: typed channels with ownership
@@ -58,35 +58,35 @@ tokio::spawn(async move {
 
 ## Rust vs Java
 
-### Thread Safety Model
+### 线程安全模型
 
-| Aspect | Rust | Java |
+| 方面 | Rust | Java |
 |--------|------|------|
-| Safety | Compile-time (Send/Sync) | Runtime (synchronized, volatile) |
-| Null | No null (Option) | NullPointerException risk |
-| Locks | RAII (drop releases) | try-finally or try-with-resources |
-| Memory | No GC | GC with stop-the-world |
+| 安全 | 编译时（Send/Sync） | 运行时（synchronized、volatile） |
+| 空值 | 无 null（Option） | NullPointerException 风险 |
+| 锁 | RAII（drop 释放） | try-finally 或 try-with-resources |
+| 内存 | 无 GC | GC 带 stop-the-world |
 
-### Synchronization Comparison
+### 同步对比
 
 ```rust
-// Rust: lock is tied to data
+// Rust：锁与数据绑定
 use std::sync::Mutex;
 
 let data = Mutex::new(vec![1, 2, 3]);
 {
     let mut guard = data.lock().unwrap();
     guard.push(4);
-}  // lock released automatically
+}  // 锁自动释放
 
-// Java: lock and data are separate
+// Java：锁和数据分离
 // List<Integer> data = new ArrayList<>();
 // synchronized(data) {
 //     data.add(4);
-// }  // easy to forget synchronization elsewhere
+// }  // 容易在其他地方忘记同步
 ```
 
-### Thread Pool Comparison
+### 线程池对比
 
 ```rust
 // Rust: rayon for data parallelism
