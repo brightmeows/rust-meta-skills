@@ -13,33 +13,33 @@
 ## 响应结构
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-[Primary query results]
+### 发现
+[主要查询结果]
 
-### Confidence
-- **Level**: HIGH | MEDIUM | LOW | UNCERTAIN
-- **Reason**: [Brief explanation]
+### 置信度
+- **级别**：高 | 中 | 低 | 不确定
+- **理由**：[简要说明]
 
-### Gaps Identified
-- [ ] [Gap 1]
-- [ ] [Gap 2]
+### 已识别的差距
+- [ ] [差距 1]
+- [ ] [差距 2]
 
-### Context Needed
-- Q1: [Question]
-- Q2: [Question]
+### 需要的上下文
+- Q1：[问题]
+- Q2：[问题]
 
-### Metadata
-- **Source**: [Data source]
-- **Coverage**: [Coverage assessment]
+### 元数据
+- **来源**：[数据源]
+- **覆盖度**：[覆盖度评估]
 ```
 
 ---
 
 ## 章节要求
 
-### Findings（必需）
+### 发现（必需）
 
 Agent 发现的内容。这是核心内容。
 
@@ -53,21 +53,21 @@ Agent 发现的内容。这是核心内容。
 **示例：**
 
 ```markdown
-### Findings
-**Crate:** tokio
-**Version:** 1.49.0
-**Description:** An event-driven, non-blocking I/O platform
+### 发现
+**Crate：** tokio
+**版本：** 1.49.0
+**描述：** 一个事件驱动的非阻塞 I/O 平台
 
-**Key Features:**
-- `full`: Enables all features
-- `rt-multi-thread`: Multi-threaded runtime
-- `sync`: Synchronization primitives
+**关键特性：**
+- `full`：启用所有特性
+- `rt-multi-thread`：多线程运行时
+- `sync`：同步原语
 
-**Recent Changes:**
-- 1.49.0: Added cooperative scheduling improvements
+**近期变更：**
+- 1.49.0：新增协作式调度改进
 ```
 
-### Confidence（必需）
+### 置信度（必需）
 
 自我评估发现的可靠性。
 
@@ -81,12 +81,12 @@ Agent 发现的内容。这是核心内容。
 **示例：**
 
 ```markdown
-### Confidence
-- **Level**: MEDIUM
-- **Reason**: Found crate info on lib.rs, but changelog not accessible
+### 置信度
+- **级别**：中
+- **理由**：在 lib.rs 上找到 crate 信息，但 changelog 无法访问
 ```
 
-### Gaps Identified（必需）
+### 已识别的差距（必需）
 
 无法找到或无法验证的内容。
 
@@ -100,13 +100,13 @@ Agent 发现的内容。这是核心内容。
 **示例：**
 
 ```markdown
-### Gaps Identified
-- [ ] Performance benchmarks not found
-- [ ] Breaking changes from 1.48 unknown
-- [x] Feature list - resolved from docs.rs
+### 已识别的差距
+- [ ] 未找到性能基准
+- [ ] 1.48 版本的破坏性变更未知
+- [x] 特性列表——已从 docs.rs 解析
 ```
 
-### Context Needed（条件性）
+### 需要的上下文（条件性）
 
 向编排器提出的问题，以获得更好的答案。
 
@@ -126,28 +126,28 @@ Agent 发现的内容。这是核心内容。
 **示例：**
 
 ```markdown
-### Context Needed
-- Q1: Is this for a web server or CLI application?
-- Q2: Do you need WebSocket support?
+### 需要的上下文
+- Q1：这是用于 Web 服务器还是 CLI 应用？
+- Q2：你需要 WebSocket 支持吗？
 ```
 
 **不需要的情况：**
 
 ```markdown
-Query: "What is tokio's latest version?"
-→ No context needed, direct lookup
+查询：“tokio 的最新版本是什么？”
+→ 无需上下文，直接查找
 ```
 
-### Metadata（必需）
+### 元数据（必需）
 
 来源归属和覆盖度评估。
 
 **示例：**
 
 ```markdown
-### Metadata
-- **Source**: lib.rs/crates/tokio, docs.rs/tokio/1.49.0
-- **Coverage**: 85% - missing performance benchmarks
+### 元数据
+- **来源**：lib.rs/crates/tokio, docs.rs/tokio/1.49.0
+- **覆盖度**：85%——缺少性能基准
 ```
 
 ---
@@ -168,108 +168,108 @@ Query: "What is tokio's latest version?"
 ### 高置信度示例
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Crate:** serde
-**Version:** 1.0.219
-**Description:** A generic serialization/deserialization framework
+### 发现
+**Crate：** serde
+**版本：** 1.0.219
+**描述：** 一个通用的序列化/反序列化框架
 
-**Features:**
-- `derive`: Enables #[derive(Serialize, Deserialize)]
-- `std`: Use standard library (default)
-- `alloc`: For no_std with alloc
+**特性：**
+- `derive`：启用 #[derive(Serialize, Deserialize)]
+- `std`：使用标准库（默认）
+- `alloc`：用于 no_std 与 alloc
 
-**Documentation:** Comprehensive with examples
-**Ecosystem:** De facto standard for Rust serialization
+**文档：** 完善且含示例
+**生态：** Rust 序列化的事实标准
 
-### Confidence
-- **Level**: HIGH
-- **Reason**: Official docs complete, widely documented crate
+### 置信度
+- **级别**：高
+- **理由**：官方文档完整，广为记载的 crate
 
-### Gaps Identified
-- [x] Core info - complete
-- [x] Features - complete
-- [ ] Migration from 0.x - not requested, not fetched
+### 已识别的差距
+- [x] 核心信息——完整
+- [x] 特性——完整
+- [ ] 从 0.x 迁移——未请求，未获取
 
-### Context Needed
-(None - query was specific)
+### 需要的上下文
+（无——查询已明确）
 
-### Metadata
-- **Source**: lib.rs, docs.rs/serde/1.0.219
-- **Coverage**: 95% - comprehensive for typical use
+### 元数据
+- **来源**：lib.rs, docs.rs/serde/1.0.219
+- **覆盖度**：95%——典型使用足够全面
 ```
 
 ### 低置信度示例
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Crate:** obscure-crate
-**Version:** 0.1.2 (last updated 2023)
-**Description:** [minimal description on crates.io]
+### 发现
+**Crate：** obscure-crate
+**版本：** 0.1.2（最后更新于 2023）
+**描述：**[crates.io 上的简要描述]
 
-**Features:** Unknown (not documented)
+**特性：** 未知（未记录）
 
-### Confidence
-- **Level**: LOW
-- **Reason**: Minimal documentation, abandoned crate, no recent activity
+### 置信度
+- **级别**：低
+- **理由**：文档极少，crate 已废弃，近期无活动
 
-### Gaps Identified
-- [ ] Feature documentation missing
-- [ ] No usage examples found
-- [ ] Maintenance status unclear
-- [ ] No API documentation on docs.rs
+### 已识别的差距
+- [ ] 特性文档缺失
+- [ ] 未找到使用示例
+- [ ] 维护状态不明确
+- [ ] docs.rs 上无 API 文档
 
-### Context Needed
-- Q1: Is there an alternative crate you'd consider?
-- Q2: What specific functionality do you need from this crate?
+### 需要的上下文
+- Q1：是否有你考虑使用的替代 crate？
+- Q2：你需要此 crate 的哪些具体功能？
 
-### Metadata
-- **Source**: crates.io (lib.rs had no additional info)
-- **Coverage**: 30% - minimal data available
+### 元数据
+- **来源**：crates.io（lib.rs 无额外信息）
+- **覆盖度**：30%——可用数据极少
 ```
 
 ### 比较查询示例
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Comparison:** tokio vs async-std (runtime focus)
+### 发现
+**比较：** tokio vs async-std（运行时对比）
 
-**tokio:**
-- Multi-threaded by default
-- Larger ecosystem (axum, tonic, etc.)
-- More configuration options
+**tokio：**
+- 默认多线程
+- 更大的生态（axum、tonic 等）
+- 更多配置选项
 
-**async-std:**
-- Single-threaded default, multi-thread available
-- Closer to std API design
-- Simpler getting started
+**async-std：**
+- 默认单线程，多线程可用
+- 更接近 std API 设计
+- 更容易上手
 
-**Common:**
-- Both support async/await
-- Both production-ready
+**共同点：**
+- 都支持 async/await
+- 都已可用于生产环境
 
-### Confidence
-- **Level**: MEDIUM
-- **Reason**: General characteristics known, but no benchmark data for specific use case
+### 置信度
+- **级别**：中
+- **理由**：已知通用特性，但缺少特定用例的基准数据
 
-### Gaps Identified
-- [ ] Performance benchmarks for web servers
-- [ ] Memory usage comparison
-- [ ] Ecosystem compatibility matrix
+### 已识别的差距
+- [ ] Web 服务器的性能基准
+- [ ] 内存使用对比
+- [ ] 生态兼容性矩阵
 
-### Context Needed
-- Q1: Which web framework will you use? (axum requires tokio)
-- Q2: Is multi-threaded runtime required?
-- Q3: What's the expected request volume?
+### 需要的上下文
+- Q1：你将使用哪个 Web 框架？（axum 需要 tokio）
+- Q2：是否需要多线程运行时？
+- Q3：预期的请求量是多少？
 
-### Metadata
-- **Source**: lib.rs for both, official docs
-- **Coverage**: 60% - characteristics known, specifics missing
+### 元数据
+- **来源**：两者的 lib.rs，官方文档
+- **覆盖度**：60%——特性已知，细节缺失
 ```
 
 ---
@@ -280,42 +280,42 @@ Query: "What is tokio's latest version?"
 
 ```markdown
 # 不好
-Confidence: HIGH
-Reason: Found some info
+置信度：高
+理由：找到了一些信息
 # 好
-Confidence: MEDIUM
-Reason: Found basic info, but detailed docs not accessible
+置信度：中
+理由：找到了基本信息，但详细文档无法访问
 ```
 
 ### 不要：模糊的差距
 
 ```markdown
 # 不好
-Gaps: Some things missing
+差距：有些东西缺失
 # 好
-Gaps:
-- [ ] Feature `x` documentation not found
-- [ ] Version 2.0 migration guide unavailable
+差距：
+- [ ] 未找到特性 `x` 的文档
+- [ ] 版本 2.0 迁移指南不可用
 ```
 
 ### 不要：不相关的上下文问题
 
 ```markdown
 # 不好（针对“tokio 最新版本”查询）
-Context Needed: What's your favorite color?
+需要的上下文：你最喜欢的颜色是什么？
 # 好
-Context Needed: (None - query is specific)
+需要的上下文：（无——查询已明确）
 ```
 
 ### 不要：跳过元数据
 
 ```markdown
 # 不好
-(no metadata section)
+（无元数据章节）
 # 好
-Metadata:
-- Source: lib.rs
-- Coverage: 90%
+元数据：
+- 来源：lib.rs
+- 覆盖度：90%
 ```
 
 ---
