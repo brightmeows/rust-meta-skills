@@ -50,13 +50,13 @@ description: >-
 加载匹配的子技能，解决关键词冲突，并决定是否触发协商。
 
 ```
-User Question
+用户问题
    │
-[1] rust-router → identify entry layer + domain
+[1] rust-router → 识别入口层级 + 领域
    │
-[2] load sub-skill (m0x / m1x / domain-*)
+[2] 加载子技能（m0x / m1x / domain-*）
    │
-[3] trace through layers, answer with reasoning chain
+[3] 逐层追溯，以推理链形式回答
 ```
 
 > 完整路由表、错误码映射、关键词冲突解决规则见
@@ -79,9 +79,9 @@ all = "warn"
 pedantic = "warn"
 ```
 
-Rules:
+规则：
 
-- ALWAYS `edition = "2024"`
+- 始终使用 `edition = "2024"`
 - 包含 `rust-version` 明确 MSRV
 - 默认启用 clippy `all` + `pedantic`
 
@@ -115,38 +115,38 @@ unsafe { slice.get_unchecked(index) }
 
 ## 技能索引
 
-### Core
+### 核心
 
 - [`rust-router`](skills/rust-router/SKILL.md) — 主路由（所有 Rust 问题先走它）
 - [`rust-learner`](skills/rust-learner/SKILL.md) — 获取最新 Rust / crate 版本
 - [`coding-guidelines`](skills/coding-guidelines/SKILL.md) — 编码规范查询
 - [`unsafe-checker`](skills/unsafe-checker/SKILL.md) — unsafe 代码审查
 
-### Layer 1: Language Mechanics (m01-m07)
+### 第一层：语言机制（m01-m07）
 
-| Skill | Core Question |
-|-------|---------------|
-| [m01-ownership](skills/m01-ownership/SKILL.md) | Who owns this data? |
-| [m02-resource](skills/m02-resource/SKILL.md) | What ownership pattern fits? |
-| [m03-mutability](skills/m03-mutability/SKILL.md) | Why must this change? |
-| [m04-zero-cost](skills/m04-zero-cost/SKILL.md) | Compile-time or runtime polymorphism? |
-| [m05-type-driven](skills/m05-type-driven/SKILL.md) | How can types prevent invalid states? |
-| [m06-error-handling](skills/m06-error-handling/SKILL.md) | Expected failure or bug? |
-| [m07-concurrency](skills/m07-concurrency/SKILL.md) | CPU-bound or I/O-bound? |
+| 技能 | 核心问题 |
+|------|----------|
+| [m01-ownership](skills/m01-ownership/SKILL.md) | 谁拥有这份数据？ |
+| [m02-resource](skills/m02-resource/SKILL.md) | 哪种所有权模式合适？ |
+| [m03-mutability](skills/m03-mutability/SKILL.md) | 为什么必须改变？ |
+| [m04-zero-cost](skills/m04-zero-cost/SKILL.md) | 编译期还是运行期多态？ |
+| [m05-type-driven](skills/m05-type-driven/SKILL.md) | 类型如何防止非法状态？ |
+| [m06-error-handling](skills/m06-error-handling/SKILL.md) | 预期失败还是程序缺陷？ |
+| [m07-concurrency](skills/m07-concurrency/SKILL.md) | CPU 密集型还是 I/O 密集型？ |
 
-### Layer 2: Design Choices (m09-m15)
+### 第二层：设计选择（m09-m15）
 
-| Skill | Core Question |
-|-------|---------------|
-| [m09-domain](skills/m09-domain/SKILL.md) | What role does this concept play? |
-| [m10-performance](skills/m10-performance/SKILL.md) | Where's the bottleneck? |
-| [m11-ecosystem](skills/m11-ecosystem/SKILL.md) | Which crate fits? |
-| [m12-lifecycle](skills/m12-lifecycle/SKILL.md) | When to create / use / cleanup? |
-| [m13-domain-error](skills/m13-domain-error/SKILL.md) | Who handles this error? |
-| [m14-mental-model](skills/m14-mental-model/SKILL.md) | How to think about this? |
-| [m15-anti-pattern](skills/m15-anti-pattern/SKILL.md) | Does this hide design issues? |
+| 技能 | 核心问题 |
+|------|----------|
+| [m09-domain](skills/m09-domain/SKILL.md) | 这个概念扮演什么角色？ |
+| [m10-performance](skills/m10-performance/SKILL.md) | 瓶颈在哪里？ |
+| [m11-ecosystem](skills/m11-ecosystem/SKILL.md) | 该用哪个 crate？ |
+| [m12-lifecycle](skills/m12-lifecycle/SKILL.md) | 何时创建 / 使用 / 清理？ |
+| [m13-domain-error](skills/m13-domain-error/SKILL.md) | 谁来处理这个错误？ |
+| [m14-mental-model](skills/m14-mental-model/SKILL.md) | 如何理解这个问题？ |
+| [m15-anti-pattern](skills/m15-anti-pattern/SKILL.md) | 是否隐藏了设计问题？ |
 
-### Layer 3: Domain Constraints (domain-*)
+### 第三层：领域约束（domain-*）
 
 - [`domain-fintech`](skills/domain-fintech/SKILL.md)
 - [`domain-web`](skills/domain-web/SKILL.md)
@@ -156,7 +156,7 @@ unsafe { slice.get_unchecked(index) }
 - [`domain-iot`](skills/domain-iot/SKILL.md)
 - [`domain-ml`](skills/domain-ml/SKILL.md)
 
-### Utility & Experimental
+### 工具与实验
 
 - [`rust-daily`](skills/rust-daily/SKILL.md)
 - [`rust-skill-creator`](skills/rust-skill-creator/SKILL.md)
