@@ -63,10 +63,10 @@ Agent 找到了部分信息。核心数据存在，但有不会阻碍理解的�
 
 ### 标准（必须满足多数）
 
-- [ ] Some authoritative source available
-- [ ] Core data found (may be incomplete)
-- [ ] Minor gaps identified
-- [ ] No major conflicts
+- [ ] 有权威来源可用
+- [ ] 核心数据已找到（可能不完整）
+- [ ] 识别出次要差距
+- [ ] 无重大冲突
 
 ### 常见的中置信度场景
 

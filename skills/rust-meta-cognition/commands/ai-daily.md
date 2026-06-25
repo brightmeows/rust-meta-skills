@@ -14,28 +14,28 @@ Arguments: $ARGUMENTS
 
 ---
 
-## Sources
+## 数据源
 
-| Community | URL | Focus |
-|-----------|-----|-------|
-| r/AI_Agents | <https://www.reddit.com/r/AI_Agents/> | AI Agent development, tools |
-| r/ClaudeAI | <https://www.reddit.com/r/ClaudeAI/> | Claude, Anthropic updates |
-| r/ChatGPT | <https://www.reddit.com/r/ChatGPT/> | ChatGPT, OpenAI updates |
+| 社区 | URL | 关注点 |
+|------|-----|--------|
+| r/AI_Agents | <https://www.reddit.com/r/AI_Agents/> | AI Agent 开发、工具 |
+| r/ClaudeAI | <https://www.reddit.com/r/ClaudeAI/> | Claude、Anthropic 更新 |
+| r/ChatGPT | <https://www.reddit.com/r/ChatGPT/> | ChatGPT、OpenAI 更新 |
 
 ---
 
-## Instructions
+## 说明
 
-### 1. Parse Arguments
+### 1. 解析参数
 
 ```
-/ai-daily              → day (last 24 hours), display only
-/ai-daily day          → last 24 hours
-/ai-daily week         → last 7 days
-/ai-daily month        → last 30 days
-/ai-daily --save       → save to ~/Documents/reports/ai-daily/{date}-ai-{time_range}.md
-/ai-daily --save /path/to/dir  → save to specified directory
-/ai-daily week --save  → weekly report, save to default location
+/ai-daily              → 天（过去 24 小时），仅显示
+/ai-daily day          → 过去 24 小时
+/ai-daily week         → 过去 7 天
+/ai-daily month        → 过去 30 天
+/ai-daily --save       → 保存到 ~/Documents/reports/ai-daily/{date}-ai-{time_range}.md
+/ai-daily --save /path/to/dir  → 保存到指定目录
+/ai-daily week --save  → 周报，保存到默认位置
 ```
 
 ### 2. Fetch Content
@@ -546,24 +546,24 @@ Based on today's discussions, consider:
 
 ---
 
-## Troubleshooting
+## 故障排除
 
-If agent-browser commands fail:
+如果 agent-browser 命令失败：
 
-1. **Check installation:**
+1. **检查安装：**
 
    ```bash
    which agent-browser
    agent-browser install
    ```
 
-2. **Try without --headed:**
+2. **尝试不带 --headed 参数：**
 
    ```bash
    agent-browser open 'https://www.reddit.com/r/ClaudeAI/'
    ```
 
-3. **Check browser is installed:**
+3. **检查浏览器是否已安装：**
 
    ```bash
    agent-browser install --with-deps
@@ -571,6 +571,6 @@ If agent-browser commands fail:
 
 ---
 
-## Related Commands
+## 相关命令
 
-- `/rust-daily` - Rust programming news
+- `/rust-daily` - Rust 编程新闻

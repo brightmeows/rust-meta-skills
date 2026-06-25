@@ -30,21 +30,21 @@
 位置：`~/.claude/cache/rust-docs/std/{module}/{item}.json`
 TTL：30 天（std 稳定）
 
-## Output (Standard Mode)
+## 输出（标准模式）
 
 ```markdown
 ## std::<Item>
 
-**Signature:**
+**签名：**
 \`\`\`rust
 <signature>
 \`\`\`
 
-**Description:** <main doc>
+**描述：** <main doc>
 
-**Key Points:**
-- point 1
-- point 2
+**关键点：**
+- 要点 1
+- 要点 2
 ```
 
 ## 验证
@@ -96,37 +96,37 @@ TTL：30 天（std 稳定）
 ### 协商响应模板
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Item:** std::<path>::<Item>
-**Signature:**
+### 发现
+**项：** std::<path>::<Item>
+**签名：**
 \`\`\`rust
 <signature>
 \`\`\`
-**Key Points:**
-- Point 1
-- Point 2
+**关键点：**
+- 要点 1
+- 要点 2
 
-**Related items:** [if relevant]
+**相关项：** [如果相关]
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Official Rust documentation"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如："官方 Rust 文档"]
 
-### Gaps Identified
-- [ ] [Specific gap 1]
-- [ ] [Specific gap 2]
+### 已识别的差距
+- [ ] [具体差距 1]
+- [ ] [具体差距 2]
 
-### Context Needed
-- Q1: [If ambiguous]
+### 需要的上下文
+- 问题 1：[如有歧义]
 
-### Metadata
-- **Source**: doc.rust-lang.org/std
-- **Coverage**: [e.g., "95% - standard docs complete"]
+### 元数据
+- **来源**：doc.rust-lang.org/std
+- **覆盖度**：[例如："95% - 标准文档完整"]
 ```
 
-### Related Documents
+### 相关文档
 
-- `_negotiation/response-format.md` - Response structure
-- `_negotiation/confidence-rubric.md` - Confidence criteria
+- `_negotiation/response-format.md` - 响应结构
+- `_negotiation/confidence-rubric.md` - 置信度标准

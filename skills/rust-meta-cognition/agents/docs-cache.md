@@ -15,13 +15,13 @@ Agent 文档缓存辅助工具。
 
 ## 按来源的 TTL
 
-| Source | TTL | Reason |
-|--------|-----|--------|
-| std/ | 30 days | Stable |
-| docs.rs/ | 7 days | Crate updates |
-| releases.rs/ | 365 days | Historical |
-| lib.rs/ | 1 day | Version changes |
-| clippy/ | 14 days | Rust version updates |
+| 来源 | TTL | 原因 |
+|------|-----|------|
+| std/ | 30 天 | 稳定 |
+| docs.rs/ | 7 天 | Crate 更新 |
+| releases.rs/ | 365 天 | 历史数据 |
+| lib.rs/ | 1 天 | 版本变化 |
+| clippy/ | 14 天 | Rust 版本更新 |
 
 ## 缓存格式
 

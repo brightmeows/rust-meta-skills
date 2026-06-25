@@ -5,16 +5,16 @@ argument-hint: [crate_names...] [--all]
 
 # 清理 Crate Skill
 
-Remove dynamically generated crate skills from the local skills directory.
+从本地 skills 目录移除动态生成的 crate skills。
 
-Arguments: $ARGUMENTS
+参数：$ARGUMENTS
 
-- `crate_names`: Specific crates to remove (space-separated)
-- `--all`: Remove all local crate skills
+- `crate_names`：要移除的特定 crate（空格分隔）
+- `--all`：移除所有本地 crate skills
 
 ---
 
-## Instructions
+## 说明
 
 ### 1. List Current Skills
 
@@ -48,8 +48,8 @@ rm -rf ~/.claude/skills/{crate_name}-*  # Remove sub-skills (e.g., tokio-task, t
 rm -rf ~/.claude/skills/{crate_name}*
 ```
 
-**If no arguments:**
-Use AskUserQuestion to ask which crates to remove:
+**如果没有参数：**
+使用 AskUserQuestion 询问要移除哪些 crate：
 
 ```
 Which crate skills do you want to remove?

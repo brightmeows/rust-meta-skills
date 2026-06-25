@@ -66,22 +66,22 @@
 ## 输出
 
 ```markdown
-# Rust {Day|Week|Month} Report
+# Rust {日|周|月} 报道
 
-**Time:** {start} - {end} | **Generated:** {now}
+**时间：** {start} - {end} | **生成时间：** {now}
 
-## Ecosystem
+## 生态
 ### Reddit r/rust
-| Score | Title | Link |
+| 分数 | 标题 | 链接 |
 
 ### This Week in Rust
-- Issue #{number} ({date}): highlights
+- 第 #{number} 期（{date}）：亮点
 
-## Official
-| Date | Title | Summary |
+## 官方
+| 日期 | 标题 | 摘要 |
 
-## Foundation
-| Date | Title | Summary |
+## 基金会
+| 日期 | 标题 | 摘要 |
 ```
 
 ## 验证（必需）

@@ -123,7 +123,7 @@ Agent 发现的内容。这是核心内容。
 - 已提供所有必要上下文
 - 直接查找，答案明确
 
-**Example:**
+**示例：**
 
 ```markdown
 ### Context Needed
@@ -131,7 +131,7 @@ Agent 发现的内容。这是核心内容。
 - Q2: Do you need WebSocket support?
 ```
 
-**Not needed for:**
+**不需要的情况：**
 
 ```markdown
 Query: "What is tokio's latest version?"
@@ -320,8 +320,8 @@ Metadata:
 
 ---
 
-## Related Documents
+## 相关文档
 
-- `_meta/negotiation-protocol.md` - Full protocol specification
-- `_meta/negotiation-templates.md` - Agent-specific templates
-- `confidence-rubric.md` - Detailed confidence criteria
+- `_meta/negotiation-protocol.md` - 完整协议规范
+- `_meta/negotiation-templates.md` - Agent 特定模板
+- `confidence-rubric.md` - 详细的置信度标准

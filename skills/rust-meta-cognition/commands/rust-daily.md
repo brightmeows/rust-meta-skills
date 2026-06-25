@@ -5,23 +5,23 @@ argument-hint: [day|week|month] [--category ecosystem|official|foundation] [--sa
 
 # Rust 每日报道
 
-Generate a summarized report of Rust news from multiple sources.
+生成 Rust 多来源新闻的汇总报告。
 
-Arguments: $ARGUMENTS
+参数：$ARGUMENTS
 
-- `time_range` (optional): `day` | `week` | `month` (default: `week`)
-- `--category` (optional): `ecosystem` | `official` | `foundation` | `all` (default: `all`)
-- `--save` (optional): Save report to file. If path not specified, saves to `~/Documents/reports/rust-daily/`
+- `time_range`（可选）：`day` | `week` | `month`（默认：`week`）
+- `--category`（可选）：`ecosystem` | `official` | `foundation` | `all`（默认：`all`）
+- `--save`（可选）：保存报告到文件。未指定路径时保存到 `~/Documents/reports/rust-daily/`
 
 ---
 
-## Sources
+## 数据源
 
-| Category | Sources |
-|----------|---------|
-| **Ecosystem** | Reddit r/rust, This Week in Rust |
-| **Official** | Rust Blog, Inside Rust Blog |
-| **Foundation** | Rust Foundation News, Blog, Events |
+| 类别 | 来源 |
+|------|------|
+| **生态** | Reddit r/rust、This Week in Rust |
+| **官方** | Rust Blog、Inside Rust Blog |
+| **基金会** | Rust Foundation News、Blog、Events |
 
 ---
 
@@ -493,8 +493,8 @@ mkdir -p ~/.claude/cache/rust-daily/
 
 ---
 
-## Related Commands
+## 相关命令
 
-- `/rust-features [version]` - Rust version changelog
-- `/crate-info <crate>` - Crate information
-- `/sync-crate-skills` - Sync project dependencies
+- `/rust-features [version]` - Rust 版本更新日志
+- `/crate-info <crate>` - Crate 信息
+- `/sync-crate-skills` - 同步项目依赖

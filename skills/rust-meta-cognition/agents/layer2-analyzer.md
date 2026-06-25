@@ -42,33 +42,33 @@
 ## 输出格式
 
 ```markdown
-## Layer 2 Analysis: Design Choices
+## 第 2 层分析：设计选择
 
-### Design Concern
-- **Pattern Category:** [Ownership/Concurrency/Error/etc.]
-- **Current Approach:** [What user is doing]
-- **Issue:** [Why it's problematic]
+### 设计关注点
+- **模式类别：** [所有权/并发/错误/等]
+- **当前方法：** [用户正在做什么]
+- **问题：** [为什么有问题]
 
-### Recommended Patterns
-| Pattern | Description | When to Use |
-|---------|-------------|-------------|
-| 1 | [Pattern name] | [Applicable scenario] |
-| 2 | [Pattern name] | [Applicable scenario] |
+### 推荐模式
+| 模式 | 描述 | 何时使用 |
+|------|------|----------|
+| 1 | [模式名称] | [适用场景] |
+| 2 | [模式名称] | [适用场景] |
 
-### Anti-patterns to Avoid
-- [Anti-pattern]: [Why it's bad]
+### 需避免的反模式
+- [反模式]：[为什么不好]
 
-### Ecosystem Support
-- **Crate:** [Recommended crate]
-- **Pattern:** [How crate implements pattern]
+### 生态支持
+- **Crate：** [推荐 crate]
+- **模式：** [crate 如何实现模式]
 
-### Layer Interactions
-- **From L1:** [What mechanisms to use]
-- **From L3:** [What domain rules to consider]
+### 层级交互
+- **来自 L1：** [要使用的机制]
+- **来自 L3：** [要考虑的领域规则]
 
-### Confidence
-- **Level:** HIGH | MEDIUM | LOW
-- **Reason:** [Why this confidence level]
+### 置信度
+- **级别：** 高 | 中 | 低
+- **原因：** [为什么是这个置信级别]
 ```
 
 ## 示例
@@ -78,33 +78,33 @@
 **输出：**
 
 ```markdown
-## Layer 2 Analysis: Design Choices
+## 第 2 层分析：设计选择
 
-### Design Concern
-- **Pattern Category:** Shared Data Ownership
-- **Current Approach:** Attempting to move data multiple times
-- **Issue:** Clone may not be semantically correct for domain
+### 设计关注点
+- **模式类别：** 共享数据所有权
+- **当前方法：** 尝试多次移动数据
+- **问题：** 克隆在语义上可能不适合该领域
 
-### Recommended Patterns
-| Pattern | Description | When to Use |
-|---------|-------------|-------------|
-| Shared Immutable | `Arc<T>` for read-only shared data | Audit logs, config |
-| Interior Mutability | `Arc<RwLock<T>>` for shared mutable | Live state |
-| Event Sourcing | Immutable events + computed state | Financial systems |
+### 推荐模式
+| 模式 | 描述 | 何时使用 |
+|------|------|----------|
+| 共享不可变 | `Arc<T>` 用于只读共享数据 | 审计日志、配置 |
+| 内部可变性 | `Arc<RwLock<T>>` 用于共享可变 | 实时状态 |
+| 事件溯源 | 不可变事件 + 计算状态 | 金融系统 |
 
-### Anti-patterns to Avoid
-- **Excessive Cloning:** Hides ownership design issues, wastes memory
-- **RefCell Everywhere:** Often indicates design problem
+### 需避免的反模式
+- **过度克隆：** 掩盖所有权设计问题，浪费内存
+- **遍地 RefCell：** 通常表明设计问题
 
-### Ecosystem Support
-- **Crate:** `im` (immutable data structures)
-- **Pattern:** Persistent data structures for audit trails
+### 生态支持
+- **Crate：** `im`（不可变数据结构）
+- **模式：** 用于审计轨迹的持久化数据结构
 
-### Layer Interactions
-- **From L1:** Arc<T> provides thread-safe sharing
-- **From L3:** Need to verify if domain allows data copying
+### 层级交互
+- **来自 L1：** Arc<T> 提供线程安全共享
+- **来自 L3：** 需要验证领域是否允许数据复制
 
-### Confidence
-- **Level:** MEDIUM
-- **Reason:** Design choice depends on domain requirements (L3)
+### 置信度
+- **级别：** 中
+- **原因：** 设计选择取决于领域需求（L3）
 ```

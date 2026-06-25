@@ -2,63 +2,63 @@
 
 查询 Rust 编码规范与最佳实践。
 
-## Usage
+## 用法
 
 ```
 /guideline <query>
 /guideline --clippy <lint>
 ```
 
-## Parameters
+## 参数
 
-- `query` (required): Rule ID (e.g., `P.NAM.01`) or keyword (e.g., `naming`)
-- `--clippy <lint>`: Look up a Clippy lint and map it to guideline rules
+- `query`（必需）：规则 ID（例如 `P.NAM.01`）或关键词（例如 `naming`）
+- `--clippy <lint>`：查询 Clippy lint 并映射到规范规则
 
-## Examples
+## 示例
 
 ```
-/guideline P.NAM.01          # Get specific rule
-/guideline naming            # Search naming conventions
-/guideline clippy            # Search clippy-related rules
-/guideline --clippy needless_clone  # Map clippy lint to rule
+/guideline P.NAM.01          # 获取特定规则
+/guideline naming            # 搜索命名规范
+/guideline clippy            # 搜索 clippy 相关规则
+/guideline --clippy needless_clone  # 映射 clippy lint 到规则
 ```
 
-## Workflow
+## 工作流程
 
-### Standard Query
+### 标准查询
 
-1. Parse query type (rule ID or keyword)
-2. Check if unsafe-related → route to `unsafe-checker` skill
-3. Search in rules files or rules-index.md
-4. Return matching rules with:
-   - Rule ID and level (P/G)
-   - Title and description
-   - Code examples
-   - Link to full documentation
+1. 解析查询类型（规则 ID 或关键词）
+2. 检查是否与 unsafe 相关 → 路由到 `unsafe-checker` skill
+3. 在规则文件或 rules-index.md 中搜索
+4. 返回匹配的规则，包括：
+   - 规则 ID 和级别（P/G）
+   - 标题和描述
+   - 代码示例
+   - 完整文档的链接
 
-### Clippy Lint Query (`--clippy`)
+### Clippy Lint 查询（`--clippy`）
 
-1. Use `clippy-researcher` agent
-2. Look up lint in `clippy-lints/_index.md`
-3. Return:
-   - Lint description
-   - Mapped rule ID and skill
-   - Fix suggestions
+1. 使用 `clippy-researcher` agent
+2. 在 `clippy-lints/_index.md` 中查找 lint
+3. 返回：
+   - Lint 描述
+   - 映射的规则 ID 和 skill
+   - 修复建议
 
-## Rule Levels
+## 规则级别
 
-- **P (Prescribed)**: Must follow - Required rules
-- **G (Guidance)**: Should follow - Recommended rules
+- **P（必须遵守）**：必需规则
+- **G（建议遵守）**：推荐规则
 
-## Routing
+## 路由
 
-| Query Type | Routed To |
-|------------|-----------|
+| 查询类型 | 路由到 |
+|----------|--------|
 | P.UNS.*, G.UNS.*, FFI, unsafe | `unsafe-checker` skill |
-| P.*, G.* (other) | `coding-guidelines` skill |
+| P.*, G.*（其他） | `coding-guidelines` skill |
 | --clippy <lint> | `clippy-researcher` agent |
 
-## Related Commands
+## 相关命令
 
-- `/unsafe-check` - Check file for unsafe issues
-- `/unsafe-review` - Interactive unsafe review
+- `/unsafe-check` - 检查文件的 unsafe 问题
+- `/unsafe-review` - 交互式 unsafe 审查

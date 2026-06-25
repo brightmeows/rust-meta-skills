@@ -1,72 +1,72 @@
 # /skill-index：Skill 索引查询
 
-Query Rust skills by meta-question category or technical subcategory.
+按元问题类别或技术子类别查询 Rust skills。
 
-## Usage
+## 用法
 
 ```
 /skill-index <query>
 ```
 
-## Parameters
+## 参数
 
-- `query` (required): Meta-question code (e.g., `m01`), tech category (e.g., `200`), or keyword
+- `query`（必需）：元问题代码（例如 `m01`）、技术类别（例如 `200`）或关键词
 
-## Examples
+## 示例
 
 ```
-/skill-index m01             # Memory ownership skills
-/skill-index m07             # Concurrency skills
-/skill-index 200             # Web development (Axum)
-/skill-index 250             # Tokio runtime
-/skill-index ownership       # Search by keyword
-/skill-index tokio           # Search by crate name
+/skill-index m01             # 内存所有权 skills
+/skill-index m07             # 并发 skills
+/skill-index 200             # Web 开发（Axum）
+/skill-index 250             # Tokio 运行时
+/skill-index ownership       # 按关键词搜索
+/skill-index tokio           # 按 crate 名称搜索
 ```
 
-## Query Format
+## 查询格式
 
-### By Meta-Question (XX)
+### 按元问题（XX）
 
-- `m01` - Memory Ownership & Lifetimes
-- `m02` - Resource Management Balance
-- `m03` - Mutability Boundaries
-- `m04` - Zero-Cost Abstractions
-- `m05` - Type-Driven Design
-- `m06` - Error Handling Philosophy
-- `m07` - Concurrency Correctness
-- ~~`m08`~~ - Merged into `unsafe-checker`
-- `m09` - Domain Constraint Mapping
-- `m10` - Performance Optimization Model
-- `m11` - Ecosystem Integration
-- `m12` - Domain Lifecycle
-- `m13` - Domain Error Patterns
-- `m14` - Mental Model Construction
-- `m15` - Error Pattern Recognition
+- `m01` - 内存所有权与生命周期
+- `m02` - 资源管理平衡
+- `m03` - 可变性边界
+- `m04` - 零成本抽象
+- `m05` - 类型驱动设计
+- `m06` - 错误处理哲学
+- `m07` - 并发正确性
+- ~~`m08`~~ - 已合并到 `unsafe-checker`
+- `m09` - 领域约束映射
+- `m10` - 性能优化模型
+- `m11` - 生态集成
+- `m12` - 领域生命周期
+- `m13` - 领域错误模式
+- `m14` - 心智模型构建
+- `m15` - 错误模式识别
 
-### By Tech Category (YYY)
+### 按技术类别（YYY）
 
-- `001-099` - Language Core
-- `100-199` - Standard Library
-- `200-299` - Web Development
-- `250-299` - Async/Concurrency
-- `400-499` - Data Processing
-- `500-599` - Systems Programming
-- `700-799` - Embedded Development
-- `800-899` - Cross-Language Integration
-- `850-899` - Toolchain & Build
+- `001-099` - 语言核心
+- `100-199` - 标准库
+- `200-299` - Web 开发
+- `250-299` - 异步/并发
+- `400-499` - 数据处理
+- `500-599` - 系统编程
+- `700-799` - 嵌入式开发
+- `800-899` - 跨语言集成
+- `850-899` - 工具链与构建
 
-### By Domain Extension
+### 按领域扩展
 
-- `F*` - FinTech
-- `M*` - Machine Learning
-- `CN*` - Cloud Native
-- `IoT*` - Internet of Things
+- `F*` - 金融科技
+- `M*` - 机器学习
+- `CN*` - 云原生
+- `IoT*` - 物联网
 
-## Output
+## 输出
 
-Returns matching skills with:
+返回匹配的 skills，包含：
 
-- Category code and name
-- Related technical subcategories
-- Key concepts and keywords
-- Cognitive level range (L0-L4)
+- 类别代码和名称
+- 相关技术子类别
+- 关键概念和关键词
+- 认知层级范围（L0-L4）

@@ -5,17 +5,17 @@ argument-hint: [crate_name] [--check-only] [--remove-invalid]
 
 # 修复 Skill 文档
 
-Check dynamic skills for missing reference files and fix them.
+检查动态 skills 是否缺少引用文件并进行修复。
 
-Arguments: $ARGUMENTS
+参数：$ARGUMENTS
 
-- `crate_name`: Specific crate to check (optional, defaults to all crates in ~/.claude/skills/)
-- `--check-only`: Only report issues, don't fix
-- `--remove-invalid`: Remove references to non-existent files instead of creating them
+- `crate_name`：要检查的特定 crate（可选，默认为 ~/.claude/skills/ 中的所有 crate）
+- `--check-only`：仅报告问题，不修复
+- `--remove-invalid`：移除对不存在文件的引用，而非创建它们
 
 ---
 
-## Instructions
+## 说明
 
 ### 1. Scan Skills Directory
 
@@ -41,7 +41,7 @@ Refer to the local files for detailed documentation:
 - `./references/file2.md` - Description
 ```
 
-Also check "Expected reference files" section if present.
+同时检查“Expected reference files”章节（如果存在）。
 
 ### 3. Check File Existence
 

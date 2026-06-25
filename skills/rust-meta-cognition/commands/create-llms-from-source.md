@@ -5,23 +5,23 @@ argument-hint: [source_path] [output_path]
 
 # 从 Rust 源代码创建 llms.txt
 
-Generate comprehensive llms.txt documentation from local Rust project source code.
+从本地 Rust 项目源代码生成全面的 llms.txt 文档。
 
-Arguments: $ARGUMENTS
+参数：$ARGUMENTS
 
-- First argument: source_path (optional) - Rust project path, defaults to current directory
-- Second argument: output_path (optional) - output path, defaults to ~/tmp/{timestamp}-{crate}-llms.txt
-
----
-
-## Tool Priority
-
-1. **rustdoc JSON** (preferred) - Most complete API extraction
-2. **Source code parsing** (fallback) - If rustdoc unavailable
+- 第一个参数：source_path（可选）——Rust 项目路径，默认为当前目录
+- 第二个参数：output_path（可选）——输出路径，默认为 ~/tmp/{timestamp}-{crate}-llms.txt
 
 ---
 
-## Instructions
+## 工具优先级
+
+1. **rustdoc JSON**（首选）——最完整的 API 提取
+2. **源码解析**（回退）——如果 rustdoc 不可用
+
+---
+
+## 说明
 
 ### 1. Validate Project
 
@@ -65,27 +65,27 @@ fi
 - Generate llms.txt for each member crate
 - Or combine into single llms.txt with sections per crate
 
-### 4. Extract API Documentation
+### 4. 提取 API 文档
 
-#### Method A: rustdoc JSON (Preferred)
+#### 方法 A：rustdoc JSON（首选）
 
 ```bash
-# Generate JSON documentation
+# 生成 JSON 文档
 cargo +nightly rustdoc -- -Z unstable-options --output-format json 2>/dev/null
 
-# Output location
+# 输出位置
 ls target/doc/*.json
 ```
 
-**rustdoc JSON contains:**
+**rustdoc JSON 包含：**
 
-- Complete module hierarchy
-- All pub items with documentation
-- Type signatures and generics
-- Code examples from doc comments
-- Feature flag requirements
+- 完整的模块层次结构
+- 所有带文档的公开项
+- 类型签名和泛型
+- 来自文档注释的代码示例
+- 特性标志要求
 
-**Parse JSON for:**
+**解析 JSON：**
 
 ```
 .index[*] | select(.visibility == "public") | {
@@ -96,36 +96,36 @@ ls target/doc/*.json
 }
 ```
 
-#### Method B: Source Code Parsing (Fallback)
+#### 方法 B：源码解析（回退）
 
-If rustdoc fails (no nightly, compilation errors):
+如果 rustdoc 失败（无 nightly、编译错误）：
 
 ```bash
-# Extract crate-level documentation
+# 提取 crate 级别文档
 grep "^//!" src/lib.rs | sed 's/^\/\/! //'
 
-# Extract module documentation
+# 提取模块文档
 find src -name "*.rs" -exec grep -l "^//!" {} \;
 
-# Extract pub items with doc comments
+# 提取带文档注释的公开项
 grep -B 10 "^pub " src/**/*.rs | grep -E "///|^pub "
 
-# Extract pub item signatures
+# 提取公开项签名
 grep -E "^pub (fn|struct|enum|trait|type|mod|const|static)" src/**/*.rs
 ```
 
-**Extraction targets:**
+**提取目标：**
 
-| Pattern | Captures |
-|---------|----------|
-| `//!` | Module-level docs |
-| `///` | Item-level docs |
-| `pub fn` | Public functions |
-| `pub struct` | Public structs |
-| `pub enum` | Public enums |
-| `pub trait` | Public traits |
-| `pub type` | Type aliases |
-| `pub mod` | Public modules |
+| 模式 | 捕获内容 |
+|------|----------|
+| `//!` | 模块级别文档 |
+| `///` | 项级别文档 |
+| `pub fn` | 公开函数 |
+| `pub struct` | 公开结构体 |
+| `pub enum` | 公开枚举 |
+| `pub trait` | 公开 trait |
+| `pub type` | 类型别名 |
+| `pub mod` | 公开模块 |
 
 ### 5. Read README.md
 
@@ -143,9 +143,9 @@ fi
 grep -A 50 "^\[features\]" Cargo.toml | grep -B 50 "^\[" | head -50
 ```
 
-### 7. Generate llms.txt
+### 7. 生成 llms.txt
 
-Consolidate all extracted content into this format:
+将所有提取的内容合并为此格式：
 
 ````markdown
 # {CrateName}

@@ -45,12 +45,12 @@
 
 ### 置信度评估
 
-| Data Found | Confidence |
-|------------|------------|
-| Full release notes | HIGH |
-| Partial notes (some sections) | MEDIUM |
-| Minimal info | LOW |
-| Version not found | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 完整的发布说明 | 高 |
+| 部分发布说明（某些章节） | 中 |
+| 最少信息 | 低 |
+| 未找到版本 | 不确定 |
 
 ### 差距类别
 
@@ -77,38 +77,38 @@
 ### 协商响应模板
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Version:** Rust <version>
-**Release Date:** <date>
+### 发现
+**版本：** Rust <version>
+**发布日期：** <date>
 
-**Language Features:**
-- Feature 1: description
+**语言特性：**
+- 特性 1：描述
 
-**Stabilized APIs:**
-- API 1: description
+**已稳定的 API：**
+- API 1：描述
 
-**Breaking Changes:**
-- Change 1: description
+**破坏性变更：**
+- 变更 1：描述
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Official release notes from releases.rs"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如："来自 releases.rs 的官方发布说明"]
 
-### Gaps Identified
-- [ ] [Specific gap 1]
-- [ ] [Specific gap 2]
+### 已识别的差距
+- [ ] [具体差距 1]
+- [ ] [具体差距 2]
 
-### Context Needed
-- Q1: [If ambiguous]
+### 需要的上下文
+- 问题 1：[如有歧义]
 
-### Metadata
-- **Source**: releases.rs/docs/<version>
-- **Coverage**: [e.g., "85% - missing detailed migration"]
+### 元数据
+- **来源**：releases.rs/docs/<version>
+- **覆盖度**：[例如："85% - 缺少详细迁移指南"]
 ```
 
-### Related Documents
+### 相关文档
 
-- `_negotiation/response-format.md` - Response structure
-- `_negotiation/confidence-rubric.md` - Confidence criteria
+- `_negotiation/response-format.md` - 响应结构
+- `_negotiation/confidence-rubric.md` - 置信度标准

@@ -12,15 +12,15 @@
 ## 输出（标准模式）
 
 ```markdown
-## <Crate Name>
+## <Crate 名称>
 
-**Version:** <latest>
-**Description:** <short>
+**版本：** <latest>
+**描述：** <short>
 
-**Features:**
+**特性：**
 - `feature1`: desc
 
-**Links:**
+**链接：**
 - docs.rs | crates.io | repo
 ```
 
@@ -39,13 +39,13 @@
 
 ### 置信度评估
 
-| Data Found | Confidence |
-|------------|------------|
-| Version + description + features + docs | HIGH |
-| Version + description + features | HIGH |
-| Version + description | MEDIUM |
-| Version only | LOW |
-| Not found or error | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 版本 + 描述 + 特性 + 文档 | 高 |
+| 版本 + 描述 + 特性 | 高 |
+| 版本 + 描述 | 中 |
+| 仅版本 | 低 |
+| 未找到或错误 | 不确定 |
 
 **降级因素：**
 
@@ -79,36 +79,36 @@
 ### 协商响应模板
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Crate:** <name>
-**Version:** <version>
-**Description:** <description>
+### 发现
+**Crate：** <name>
+**版本：** <version>
+**描述：** <description>
 
-**Features:**
-- `feature1`: description
+**特性：**
+- `feature1`：description
 
-**Dependencies:** [if relevant]
-**Last Updated:** <date>
+**依赖：** [如果相关]
+**最后更新：** <date>
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Found on lib.rs with complete metadata"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如："在 lib.rs 上找到，元数据完整"]
 
-### Gaps Identified
-- [ ] [Specific gap 1]
-- [ ] [Specific gap 2]
+### 已识别的差距
+- [ ] [具体差距 1]
+- [ ] [具体差距 2]
 
-### Context Needed
-- Q1: [If ambiguous]
+### 需要的上下文
+- 问题 1：[如有歧义]
 
-### Metadata
-- **Source**: lib.rs | crates.io | docs.rs
-- **Coverage**: [e.g., "90% - missing changelog"]
+### 元数据
+- **来源**：lib.rs | crates.io | docs.rs
+- **覆盖度**：[例如："90% - 缺少 changelog"]
 ```
 
-### Related Documents
+### 相关文档
 
-- `_negotiation/response-format.md` - Response structure
-- `_negotiation/confidence-rubric.md` - Confidence criteria
+- `_negotiation/response-format.md` - 响应结构
+- `_negotiation/confidence-rubric.md` - 置信度标准

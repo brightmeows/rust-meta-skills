@@ -12,10 +12,10 @@
 ## 输出
 
 ```markdown
-## Fetched Content
+## 获取的内容
 
-**URL:** <url>
-**Title:** <title>
+**URL：** <url>
+**标题：** <title>
 
 <content>
 ```

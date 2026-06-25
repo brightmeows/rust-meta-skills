@@ -12,54 +12,54 @@ arguments:
 
 # /docs 命令：API 文档查询
 
-Fetch API documentation for Rust crates from docs.rs.
+从 docs.rs 获取 Rust crate 的 API 文档。
 
-## Usage
+## 用法
 
 ```
 /docs <crate_name> [item]
 ```
 
-## Examples
+## 示例
 
 ```
-/docs snafu              # Get snafu crate overview
-/docs tokio spawn        # Get tokio::spawn documentation
-/docs serde Serialize    # Get serde::Serialize trait docs
+/docs snafu              # 获取 snafu crate 概览
+/docs tokio spawn        # 获取 tokio::spawn 文档
+/docs serde Serialize    # 获取 serde::Serialize trait 文档
 ```
 
-## Workflow
+## 工作流程
 
-1. Use actionbook MCP to get docs.rs selectors
-2. Launch `docs-researcher` agent with target URL
-3. Wait for agent to complete
-4. Return formatted API documentation
+1. 使用 actionbook MCP 获取 docs.rs 选择器
+2. 使用目标 URL 启动 `docs-researcher` agent
+3. 等待 agent 完成
+4. 返回格式化的 API 文档
 
-## Target URLs
+## 目标 URL
 
-- Overview: `https://docs.rs/<crate>/latest/<crate>/`
-- Function: `https://docs.rs/<crate>/latest/<crate>/fn.<name>.html`
-- Struct: `https://docs.rs/<crate>/latest/<crate>/struct.<Name>.html`
-- Trait: `https://docs.rs/<crate>/latest/<crate>/trait.<Name>.html`
-- Macro: `https://docs.rs/<crate>/latest/<crate>/macro.<name>.html`
-- Module: `https://docs.rs/<crate>/latest/<crate>/<module>/`
+- 概览：`https://docs.rs/<crate>/latest/<crate>/`
+- 函数：`https://docs.rs/<crate>/latest/<crate>/fn.<name>.html`
+- 结构体：`https://docs.rs/<crate>/latest/<crate>/struct.<Name>.html`
+- Trait：`https://docs.rs/<crate>/latest/<crate>/trait.<Name>.html`
+- 宏：`https://docs.rs/<crate>/latest/<crate>/macro.<name>.html`
+- 模块：`https://docs.rs/<crate>/latest/<crate>/<module>/`
 
-## Output Format
+## 输出格式
 
 ```
-# <crate_name> API Documentation
+# <crate_name> API 文档
 
-## Overview
-<crate description>
+## 概览
+<crate 描述>
 
-## Key Types
-- `TypeName`: <description>
+## 关键类型
+- `TypeName`：<描述>
 
-## Key Functions
-- `fn_name`: <description>
+## 关键函数
+- `fn_name`：<描述>
 
-## Key Traits
-- `TraitName`: <description>
+## 关键 Trait
+- `TraitName`：<描述>
 
-Source: docs.rs
+来源：docs.rs
 ```

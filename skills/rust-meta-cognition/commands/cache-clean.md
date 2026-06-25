@@ -5,17 +5,17 @@ argument-hint: [--all | --expired | crate_name]
 
 # 缓存清理
 
-Clean cached Rust documentation.
+清理缓存的 Rust 文档。
 
-Arguments: $ARGUMENTS
+参数：$ARGUMENTS
 
-- `--all`: Remove all cached docs
-- `--expired`: Remove only expired docs (default)
-- `crate_name`: Remove cache for specific crate/item
+- `--all`：移除所有缓存文档
+- `--expired`：仅移除过期文档（默认）
+- `crate_name`：移除特定 crate/项的缓存
 
 ---
 
-## Instructions
+## 说明
 
 ### 1. Parse Arguments
 
@@ -108,7 +108,7 @@ fi
 
 ---
 
-## Output Format
+## 输出格式
 
 ### --expired (default)
 

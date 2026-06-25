@@ -7,12 +7,12 @@ argument-hint: <crate_name> <llms_path> [version] [description]
 
 基于 llms.txt 文档为 Rust crate 创建高质量 skills。
 
-Arguments: $ARGUMENTS
+参数：$ARGUMENTS
 
-- First argument: crate_name (required) - the Rust crate name (e.g., tokio, serde)
-- Second argument: llms_path (required) - local path to the llms.txt file
-- Third argument: version (optional) - the crate version (e.g., "1.40.0", "2.0.0")
-- Fourth argument: description (optional) - additional requirements or information
+- 第一个参数：crate_name（必需）——Rust crate 名称（例如 tokio、serde）
+- 第二个参数：llms_path（必需）——llms.txt 文件的本地路径
+- 第三个参数：version（可选）——crate 版本（例如 “1.40.0”、“2.0.0”）
+- 第四个参数：description（可选）——额外要求或信息
 
 ---
 
@@ -103,29 +103,29 @@ Each skill's `references/` directory contains detailed documentation:
 
 ---
 
-## Instructions
+## 说明
 
-### 1. Read llms.txt and Analyze
+### 1. 读取 llms.txt 并分析
 
-1. **Read the entire llms.txt** content
-2. **Identify content domains**: Find functional modules that can be separate skills
-3. **Analyze each domain**:
-   - What are the core concepts?
-   - What APIs/configuration options exist?
-   - What are common usage patterns?
-   - What content needs detailed documentation?
+1. **读取整个 llms.txt** 内容
+2. **识别内容领域**：找到可以作为独立 skills 的功能模块
+3. **分析每个领域**：
+   - 核心概念是什么？
+   - 有哪些 API/配置选项？
+   - 有哪些常见使用模式？
+   - 哪些内容需要详细文档？
 
-### 1.5 Confirm Version Number
+### 1.5 确认版本号
 
-If the user did not provide a version number (third argument):
+如果用户未提供版本号（第三个参数）：
 
-1. Use the AskUserQuestion tool to ask the user for the current version
-2. Version format examples: "1.40.0", "2.0.0", "latest"
-3. Use the version number for all SKILL.md Version fields
+1. 使用 AskUserQuestion 工具询问用户当前版本
+2. 版本格式示例：“1.40.0”、“2.0.0”、“latest”
+3. 在所有 SKILL.md 的版本字段中使用该版本号
 
-### 2. Output Detailed Plan
+### 2. 输出详细计划
 
-Output to `~/tmp/{YYYYMMDDHHmm}-{crate_name}-skills-plan.md`:
+输出到 `~/tmp/{YYYYMMDDHHmm}-{crate_name}-skills-plan.md`：
 
 ````markdown
 # {CrateName} Skills Plan
@@ -148,11 +148,11 @@ Output to `~/tmp/{YYYYMMDDHHmm}-{crate_name}-skills-plan.md`:
 ...
 ````
 
-### 3. Create Skills
+### 3. 创建 Skills
 
-For each skill:
+对每个 skill：
 
-1. **Create directory structure**:
+1. **创建目录结构**：
 
    ```
    ~/.claude/skills/{crate_name}-{feature}/
@@ -162,52 +162,52 @@ For each skill:
        └── {detailed-guide}.md
    ```
 
-2. **Write SKILL.md**:
-   - Follow the quality standards above
-   - Keep SKILL.md concise (<200 lines)
-   - Put complex content in references/
+2. **编写 SKILL.md**：
+   - 遵循上述质量标准
+   - 保持 SKILL.md 简洁（<200 行）
+   - 将复杂内容放入 references/
 
-3. **Write reference files**:
-   - Complete API reference
-   - Configuration options tables
-   - Detailed code examples
-   - Feature-specific content
+3. **编写引用文件**：
+   - 完整的 API 参考
+   - 配置选项表格
+   - 详细的代码示例
+   - 特性特定内容
 
-### 4. Content Allocation Principles
+### 4. 内容分配原则
 
-| Content Type | Location |
-|--------------|----------|
-| Core patterns (3-5) | SKILL.md |
-| Complete API reference | references/ |
-| Configuration options details | references/ |
-| Feature-specific config | references/ |
-| Advanced usage/edge cases | references/ |
-| Deprecated patterns table | SKILL.md |
-| Best practices | SKILL.md |
-
----
-
-## Quality Checklist
-
-- [ ] Each SKILL.md has CSO-optimized description with "CRITICAL:" prefix
-- [ ] Each SKILL.md description includes Chinese trigger keywords
-- [ ] Each SKILL.md has version info and update date
-- [ ] Each SKILL.md has "You are an expert..." role definition
-- [ ] Each SKILL.md has Documentation navigation list
-- [ ] Each SKILL.md has "Documentation Completeness Check" section
-- [ ] Each SKILL.md has Key Patterns code examples
-- [ ] Each SKILL.md has Deprecated Patterns table (if applicable)
-- [ ] Each SKILL.md has "When Writing Code" best practices
-- [ ] Each SKILL.md has "When Answering Questions" guidelines
-- [ ] Complex content has been split into references/ directory
-- [ ] Code examples use latest Rust idioms
-- [ ] No redundant documentation files (README.md, etc.)
-- [ ] Skills created directly in `~/.claude/skills/` for auto-discovery
+| 内容类型 | 位置 |
+|----------|------|
+| 核心模式（3-5 个） | SKILL.md |
+| 完整 API 参考 | references/ |
+| 配置选项详情 | references/ |
+| 特性特定配置 | references/ |
+| 高级用法/边界情况 | references/ |
+| 废弃模式表格 | SKILL.md |
+| 最佳实践 | SKILL.md |
 
 ---
 
-## Output Location
+## 质量检查清单
 
-All skills are created in: `~/.claude/skills/{crate_name}-*/`
+- [ ] 每个 SKILL.md 都有 CSO 优化的 description，以 “CRITICAL:” 开头
+- [ ] 每个 SKILL.md 的 description 包含中文触发关键词
+- [ ] 每个 SKILL.md 有版本信息和更新日期
+- [ ] 每个 SKILL.md 有 “You are an expert...” 角色定义
+- [ ] 每个 SKILL.md 有文档导航列表
+- [ ] 每个 SKILL.md 有“文档完整性检查”章节
+- [ ] 每个 SKILL.md 有核心模式的代码示例
+- [ ] 每个 SKILL.md 有废弃模式表格（如适用）
+- [ ] 每个 SKILL.md 有“编写代码时”的最佳实践
+- [ ] 每个 SKILL.md 有“回答问题时的准则”
+- [ ] 复杂内容已拆分到 references/ 目录
+- [ ] 代码示例使用最新的 Rust 惯用法
+- [ ] 没有冗余的文档文件（README.md 等）
+- [ ] Skills 直接创建在 `~/.claude/skills/` 中用于自动发现
 
-This is the local dynamic skills directory, not committed to the rust-skills repository.
+---
+
+## 输出位置
+
+所有 skills 创建在：`~/.claude/skills/{crate_name}-*/`
+
+这是本地动态 skills 目录，不会提交到 rust-skills 仓库。

@@ -6,9 +6,9 @@
 
 `rust-lang.github.io/rust-clippy/stable/index.html#<lint_name>`
 
-## Fetch
+## 获取
 
-Use available tools to get clippy docs.
+使用可用工具获取 clippy 文档。
 
 ## Lint 类别
 
@@ -25,18 +25,18 @@ Use available tools to get clippy docs.
 ```markdown
 ## clippy::<lint_name>
 
-**Level:** warn/deny/allow
-**Category:** <category>
+**级别：** warn/deny/allow
+**类别：** <category>
 
-**What:** <what it checks>
-**Why:** <why it's a problem>
+**检查内容：** <what it checks>
+**为什么重要：** <why it's a problem>
 
-**Bad:**
+**错误示例：**
 \`\`\`rust
 <code triggering lint>
 \`\`\`
 
-**Good:**
+**正确示例：**
 \`\`\`rust
 <fixed code>
 \`\`\`
@@ -56,12 +56,12 @@ Use available tools to get clippy docs.
 
 ### 置信度评估
 
-| Data Found | Confidence |
-|------------|------------|
-| Full lint info with examples | HIGH |
-| Lint info, no examples | MEDIUM |
-| Lint exists, minimal info | LOW |
-| Lint not found | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 完整 lint 信息含示例 | 高 |
+| Lint 信息无示例 | 中 |
+| Lint 存在，信息极少 | 低 |
+| Lint 未找到 | 不确定 |
 
 ### 差距类别
 
@@ -88,43 +88,43 @@ Use available tools to get clippy docs.
 ### 协商响应模板
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Lint:** clippy::<lint_name>
-**Level:** warn | deny | allow
-**Category:** correctness | style | complexity | perf | pedantic
+### 发现
+**Lint：** clippy::<lint_name>
+**级别：** warn | deny | allow
+**类别：** correctness | style | complexity | perf | pedantic
 
-**What it checks:** <description>
-**Why it matters:** <rationale>
+**检查内容：** <description>
+**为何重要：** <rationale>
 
-**Bad example:**
+**错误示例：**
 \`\`\`rust
 <triggering code>
 \`\`\`
 
-**Good example:**
+**正确示例：**
 \`\`\`rust
 <fixed code>
 \`\`\`
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Official clippy documentation"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如："官方 clippy 文档"]
 
-### Gaps Identified
-- [ ] [Specific gap 1]
-- [ ] [Specific gap 2]
+### 已识别的差距
+- [ ] [具体差距 1]
+- [ ] [具体差距 2]
 
-### Context Needed
-- Q1: [If ambiguous]
+### 需要的上下文
+- 问题 1：[如有歧义]
 
-### Metadata
-- **Source**: rust-lang.github.io/rust-clippy
-- **Coverage**: [e.g., "100% - lint fully documented"]
+### 元数据
+- **来源**：rust-lang.github.io/rust-clippy
+- **覆盖度**：[例如："100% - lint 已完整文档化"]
 ```
 
-### Related Documents
+### 相关文档
 
-- `_negotiation/response-format.md` - Response structure
-- `_negotiation/confidence-rubric.md` - Confidence criteria
+- `_negotiation/response-format.md` - 响应结构
+- `_negotiation/confidence-rubric.md` - 置信度标准

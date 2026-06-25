@@ -5,15 +5,15 @@ argument-hint: [--verbose]
 
 # 缓存状态
 
-Show the status of cached Rust documentation.
+显示缓存的 Rust 文档的状态。
 
-Arguments: $ARGUMENTS
+参数：$ARGUMENTS
 
-- `--verbose`: Show detailed file list
+- `--verbose`：显示详细文件列表
 
 ---
 
-## Instructions
+## 说明
 
 ### 1. Check Cache Directory
 
@@ -82,7 +82,7 @@ done
 
 ---
 
-## Output Format
+## 输出格式
 
 ```
 === Rust Docs Cache Status ===

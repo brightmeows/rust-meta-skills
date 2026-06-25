@@ -1,18 +1,18 @@
 # /rust-review：Rust 代码审查
 
-Lightweight Rust code review using clippy.
+使用 clippy 的轻量级 Rust 代码审查。
 
-## Usage
+## 用法
 
 ```
 /rust-review [path]
 ```
 
-## Parameters
+## 参数
 
-- `path` (optional): Path to file or directory to review. Defaults to current directory.
+- `path`（可选）：要审查的文件或目录路径。默认为当前目录。
 
-## What It Does
+## 功能说明
 
 运行 `cargo clippy` 进行代码审查：
 
@@ -24,42 +24,42 @@ Lightweight Rust code review using clippy.
 | `clippy::perf` | 性能问题 |
 | `clippy::style` | 风格问题 |
 
-## Workflow
+## 工作流程
 
 1. **读取代码** - 分析目标文件/目录
 2. **运行 clippy** - `cargo clippy --message-format=json`
 3. **分析结果** - 按严重程度分类
 4. **提供修复建议** - 代码示例
 
-## Example Output
+## 示例输出
 
 ```
-Rust Code Review: src/lib.rs
+Rust 代码审查：src/lib.rs
 
-Running clippy...
+正在运行 clippy...
 
 ═══════════════════════════════════════════
-Results: 3 issues found
+结果：发现 3 个问题
 ═══════════════════════════════════════════
 
-ERROR (1):
+错误（1）：
   src/lib.rs:42 [clippy::unwrap_used]
-    → unwrap() called on Result
-    → Fix: Use ? operator or handle error explicitly
+    → 对 Result 调用了 unwrap()
+    → 修复：使用 ? 运算符或显式处理错误
 
-WARNING (2):
+警告（2）：
   src/lib.rs:15 [clippy::needless_clone]
-    → Clone is not needed here
-    → Fix: Remove .clone()
+    → 此处不需要 Clone
+    → 修复：移除 .clone()
 
   src/lib.rs:28 [clippy::manual_map]
-    → Use Option::map instead of match
-    → Fix: x.map(|v| v + 1)
+    → 使用 Option::map 替代 match
+    → 修复：x.map(|v| v + 1)
 
 ═══════════════════════════════════════════
 ```
 
-## Clippy Configuration
+## Clippy 配置
 
 项目可通过 `clippy.toml` 或 `Cargo.toml` 配置 clippy：
 
@@ -70,7 +70,7 @@ unwrap_used = "deny"
 expect_used = "warn"
 ```
 
-## NOT Included
+## 不包括的内容
 
 以下检查**不在** `/rust-review` 范围内：
 
@@ -81,7 +81,7 @@ expect_used = "warn"
 | `cargo audit` | 安全审计场景 | `/audit security` |
 | `lockbud` | 专用并发审计 | `/audit concurrency` |
 
-## Related Commands
+## 相关命令
 
 - `/audit` - 重量级安全审计（使用 os-checker）
 - `/unsafe-check` - 专注 unsafe 代码检查

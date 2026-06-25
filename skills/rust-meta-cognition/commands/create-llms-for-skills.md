@@ -5,86 +5,86 @@ argument-hint: <urls> [requirements]
 
 # 从 URL 创建 llms.txt
 
-Use agent-browser CLI to access target URLs, extract content, and generate comprehensive llms.txt files.
+使用 agent-browser CLI 访问目标 URL，提取内容并生成全面的 llms.txt 文件。
 
-Arguments: $ARGUMENTS
+参数：$ARGUMENTS
 
-- First argument(s): urls (required) - one or more URLs, space-separated
-- Last argument: requirements (optional) - additional requirements or instructions (if the last argument is not a URL)
-
----
-
-## Tool Priority
-
-1. **agent-browser CLI** (preferred) - Full browser automation
-2. **WebFetch** (fallback) - If agent-browser unavailable
-
-**DO NOT use:**
-
-- Claude in Chrome MCP
-- Direct Fetch without user confirmation
+- 第一个参数：urls（必需）——一个或多个 URL，空格分隔
+- 最后一个参数：requirements（可选）——额外的要求或说明（如果最后一个参数不是 URL）
 
 ---
 
-## Instructions
+## 工具优先级
 
-### 1. Parse Arguments
+1. **agent-browser CLI**（首选）——完整的浏览器自动化
+2. **WebFetch**（回退）——如果 agent-browser 不可用
 
-From `$ARGUMENTS`, parse:
+**不要使用：**
 
-- Identify all URLs (starting with http:// or https://)
-- Remaining content serves as additional requirements
+- Chrome MCP
+- 未经用户确认直接 Fetch
 
-### 2. Use agent-browser CLI
+---
 
-agent-browser is a **command-line tool** with specific subcommands:
+## 说明
+
+### 1. 解析参数
+
+从 `$ARGUMENTS` 中解析：
+
+- 识别所有 URL（以 http:// 或 https:// 开头）
+- 剩余内容作为额外要求
+
+### 2. 使用 agent-browser CLI
+
+agent-browser 是一个**命令行工具**，拥有特定的子命令：
 
 ```bash
-# Step 1: Open the page
+# 步骤 1：打开页面
 agent-browser open "https://docs.rs/{crate}/latest/{crate}/"
 
-# Step 2: Extract content using CSS selectors
-agent-browser get text ".docblock"              # Main documentation
-agent-browser get text ".module-item"           # Module list
-agent-browser get text ".item-decl"             # Type declarations
-agent-browser get text "pre.rust"               # Code examples
+# 步骤 2：使用 CSS 选择器提取内容
+agent-browser get text ".docblock"              # 主要文档
+agent-browser get text ".module-item"           # 模块列表
+agent-browser get text ".item-decl"             # 类型声明
+agent-browser get text "pre.rust"               # 代码示例
 
-# Step 3: Close browser
+# 步骤 3：关闭浏览器
 agent-browser close
 ```
 
-**Common selectors for docs.rs:**
+**docs.rs 的通用选择器：**
 
-| Selector | Content |
-|----------|---------|
-| `.docblock` | Main documentation text |
-| `.module-item` | Module/item list |
-| `.item-decl` | Function/struct declarations |
-| `pre.rust` | Code examples |
-| `.feature-flag` | Feature flags |
-| `#reexports` | Re-exports section |
+| 选择器 | 内容 |
+|--------|------|
+| `.docblock` | 主要文档文本 |
+| `.module-item` | 模块/项列表 |
+| `.item-decl` | 函数/结构体声明 |
+| `pre.rust` | 代码示例 |
+| `.feature-flag` | 特性标志 |
+| `#reexports` | 重新导出章节 |
 
-**For multiple pages**, repeat open/get/close for each submodule.
+**对于多个页面**，为每个子模块重复 open/get/close。
 
-### 3. Content Extraction Strategy
+### 3. 内容提取策略
 
-For Rust crate documentation (docs.rs):
+对于 Rust crate 文档（docs.rs）：
 
 ```
-1. Main crate page → Overview, re-exports, modules list
-2. Each major module → Public items, examples
-3. Important types → Methods, trait implementations
-4. Examples section → Complete runnable code
+1. crate 主页面 → 概览、重新导出、模块列表
+2. 每个主要模块 → 公开项、示例
+3. 重要类型 → 方法、trait 实现
+4. 示例章节 → 完整可运行代码
 ```
 
-**Extraction focus**:
+**提取重点：**
 
-- Core concepts and principles
-- API function signatures and parameter descriptions
-- Code examples (complete and runnable)
-- Configuration options and best practices
-- Common patterns and use cases
-- Feature flags and cargo features
+- 核心概念和原则
+- API 函数签名和参数描述
+- 代码示例（完整且可运行）
+- 配置选项和最佳实践
+- 常见模式和使用场景
+- 特性标志和 cargo features
 
 ### 4. Generate llms.txt
 
@@ -156,65 +156,65 @@ fn main() {
 ```
 ````
 
-### 5. Save Output
+### 5. 保存输出
 
 ```bash
-# Generate timestamp
+# 生成时间戳
 timestamp=$(date +%Y%m%d%H%M)
 
-# Determine crate name from URL
-# e.g., https://docs.rs/tokio/latest/tokio/ → tokio
+# 从 URL 确定 crate 名称
+# 例如：https://docs.rs/tokio/latest/tokio/ → tokio
 
-# Save location
+# 保存位置
 ~/tmp/${timestamp}-{crate_name}-llms.txt
 ```
 
-Inform the user of the file path after output is complete.
+输出完成后告知用户文件路径。
 
 ---
 
-## Fallback: WebFetch
+## 回退方案：WebFetch
 
-If agent-browser is not available:
+如果 agent-browser 不可用：
 
 ```
-1. Use WebFetch to get main page content
-2. Parse the response for key sections
-3. May need multiple WebFetch calls for subpages
-4. Inform user that content may be incomplete
+1. 使用 WebFetch 获取主页面内容
+2. 解析响应中的关键章节
+3. 可能需要多次 WebFetch 调用子页面
+4. 告知用户内容可能不完整
 ```
 
 ---
 
-## Quality Requirements
+## 质量要求
 
-- [ ] Comprehensive content: Include actual API descriptions and code examples
-- [ ] Clear sources: Mark source URL for each section
-- [ ] Complete structure: Maintain the hierarchy of the original documentation
-- [ ] Usable code: Example code should be complete and runnable
-- [ ] Consistent format: Use consistent Markdown formatting
-- [ ] Feature flags: Document all cargo features
-
----
-
-## Workflow Integration
-
-This command is the first step in the Skills creation workflow:
-
-1. **create-llms-for-skills** (this command) → Generate llms.txt
-2. **create-skills-via-llms** → Create skills based on llms.txt
+- [ ] 内容全面：包含实际 API 描述和代码示例
+- [ ] 来源清晰：标记每个章节的来源 URL
+- [ ] 结构完整：保持原始文档的层次结构
+- [ ] 代码可用：示例代码应完整且可运行
+- [ ] 格式一致：使用一致的 Markdown 格式
+- [ ] 特性标志：记录所有 cargo features
 
 ---
 
-## Example Usage
+## 工作流集成
+
+此命令是 Skills 创建工作流的第一步：
+
+1. **create-llms-for-skills**（本命令）→ 生成 llms.txt
+2. **create-skills-via-llms** → 基于 llms.txt 创建 skills
+
+---
+
+## 使用示例
 
 ```bash
-# Generate llms.txt for tokio
+# 为 tokio 生成 llms.txt
 /create-llms-for-skills https://docs.rs/tokio/latest/tokio/
 
-# Generate for multiple URLs
+# 为多个 URL 生成
 /create-llms-for-skills https://docs.rs/serde/latest/serde/ https://serde.rs/
 
-# With additional requirements
-/create-llms-for-skills https://docs.rs/axum/latest/axum/ "Focus on routing and extractors"
+# 附加要求
+/create-llms-for-skills https://docs.rs/axum/latest/axum/ "重点关注路由和提取器"
 ```

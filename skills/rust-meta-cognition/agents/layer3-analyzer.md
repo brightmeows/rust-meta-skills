@@ -12,7 +12,7 @@
 
 - `query`：用户的原始问题
 - `context`：相关代码或错误信息
-- `domain`: Identified domain (if any)
+- `domain`：已识别的领域（如有）
 
 ## 分析焦点
 
@@ -43,32 +43,32 @@
 ## 输出格式
 
 ```markdown
-## Layer 3 Analysis: Domain Constraints
+## 第 3 层分析：领域约束
 
-### Domain Context
-- **Identified Domain:** [Domain name]
-- **Confidence:** HIGH | MEDIUM | LOW | UNCERTAIN
-- **Signals:** [What indicated this domain]
+### 领域上下文
+- **已识别的领域：** [领域名称]
+- **置信度：** 高 | 中 | 低 | 不确定
+- **信号：** [什么指示了此领域]
 
-### Critical Constraints
-| Constraint | Requirement | Impact on Design |
-|------------|-------------|------------------|
-| [Name] | [What domain requires] | [How it affects code] |
+### 关键约束
+| 约束 | 要求 | 对设计的影响 |
+|------|------|-------------|
+| [名称] | [领域要求] | [如何影响代码] |
 
-### Domain Rules Applied
-1. **[Rule Name]:** [How it applies to this question]
+### 应用的领域规则
+1. **[规则名称]：** [如何应用于此问题]
 
-### Domain-Driven Recommendation
-- **Recommended Approach:** [What domain principles suggest]
-- **Avoid:** [What would violate domain rules]
+### 领域驱动的建议
+- **推荐方法：** [领域原则建议的方案]
+- **避免：** [什么会违反领域规则]
 
-### Guidance for Lower Layers
-- **For L2 (Design):** [What patterns fit domain]
-- **For L1 (Mechanics):** [What mechanisms domain prefers]
+### 对下层的指导
+- **对 L2（设计）：** [哪些模式适合该领域]
+- **对 L1（机制）：** [领域偏好的机制]
 
-### Confidence
-- **Level:** HIGH | MEDIUM | LOW | UNCERTAIN
-- **Reason:** [Why this confidence level]
+### 置信度
+- **级别：** 高 | 中 | 低 | 不确定
+- **原因：** [为什么是这个置信级别]
 ```
 
 ## 示例
@@ -78,39 +78,39 @@
 **输出：**
 
 ```markdown
-## Layer 3 Analysis: Domain Constraints
+## 第 3 层分析：领域约束
 
-### Domain Context
-- **Identified Domain:** FinTech (Trading System)
-- **Confidence:** HIGH
-- **Signals:** "trading system", "trade record"
+### 领域上下文
+- **已识别的领域：** 金融科技（交易系统）
+- **置信度：** 高
+- **信号：** "trading system", "trade record"
 
-### Critical Constraints
-| Constraint | Requirement | Impact on Design |
-|------------|-------------|------------------|
-| Audit Trail | All changes must be traceable | No silent mutations |
-| Data Integrity | Trade records are facts | Immutable once created |
-| Consistency | Same record = same data everywhere | Single source of truth |
-| Compliance | Regulatory requirements | Cannot lose/corrupt data |
+### 关键约束
+| 约束 | 要求 | 对设计的影响 |
+|------|------|-------------|
+| 审计轨迹 | 所有变更必须可追踪 | 不能静默修改 |
+| 数据完整性 | 交易记录是事实 | 创建后不可变 |
+| 一致性 | 同一记录在所有地方数据相同 | 单一事实来源 |
+| 合规性 | 监管要求 | 不能丢失/损坏数据 |
 
-### Domain Rules Applied
-1. **Immutability Principle:** Trade records represent historical facts - they should never be modified, only new records created
-2. **Single Source of Truth:** The same trade should not exist as multiple independent copies that could diverge
-3. **Audit Requirements:** Every access to trade data may need to be logged
+### 应用的领域规则
+1. **不可变原则：** 交易记录代表历史事实——永远不应修改，只应创建新记录
+2. **单一事实来源：** 同一笔交易不应存在多个可能分歧的独立副本
+3. **审计要求：** 每次访问交易数据可能都需要记录日志
 
-### Domain-Driven Recommendation
-- **Recommended Approach:** Share reference to immutable data (`Arc<TradeRecord>`)
-- **Avoid:**
-  - `.clone()` - Creates independent copies that could diverge
-  - Mutable trade records - Violates audit requirements
+### 领域驱动的建议
+- **推荐方法：** 共享不可变数据的引用（`Arc<TradeRecord>`）
+- **避免：**
+  - `.clone()` - 创建可能分歧的独立副本
+  - 可变的交易记录 - 违反审计要求
 
-### Guidance for Lower Layers
-- **For L2 (Design):** Use Event Sourcing or Immutable Data pattern
-- **For L1 (Mechanics):** Prefer `Arc<T>` over `Clone`, use immutable structs
+### 对下层的指导
+- **对 L2（设计）：** 使用事件溯源或不可变数据模式
+- **对 L1（机制）：** 优先使用 `Arc<T>` 而非 Clone，使用不可变结构体
 
-### Confidence
-- **Level:** HIGH
-- **Reason:** "trading system" + "trade record" clearly indicates FinTech domain with well-established constraints
+### 置信度
+- **级别：** 高
+- **原因：** "trading system" + "trade record" 清楚地指示了金融科技领域，具有完善的约束
 ```
 
 ## 领域检测提示

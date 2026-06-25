@@ -2,76 +2,76 @@
 
 检查文件的 unsafe 代码问题和潜在安全违规。
 
-## Usage
+## 用法
 
 ```
 /unsafe-check [file]
 ```
 
-## Parameters
+## 参数
 
-- `file` (optional): Path to the Rust file to check. If not provided, checks the current file or prompts for input.
+- `file`（可选）：要检查的 Rust 文件路径。未提供时检查当前文件或提示输入。
 
-## Workflow
+## 工作流程
 
-1. **Read the file** to identify all `unsafe` blocks and `unsafe fn`
-2. **Load unsafe-checker skill** rules
-3. **Check each unsafe block** against relevant rules:
-   - SAFETY comment present? (safety-09)
-   - Pointer validity verified? (ptr-*)
-   - Panic safety considered? (safety-01)
-   - FFI rules followed? (ffi-*)
-4. **Report findings** with rule references and fix suggestions
+1. **读取文件**，识别所有 `unsafe` 块和 `unsafe fn`
+2. **加载 unsafe-checker skill** 规则
+3. **对照相关规则检查每个 unsafe 块**：
+   - 是否存在 SAFETY 注释？（safety-09）
+   - 指针有效性是否已验证？（ptr-*）
+   - 是否考虑了 panic 安全性？（safety-01）
+   - 是否遵守了 FFI 规则？（ffi-*）
+4. **报告检查结果**，附带规则引用和修复建议
 
-## Checks Performed
+## 执行的检查
 
-### Safety Comments
+### Safety 注释
 
-- Every `unsafe` block should have `// SAFETY:` comment
-- Comment should explain invariants, not just say "this is safe"
+- 每个 `unsafe` 块应有 `// SAFETY:` 注释
+- 注释应解释不变量，而非只说“this is safe”
 
-### Pointer Operations
+### 指针操作
 
-- Null checks before dereference
-- Alignment verification
-- Bounds checking
-- No aliasing violations
+- 解引用前的空值检查
+- 对齐验证
+- 边界检查
+- 无别名违规
 
 ### FFI
 
-- Types have `#[repr(C)]`
-- Panics caught at boundary
-- String handling correct
-- Memory ownership clear
+- 类型有 `#[repr(C)]`
+- 在边界处捕获 panic
+- 字符串处理正确
+- 内存所有权清晰
 
 ### Send/Sync
 
-- Manual implementations are sound
-- No data races possible
+- 手动实现是健全的
+- 无数据竞争可能
 
-## Example Output
+## 示例输出
 
 ```
-Checking: src/lib.rs
+检查：src/lib.rs
 
-Found 3 unsafe blocks:
+找到 3 个 unsafe 块：
 
-1. Line 42: unsafe { ptr.read() }
-   - [WARN] Missing SAFETY comment (safety-09)
-   - [WARN] No null check for ptr (ptr-01)
-   Suggestion: Add SAFETY comment and verify ptr is non-null
+1. 第 42 行：unsafe { ptr.read() }
+   - [警告] 缺少 SAFETY 注释（safety-09）
+   - [警告] 未对 ptr 进行空值检查（ptr-01）
+   建议：添加 SAFETY 注释并验证 ptr 非空
 
-2. Line 87: unsafe impl Send for MyType {}
-   - [WARN] Missing Safety docs (safety-10)
-   - [OK] Type analysis shows no !Send fields
-   Suggestion: Add /// # Safety documentation
+2. 第 87 行：unsafe impl Send for MyType {}
+   - [警告] 缺少 Safety 文档（safety-10）
+   - [OK] 类型分析显示无 !Send 字段
+   建议：添加 /// # Safety 文档
 
-3. Line 123: extern "C" fn callback() { ... }
-   - [WARN] No catch_unwind (ffi-04)
-   Suggestion: Wrap body in std::panic::catch_unwind
+3. 第 123 行：extern "C" fn callback() { ... }
+   - [警告] 缺少 catch_unwind（ffi-04）
+   建议：在函数主体中包裹 std::panic::catch_unwind
 ```
 
-## Related Commands
+## 相关命令
 
-- `/unsafe-review` - Interactive unsafe code review
-- `/guideline` - Query specific rules
+- `/unsafe-review` - 交互式 unsafe 代码审查
+- `/guideline` - 查询特定规则

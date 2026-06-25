@@ -2,7 +2,7 @@
 
 从 docs.rs 获取第三方 crate 文档。
 
-> For std library (std::*), use `std-docs-researcher` instead.
+> 标准库（std::*）请使用 `std-docs-researcher`。
 
 ## 获取
 
@@ -20,19 +20,19 @@ TTL：7 天
 
 如果用户说“refresh”、“force”或“--force”，则跳过缓存。
 
-## Output (Standard Mode)
+## 输出（标准模式）
 
 ```markdown
 ## <Crate>::<Item>
 
-**Signature:**
+**签名：**
 \`\`\`rust
 <signature>
 \`\`\`
 
-**Description:** <main doc>
+**描述：** <main doc>
 
-**Example:**
+**示例：**
 \`\`\`rust
 <usage>
 \`\`\`
@@ -53,12 +53,12 @@ TTL：7 天
 
 ### 置信度评估
 
-| Data Found | Confidence |
-|------------|------------|
-| Signature + description + examples | HIGH |
-| Signature + description | MEDIUM |
-| Signature only | LOW |
-| 404 or empty | UNCERTAIN |
+| 数据发现 | 置信度 |
+|----------|--------|
+| 签名 + 描述 + 示例 | 高 |
+| 签名 + 描述 | 中 |
+| 仅签名 | 低 |
+| 404 或为空 | 不确定 |
 
 **降级因素：**
 
@@ -92,35 +92,35 @@ TTL：7 天
 ### 协商响应模板
 
 ```markdown
-## Negotiation Response
+## 协商响应
 
-### Findings
-**Item:** <crate>::<Item>
-**Signature:**
+### 发现
+**项：** <crate>::<Item>
+**签名：**
 \`\`\`rust
 <signature>
 \`\`\`
-**Description:** <main doc>
+**描述：** <main doc>
 
-**Examples found:** [yes/no, count]
+**找到的示例：** [是/否，数量]
 
-### Confidence
-- **Level**: [HIGH|MEDIUM|LOW|UNCERTAIN]
-- **Reason**: [e.g., "Official docs.rs with examples"]
+### 置信度
+- **级别**：[高|中|低|不确定]
+- **原因**：[例如："官方 docs.rs 带示例"]
 
-### Gaps Identified
-- [ ] [Specific gap 1]
-- [ ] [Specific gap 2]
+### 已识别的差距
+- [ ] [具体差距 1]
+- [ ] [具体差距 2]
 
-### Context Needed
-- Q1: [If ambiguous]
+### 需要的上下文
+- 问题 1：[如有歧义]
 
-### Metadata
-- **Source**: docs.rs/<crate>/<version>
-- **Coverage**: [e.g., "70% - no examples"]
+### 元数据
+- **来源**：docs.rs/<crate>/<version>
+- **覆盖度**：[例如："70% - 无示例"]
 ```
 
-### Related Documents
+### 相关文档
 
-- `_negotiation/response-format.md` - Response structure
-- `_negotiation/confidence-rubric.md` - Confidence criteria
+- `_negotiation/response-format.md` - 响应结构
+- `_negotiation/confidence-rubric.md` - 置信度标准

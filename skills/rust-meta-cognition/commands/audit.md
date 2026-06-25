@@ -27,9 +27,9 @@
 | **并发代码审查** | `/audit concurrency` |
 | **安全关键项目** | `/audit full` |
 
-## Audit Modes
+## 审计模式
 
-### Security (Default)
+### 安全（默认）
 
 检查已知安全漏洞：
 
@@ -43,13 +43,13 @@ cargo audit
 cargo geiger
 ```
 
-### Safety
+### 安全性
 
 检查 unsafe 代码的正确性：
 
 | 工具 | 检查内容 |
 |------|----------|
-| `miri` | Undefined Behavior |
+| `miri` | 未定义行为 |
 | `rudra` | 内存安全问题 |
 | `geiger` | unsafe 统计 |
 
@@ -60,7 +60,7 @@ cargo +nightly miri test
 
 **注意**: 需要 nightly toolchain
 
-### Concurrency
+### 并发
 
 检查并发问题：
 
@@ -69,11 +69,11 @@ cargo +nightly miri test
 | `lockbud` | 死锁检测 |
 | `atomvchecker` | 原子性违规 |
 
-### Full
+### 完整
 
 运行所有可用检查器（最慢）。
 
-## Integration with os-checker Skills
+## 与 os-checker Skills 集成
 
 审计时会参考以下 skills：
 
@@ -84,16 +84,16 @@ cargo +nightly miri test
 | `os-checker-diagnostics` | 解读审计结果 |
 | `os-checker-setup` | 安装检查工具 |
 
-## Issue Prioritization
+## 问题优先级
 
 | 优先级 | 诊断类型 | 处理 |
 |--------|----------|------|
-| Critical | `Miri`, `Rudra`, `Audit`, `Cargo` | 立即修复 |
-| High | `Lockbud(Probably)`, `Semver Violation` | 应该修复 |
-| Medium | `Lockbud(Possibly)`, `Atomvchecker` | 需审查 |
-| Low | `Geiger`, `Outdated` | 参考信息 |
+| 严重 | `Miri`, `Rudra`, `Audit`, `Cargo` | 立即修复 |
+| 高 | `Lockbud(Probably)`, `Semver Violation` | 应该修复 |
+| 中 | `Lockbud(Possibly)`, `Atomvchecker` | 需审查 |
+| 低 | `Geiger`, `Outdated` | 参考信息 |
 
-## Example Output
+## 示例输出
 
 ```
 Security Audit Report
@@ -123,23 +123,23 @@ Recommended Actions:
 3. Review unsafe usage with /unsafe-check
 ```
 
-## Tool Installation
+## 工具安装
 
 ```bash
-# Security
+# 安全审计
 cargo install cargo-audit
 
-# Safety (needs nightly)
+# 安全性检查（需要 nightly）
 rustup +nightly component add miri
 
 # Geiger
 cargo install cargo-geiger
 
-# Full os-checker suite
+# 完整 os-checker 套件
 cargo install os-checker
 ```
 
-## Batch Audit (Multiple Repos)
+## 批量审计（多个仓库）
 
 使用 os-checker 进行批量审计：
 
@@ -157,7 +157,7 @@ EOF
 os-checker run --config audit-config.json --emit results.json
 ```
 
-## Related Commands
+## 相关命令
 
 - `/rust-review` - 轻量级日常检查 (clippy)
 - `/unsafe-check` - unsafe 代码静态检查

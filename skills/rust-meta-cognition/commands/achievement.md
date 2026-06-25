@@ -16,27 +16,27 @@ argument-hint: [list|stats|reset] [--category bug|test|streak|safety|learning]
 
 ---
 
-## Data Files
+## 数据文件
 
 ```
 ~/.claude/achievements/
-├── stats.json       # Coding statistics
-├── unlocked.json    # Unlocked achievements
-└── activity.log     # Activity history
+├── stats.json       # 编码统计数据
+├── unlocked.json    # 已解锁成就
+└── activity.log     # 活动历史
 ```
 
 ---
 
-## Instructions
+## 说明
 
-### 1. Parse Arguments
+### 1. 解析参数
 
 ```
-/achievement           → list all achievements
-/achievement list      → list all achievements
-/achievement stats     → show statistics
-/achievement reset     → reset (ask confirmation first)
-/achievement --category test  → show test-related achievements only
+/achievement           → 列出所有成就
+/achievement list      → 列出所有成就
+/achievement stats     → 显示统计信息
+/achievement reset     → 重置（需先确认）
+/achievement --category test  → 仅显示测试相关成就
 ```
 
 ### 2. Read Data Files
@@ -251,9 +251,9 @@ echo "🌱 Start fresh and earn new achievements!"
 
 ---
 
-## Hook Setup
+## Hook 设置
 
-To enable automatic achievement tracking, add to your Claude Code settings:
+要启用自动成就追踪，在 Claude Code 设置中添加：
 
 ```json
 {
@@ -283,7 +283,7 @@ To enable automatic achievement tracking, add to your Claude Code settings:
 }
 ```
 
-Or copy the script to a global location:
+或复制脚本到全局位置：
 
 ```bash
 cp scripts/achievement-tracker.sh ~/.claude/hooks/achievement-tracker.sh
@@ -292,25 +292,25 @@ chmod +x ~/.claude/hooks/achievement-tracker.sh
 
 ---
 
-## Example Usage
+## 使用示例
 
 ```bash
-# View all achievements
+# 查看所有成就
 /achievement
 
-# View only testing achievements
+# 仅查看测试成就
 /achievement --category test
 
-# View detailed stats
+# 查看详细统计
 /achievement stats
 
-# Reset everything (with confirmation)
+# 重置所有数据（需确认）
 /achievement reset
 ```
 
 ---
 
-## Related Commands
+## 相关命令
 
-- `/rust-review` - Triggers code review achievement
-- `/unsafe-check` - Related to safety achievements
+- `/rust-review` - 触发代码审查成就
+- `/unsafe-check` - 与安全成就相关
