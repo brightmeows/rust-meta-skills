@@ -1,0 +1,16 @@
+{
+  "name": "rust-meta-skills",
+  "version": "0.1.1",
+  "description": "Rust 元认知技能包——三层认知模型驱动领域正确的 Rust 方案",
+  "homepage": "https://codeberg.org/brightmeows/rust-meta-skills",
+  "repository": "https://codeberg.org/brightmeows/rust-meta-skills",
+  "license": "MIT",
+  "keywords": [
+    "rust",
+    "meta-cognition",
+    "skills",
+    "agent-skills",
+    "rust-errors",
+    "coding-assistant"
+  ]
+}
