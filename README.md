@@ -19,6 +19,35 @@
 └── 建议: 重新设计为 Arc<T>，而非 clone()
 ```
 
+## 安装方式
+
+### npx skills（推荐）
+
+通过 [Agent Skills](https://agentskills.io) 标准直接安装：
+
+```bash
+npx skills add https://codeberg.org/brightmeows/rust-meta-skills
+```
+
+安装 main 分支最新版。锁定到指定 release tag：
+
+```bash
+npx skills add https://codeberg.org/brightmeows/rust-meta-skills#v0.1.0
+```
+
+> 仓库根目录已配置 `.well-known/agent-skills/index.json`，支持 `npx skills` 自动发现。
+
+### 手动引用
+
+克隆仓库后，在 AI 助手配置中引用技能文件：
+
+```bash
+git clone https://codeberg.org/brightmeows/rust-meta-skills.git
+```
+
+- OpenCode：技能存放于 `skills/rust-meta-cognition/`，由 OpenCode 自动发现并加载
+- Claude Code：将 `skills/rust-meta-cognition/` 加入 skills 路径，或手动加载 `SKILL.md`
+
 ## 目录结构
 
 ```
@@ -122,33 +151,6 @@ Layer 1: 语言机制 (HOW - 怎么做)
 | `rust-meta-cognition` | 技能集主入口——路由、三层模型、默认设置、代码风格 |
 | `rust-learner` | 获取最新 Rust / crate 版本信息 |
 | `unsafe-checker` | Unsafe 代码安全检查 |
-
-## 安装方式
-
-### npx skills（推荐）
-
-通过 [Agent Skills](https://agentskills.io) 标准直接安装：
-
-```bash
-# 安装 main 分支最新版
-npx skills add https://github.com/actionbook/rust-meta-skills.git
-
-# 锁定到指定 release tag
-npx skills add https://github.com/actionbook/rust-meta-skills.git#v0.1.0
-```
-
-> 仓库根目录已配置 `.well-known/agent-skills/index.json`，支持 `npx skills` 自动发现。
-
-### 手动引用
-
-克隆仓库后，在 AI 助手配置中引用技能文件：
-
-```bash
-git clone https://github.com/actionbook/rust-meta-skills.git
-```
-
-- OpenCode：技能存放于 `skills/rust-meta-cognition/`，由 OpenCode 自动发现并加载
-- Claude Code：将 `skills/rust-meta-cognition/` 加入 skills 路径，或手动加载 `SKILL.md`
 
 ## 使用方式
 
