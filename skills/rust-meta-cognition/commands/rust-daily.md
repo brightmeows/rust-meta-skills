@@ -134,7 +134,7 @@ Bash("agent-browser close")
 3. ✅ 互动指标（点赞数、评论数）
 4. ✅ 发布日期/时间
 
-Display the report in markdown format:
+以 Markdown 格式显示报告：
 
 ```markdown
 # 🦀 Rust {Time_Range} Report
@@ -285,7 +285,7 @@ filename="${save_dir}/$(date +%Y%m%d)-rust-${time_range}.md"
 Write("$filename", "{report_content}")
 ```
 
-**Use the Write tool to save the report:**
+**使用 Write 工具保存报告：**
 
 ```
 Write("{save_dir}/{date}-rust-{time_range}.md", "{full_report_markdown}")
