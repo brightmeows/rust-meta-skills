@@ -44,10 +44,10 @@ router/
 
 | 内容 | 移动到 | 大小 |
 |------|--------|------|
-| Negotiation Protocol | `patterns/negotiation.md` | 4.5 KB |
-| Workflow Example | `examples/workflow.md` | 2.3 KB |
-| OS-Checker Integration | `integrations/os-checker.md` | 1.3 KB |
-| Skill File Paths | 删除（冗余） | 1.5 KB |
+| 协商协议 | `patterns/negotiation.md` | 4.5 KB |
+| 工作流示例 | `examples/workflow.md` | 2.3 KB |
+| OS-Checker 集成 | `integrations/os-checker.md` | 1.3 KB |
+| Skill 文件路径 | 删除（冗余） | 1.5 KB |
 
 ### 关键点：自动触发不受影响
 
