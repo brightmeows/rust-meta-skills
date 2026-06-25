@@ -33,44 +33,13 @@ description: >-
 
 ## 元认知三层模型
 
-```
-Layer 3: Domain Constraints (WHY)
-├── 业务规则、监管要求、SLA
-├── domain-fintech, domain-web, domain-cli, domain-embedded, ...
-└── "Why is it designed this way?"
+问题按三个认知层级追溯：
 
-Layer 2: Design Choices (WHAT)
-├── 架构模式、DDD、权衡决策
-├── m09-m15 skills
-└── "What pattern should I use?"
+- **Layer 3 领域约束（WHY）**：业务规则、监管要求、SLA → `domain-*`
+- **Layer 2 设计选择（WHAT）**：架构模式、DDD、权衡决策 → `m09-m15`
+- **Layer 1 语言机制（HOW）**：所有权、借用、生命周期、trait、并发 → `m01-m07`
 
-Layer 1: Language Mechanics (HOW)
-├── 所有权、借用、生命周期、trait、并发
-├── m01-m07 skills
-└── "How do I implement this in Rust?"
-```
-
-### 追踪方向
-
-| 入口信号 | 起始层 | 方向 | 首选技能 |
-|----------|--------|------|----------|
-| E0xxx 编译错误 | Layer 1 | 向上 ↑ | m01-m07 |
-| "如何设计……" | Layer 2 | 先查 L3 再向下 ↓ | m09-m15 |
-| "构建 [领域] 应用" | Layer 3 | 向下 ↓ | domain-* |
-| 性能问题 | L1 → 2 | 先向上后向下 | m10-performance |
-
-### 双技能加载（领域 + 错误）
-
-当领域关键词与错误/机制同时出现时，**必须同时加载两层技能**：
-
-| 领域关键词 | L1 技能 | L3 技能 |
-|-----------|---------|---------|
-| Web API、HTTP、axum | m07-concurrency | domain-web |
-| 交易、支付、trading | m01-ownership | domain-fintech |
-| CLI、terminal、clap | m07-concurrency | domain-cli |
-| embedded、no_std、MCU | m02-resource | domain-embedded |
-
-> 详细层定义见 [`_meta/layer-definitions.md`](_meta/layer-definitions.md)；
+> 详细定义见 [`_meta/layer-definitions.md`](_meta/layer-definitions.md)；
 > 推理框架与追踪示例见 [`_meta/reasoning-framework.md`](_meta/reasoning-framework.md)。
 
 ## rust-router 优先（强制）
@@ -118,35 +87,16 @@ Rules:
 
 ## 协商协议触发
 
-回答前，检查是否需要协商：
+以下查询**必须**启用协商协议：
 
-| 查询含 | 动作 |
-|--------|------|
-| 比较 / 对比 / compare / vs / versus / 区别 / difference | **必须**启用协商 |
-| 最佳实践 / best practice / 推荐 / recommend | **必须**启用协商 |
-| 领域 + 错误（如“交易系统 E0382”）| **必须**启用协商 |
-| 多技术（如“tokio 和 async-std”）| **必须**启用协商 |
-| 模糊范围（如“tokio 性能”）| **应**启用协商 |
+- 比较 / 对比 / compare / vs / versus / 区别 / difference
+- 最佳实践 / best practice / 推荐 / recommend
+- 领域 + 错误（如“交易系统 E0382”）
+- 多技术（如“tokio 和 async-std”）
+- 范围模糊（如“tokio 性能”）
 
-协商响应须结构化：查询类型（Query Type）、置信度（HIGH / MEDIUM / LOW / UNCERTAIN）、差距（Gaps）、综合答案（Synthesized Answer）。
-
-> 完整协议、置信度判定、精炼循环见
+> 完整协议、响应格式与置信度判定见
 > [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md)。
-
-## 错误码速查
-
-| Error | Cause | Route To |
-|-------|-------|----------|
-| E0382 | Use of moved value | m01-ownership |
-| E0597 | Lifetime too short | m01-ownership |
-| E0106 | Missing lifetime specifier | m01-ownership |
-| E0499 / E0502 | Multiple / conflicting mutable borrows | m03-mutability |
-| E0596 | Cannot borrow as mutable | m03-mutability |
-| E0277 | Trait bound not satisfied | m04-zero-cost / m07 |
-| E0308 | Type mismatch | m04-zero-cost |
-| E0433 | Cannot find crate / module | m11-ecosystem |
-
-> 完整错误码路由表见 [`skills/rust-router/SKILL.md`](skills/rust-router/SKILL.md)。
 
 ## 代码风格要点
 

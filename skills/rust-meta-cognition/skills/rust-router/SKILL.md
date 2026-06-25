@@ -95,26 +95,8 @@ globs: ["**/Cargo.toml", "**/*.rs"]
 **已披露缺口：**[用户应该知道的缺口]
 ```
 
-> **详细协议见：** `patterns/negotiation.md`
-
----
-
-### 默认项目设置
-
-创建新的 Rust 项目或 Cargo.toml 时，始终使用：
-
-```toml
-[package]
-edition = "2024"  # 始终使用最新的稳定版
-rust-version = "1.85"
-
-[lints.rust]
-unsafe_code = "warn"
-
-[lints.clippy]
-all = "warn"
-pedantic = "warn"
-```
+> **详细协议与响应格式见：** `patterns/negotiation.md`
+> **项目级默认设置见：** 根 [`SKILL.md`](../SKILL.md) 的“默认项目设置”
 
 ---
 
