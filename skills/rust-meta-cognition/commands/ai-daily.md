@@ -115,160 +115,160 @@ Bash("agent-browser close")
 以 Markdown 格式显示报告：
 
 ```markdown
-# 🤖 AI {Time_Range} Report
+# 🤖 AI {Time_Range} 报告
 
-**Period:** {start_date} - {end_date} | **Generated:** {now}
-**Sources:** {count} posts from 3 subreddits
+**期间：** {start_date} - {end_date} | **生成时间：** {now}
+**来源：** 来自 3 个 subreddit 的 {count} 篇帖子
 
 ---
 
-## 📊 Quick Stats
+## 📊 快速统计
 
-| Metric | Value |
+| 指标 | 数值 |
 |--------|-------|
-| Total Posts Analyzed | {count} |
-| Hot Discussions (>100 comments) | {hot_count} |
-| Product Announcements | {announcement_count} |
-| Tutorials/Guides | {tutorial_count} |
-| Most Active Community | r/{subreddit} |
+| 分析帖子总数 | {count} |
+| 热门讨论（评论 >100） | {hot_count} |
+| 产品公告 | {announcement_count} |
+| 教程/指南 | {tutorial_count} |
+| 最活跃社区 | r/{subreddit} |
 
 ---
 
-## 🤖 r/AI_Agents - AI Agent Development
+## 🤖 r/AI_Agents — AI 代理开发
 
-### Top Posts
+### 热门帖子
 
 #### 1. {Post Title}
-- **Link:** https://reddit.com/r/AI_Agents/comments/{id}
-- **Score:** {upvotes} ⬆️ | **Comments:** {comments} 💬 | **Posted:** {time_ago}
-- **Author:** u/{username}
-- **Key Takeaway:** {1-2 sentence summary explaining why this matters for AI agent developers}
-- **Tags:** `{agent-framework}` `{use-case}` `{difficulty-level}`
+- **链接：** https://reddit.com/r/AI_Agents/comments/{id}
+- **评分：** {upvotes} ⬆️ | **评论：** {comments} 💬 | **发布时间：** {time_ago}
+- **作者：** u/{username}
+- **要点：** {对 AI 代理开发者重要的 1-2 句摘要}
+- **标签：** `{agent-framework}` `{use-case}` `{difficulty-level}`
 
 #### 2. {Post Title}
-- **Link:** {real_url}
-- **Score:** {upvotes} ⬆️ | **Comments:** {comments} 💬 | **Posted:** {time_ago}
-- **Key Takeaway:** {summary}
+- **链接：** {real_url}
+- **评分：** {upvotes} ⬆️ | **评论：** {comments} 💬 | **发布时间：** {time_ago}
+- **要点：** {summary}
 
-{... more posts}
+{...更多帖子}
 
-**🔥 Hot Topics in r/AI_Agents:**
-- {topic 1}: {brief context with related post links}
-- {topic 2}: {brief context}
+**🔥 r/AI_Agents 热门话题：**
+- {topic 1}: {与相关帖子链接的简要背景}
+- {topic 2}: {简要背景}
 
-**💡 Emerging Tools/Frameworks:** {list any new tools mentioned}
+**💡 新兴工具/框架：** {列出提到的任何新工具}
 
 ---
 
-## 🟠 r/ClaudeAI - Claude & Anthropic
+## 🟠 r/ClaudeAI — Claude 与 Anthropic
 
-### Top Posts
+### 热门帖子
 
 #### 1. {Post Title}
-- **Link:** https://reddit.com/r/ClaudeAI/comments/{id}
-- **Score:** {upvotes} ⬆️ | **Comments:** {comments} 💬 | **Posted:** {time_ago}
-- **Author:** u/{username}
-- **Key Takeaway:** {what Claude users should know}
-- **Tags:** `{feature}` `{use-case}`
+- **链接：** https://reddit.com/r/ClaudeAI/comments/{id}
+- **评分：** {upvotes} ⬆️ | **评论：** {comments} 💬 | **发布时间：** {time_ago}
+- **作者：** u/{username}
+- **要点：** {Claude 用户应了解的内容}
+- **标签：** `{feature}` `{use-case}`
 
-{... more posts}
+{...更多帖子}
 
-**🔥 Hot Topics in r/ClaudeAI:**
-- {topic 1}: {context}
-- {topic 2}: {context}
+**🔥 r/ClaudeAI 热门话题：**
+- {topic 1}: {背景}
+- {topic 2}: {背景}
 
-**📢 Official/Notable Updates:** {any Anthropic announcements or significant feature discoveries}
+**📢 官方/值得关注的更新：** {任何 Anthropic 公告或重要功能发现}
 
 ---
 
-## 🟢 r/ChatGPT - ChatGPT & OpenAI
+## 🟢 r/ChatGPT — ChatGPT 与 OpenAI
 
-### Top Posts
+### 热门帖子
 
 #### 1. {Post Title}
-- **Link:** https://reddit.com/r/ChatGPT/comments/{id}
-- **Score:** {upvotes} ⬆️ | **Comments:** {comments} 💬 | **Posted:** {time_ago}
-- **Author:** u/{username}
-- **Key Takeaway:** {what ChatGPT users should know}
-- **Tags:** `{feature}` `{use-case}`
+- **链接：** https://reddit.com/r/ChatGPT/comments/{id}
+- **评分：** {upvotes} ⬆️ | **评论：** {comments} 💬 | **发布时间：** {time_ago}
+- **作者：** u/{username}
+- **要点：** {ChatGPT 用户应了解的内容}
+- **标签：** `{feature}` `{use-case}`
 
-{... more posts}
+{...更多帖子}
 
-**🔥 Hot Topics in r/ChatGPT:**
-- {topic 1}: {context}
-- {topic 2}: {context}
+**🔥 r/ChatGPT 热门话题：**
+- {topic 1}: {背景}
+- {topic 2}: {背景}
 
-**📢 Official/Notable Updates:** {any OpenAI announcements}
+**📢 官方/值得关注的更新：** {任何 OpenAI 公告}
 
 ---
 
-## 🔥 Cross-Community Trends
+## 🔥 跨社区趋势
 
-Topics generating discussion across multiple subreddits:
+跨多个 subreddit 引发讨论的话题：
 
 ### 1. {Trending Topic}
-- **Why it matters:** {explanation}
-- **Discussed in:** [r/AI_Agents]({url}), [r/ClaudeAI]({url}), [r/ChatGPT]({url})
-- **Key perspectives:**
-  - AI_Agents: {viewpoint}
-  - ClaudeAI: {viewpoint}
-  - ChatGPT: {viewpoint}
+- **为什么重要：** {说明}
+- **讨论社区：** [r/AI_Agents]({url})、[r/ClaudeAI]({url})、[r/ChatGPT]({url})
+- **关键视角：**
+  - AI_Agents：{观点}
+  - ClaudeAI：{观点}
+  - ChatGPT：{观点}
 
 ### 2. {Trending Topic}
-- **Why it matters:** {explanation}
-- **Related posts:** [{title}]({url}), [{title}]({url})
+- **为什么重要：** {说明}
+- **相关帖子：** [{title}]({url})、[{title}]({url})
 
 ---
 
-## 💡 AI Analysis & Insights
+## 💡 AI 分析与洞察
 
-**Key Themes This {Period}:**
-1. **{Theme}** - {detailed explanation with evidence from posts}
-2. **{Theme}** - {explanation}
+**本期 {Period} 关键主题：**
+1. **{Theme}** - {包含帖子证据的详细说明}
+2. **{Theme}** - {说明}
 
-**Emerging Patterns:**
-- {pattern observed across communities}
+**新兴模式：**
+- {跨社区观察到的模式}
 
-**What to Watch:**
-- {upcoming developments or trends to monitor}
+**值得关注：**
+- {需要关注的最新发展或趋势}
 
-**Community Sentiment:**
-| Community | Sentiment | Top Concern |
+**社区情绪：**
+| 社区 | 情绪 | 主要关注点 |
 |-----------|-----------|-------------|
-| r/AI_Agents | {positive/neutral/negative} | {main topic} |
-| r/ClaudeAI | {sentiment} | {topic} |
-| r/ChatGPT | {sentiment} | {topic} |
+| r/AI_Agents | {积极/中性/消极} | {主要话题} |
+| r/ClaudeAI | {情绪} | {话题} |
+| r/ChatGPT | {情绪} | {话题} |
 
 ---
 
-## 🛠️ Tools & Resources Mentioned
+## 🛠️ 提到的工具与资源
 
-| Tool/Resource | Mentioned In | What It Does | Link |
+| 工具/资源 | 提及社区 | 功能 | 链接 |
 |---------------|--------------|--------------|------|
-| {name} | r/{subreddit} | {brief description} | [{url}]({url}) |
+| {name} | r/{subreddit} | {简要描述} | [{url}]({url}) |
 
 ---
 
-## 📝 Notable Tutorials & Guides
+## 📝 值得关注的教程与指南
 
-| Title | Community | Difficulty | Key Learning |
+| 标题 | 社区 | 难度 | 关键收获 |
 |-------|-----------|------------|--------------|
-| [{title}]({url}) | r/{sub} | {beginner/intermediate/advanced} | {what you'll learn} |
+| [{title}]({url}) | r/{sub} | {初级/中级/高级} | {你将学到什么} |
 
 ---
 
-## ⚡ Action Items
+## ⚡ 行动项
 
-Based on today's discussions, consider:
-- [ ] {actionable insight 1}
-- [ ] {actionable insight 2}
-- [ ] {resource to check out}
+基于今天的讨论，建议考虑：
+- [ ] {可行见解 1}
+- [ ] {可行见解 2}
+- [ ] {值得查看的资源}
 
 ---
 
-📊 **Stats:** {total_posts} posts | {total_comments} comments | 3 communities
-🔄 **Refresh:** `/ai-daily` | 💾 **Save:** `/ai-daily --save`
-📅 **Weekly:** `/ai-daily week` | 📆 **Monthly:** `/ai-daily month`
+📊 **统计：** {total_posts} 篇帖子 | {total_comments} 条评论 | 3 个社区
+🔄 **刷新：** `/ai-daily` | 💾 **保存：** `/ai-daily --save`
+📅 **每周：** `/ai-daily week` | 📆 **每月：** `/ai-daily month`
 ```
 
 ### 4. 总结趋势
