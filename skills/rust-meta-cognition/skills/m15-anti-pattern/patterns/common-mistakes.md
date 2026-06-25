@@ -1,6 +1,6 @@
 # Rust 常见反模式与错误
 
-## Ownership Anti-Patterns
+## 所有权反模式
 
 ### 1. Clone Everything
 
@@ -54,7 +54,7 @@ println!("{}", first);
 
 ---
 
-## Error Handling Anti-Patterns
+## 错误处理反模式
 
 ### 4. Unwrap Everywhere
 
@@ -109,7 +109,7 @@ pub fn parse(input: &str) -> Result<Data, ParseError> {
 
 ---
 
-## String Anti-Patterns
+## 字符串反模式
 
 ### 7. String Instead of &str
 
@@ -165,7 +165,7 @@ for word in words {
 
 ---
 
-## Collection Anti-Patterns
+## 集合反模式
 
 ### 10. Index Instead of Iterator
 
@@ -211,7 +211,7 @@ if allowed.contains(input) { ... }  // O(1)
 
 ---
 
-## Concurrency Anti-Patterns
+## 并发反模式
 
 ### 13. Mutex for Read-Heavy Data
 
@@ -267,7 +267,7 @@ async fn compute() {
 
 ---
 
-## Type System Anti-Patterns
+## 类型系统反模式
 
 ### 16. Stringly Typed
 
@@ -321,7 +321,7 @@ enum FindResult {
 
 ---
 
-## API Design Anti-Patterns
+## API 设计反模式
 
 ### 19. Taking Ownership Unnecessarily
 
@@ -374,7 +374,7 @@ fn process(input: &str) -> String { ... }
 
 ---
 
-## Macro Anti-Patterns
+## 宏反模式
 
 ### 22. Macro When Function Works
 
@@ -405,7 +405,7 @@ fn test_macro_expansion() {
 
 ---
 
-## Quick Reference
+## 快速参考
 
 | Anti-Pattern | Better Alternative |
 |--------------|-------------------|
