@@ -2,7 +2,7 @@
 
 > 根 SKILL.md 路由 的工作流程示例
 
-## Example 1: Error Code with Domain Context
+## 示例 1：错误码 + 领域上下文
 
 ```
 User: "Why am I getting E0382 in my trading system?"
@@ -30,7 +30,7 @@ See: m01-ownership (Trace Up section),
      domain-fintech (Audit Requirements)"
 ```
 
-## Example 2: Design Question
+## 示例 2：设计问题
 
 ```
 User: "How should I handle user authentication?"
@@ -42,7 +42,7 @@ User: "How should I handle user authentication?"
 5. Answer: JWT with proper error types, async handlers
 ```
 
-## Example 3: Comparative Query
+## 示例 3：对比查询
 
 ```
 User: "Compare tokio and async-std"
@@ -54,7 +54,7 @@ User: "Compare tokio and async-std"
 5. Answer: Structured comparison table
 ```
 
-## Example 4: Multi-Layer Trace
+## 示例 4：多层追踪
 
 ```
 User: "My web API reports Rc cannot be sent between threads"
@@ -68,7 +68,7 @@ User: "My web API reports Rc cannot be sent between threads"
 5. Answer: Use Arc instead of Rc, or move to thread-local
 ```
 
-## Example 5: Intent Analysis Request
+## 示例 5：意图分析请求
 
 ```
 User: "Analyze this question: How do I share state in actix-web?"
