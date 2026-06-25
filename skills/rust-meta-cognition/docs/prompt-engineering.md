@@ -45,25 +45,25 @@
 ### 使用示例
 
 ```markdown
-# L5: 核心规则
-CRITICAL: You MUST load both L1 and L3 skills.
-NEVER skip the domain constraint analysis.
-This is MANDATORY and NON-NEGOTIABLE.
+# L5：核心规则
+CRITICAL：你必须同时加载 L1 和 L3 skill。
+NEVER 跳过领域约束分析。
+这是强制且不可协商的。
 
-# L4: 重要规则
-IMPORTANT: Always include the reasoning chain.
-You are REQUIRED to reference domain rules.
+# L4：重要规则
+IMPORTANT：始终包含推理链。
+你必须引用领域规则。
 
-# L3: 建议
-You should trace through all layers.
-It is recommended to provide code examples.
+# L3：建议
+你应该遍历所有层级。
+建议提供代码示例。
 
-# L2: 可选
-You can include additional context.
-You may reference related skills.
+# L2：可选
+你可以包含额外上下文。
+你可以引用相关 skill。
 
-# L1: 边缘
-Optionally, mention performance implications.
+# L1：边缘
+可选地，提及性能影响。
 ```
 
 ---
@@ -179,8 +179,8 @@ CRITICAL: You MUST...   → 最强
 ---
 
 # 差 - 无结构
-First identify the layer. Look for error codes like E0382
-or keywords like borrow. Also check for domain keywords...
+首先识别层级。查找像 E0382 这样的错误码
+或像 borrow 这样的关键词。还要检查领域关键词...
 ```
 
 ### 表格约束
@@ -193,8 +193,8 @@ or keywords like borrow. Also check for domain keywords...
 | payment | Load domain-fintech |
 
 # 差 - 文字描述
-If you see Web API or HTTP, load domain-web.
-If you see payment, load domain-fintech.
+如果你看到 Web API 或 HTTP，加载 domain-web。
+如果你看到 payment，加载 domain-fintech。
 ```
 
 ---
@@ -328,35 +328,35 @@ Solution: Use Arc
 
 ```markdown
 # 差
-You should probably include the reasoning chain.
-It would be nice to reference domain constraints.
+你可能应该包含推理链。
+最好能引用领域约束。
 
 # 好
-You MUST include the reasoning chain.
-CRITICAL: Reference domain constraints.
+你必须包含推理链。
+CRITICAL：引用领域约束。
 ```
 
 ### 2. 约束太模糊
 
 ```markdown
 # 差
-Follow the meta-cognition framework.
+遵循元认知框架。
 
 # 好
-STEP 1: Identify entry layer (L1/L2/L3)
-STEP 2: Load appropriate skills using Skill() tool
-STEP 3: Trace through layers (UP or DOWN)
-STEP 4: Output with reasoning chain format
+STEP 1：识别入口层级（L1/L2/L3）
+STEP 2：使用 Skill() 工具加载适当的 skill
+STEP 3：遍历各层级（向上或向下）
+STEP 4：以推理链格式输出
 ```
 
 ### 3. 没有示例
 
 ```markdown
 # 差
-Output should include reasoning chain.
+输出应包含推理链。
 
 # 好
-Output MUST include reasoning chain:
+输出必须包含推理链：
 ```
 
 ### Reasoning Chain
