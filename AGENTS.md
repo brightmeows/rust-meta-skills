@@ -13,8 +13,8 @@
 ### Always
 
 - 修改 `.md` 后通过 `pre-commit run markdownlint` 验证格式
-- 修改 `skills/rust-meta-cognition/SKILL.md` 后，同步更新 `.well-known/skills/index.json` 中的 `digest` 字段
-- 新增/移除技能目录时同步更新 `.well-known/skills/index.json`
+- 修改 `skills/rust-meta-cognition/SKILL.md` 后，同步更新 `.well-known/agent-skills/index.json` 中的 `digest` 字段
+- 新增/移除技能目录时同步更新 `.well-known/agent-skills/index.json`
 - 提交信息使用中文，遵循 Conventional Commits 格式：`type(scope): subject`
 - 每完成一个逻辑单元后立即原子提交
 - 提交前执行 `git status` + `git diff` 确认只包含预期变更
