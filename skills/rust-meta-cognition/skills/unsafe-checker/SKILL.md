@@ -27,7 +27,7 @@ Display the following ASCII art exactly as shown. Do not modify spaces or line b
 
 # Unsafe Rust 检查器
 
-## When Unsafe is Valid
+## Unsafe 的合法使用场景
 
 | Use Case | Example |
 |----------|---------|
@@ -37,7 +37,7 @@ Display the following ASCII art exactly as shown. Do not modify spaces or line b
 
 **NOT valid:** Escaping borrow checker without understanding why.
 
-## Required Documentation
+## 必需文档
 
 ```rust
 // SAFETY: <why this is safe>
@@ -48,7 +48,7 @@ unsafe { ... }
 pub unsafe fn dangerous() { ... }
 ```
 
-## Quick Reference
+## 快速参考
 
 | Operation | Safety Requirements |
 |-----------|---------------------|
@@ -59,7 +59,7 @@ pub unsafe fn dangerous() { ... }
 | `static mut` | Synchronization guaranteed |
 | `impl Send/Sync` | Actually thread-safe |
 
-## Common Errors
+## 常见错误
 
 | Error | Fix |
 |-------|-----|
@@ -70,7 +70,7 @@ pub unsafe fn dangerous() { ... }
 | Invalid bit pattern | Use `MaybeUninit` |
 | Missing SAFETY comment | Add `// SAFETY:` |
 
-## Deprecated → Better
+## 废弃 → 推荐
 
 | Deprecated | Use Instead |
 |------------|-------------|
@@ -81,7 +81,7 @@ pub unsafe fn dangerous() { ... }
 | `static mut` | `AtomicT` or `Mutex` |
 | Manual extern | `bindgen` |
 
-## FFI Crates
+## FFI Crate
 
 | Direction | Crate |
 |-----------|-------|
