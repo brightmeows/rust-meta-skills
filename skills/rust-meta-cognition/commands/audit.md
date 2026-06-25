@@ -2,13 +2,13 @@
 
 使用 os-checker 工具进行重量级安全审计。
 
-## Usage
+## 使用方法
 
 ```
 /audit [mode]
 ```
 
-## Parameters
+## 参数
 
 - `mode` (optional): Audit mode
   - `security` - 安全漏洞审计 (default)
@@ -16,7 +16,7 @@
   - `concurrency` - 并发问题审计
   - `full` - 完整审计（所有检查器）
 
-## When to Use
+## 使用时机
 
 | 场景 | 推荐 |
 |------|------|
