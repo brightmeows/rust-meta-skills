@@ -397,4 +397,4 @@ unsafe { slice.get_unchecked(index) }
 | [`router/examples/workflow.md`](router/examples/workflow.md) | 路由工作流程示例 |
 | [`router/integrations/os-checker.md`](router/integrations/os-checker.md) | OS-Checker 集成 |
 | [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md) | unsafe 审查规则 |
-| [`README.md`](README.md) | 人类文档（安装、特性、命令）|
+| [`../../README.md`](../../README.md) | 人类文档（安装、特性、命令）|

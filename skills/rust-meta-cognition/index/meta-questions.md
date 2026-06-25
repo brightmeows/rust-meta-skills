@@ -99,4 +99,4 @@ m[XX][YYY][ZZZZZ]
 
 | 文件 | 用途 |
 |------|------|
-| [../router/SKILL.md](../router/SKILL.md) | 使用元问题进行路由决策 |
+| [../SKILL.md](../SKILL.md) | 使用元问题进行路由决策 |

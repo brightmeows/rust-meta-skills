@@ -139,4 +139,4 @@
 
 | 文件 | 用途 |
 |------|------|
-| [../router/SKILL.md](../router/SKILL.md) | 实现这些路由规则 |
+| [../SKILL.md](../SKILL.md) | 实现这些路由规则 |
