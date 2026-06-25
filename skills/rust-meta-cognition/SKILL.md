@@ -117,42 +117,54 @@ unsafe { slice.get_unchecked(index) }
 
 ### Core
 
-- `rust-router` — 主路由（所有 Rust 问题先走它）
-- `rust-learner` — 获取最新 Rust / crate 版本
-- `coding-guidelines` — 编码规范查询
-- `unsafe-checker` — unsafe 代码审查
+- [`rust-router`](skills/rust-router/SKILL.md) — 主路由（所有 Rust 问题先走它）
+- [`rust-learner`](skills/rust-learner/SKILL.md) — 获取最新 Rust / crate 版本
+- [`coding-guidelines`](skills/coding-guidelines/SKILL.md) — 编码规范查询
+- [`unsafe-checker`](skills/unsafe-checker/SKILL.md) — unsafe 代码审查
 
 ### Layer 1: Language Mechanics (m01-m07)
 
 | Skill | Core Question |
 |-------|---------------|
-| m01-ownership | Who owns this data? |
-| m02-resource | What ownership pattern fits? |
-| m03-mutability | Why must this change? |
-| m04-zero-cost | Compile-time or runtime polymorphism? |
-| m05-type-driven | How can types prevent invalid states? |
-| m06-error-handling | Expected failure or bug? |
-| m07-concurrency | CPU-bound or I/O-bound? |
+| [m01-ownership](skills/m01-ownership/SKILL.md) | Who owns this data? |
+| [m02-resource](skills/m02-resource/SKILL.md) | What ownership pattern fits? |
+| [m03-mutability](skills/m03-mutability/SKILL.md) | Why must this change? |
+| [m04-zero-cost](skills/m04-zero-cost/SKILL.md) | Compile-time or runtime polymorphism? |
+| [m05-type-driven](skills/m05-type-driven/SKILL.md) | How can types prevent invalid states? |
+| [m06-error-handling](skills/m06-error-handling/SKILL.md) | Expected failure or bug? |
+| [m07-concurrency](skills/m07-concurrency/SKILL.md) | CPU-bound or I/O-bound? |
 
 ### Layer 2: Design Choices (m09-m15)
 
 | Skill | Core Question |
 |-------|---------------|
-| m09-domain | What role does this concept play? |
-| m10-performance | Where's the bottleneck? |
-| m11-ecosystem | Which crate fits? |
-| m12-lifecycle | When to create / use / cleanup? |
-| m13-domain-error | Who handles this error? |
-| m14-mental-model | How to think about this? |
-| m15-anti-pattern | Does this hide design issues? |
+| [m09-domain](skills/m09-domain/SKILL.md) | What role does this concept play? |
+| [m10-performance](skills/m10-performance/SKILL.md) | Where's the bottleneck? |
+| [m11-ecosystem](skills/m11-ecosystem/SKILL.md) | Which crate fits? |
+| [m12-lifecycle](skills/m12-lifecycle/SKILL.md) | When to create / use / cleanup? |
+| [m13-domain-error](skills/m13-domain-error/SKILL.md) | Who handles this error? |
+| [m14-mental-model](skills/m14-mental-model/SKILL.md) | How to think about this? |
+| [m15-anti-pattern](skills/m15-anti-pattern/SKILL.md) | Does this hide design issues? |
 
 ### Layer 3: Domain Constraints (domain-*)
 
-`domain-fintech` · `domain-web` · `domain-cli` · `domain-embedded` · `domain-cloud-native` · `domain-iot` · `domain-ml`
+- [`domain-fintech`](skills/domain-fintech/SKILL.md)
+- [`domain-web`](skills/domain-web/SKILL.md)
+- [`domain-cli`](skills/domain-cli/SKILL.md)
+- [`domain-embedded`](skills/domain-embedded/SKILL.md)
+- [`domain-cloud-native`](skills/domain-cloud-native/SKILL.md)
+- [`domain-iot`](skills/domain-iot/SKILL.md)
+- [`domain-ml`](skills/domain-ml/SKILL.md)
 
 ### Utility & Experimental
 
-`rust-daily` · `rust-skill-creator` · `core-actionbook` · `core-agent-browser` · `core-dynamic-skills` · `core-fix-skill-docs` · `meta-cognition-parallel`
+- [`rust-daily`](skills/rust-daily/SKILL.md)
+- [`rust-skill-creator`](skills/rust-skill-creator/SKILL.md)
+- [`core-actionbook`](skills/core-actionbook/SKILL.md)
+- [`core-agent-browser`](skills/core-agent-browser/SKILL.md)
+- [`core-dynamic-skills`](skills/core-dynamic-skills/SKILL.md)
+- [`core-fix-skill-docs`](skills/core-fix-skill-docs/SKILL.md)
+- [`meta-cognition-parallel`](skills/meta-cognition-parallel/SKILL.md)
 
 ## 参考文件索引
 
