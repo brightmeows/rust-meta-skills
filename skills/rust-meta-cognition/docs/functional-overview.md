@@ -22,7 +22,7 @@
 
 | 问题 | 传统 AI | 元认知 AI |
 |------|---------|-----------|
-| E0382 错误 | "加 .clone()" | 追溯所有权设计，给出领域正确方案 |
+| E0382 错误 | “加 .clone()” | 追溯所有权设计，给出领域正确方案 |
 | 类型选择 | 泛泛建议 | 基于领域约束的决策 |
 | 设计问题 | 通用模式 | 符合领域最佳实践 |
 
@@ -237,7 +237,7 @@
 - 规则复用：共享 `rust-defaults.md`
 - 上下文节省：只加载需要的子 Skill
 
-详见 `docs/architecture.md` 中的"Skill 继承模式"章节。
+详见 `docs/architecture.md` 中的“Skill 继承模式”章节。
 
 ---
 
@@ -461,7 +461,7 @@ crate info, docs.rs, API documentation, which crate
 | `search_actions` | query, type, limit | action IDs, 预览, 相关度 |
 | `get_action_by_id` | id | URL, 选择器, 元素类型 |
 
-#### 为什么是"核心依赖"？
+#### 为什么是“核心依赖”？
 
 | 维度 | 无 Actionbook | 有 Actionbook |
 |------|---------------|---------------|
@@ -588,7 +588,7 @@ actionbook MCP → agent-browser CLI → WebFetch (仅备用)
 
 ### 协作示例
 
-**问题**: "用 tokio 1.40 写一个 Web 服务，处理并发请求"
+**问题**: “用 tokio 1.40 写一个 Web 服务，处理并发请求”
 
 ```
 1. 元认知类: 识别 Web + 并发 → 加载 domain-web + m07

@@ -371,7 +371,7 @@ pedantic = "warn"
 
 ## 示例：元认知实战
 
-**问题**: "我的 Web API 报错 Rc cannot be sent between threads"
+**问题**: “我的 Web API 报错 Rc cannot be sent between threads”
 
 **传统回答**:
 

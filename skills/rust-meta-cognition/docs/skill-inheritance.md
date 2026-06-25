@@ -7,7 +7,7 @@
 Claude Code 的 Skills 是独立的：
 
 - 每个 skill 根据 `description` 关键词独立触发
-- 不会自动加载"父" skill
+- 不会自动加载“父” skill
 - 共享规则需要重复写在每个 skill 中
 
 ## 解决方案对比

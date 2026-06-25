@@ -237,10 +237,10 @@ Trait: Handler (3 required methods)
 
 | 用户提问 | 操作 |
 |-----------|--------|
-| "谁实现了 X？" | 对 trait 执行 goToImplementation |
-| "Y 实现了哪些 trait？" | Grep 搜索 `impl * for Y` |
-| "显示 trait 层级" | 递归查找超 trait |
-| "X: Send + Sync 吗？" | 检查标准库 trait 实现 |
+| “谁实现了 X？” | 对 trait 执行 goToImplementation |
+| “Y 实现了哪些 trait？” | Grep 搜索 `impl * for Y` |
+| “显示 trait 层级” | 递归查找超 trait |
+| “X: Send + Sync 吗？” | 检查标准库 trait 实现 |
 
 ## 相关技能
 

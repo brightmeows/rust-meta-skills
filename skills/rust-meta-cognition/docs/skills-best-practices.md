@@ -27,7 +27,7 @@ description: |
 | 关键词 | `tokio, spawn, select!, mpsc` |
 | 错误码 | `E0382, E0597, E0277` |
 | 错误信息 | `"cannot move out of"`, `"borrowed value"` |
-| 用户问题 | `"how to use tokio"`, `"tokio 怎么用"` |
+| 用户问题 | `"how to use tokio"`, `“tokio 怎么用”` |
 | 中文触发词 | `异步运行时, spawn 用法, 最新版本` |
 
 **示例对比：**
@@ -138,7 +138,7 @@ Skills 引用的 reference 文件可能不存在，导致读取失败但用户�
 
 ### 解决方案
 
-**使用 "PREFER" 而非 "DO NOT"：**
+**使用 “PREFER“ 而非 ”DO NOT”：**
 
 ```markdown
 ## Tool Priority
@@ -161,7 +161,7 @@ Skills 引用的 reference 文件可能不存在，导致读取失败但用户�
 
 ### 概念
 
-"没有失败测试就没有技能" - 先定义技能应该解决的问题，再编写技能。
+“没有失败测试就没有技能” - 先定义技能应该解决的问题，再编写技能。
 
 ### 流程
 
@@ -372,7 +372,7 @@ description: |
 | 分布式触发 | 每个 skill 独立可触发 |
 | 符号链接 | 动态 skills 需要链接到 ~/.claude/skills/ |
 | 文档检查 | 读取失败时提示用户更新 |
-| 工具优先级 | "PREFER" 而非 "DO NOT" |
+| 工具优先级 | “PREFER“ 而非 ”DO NOT” |
 | TDD | 先写压力场景，再写 skill |
 | 表格优先 | Quick Reference 放顶部 |
 | 热加载 | Commands 需要 Skill 包装 |

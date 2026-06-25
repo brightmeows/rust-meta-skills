@@ -174,10 +174,10 @@ process_request  ◄── YOU ARE HERE
 
 | 用户提问 | 方向 | 用途 |
 |-----------|-----------|----------|
-| "谁调用了 X？" | incoming | 影响分析 |
-| "X 调用了什么？" | outgoing | 理解实现 |
-| "显示调用图" | both | 全貌 |
-| "从 main 追踪到 X" | outgoing | 执行路径 |
+| “谁调用了 X？” | incoming | 影响分析 |
+| “X 调用了什么？” | outgoing | 理解实现 |
+| “显示调用图” | both | 全貌 |
+| “从 main 追踪到 X” | outgoing | 执行路径 |
 
 ## 可视化选项
 

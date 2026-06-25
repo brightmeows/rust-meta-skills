@@ -101,8 +101,8 @@ user-invocable: false
 | `Option<T>` | 缺失是正常的 | `fn find() -> Option<&Item>` |
 | `?` | 传播错误 | `let data = file.read()?;` |
 | `unwrap()` | 仅开发/测试 | `config.get("key").unwrap()` |
-| `expect()` | 不变量成立 | `env.get("HOME").expect("HOME 已设置")` |
-| `panic!` | 不可恢复 | `panic!("致命失败")` |
+| `expect()` | 不变量成立 | `env.get("HOME").expect(“HOME 已设置”)` |
+| `panic!` | 不可恢复 | `panic!(“致命失败”)` |
 
 ## 库 vs 应用
 
@@ -143,7 +143,7 @@ user-invocable: false
 
 | 反模式 | 为什么不好 | 更好的做法 |
 |--------------|---------|--------|
-| 到处用 `.unwrap()` | 生产环境恐慌 | `.expect("原因")` 或 `?` |
+| 到处用 `.unwrap()` | 生产环境恐慌 | `.expect(“原因”)` 或 `?` |
 | 静默忽略错误 | 隐藏 Bug | 处理或传播 |
 | 对预期错误用 `panic!` | 糟糕的用户体验，无法恢复 | Result |
 | 到处用 `Box<dyn Error>` | 丢失类型信息 | thiserror |

@@ -8,7 +8,7 @@
 **期望 Skill：** m01-ownership
 **期望的响应要素：**
 
-- [ ] 解释"use of moved value"
+- [ ] 解释”use of moved value"
 - [ ] 展示错误的代码示例
 - [ ] 修复选项（clone、borrow、restructure）
 

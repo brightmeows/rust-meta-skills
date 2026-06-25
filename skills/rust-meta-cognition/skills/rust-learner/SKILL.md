@@ -318,7 +318,7 @@ actionbook → agent-browser → WebFetch（仅当 agent-browser 不可用时）
 以下情况会自动触发本技能：
 
 - 提及任何 Rust crate 名称（tokio、serde、axum、sqlx 等）
-- 关于 "latest"、"new"、"version"、"changelog" 的问题
+- 关于 "latest“、”new“、”version“、”changelog" 的问题
 - API 文档请求
 - 依赖/特性问题
 

@@ -210,10 +210,10 @@ user.rs
 
 | 用户提问 | 分析方式 |
 |-----------|----------|
-| "这个项目中有哪些 struct？" | workspaceSymbol + 过滤 |
-| "显示 src/lib.rs 的结构" | documentSymbol |
-| "查找所有异步函数" | workspaceSymbol + async 过滤 |
-| "列出公共 API" | documentSymbol + pub 过滤 |
+| “这个项目中有哪些 struct？” | workspaceSymbol + 过滤 |
+| “显示 src/lib.rs 的结构” | documentSymbol |
+| “查找所有异步函数” | workspaceSymbol + async 过滤 |
+| “列出公共 API” | documentSymbol + pub 过滤 |
 
 ## 相关技能
 

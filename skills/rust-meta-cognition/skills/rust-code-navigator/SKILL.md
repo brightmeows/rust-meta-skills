@@ -39,7 +39,7 @@ LSP(
 
 **使用时机：**
 
-- 用户问 "X 定义在哪里？"
+- 用户问 “X 定义在哪里？”
 - 用户想理解类型/函数
 - 等同于 Ctrl+点击
 
@@ -58,7 +58,7 @@ LSP(
 
 **使用时机：**
 
-- 用户问 "谁在使用 X？"
+- 用户问 “谁在使用 X？”
 - 重构/重命名之前
 - 理解变更影响
 
@@ -77,7 +77,7 @@ LSP(
 
 **使用时机：**
 
-- 用户问 "X 是什么类型？"
+- 用户问 “X 是什么类型？”
 - 用户想查看文档
 - 快速类型检查
 
@@ -141,19 +141,19 @@ pub struct Config {
 
 | 用户提问 | LSP 操作 |
 |-----------|---------------|
-| "X 定义在哪里？" | goToDefinition |
-| "谁在使用 X？" | findReferences |
-| "X 是什么类型？" | hover |
-| "查找所有 struct" | workspaceSymbol |
-| "这个文件里有什么？" | documentSymbol |
+| “X 定义在哪里？” | goToDefinition |
+| “谁在使用 X？” | findReferences |
+| “X 是什么类型？” | hover |
+| “查找所有 struct” | workspaceSymbol |
+| “这个文件里有什么？” | documentSymbol |
 
 ## 错误处理
 
 | 错误 | 原因 | 解决方案 |
 |-------|-------|----------|
-| "没有 LSP 服务器" | rust-analyzer 未运行 | 建议：`rustup component add rust-analyzer` |
-| "符号未找到" | 拼写错误或不在作用域内 | 先用 workspaceSymbol 搜索 |
-| "多个定义" | 泛型或宏 | 全部展示让用户选择 |
+| “没有 LSP 服务器” | rust-analyzer 未运行 | 建议：`rustup component add rust-analyzer` |
+| “符号未找到” | 拼写错误或不在作用域内 | 先用 workspaceSymbol 搜索 |
+| “多个定义” | 泛型或宏 | 全部展示让用户选择 |
 
 ## 相关技能
 
