@@ -50,7 +50,7 @@ let b = a;  // a 被移动
 ### 共享数据
 
 ```rust
-// Rust: explicit about sharing
+// Rust：显式说明共享
 use std::sync::Arc;
 let data = Arc::new(vec![1, 2, 3]);
 let data_clone = Arc::clone(&data);
@@ -58,7 +58,7 @@ std::thread::spawn(move || {
     println!("{:?}", data_clone);
 });
 
-// Go: implicit sharing
+// Go：隐式共享
 // data := []int{1, 2, 3}
 // go func() {
 //     fmt.Println(data)  // potential race condition
@@ -88,7 +88,7 @@ std::thread::spawn(move || {
 ### 对比
 
 ```rust
-// Rust: clear ownership
+// Rust：所有权清晰
 fn process(data: Vec<i32>) {  // takes ownership
     // data is ours, will be freed at end
 }
@@ -97,10 +97,10 @@ let numbers = vec![1, 2, 3];
 process(numbers);
 // numbers is invalid here
 
-// Java: ambiguous ownership
+// Java：所有权模糊
 // void process(List<Integer> data) {
-//     // Who owns data? Caller? Callee? Both?
-//     // Can caller still use it?
+//     // 谁拥有数据？调用者？被调用者？两者？
+//     // 调用者还能使用它吗？
 // }
 ```
 
@@ -120,14 +120,14 @@ process(numbers);
 ### Common Pattern Translation
 
 ```rust
-// Rust: borrowing iteration
+// Rust：借用以迭代
 let items = vec!["a", "b", "c"];
 for item in &items {
     println!("{}", item);
 }
 // items still usable
 
-// Python: iteration doesn't consume
+// Python：迭代不会消耗
 // items = ["a", "b", "c"]
 // for item in items:
 //     print(item)

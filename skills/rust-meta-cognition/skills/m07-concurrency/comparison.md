@@ -14,7 +14,7 @@
 ### Goroutine vs Rust 任务
 
 ```rust
-// Rust: explicit about thread safety
+// Rust：明确线程安全
 use std::sync::Arc;
 use tokio::sync::Mutex;
 
@@ -23,20 +23,20 @@ let data_clone = Arc::clone(&data);
 
 tokio::spawn(async move {
     let mut guard = data_clone.lock().await;
-    guard.push(1);  // Safe: Mutex protects access
+    guard.push(1);  // 安全：Mutex 保护访问
 });
 
-// Go: implicit sharing (potential race)
+// Go：隐式共享（潜在竞态）
 // data := []int{}
 // go func() {
-//     data = append(data, 1)  // RACE CONDITION!
+//     data = append(data, 1)  // 竞态条件！
 // }()
 ```
 
 ### 信道对比
 
 ```rust
-// Rust: typed channels with ownership
+// Rust：带所有权的类型化信道
 use tokio::sync::mpsc;
 
 let (tx, mut rx) = mpsc::channel::<String>(100);
@@ -46,7 +46,7 @@ tokio::spawn(async move {
     // tx is moved, can't be used elsewhere
 });
 
-// Go: channels are more flexible but less safe
+// Go：信道更灵活但安全性较低
 // ch := make(chan string, 100)
 // go func() {
 //     ch <- "hello"
@@ -89,7 +89,7 @@ let data = Mutex::new(vec![1, 2, 3]);
 ### 线程池对比
 
 ```rust
-// Rust: rayon for data parallelism
+// Rust：rayon 实现数据并行
 use rayon::prelude::*;
 
 let sum: i32 = (0..1000)
@@ -97,7 +97,7 @@ let sum: i32 = (0..1000)
     .map(|x| x * x)
     .sum();
 
-// Java: Stream API
+// Java：Stream API
 // int sum = IntStream.range(0, 1000)
 //     .parallel()
 //     .map(x -> x * x)
