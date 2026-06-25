@@ -96,31 +96,31 @@ cargo +nightly miri test
 ## 示例输出
 
 ```
-Security Audit Report
+安全审计报告
 ═══════════════════════════════════════════
 
 [1/2] cargo audit
-  ✗ 2 vulnerabilities found
+  ✗ 发现 2 个漏洞
 
-  CRITICAL:
-    RUSTSEC-2024-0001: Memory corruption in foo v1.2.3
-    → Upgrade to foo v1.2.4
+  严重：
+    RUSTSEC-2024-0001：foo v1.2.3 中的内存损坏
+    → 升级到 foo v1.2.4
 
-  HIGH:
-    RUSTSEC-2024-0002: DoS vulnerability in bar v2.0.0
-    → Upgrade to bar v2.0.1
+  高：
+    RUSTSEC-2024-0002：bar v2.0.0 中的 DoS 漏洞
+    → 升级到 bar v2.0.1
 
 [2/2] cargo geiger
-  Unsafe usage in dependencies:
-    ├── libc: 127 unsafe blocks
-    ├── tokio: 45 unsafe blocks
-    └── your-crate: 3 unsafe blocks
+  依赖项中的不安全使用：
+    ├── libc：127 个 unsafe 块
+    ├── tokio：45 个 unsafe 块
+    └── your-crate：3 个 unsafe 块
 
 ═══════════════════════════════════════════
-Recommended Actions:
-1. Update foo to v1.2.4 (CRITICAL)
-2. Update bar to v2.0.1 (HIGH)
-3. Review unsafe usage with /unsafe-check
+建议操作：
+1. 更新 foo 至 v1.2.4（严重）
+2. 更新 bar 至 v2.0.1（高）
+3. 使用 /unsafe-check 审查不安全代码
 ```
 
 ## 工具安装
