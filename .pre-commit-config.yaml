@@ -26,7 +26,7 @@ repos:
             errors=0
             echo "=== 根 SKILL.md vs index.json ==="
             root_skill_name=$(basename "$(dirname skills/rust-meta-cognition/SKILL.md)")
-            index_names=$(jq -r '.skills[].name' .well-known/agent-skills/index.json | sort -u)
+            index_names=$(jq -r '.skills[].name' .well-known/skills/index.json | sort -u)
             if ! echo "$index_names" | grep -qx "$root_skill_name"; then
               echo "  ERROR: 根 skill '$root_skill_name' 在 index.json 中无对应条目"
               errors=$((errors + 1))
@@ -64,7 +64,7 @@ repos:
                 echo "         实际值:      sha256:${computed}"
                 errors=$((errors + 1))
               fi
-            done < <(jq -r '.skills[] | [.name, .digest] | @tsv' .well-known/agent-skills/index.json)
+            done < <(jq -r '.skills[] | [.name, .digest] | @tsv' .well-known/skills/index.json)
             if [ "$errors" -gt 0 ]; then
               echo "FAILED: ${errors} 个 digest 错误"
               exit 1
@@ -101,7 +101,7 @@ repos:
                     print(f"         frontmatter name='{fm_name}' ≠ 父目录名='{name}'")
                     errors += 1
 
-                index = json.loads(Path(".well-known/agent-skills/index.json").read_text(encoding="utf-8"))
+                index = json.loads(Path(".well-known/skills/index.json").read_text(encoding="utf-8"))
                 indexed = {s["name"]: s for s in index.get("skills", [])}
                 if name in indexed:
                     if fm_desc != indexed[name].get("description", ""):

@@ -35,7 +35,7 @@ npx skills add https://codeberg.org/brightmeows/rust-meta-skills
 npx skills add https://codeberg.org/brightmeows/rust-meta-skills#v0.1.0
 ```
 
-> 仓库根目录已配置 `.well-known/agent-skills/index.json`，支持 `npx skills` 自动发现。
+> 仓库根目录已配置 `.well-known/skills/index.json`，支持 `npx skills` 自动发现。
 
 ### 手动引用
 
