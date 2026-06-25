@@ -16,34 +16,34 @@ m[XX][YYY][ZZZZZ]
 
 ## 核心语言元问题（01-07）
 
-| Code | Meta-Question | Core Thinking | Key Concepts |
+| 编码 | 元问题 | 核心思考 | 关键概念 |
 |------|---------------|---------------|--------------|
-| **01** | Memory Ownership & Lifetimes | "Who owns this memory, when is it freed?" | ownership, borrowing, lifetime |
-| **02** | Resource Management Balance | "How to balance determinism vs flexibility?" | Box, Rc, Arc, Cell, RefCell |
-| **03** | Mutability Boundaries | "Where are the immutability boundaries?" | mut, interior mutability |
-| **04** | Zero-Cost Abstractions | "What can the compiler optimize away?" | generics, trait, inline |
-| **05** | Type-Driven Design | "How do types encode constraints?" | type state, phantom data |
-| **06** | Error Handling Philosophy | "Are failures expected or exceptional?" | Result, panic, recovery |
-| **07** | Concurrency Correctness | "How to ensure concurrency safety at compile time?" | Send, Sync, thread safety |
+| **01** | 内存所有权与生命周期 | “谁拥有这块内存，何时释放？” | ownership, borrowing, lifetime |
+| **02** | 资源管理平衡 | “如何平衡确定性与灵活性？” | Box, Rc, Arc, Cell, RefCell |
+| **03** | 可变性边界 | “不可变性边界在哪里？” | mut, interior mutability |
+| **04** | 零成本抽象 | “编译器能优化掉什么？” | generics, trait, inline |
+| **05** | 类型驱动设计 | “类型如何编码约束？” | type state, phantom data |
+| **06** | 错误处理哲学 | “失败是可预期的还是异常情况？” | Result, panic, recovery |
+| **07** | 并发正确性 | “如何在编译期保证并发安全？” | Send, Sync, thread safety |
 
 > **注：** m08（安全边界）已合并到 **unsafe-checker** skill 中。
 
 ## 领域架构元问题（09-13）
 
-| Code | Meta-Question | Core Thinking | Application Domain |
+| 编码 | 元问题 | 核心思考 | 应用领域 |
 |------|---------------|---------------|-------------------|
-| **09** | Domain Constraint Mapping | "How do domain rules become types?" | domain modeling |
-| **10** | Performance Optimization Model | "What are the performance bottlenecks in this domain?" | profiling, optimization |
-| **11** | Ecosystem Integration | "How to integrate with existing systems?" | interop, bindings |
-| **12** | Domain Lifecycle | "What are domain-specific resource patterns?" | resource patterns |
-| **13** | Domain Error Patterns | "What are domain failure and recovery strategies?" | domain errors |
+| **09** | 领域约束映射 | “领域规则如何转化为类型？” | domain modeling |
+| **10** | 性能优化模型 | “此领域的性能瓶颈在哪里？” | profiling, optimization |
+| **11** | 生态系统集成 | “如何与现有系统集成？” | interop, bindings |
+| **12** | 领域生命周期 | “领域特有的资源模式是什么？” | resource patterns |
+| **13** | 领域错误模式 | “领域的失败和恢复策略是什么？” | domain errors |
 
 ## 认知学习元问题（14-15）
 
-| Code | Meta-Question | Core Thinking | Learning Dimension |
+| 编码 | 元问题 | 核心思考 | 学习维度 |
 |------|---------------|---------------|-------------------|
-| **14** | Mental Model Construction | "What is the correct mental model?" | mental models |
-| **15** | Error Pattern Recognition | "What are common cognitive pitfalls?" | anti-patterns |
+| **14** | 心智模型构建 | “正确的心智模型是什么？” | mental models |
+| **15** | 错误模式识别 | “常见的认知陷阱有哪些？” | anti-patterns |
 
 ---
 
