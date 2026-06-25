@@ -138,10 +138,10 @@ description: >-
 
 | 模式 | 路由到 | 操作 |
 |------|--------|------|
-| 最新版本、what's new | **`rust-learner`** | 使用 agent |
-| API、docs、documentation | **`docs-researcher`** | 使用 agent |
-| 代码风格、命名、clippy | **`coding-guidelines`** | 读取 skill |
-| unsafe 代码、FFI | **`unsafe-checker`** | 读取 skill |
+| 最新版本 / 最新动态 | **`rust-learner`** | 使用 agent |
+| API / 文档 / documentation | **`docs-researcher`** | 使用 agent |
+| 代码风格 / 命名 / clippy | **`coding-guidelines`** | 读取 skill |
+| unsafe 代码 / FFI | **`unsafe-checker`** | 读取 skill |
 | 代码审查 | **`os-checker`** | 见 [`router/integrations/os-checker.md`](router/integrations/os-checker.md) |
 
 ## 优先级顺序
