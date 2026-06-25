@@ -66,113 +66,113 @@ unlocked=$(cat "$achievements_file" 2>/dev/null || echo '{"unlocked":[]}')
 
 ## 🐛 Bug Fixing
 
-| Status | Achievement | Description | Progress |
+| 状态 | 成就 | 描述 | 进度 |
 |--------|-------------|-------------|----------|
-| ✅ | First Blood | Fixed your first bug | 1/1 |
-| ✅ | Bug Hunter | Fixed 10 bugs | 10/10 |
-| ⬜ | Bug Slayer | Fixed 50 bugs | 23/50 |
-| 🔒 | Bug Terminator | Fixed 100 bugs | 23/100 |
+| ✅ | 初试锋芒 | 修复了第一个 bug | 1/1 |
+| ✅ | Bug 猎人 | 修复了 10 个 bug | 10/10 |
+| ⬜ | Bug 猎杀者 | 修复了 50 个 bug | 23/50 |
+| 🔒 | Bug 终结者 | 修复了 100 个 bug | 23/100 |
 
-## 🧪 Testing
+## 🧪 测试
 
-| Status | Achievement | Description | Progress |
+| 状态 | 成就 | 描述 | 进度 |
 |--------|-------------|-------------|----------|
-| ✅ | Test Curious | Wrote your first test | 1/1 |
-| ⬜ | Test Believer | Wrote 10 tests | 7/10 |
-| 🔒 | Test Enthusiast | Wrote 50 tests | 7/50 |
-| 🔒 | TDD Master | Wrote 100 tests | 7/100 |
+| ✅ | 测试好奇者 | 编写了第一个测试 | 1/1 |
+| ⬜ | 测试信徒 | 编写了 10 个测试 | 7/10 |
+| 🔒 | 测试爱好者 | 编写了 50 个测试 | 7/50 |
+| 🔒 | TDD 大师 | 编写了 100 个测试 | 7/100 |
 
-## 🔥 Consistency
+## 🔥 持续
 
-| Status | Achievement | Description | Progress |
+| 状态 | 成就 | 描述 | 进度 |
 |--------|-------------|-------------|----------|
-| ✅ | Getting Started | 3 day streak | 3/3 |
-| ✅ | Week Warrior | 7 day streak | 7/7 |
-| ⬜ | Monthly Master | 30 day streak | 12/30 |
-| 🔒 | Unstoppable | 100 day streak | 12/100 |
+| ✅ | 初出茅庐 | 连续 3 天 | 3/3 |
+| ✅ | 周勇士 | 连续 7 天 | 7/7 |
+| ⬜ | 月度大师 | 连续 30 天 | 12/30 |
+| 🔒 | 势不可挡 | 连续 100 天 | 12/100 |
 
-## 🛡️ Safety
+## 🛡️ 安全
 
-| Status | Achievement | Description | Progress |
+| 状态 | 成就 | 描述 | 进度 |
 |--------|-------------|-------------|----------|
-| ✅ | Safety First | 7 days no unsafe | 7/7 |
-| ⬜ | Safe Rustacean | 30 days no unsafe | 18/30 |
-| 🔒 | Safety Champion | 100 days no unsafe | 18/100 |
+| ✅ | 安全第一 | 7 天未用 unsafe | 7/7 |
+| ⬜ | 安全 Rustacean | 30 天未用 unsafe | 18/30 |
+| 🔒 | 安全冠军 | 100 天未用 unsafe | 18/100 |
 
-## 🔧 Error Resolution
+## 🔧 错误解决
 
-| Status | Achievement | Description | Progress |
+| 状态 | 成就 | 描述 | 进度 |
 |--------|-------------|-------------|----------|
-| ✅ | Error Whisperer | Resolved first error | 1/1 |
-| ⬜ | Borrow Checker's Friend | 25 errors | 15/25 |
-| 🔒 | Compiler Whisperer | 100 errors | 15/100 |
+| ✅ | 错误低语者 | 解决了第一个错误 | 1/1 |
+| ⬜ | 借用检查器之友 | 解决了 25 个错误 | 15/25 |
+| 🔒 | 编译器低语者 | 解决了 100 个错误 | 15/100 |
 
-## 📝 Documentation
+## 📝 文档
 
-| Status | Achievement | Description | Progress |
+| 状态 | 成就 | 描述 | 进度 |
 |--------|-------------|-------------|----------|
-| ⬜ | Documenter | 5 doc comments | 2/5 |
-| 🔒 | Documentation Master | 25 doc comments | 2/25 |
+| ⬜ | 文档撰写者 | 5 个文档注释 | 2/5 |
+| 🔒 | 文档大师 | 25 个文档注释 | 2/25 |
 
-## 🧹 Refactoring
+## 🧹 重构
 
-| Status | Achievement | Description | Progress |
+| 状态 | 成就 | 描述 | 进度 |
 |--------|-------------|-------------|----------|
-| ⬜ | Code Cleaner | 5 refactors | 3/5 |
-| 🔒 | Architect | 25 refactors | 3/25 |
+| ⬜ | 代码清洁者 | 5 次重构 | 3/5 |
+| 🔒 | 架构师 | 25 次重构 | 3/25 |
 
-## 🎓 Learning
+## 🎓 学习
 
-| Status | Achievement | Description | Progress |
+| 状态 | 成就 | 描述 | 进度 |
 |--------|-------------|-------------|----------|
-| ✅ | Curious Crab | 10 Rust questions | 10/10 |
-| ⬜ | Knowledge Seeker | 50 questions | 32/50 |
-| 🔒 | Rust Scholar | 100 questions | 32/100 |
+| ✅ | 好奇之蟹 | 10 个 Rust 问题 | 10/10 |
+| ⬜ | 求知者 | 50 个问题 | 32/50 |
+| 🔒 | Rust 学者 | 100 个问题 | 32/100 |
 
-## 📅 Sessions
+## 📅 会话
 
-| Status | Achievement | Description | Progress |
+| 状态 | 成就 | 描述 | 进度 |
 |--------|-------------|-------------|----------|
-| ✅ | Hello, Rust! | First session | 1/1 |
-| ⬜ | Regular | 50 sessions | 28/50 |
-| 🔒 | Dedicated | 200 sessions | 28/200 |
+| ✅ | Hello, Rust! | 首次会话 | 1/1 |
+| ⬜ | 常客 | 50 次会话 | 28/50 |
+| 🔒 | 专注者 | 200 次会话 | 28/200 |
 
 ---
 
-💡 **Tip:** Keep coding to unlock more achievements!
-🔄 **Refresh:** `/achievement`
+💡 **提示：** 持续编码以解锁更多成就！
+🔄 **刷新：** `/achievement`
 ```
 
 #### For `stats`
 
 ```markdown
-# 📊 Coding Statistics
+# 📊 编码统计
 
-**Period:** {first_session_date} - {today}
-**Total Sessions:** {total_sessions}
+**期间：** {first_session_date} - {today}
+**总会话数：** {total_sessions}
 
 ---
 
-## Activity Summary
+## 活动摘要
 
-| Metric | Value | Trend |
+| 指标 | 数值 | 趋势 |
 |--------|-------|-------|
-| 🐛 Bugs Fixed | {bugs_fixed} | {trend} |
-| 🧪 Tests Written | {tests_written} | {trend} |
-| 🔧 Errors Resolved | {errors_resolved} | {trend} |
-| 👀 Code Reviews | {code_reviews} | {trend} |
-| 📝 Docs Written | {docs_written} | {trend} |
-| 🧹 Refactors | {refactors} | {trend} |
-| ❓ Questions Asked | {rust_questions} | {trend} |
+| 🐛 修复 Bug | {bugs_fixed} | {trend} |
+| 🧪 编写测试 | {tests_written} | {trend} |
+| 🔧 解决错误 | {errors_resolved} | {trend} |
+| 👀 代码审查 | {code_reviews} | {trend} |
+| 📝 编写文档 | {docs_written} | {trend} |
+| 🧹 重构次数 | {refactors} | {trend} |
+| ❓ 提问次数 | {rust_questions} | {trend} |
 
 ---
 
-## Streaks
+## 连续记录
 
-| Type | Current | Best |
+| 类型 | 当前 | 最佳 |
 |------|---------|------|
-| 🔥 Coding Streak | {streak_days} days | {best_streak} days |
-| 🛡️ No Unsafe | {unsafe_avoided_days} days | {best_safe} days |
+| 🔥 编码连续 | {streak_days} 天 | {best_streak} 天 |
+| 🛡️ 未用 Unsafe | {unsafe_avoided_days} 天 | {best_safe} 天 |
 
 ---
 
@@ -180,10 +180,10 @@ unlocked=$(cat "$achievements_file" 2>/dev/null || echo '{"unlocked":[]}')
 
 ```
 
-Bug Fixing:     ████████░░░░░░░░ 23/50 to Bug Slayer
-Testing:        ██████░░░░░░░░░░ 7/10 to Test Believer
-Safety:         ████████████░░░░ 18/30 to Safe Rustacean
-Learning:       ████████████░░░░ 32/50 to Knowledge Seeker
+Bug 修复：     ████████░░░░░░░░ 23/50 到 Bug 猎杀者
+测试：        ██████░░░░░░░░░░ 7/10 到 测试信徒
+安全：        ████████████░░░░ 18/30 到 安全 Rustacean
+学习：        ████████████░░░░ 32/50 到 求知者
 
 ```
 
@@ -191,55 +191,55 @@ Learning:       ████████████░░░░ 32/50 to Knowle
 
 ## Recent Activity
 
-| Time | Event |
+| 时间 | 事件 |
 |------|-------|
-| 2h ago | 🐛 Fixed bug in parser.rs |
-| 5h ago | 🧪 Wrote 3 tests |
-| 1d ago | 🔧 Resolved E0382 |
+| 2 小时前 | 🐛 修复了 parser.rs 中的 bug |
+| 5 小时前 | 🧪 编写了 3 个测试 |
+| 1 天前 | 🔧 解决了 E0382 |
 
 ---
 
-🏆 **Achievements:** {unlocked}/{total} unlocked
-📈 **Next Milestone:** {next_achievement}
+🏆 **成就：** {unlocked}/{total} 已解锁
+📈 **下一个里程碑：** {next_achievement}
 ```
 
 #### For `reset`
 
-**IMPORTANT: Ask for confirmation before resetting!**
+**重要：重置前需确认！**
 
 ```markdown
-⚠️ **Reset Confirmation Required**
+⚠️ **需要重置确认**
 
-This will permanently delete:
-- All {unlocked_count} unlocked achievements
-- All statistics ({bugs_fixed} bugs, {tests_written} tests, etc.)
-- {streak_days} day streak
+此操作将永久删除：
+- 所有 {unlocked_count} 个已解锁成就
+- 所有统计数据（{bugs_fixed} 个 bug、{tests_written} 个测试等）
+- {streak_days} 天连续记录
 
-**Are you sure?** Type "yes I want to reset" to confirm.
+**确认？** 输入 "yes I want to reset" 以确认。
 ```
 
-If confirmed:
+确认后：
 
 ```bash
 rm -rf ~/.claude/achievements/
-echo "✅ Achievement data reset successfully."
-echo "🌱 Start fresh and earn new achievements!"
+echo "✅ 成就数据已重置成功。"
+echo "🌱 重新开始，获取新成就！"
 ```
 
 ### 4. Achievement Categories
 
-| Category | ID Prefix | Achievements |
+| 类别 | ID 前缀 | 成就 |
 |----------|-----------|--------------|
-| Bug Fixing | bug_ | first_blood, bug_hunter, bug_slayer, bug_terminator |
-| Testing | test_ | test_curious, test_believer, test_enthusiast, tdd_master |
-| Streak | streak_ | getting_started, week_warrior, monthly_master, unstoppable |
-| Safety | safe_ | safety_first, safe_rustacean, safety_champion |
-| Error | error_ | error_whisperer, borrow_checker_friend, compiler_whisperer |
-| Review | review_ | code_reviewer, quality_guardian |
-| Docs | docs_ | documenter, doc_master |
-| Refactor | refactor_ | code_cleaner, architect |
-| Learning | learn_ | curious_crab, knowledge_seeker, rust_scholar |
-| Session | session_ | hello_rust, regular, dedicated |
+| Bug 修复 | bug_ | first_blood, bug_hunter, bug_slayer, bug_terminator |
+| 测试 | test_ | test_curious, test_believer, test_enthusiast, tdd_master |
+| 连续 | streak_ | getting_started, week_warrior, monthly_master, unstoppable |
+| 安全 | safe_ | safety_first, safe_rustacean, safety_champion |
+| 错误 | error_ | error_whisperer, borrow_checker_friend, compiler_whisperer |
+| 审查 | review_ | code_reviewer, quality_guardian |
+| 文档 | docs_ | documenter, doc_master |
+| 重构 | refactor_ | code_cleaner, architect |
+| 学习 | learn_ | curious_crab, knowledge_seeker, rust_scholar |
+| 会话 | session_ | hello_rust, regular, dedicated |
 
 ### 5. Status Icons
 
