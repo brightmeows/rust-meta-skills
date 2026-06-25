@@ -339,7 +339,7 @@ Write("{save_dir}/{date}-ai-{time_range}.md", "{full_report_markdown}")
 
 ---
 
-## Example Usage
+## 使用示例
 
 ```bash
 # Get today's AI news (default)
@@ -369,179 +369,179 @@ Write("{save_dir}/{date}-ai-{time_range}.md", "{full_report_markdown}")
 
 ---
 
-## Output Example
+## 输出示例
 
 ```markdown
-# 🤖 AI Daily Report
+# 🤖 AI 日报
 
-**Period:** 2026-01-19 - 2026-01-20 | **Generated:** 2026-01-20 15:30
-**Sources:** 45 posts from 3 subreddits
+**期间：** 2026-01-19 - 2026-01-20 | **生成时间：** 2026-01-20 15:30
+**来源：** 来自 3 个 subreddit 的 45 篇帖子
 
 ---
 
-## 📊 Quick Stats
+## 📊 快速统计
 
-| Metric | Value |
+| 指标 | 数值 |
 |--------|-------|
-| Total Posts Analyzed | 45 |
-| Hot Discussions (>100 comments) | 6 |
-| Product Announcements | 3 |
-| Tutorials/Guides | 8 |
-| Most Active Community | r/ChatGPT |
+| 分析帖子总数 | 45 |
+| 热门讨论（评论 >100） | 6 |
+| 产品公告 | 3 |
+| 教程/指南 | 8 |
+| 最活跃社区 | r/ChatGPT |
 
 ---
 
-## 🤖 r/AI_Agents - AI Agent Development
+## 🤖 r/AI_Agents — AI 代理开发
 
-### Top Posts
+### 热门帖子
 
-#### 1. Claude Code Now Supports MCP Servers Natively
-- **Link:** https://reddit.com/r/AI_Agents/comments/xyz789
-- **Score:** 234 ⬆️ | **Comments:** 45 💬 | **Posted:** 4 hours ago
-- **Author:** u/mcp_developer
-- **Key Takeaway:** MCP (Model Context Protocol) integration allows Claude Code to connect to external tools and data sources. This is a major step toward truly autonomous agents that can interact with real-world systems.
-- **Tags:** `claude-code` `mcp` `tooling` `intermediate`
+#### 1. Claude Code 现已原生支持 MCP 服务器
+- **链接：** https://reddit.com/r/AI_Agents/comments/xyz789
+- **评分：** 234 ⬆️ | **评论：** 45 💬 | **发布时间：** 4 小时前
+- **作者：** u/mcp_developer
+- **要点：** MCP（模型上下文协议）集成使 Claude Code 能够连接到外部工具和数据源。这是迈向真正自主代理的重要一步，这些代理可以与现实世界系统交互。
+- **标签：** `claude-code` `mcp` `tooling` `intermediate`
 
-#### 2. Building a Multi-Agent System with LangGraph - Complete Tutorial
-- **Link:** https://reddit.com/r/AI_Agents/comments/abc456
-- **Score:** 189 ⬆️ | **Comments:** 32 💬 | **Posted:** 8 hours ago
-- **Author:** u/langgraph_fan
-- **Key Takeaway:** Step-by-step guide for orchestrating multiple specialized agents. Shows patterns for agent communication, state management, and error handling in production.
-- **Tags:** `langgraph` `multi-agent` `tutorial` `advanced`
+#### 2. 使用 LangGraph 构建多代理系统 — 完整教程
+- **链接：** https://reddit.com/r/AI_Agents/comments/abc456
+- **评分：** 189 ⬆️ | **评论：** 32 💬 | **发布时间：** 8 小时前
+- **作者：** u/langgraph_fan
+- **要点：** 编排多个专业代理的分步指南。展示了生产环境中的代理通信、状态管理和错误处理模式。
+- **标签：** `langgraph` `multi-agent` `tutorial` `advanced`
 
-**🔥 Hot Topics in r/AI_Agents:**
-- MCP Protocol: [Native support](https://reddit.com/...), [Custom servers](https://reddit.com/...)
-- Agent monetization: Multiple posts on making agents profitable
+**🔥 r/AI_Agents 热门话题：**
+- MCP 协议：[原生支持](https://reddit.com/...)、[自定义服务器](https://reddit.com/...)
+- 代理盈利：多篇关于如何让代理盈利的帖子
 
-**💡 Emerging Tools/Frameworks:** LangGraph, CrewAI, AutoGen
-
----
-
-## 🟠 r/ClaudeAI - Claude & Anthropic
-
-### Top Posts
-
-#### 1. Claude 4.5 Opus Announced - First Impressions Thread
-- **Link:** https://reddit.com/r/ClaudeAI/comments/def123
-- **Score:** 567 ⬆️ | **Comments:** 234 💬 | **Posted:** 2 hours ago
-- **Author:** u/anthropic_watcher
-- **Key Takeaway:** New flagship model with improved reasoning, larger context window (300K), and better code generation. Early testers report significant improvements in complex multi-step tasks.
-- **Tags:** `opus` `new-release` `benchmark`
-
-#### 2. Claude's New System Prompts Explained - What Changed
-- **Link:** https://reddit.com/r/ClaudeAI/comments/ghi789
-- **Score:** 423 ⬆️ | **Comments:** 89 💬 | **Posted:** 6 hours ago
-- **Author:** u/prompt_engineer
-- **Key Takeaway:** Anthropic updated Claude's system prompts to be more helpful while maintaining safety. Key changes include better handling of edge cases and more nuanced refusals.
-- **Tags:** `system-prompt` `safety` `behavior`
-
-**🔥 Hot Topics in r/ClaudeAI:**
-- Opus 4.5 capabilities and pricing
-- Claude Code vs Cursor comparison threads
-
-**📢 Official/Notable Updates:** Claude 4.5 Opus release, API pricing changes
+**💡 新兴工具/框架：** LangGraph, CrewAI, AutoGen
 
 ---
 
-## 🟢 r/ChatGPT - ChatGPT & OpenAI
+## 🟠 r/ClaudeAI — Claude 与 Anthropic
 
-### Top Posts
+### 热门帖子
 
-#### 1. GPT-5 Rumors: What We Know So Far
-- **Link:** https://reddit.com/r/ChatGPT/comments/jkl012
-- **Score:** 892 ⬆️ | **Comments:** 445 💬 | **Posted:** 5 hours ago
-- **Author:** u/openai_insider
-- **Key Takeaway:** Compilation of leaked information and official hints about GPT-5. Expected features include native multimodal input, improved reasoning, and potential agent capabilities.
-- **Tags:** `gpt-5` `rumors` `speculation`
+#### 1. Claude 4.5 Opus 发布 — 初体验汇总
+- **链接：** https://reddit.com/r/ClaudeAI/comments/def123
+- **评分：** 567 ⬆️ | **评论：** 234 💬 | **发布时间：** 2 小时前
+- **作者：** u/anthropic_watcher
+- **要点：** 新的旗舰模型，改进了推理能力、更大的上下文窗口（300K）和更好的代码生成。早期测试者报告在复杂多步骤任务上有显著改进。
+- **标签：** `opus` `new-release` `benchmark`
 
-#### 2. OpenAI's New Voice Mode is Incredible - Demo Inside
-- **Link:** https://reddit.com/r/ChatGPT/comments/mno345
-- **Score:** 654 ⬆️ | **Comments:** 234 💬 | **Posted:** 10 hours ago
-- **Author:** u/voice_tester
-- **Key Takeaway:** Advanced Voice mode now available to Plus users. Features real-time conversation, emotional tone detection, and multilingual support. Latency reduced to near-instant.
-- **Tags:** `voice-mode` `feature` `demo`
+#### 2. Claude 的新系统提示说明 — 有哪些变化
+- **链接：** https://reddit.com/r/ClaudeAI/comments/ghi789
+- **评分：** 423 ⬆️ | **评论：** 89 💬 | **发布时间：** 6 小时前
+- **作者：** u/prompt_engineer
+- **要点：** Anthropic 更新了 Claude 的系统提示，使其在保持安全性的同时更有帮助。主要变化包括更好地处理边缘情况和更细致的拒答策略。
+- **标签：** `system-prompt` `safety` `behavior`
 
-**🔥 Hot Topics in r/ChatGPT:**
-- GPT-5 speculation dominating discussion
-- Voice mode demos and use cases
-- Custom GPTs marketplace strategies
+**🔥 r/ClaudeAI 热门话题：**
+- Opus 4.5 的能力和定价
+- Claude Code 与 Cursor 的对比讨论
 
-**📢 Official/Notable Updates:** Voice mode general availability, GPT Store improvements
-
----
-
-## 🔥 Cross-Community Trends
-
-### 1. Agent Capabilities Race
-- **Why it matters:** All major AI providers are pushing toward autonomous agents
-- **Discussed in:** [r/AI_Agents](https://reddit.com/...), [r/ClaudeAI](https://reddit.com/...), [r/ChatGPT](https://reddit.com/...)
-- **Key perspectives:**
-  - AI_Agents: Focus on practical implementation and tooling
-  - ClaudeAI: Excitement about MCP and Claude Code
-  - ChatGPT: Anticipation for GPT-5 agent features
-
-### 2. Voice/Multimodal as Default
-- **Why it matters:** Shift from text-only to multimodal interaction becoming standard
-- **Related posts:** [Voice mode demo](https://reddit.com/...), [Claude vision](https://reddit.com/...)
+**📢 官方/值得关注的更新：** Claude 4.5 Opus 发布，API 定价变更
 
 ---
 
-## 💡 AI Analysis & Insights
+## 🟢 r/ChatGPT — ChatGPT 与 OpenAI
 
-**Key Themes This Period:**
-1. **Agent Infrastructure Maturing** - MCP, LangGraph, and similar tools enabling production-grade agents
-2. **Model Competition Intensifying** - Opus 4.5 vs GPT-5 speculation driving engagement
+### 热门帖子
 
-**Emerging Patterns:**
-- Increased focus on agent monetization and business applications
-- Voice/audio becoming differentiating feature
+#### 1. GPT-5 传闻：目前所知的一切
+- **链接：** https://reddit.com/r/ChatGPT/comments/jkl012
+- **评分：** 892 ⬆️ | **评论：** 445 💬 | **发布时间：** 5 小时前
+- **作者：** u/openai_insider
+- **要点：** 关于 GPT-5 的泄露信息和官方暗示汇总。预期功能包括原生多模态输入、改进的推理能力和潜在的代理功能。
+- **标签：** `gpt-5` `rumors` `speculation`
 
-**What to Watch:**
-- GPT-5 announcement timing (rumored Q1 2026)
-- MCP adoption across AI tools
+#### 2. OpenAI 的新语音模式令人惊叹 — 内含演示
+- **链接：** https://reddit.com/r/ChatGPT/comments/mno345
+- **评分：** 654 ⬆️ | **评论：** 234 💬 | **发布时间：** 10 小时前
+- **作者：** u/voice_tester
+- **要点：** 高级语音模式现已面向 Plus 用户推出。具备实时对话、情感语调检测和多语言支持。延迟降低到近乎即时。
+- **标签：** `voice-mode` `feature` `demo`
 
-**Community Sentiment:**
-| Community | Sentiment | Top Concern |
+**🔥 r/ChatGPT 热门话题：**
+- GPT-5 猜测占据讨论主流
+- 语音模式演示和用例
+- 自定义 GPT 市场策略
+
+**📢 官方/值得关注的更新：** 语音模式正式可用，GPT Store 改进
+
+---
+
+## 🔥 跨社区趋势
+
+### 1. 代理能力竞赛
+- **为什么重要：** 所有主要 AI 提供商都在推动自主代理
+- **讨论社区：** [r/AI_Agents](https://reddit.com/...)、[r/ClaudeAI](https://reddit.com/...)、[r/ChatGPT](https://reddit.com/...)
+- **关键视角：**
+  - AI_Agents：关注实际实现和工具
+  - ClaudeAI：对 MCP 和 Claude Code 感到兴奋
+  - ChatGPT：期待 GPT-5 代理功能
+
+### 2. 语音/多模态成为默认
+- **为什么重要：** 从纯文本向多模态交互转变成为标准
+- **相关帖子：** [语音模式演示](https://reddit.com/...)、[Claude 视觉能力](https://reddit.com/...)
+
+---
+
+## 💡 AI 分析与洞察
+
+**本期关键主题：**
+1. **代理基础设施成熟** — MCP、LangGraph 等工具使生产级代理成为可能
+2. **模型竞争加剧** — Opus 4.5 与 GPT-5 的猜测推动了参与度
+
+**新兴模式：**
+- 越来越关注代理盈利和业务应用
+- 语音/音频成为差异化功能
+
+**值得关注：**
+- GPT-5 公告时间（传闻 2026 年第一季度）
+- MCP 在 AI 工具中的采用情况
+
+**社区情绪：**
+| 社区 | 情绪 | 主要关注点 |
 |-----------|-----------|-------------|
-| r/AI_Agents | Positive | Production readiness |
-| r/ClaudeAI | Excited | Opus pricing |
-| r/ChatGPT | Anticipatory | GPT-5 timeline |
+| r/AI_Agents | 积极 | 生产就绪 |
+| r/ClaudeAI | 兴奋 | Opus 定价 |
+| r/ChatGPT | 期待 | GPT-5 时间线 |
 
 ---
 
-## 🛠️ Tools & Resources Mentioned
+## 🛠️ 提到的工具与资源
 
-| Tool/Resource | Mentioned In | What It Does | Link |
+| 工具/资源 | 提及社区 | 功能 | 链接 |
 |---------------|--------------|--------------|------|
-| LangGraph | r/AI_Agents | Multi-agent orchestration | [langchain.com](https://langchain.com) |
-| MCP Protocol | r/ClaudeAI | Tool/data integration for Claude | [anthropic.com](https://anthropic.com) |
-| GPT Store | r/ChatGPT | Marketplace for custom GPTs | [chat.openai.com](https://chat.openai.com) |
+| LangGraph | r/AI_Agents | 多代理编排 | [langchain.com](https://langchain.com) |
+| MCP 协议 | r/ClaudeAI | Claude 的工具/数据集成 | [anthropic.com](https://anthropic.com) |
+| GPT Store | r/ChatGPT | 自定义 GPT 市场 | [chat.openai.com](https://chat.openai.com) |
 
 ---
 
-## 📝 Notable Tutorials & Guides
+## 📝 值得关注的教程与指南
 
-| Title | Community | Difficulty | Key Learning |
+| 标题 | 社区 | 难度 | 关键收获 |
 |-------|-----------|------------|--------------|
-| [Multi-Agent LangGraph](https://reddit.com/...) | r/AI_Agents | Advanced | Agent orchestration patterns |
-| [MCP Server Setup](https://reddit.com/...) | r/ClaudeAI | Intermediate | Connecting Claude to tools |
-| [Voice Mode Tips](https://reddit.com/...) | r/ChatGPT | Beginner | Getting best results from voice |
+| [多代理 LangGraph](https://reddit.com/...) | r/AI_Agents | 高级 | 代理编排模式 |
+| [MCP 服务器设置](https://reddit.com/...) | r/ClaudeAI | 中级 | 将 Claude 连接到工具 |
+| [语音模式技巧](https://reddit.com/...) | r/ChatGPT | 初级 | 从语音获得最佳效果 |
 
 ---
 
-## ⚡ Action Items
+## ⚡ 行动项
 
-Based on today's discussions, consider:
-- [ ] Try Claude 4.5 Opus for complex reasoning tasks
-- [ ] Explore MCP protocol for agent development
-- [ ] Test OpenAI's new voice mode if you have Plus
-- [ ] Bookmark LangGraph tutorial for multi-agent projects
+基于今天的讨论，建议考虑：
+- [ ] 尝试 Claude 4.5 Opus 处理复杂推理任务
+- [ ] 探索 MCP 协议用于代理开发
+- [ ] 如果你有 Plus，测试 OpenAI 的新语音模式
+- [ ] 收藏 LangGraph 教程用于多代理项目
 
 ---
 
-📊 **Stats:** 45 posts | 1,234 comments | 3 communities
-🔄 **Refresh:** `/ai-daily` | 💾 **Save:** `/ai-daily --save`
-📅 **Weekly:** `/ai-daily week` | 📆 **Monthly:** `/ai-daily month`
+📊 **统计：** 45 篇帖子 | 1,234 条评论 | 3 个社区
+🔄 **刷新：** `/ai-daily` | 💾 **保存：** `/ai-daily --save`
+📅 **每周：** `/ai-daily week` | 📆 **每月：** `/ai-daily month`
 ```
 
 ---
