@@ -11,7 +11,7 @@ allowed-tools: ["LSP", "Read", "Glob"]
 
 使用语言服务器协议高效导航大型 Rust 代码库。
 
-## Usage
+## 使用方法
 
 ```
 /rust-code-navigator <symbol> [in file.rs:line]

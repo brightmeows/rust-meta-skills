@@ -11,7 +11,7 @@ allowed-tools: ["LSP", "Read", "Glob", "Grep"]
 
 发现 trait 实现并理解多态设计。
 
-## Usage
+## 使用方法
 
 ```
 /rust-trait-explorer <TraitName|StructName>

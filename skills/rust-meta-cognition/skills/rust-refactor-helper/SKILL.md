@@ -11,7 +11,7 @@ allowed-tools: ["LSP", "Read", "Glob", "Grep", "Edit"]
 
 执行安全的重构，并进行全面的影响分析。
 
-## Usage
+## 使用方法
 
 ```
 /rust-refactor-helper <action> <target> [--dry-run]

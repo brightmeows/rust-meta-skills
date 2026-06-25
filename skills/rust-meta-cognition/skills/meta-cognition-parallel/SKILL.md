@@ -42,7 +42,7 @@ User Question
 Domain-Correct Architectural Solution
 ```
 
-## Usage
+## 使用方法
 
 ```
 /meta-parallel <your Rust question>

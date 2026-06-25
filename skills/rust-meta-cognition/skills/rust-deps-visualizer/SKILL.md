@@ -11,7 +11,7 @@ allowed-tools: ["Bash", "Read", "Glob"]
 
 生成 Rust 项目依赖树的 ASCII 艺术可视化。
 
-## Usage
+## 使用方法
 
 ```
 /rust-deps-visualizer [--depth N] [--features]

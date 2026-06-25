@@ -11,7 +11,7 @@ allowed-tools: ["LSP", "Read", "Glob"]
 
 使用 LSP 调用层级可视化函数调用关系。
 
-## Usage
+## 使用方法
 
 ```
 /rust-call-graph <function_name> [--depth N] [--direction in|out|both]

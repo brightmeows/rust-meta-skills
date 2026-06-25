@@ -11,7 +11,7 @@ allowed-tools: ["LSP", "Read", "Glob"]
 
 通过检查 Rust 代码库中的符号来分析项目结构。
 
-## Usage
+## 使用方法
 
 ```
 /rust-symbol-analyzer [file.rs] [--type struct|trait|fn|mod]
