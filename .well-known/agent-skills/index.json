@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "rust-meta-cognition",
+      "type": "skill-md",
+      "description": "Rust 元认知技能集包级别入口——三层认知模型（领域→设计→语言机制）与主路由。在 Rust 问题路由、子技能选择、项目级默认设置或代码风格审查时使用。",
+      "url": "https://github.com/actionbook/rust-meta-skills/raw/branch/main/skills/rust-meta-cognition/SKILL.md",
+      "digest": "sha256:0fd874835eac5abea2831f5a9293f8d117b960ad83150ffaee64b1156a1f28cc"
+    }
+  ]
+}

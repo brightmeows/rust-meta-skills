@@ -117,34 +117,56 @@ Layer 1: 语言机制 (HOW - 怎么做)
 
 ### 核心技能
 
-| Skill | 用途 |
-|-------|------|
-| rust-router | Rust 问题路由器——识别入口层 + 领域，决策双技能加载 |
-| rust-learner | 获取最新 Rust/crate 版本信息 |
-| coding-guidelines | 编码规范查询 |
-| unsafe-checker | Unsafe 代码安全检查 |
+| 技能 | 用途 |
+|------|------|
+| `rust-meta-cognition` | 技能集主入口——路由、三层模型、默认设置、代码风格 |
+| `rust-learner` | 获取最新 Rust / crate 版本信息 |
+| `unsafe-checker` | Unsafe 代码安全检查 |
+
+## 安装方式
+
+### npx skills（推荐）
+
+通过 [Agent Skills](https://agentskills.io) 标准直接安装：
+
+```bash
+# 安装 main 分支最新版
+npx skills add https://github.com/actionbook/rust-meta-skills.git
+
+# 锁定到指定 release tag
+npx skills add https://github.com/actionbook/rust-meta-skills.git#v0.1.0
+```
+
+> 仓库根目录已配置 `.well-known/agent-skills/index.json`，支持 `npx skills` 自动发现。
+
+### 手动引用
+
+克隆仓库后，在 AI 助手配置中引用技能文件：
+
+```bash
+git clone https://github.com/actionbook/rust-meta-skills.git
+```
+
+- OpenCode：技能存放于 `skills/rust-meta-cognition/`，由 OpenCode 自动发现并加载
+- Claude Code：将 `skills/rust-meta-cognition/` 加入 skills 路径，或手动加载 `SKILL.md`
 
 ## 使用方式
 
 ### 在编码助手中使用
 
-本技能包可被任何支持 skills 机制的 AI 编码助手加载。技能集中存放于 `skills/rust-meta-cognition/`，编码助手通过识别用户问题中的触发词自动加载对应技能。
-
-### 在 OpenCode 中使用
-
-本仓库已配置 OpenCode 集成。技能在 `skills/rust-meta-cognition/` 下，由 OpenCode 的 skills 机制自动发现并加载。
+本技能包可被任何支持 skills 机制的 AI 编码助手加载。编码助手通过识别用户问题中的触发词自动加载对应子技能。
 
 ### 运行测试
 
 ```bash
-# 手工测试清单
-# 使用 tests/trigger-checklist.md 中的查询验证技能触发
-
 # 验证脚本
 ./skills/rust-meta-cognition/tests/validation/validate-skills.sh
 
 # 触发测试
 ./skills/rust-meta-cognition/tests/trigger-test.sh
+
+# 手工测试清单
+# 使用 tests/trigger-checklist.md 中的查询验证技能触发
 ```
 
 ## 文档
