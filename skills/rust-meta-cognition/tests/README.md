@@ -16,7 +16,7 @@ tests/
 │   ├── layer2-skills.md    # m05, m09-m15 设计类 skill
 │   ├── domain-skills.md    # Layer 3 领域 skill
 │   ├── unsafe.md           # unsafe-checker 测试
-│   ├── routing.md          # rust-router 测试
+│   ├── routing.md          # 根 SKILL.md 路由 测试
 │   └── agents.md           # Agent 集成测试
 │
 ├── pressure-scenarios/     # 边界情况测试
@@ -101,7 +101,7 @@ claude -p "tokio 最新版本"                # rust-learner
 
 ### 4. 核心 Skill
 
-- rust-router
+- 根 SKILL.md 路由
 - rust-learner
 - coding-guidelines
 - unsafe-checker

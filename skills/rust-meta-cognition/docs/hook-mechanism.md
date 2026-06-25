@@ -414,7 +414,7 @@ for case in test_cases:
 触发后应该看到:
 
 ```
-⏺ Skill(rust-router)
+⏺ Skill(根 SKILL.md)
   ⎿ Successfully loaded skill
 
 ⏺ Skill(m07-concurrency)

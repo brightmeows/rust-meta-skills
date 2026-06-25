@@ -40,7 +40,7 @@ Skill = 路由逻辑
 **作用**：对问题进行分类，确定激活哪种思维模式。
 
 ```
-rust-router:
+根 SKILL.md:
   "E0382" → Layer 1 入口 → m01-ownership
   "Web API" → Layer 3 上下文 → domain-web
   "如何设计" → Layer 2 问题 → m09-domain
@@ -155,7 +155,7 @@ domain-embedded：“no_std 约束” → 限制可用模式
 **目的**：元层次的路由，编排其他 Skill。
 
 ```
-rust-router：
+根 SKILL.md：
   1. 识别入口层级
   2. 检测领域上下文
   3. 加载适当的 Skill
@@ -185,8 +185,8 @@ Claude 的思考：
 用户：“Web API 报告 Rc 无法被发送”
 
 Skill 引导的思考：
-  → rust-router：检测到“Web API” → 加载 domain-web
-  → rust-router：检测到“Send”错误 → 加载 m07-concurrency
+  → 根 SKILL.md：检测到“Web API” → 加载 domain-web
+  → 根 SKILL.md：检测到“Send”错误 → 加载 m07-concurrency
   → m07-concurrency：“不要只修复，要向上追溯”
   → domain-web：“处理器在任意线程上运行”（约束）
   → domain-web：“状态中的 Rc”是常见错误（验证）
@@ -321,7 +321,7 @@ impl Skill {
 
 ```
 ┌─────────────────────────────────────────────────┐
-│                  rust-router                     │
+│                  根 SKILL.md                     │
 │             （认知交通控制器）                     │
 └─────────────────┬───────────────────────────────┘
                   │

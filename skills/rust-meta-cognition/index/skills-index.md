@@ -36,7 +36,7 @@
 
 | 名称 | 描述 | 关键触发词 |
 |------|------|------------|
-| rust-router | 所有 Rust 问题的主路由器 | Rust, cargo, rustc, crate, error codes |
+| 根 SKILL.md 路由 | 所有 Rust 问题的主路由器 | Rust, cargo, rustc, crate, error codes |
 | rust-learner | Rust 版本和 crate 信息 | version, changelog, crate info |
 | coding-guidelines | 代码风格和最佳实践 | style, naming, clippy, formatting |
 | unsafe-checker | Unsafe 代码审查和 FFI 指南 | unsafe, FFI, raw pointer, transmute |
@@ -102,4 +102,4 @@
 
 | 文件 | 用途 |
 |------|------|
-| [../skills/rust-router/SKILL.md](../skills/rust-router/SKILL.md) | 带优先级规则的主路由逻辑 |
+| [../router/SKILL.md](../router/SKILL.md) | 带优先级规则的主路由逻辑 |

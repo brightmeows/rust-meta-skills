@@ -62,7 +62,7 @@ test_hook() {
 
     # Check if output contains skill evaluation pattern
     # Patterns: "[RUST-SKILL-EVAL]", "YES -", "NO -", skill names, etc.
-    if echo "$result" | grep -qiE "\[RUST-SKILL-EVAL\]|(YES|NO)[ :-]|Skill\(|skill.*:|m0[1-7]-|unsafe-checker|coding-guidelines|rust-learner|rust-router|domain-"; then
+    if echo "$result" | grep -qiE "\[RUST-SKILL-EVAL\]|(YES|NO)[ :-]|Skill\(|skill.*:|m0[1-7]-|unsafe-checker|coding-guidelines|rust-learner|根_SKILL.md|domain-"; then
         echo -e "${GREEN}HOOK TRIGGERED${NC}"
 
         # Check if the expected skill was mentioned

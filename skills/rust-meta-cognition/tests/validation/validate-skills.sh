@@ -47,7 +47,7 @@ dirs=(
     "skills/m15-anti-pattern"
     "skills/unsafe-checker"
     "skills/coding-guidelines"
-    "skills/rust-router"
+    "router"
     "skills/rust-learner"
     "agents"
     "commands"
@@ -76,7 +76,7 @@ skill_files=(
     "skills/m07-concurrency/SKILL.md"
     "skills/unsafe-checker/SKILL.md"
     "skills/coding-guidelines/SKILL.md"
-    "skills/rust-router/SKILL.md"
+    "SKILL.md"
     "skills/rust-learner/SKILL.md"
 )
 

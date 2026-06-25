@@ -32,7 +32,7 @@
 
 | Skill | 功能 |
 |-------|------|
-| **rust-router** | 入口路由，识别问题层级和领域 |
+| **根 SKILL.md** | 入口路由，识别问题层级和领域 |
 | **_meta/reasoning-framework** | 三层追溯方法论 |
 | **_meta/layer-definitions** | L1/L2/L3 定义 |
 
@@ -85,7 +85,7 @@
     │
     ▼
 ┌─────────────────────────────────────────┐
-│ rust-router 语义识别                     │
+│ 根 SKILL.md 语义识别                     │
 │ ├─ 检测: "Web API" → 领域: domain-web   │
 │ ├─ 检测: "Send" 错误 → 机制: m07        │
 │ └─ 决策: 双技能加载                      │
@@ -604,7 +604,7 @@ actionbook MCP → agent-browser CLI → WebFetch (仅备用)
 
 | 功能类 | 核心价值 | Skills/Agents |
 |--------|----------|---------------|
-| **元认知** | 语义识别，追溯本质 | rust-router, m01-m15, domain-* |
+| **元认知** | 语义识别，追溯本质 | 根 SKILL.md, m01-m15, domain-* |
 | **动态 Skills** | 按需生成，热加载 | core-dynamic-skills, rust-skill-creator |
 | **信息获取** | 最新信息，紧跟前沿 | rust-learner, 8 个 agents |
 

@@ -63,7 +63,7 @@
          │
          ▼
 ┌─────────────────┐
-│ rust-router     │ ← 识别入口层 + 领域
+│ 根 SKILL.md     │ ← 识别入口层 + 领域
 └────────┬────────┘
          │
     ┌────┴────┐
@@ -132,7 +132,7 @@
 
 | Skill | 用途 |
 |-------|------|
-| **rust-router** | 路由所有 Rust 问题，实现元认知 |
+| **根 SKILL.md** | 路由所有 Rust 问题，实现元认知 |
 | **rust-learner** | 通过 agents 获取最新 Rust/crate 版本 |
 | **coding-guidelines** | 80+ Rust 编码规则 (命名, 风格, 模式) |
 | **unsafe-checker** | 47 条 unsafe 规则, SAFETY 注释, FFI 审查 |
@@ -173,7 +173,7 @@
 
 | 命令 | 用途 |
 |------|------|
-| `/rust-router` | 将问题路由到合适的 skill |
+| `/根 SKILL.md` | 将问题路由到合适的 skill |
 | `/guideline [--clippy] rule` | 查询编码规范 |
 | `/skill-index category` | 按分类搜索 skills |
 | `/docs crate [item]` | 获取 API 文档 |

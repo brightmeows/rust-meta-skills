@@ -1,6 +1,6 @@
 # 工作流示例
 
-> rust-router 的工作流程示例
+> 根 SKILL.md 路由 的工作流程示例
 
 ## Example 1: Error Code with Domain Context
 

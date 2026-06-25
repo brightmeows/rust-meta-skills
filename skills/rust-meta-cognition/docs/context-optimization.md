@@ -20,7 +20,7 @@ Rust Skills 采用三种方法优化上下文消耗，综合可节省约 **68%**
 
 将大型 Skill 的非核心内容拆分到子文件，主 SKILL.md 只保留核心路由逻辑，其他内容按需加载。
 
-### 实施案例：rust-router
+### 实施案例：根 SKILL.md
 
 | 指标 | 优化前 | 优化后 | 节省 |
 |------|--------|--------|------|
@@ -30,7 +30,7 @@ Rust Skills 采用三种方法优化上下文消耗，综合可节省约 **68%**
 ### 文件结构
 
 ```
-skills/rust-router/
+router/
 ├── SKILL.md (8.1KB - 核心路由，始终加载)
 ├── patterns/
 │   └── negotiation.md (协商协议，按需加载)
@@ -55,7 +55,7 @@ Claude Code 的自动触发机制仅依赖 frontmatter 中的 `description` 字�
 
 ```yaml
 ---
-name: rust-router
+name: 根 SKILL.md
 description: "CRITICAL: Use for ALL Rust questions...
 Triggers on: Rust, cargo, rustc, E0382, E0597..."
 ---
@@ -221,7 +221,7 @@ Cross-Layer Synthesis (主上下文)
 
 | 阶段 | 优化前 | 优化后 |
 |------|--------|--------|
-| rust-router 加载 | 4,700 | 2,000 |
+| 根 SKILL.md 加载 | 4,700 | 2,000 |
 | 多 skill 分析 | 8,000 | 2,500 |
 | 任务执行 | 3,000 | 500 |
 | **总计** | **15,700** | **5,000** |
@@ -276,7 +276,7 @@ Cross-Layer Synthesis (主上下文)
 
 ### 方法一验证
 
-- [ ] rust-router 自动触发测试
+- [ ] 根 SKILL.md 自动触发测试
 
   ```bash
   claude -p "E0382 错误怎么解决"
@@ -306,7 +306,7 @@ Cross-Layer Synthesis (主上下文)
 
 | 版本 | 日期 | 优化内容 |
 |------|------|---------|
-| 2.0.0 | 2025-01-22 | rust-router 内容拆分 (56% 节省) |
+| 2.0.0 | 2025-01-22 | 根 SKILL.md 内容拆分 (56% 节省) |
 | 2.0.4 | 2025-01-22 | 4 个 skills 添加 context: fork (thanks @pinghe) |
 | 2.0.5 | 2025-01-22 | 三层并行 Fork 实验性支持 |
 

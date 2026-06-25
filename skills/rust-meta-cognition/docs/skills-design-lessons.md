@@ -136,7 +136,7 @@ skills/
 ├── domain-web/SKILL.md
 ├── ...
 ├── core-actionbook/SKILL.md   # 工具类
-├── rust-router/SKILL.md       # 路由器
+├── 根 SKILL.md/SKILL.md       # 路由器
 └── coding-guidelines/SKILL.md # 编码规范
 ```
 
@@ -160,7 +160,7 @@ skills/core-actionbook/SKILL.md
 | Layer 2（设计） | `m1x-` | m09-domain, m15-anti-pattern |
 | Layer 3（领域） | `domain-` | domain-web, domain-fintech |
 | 核心工具 | `core-` | core-actionbook, core-dynamic-skills |
-| 其他 | 描述性名称 | rust-router, coding-guidelines |
+| 其他 | 描述性名称 | 根 SKILL.md, coding-guidelines |
 
 ---
 
@@ -207,7 +207,7 @@ skills/core-actionbook/SKILL.md
 
 ## 元认知路由
 
-### 路由 Skill（rust-router）
+### 路由 Skill（根 SKILL.md）
 
 路由器是所有 Rust 问题的入口：
 
@@ -366,7 +366,7 @@ name: core-actionbook
 
 | 文件 | 目的 |
 |------|---------|
-| `skills/rust-router/SKILL.md` | 主路由逻辑 |
+| `router/SKILL.md` | 主路由逻辑 |
 | `skills/m0x-*/SKILL.md` | Layer 1 Skill |
 | `skills/m1x-*/SKILL.md` | Layer 2 Skill |
 | `skills/domain-*/SKILL.md` | Layer 3 Skill |

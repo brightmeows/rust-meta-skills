@@ -188,13 +188,13 @@
 | `rustfmt 配置` | coding-guidelines |
 | `P.NAM.01` | coding-guidelines |
 
-## 路由器（rust-router）
+## 路由器（根 SKILL.md 路由）
 
 | 查询 | 期望的 Skill |
-|-------|----------------|
-| `分析这个问题的意图` | rust-router |
-| `意图分析` | rust-router |
-| `这是什么类型的 Rust 问题` | rust-router |
+|------|---------------|
+| `分析这个问题的意图` | 根 SKILL.md 路由 |
+| `意图分析` | 根 SKILL.md 路由 |
+| `这是什么类型的 Rust 问题` | 根 SKILL.md 路由 |
 
 ## Layer 3：领域约束
 

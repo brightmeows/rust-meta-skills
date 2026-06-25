@@ -241,4 +241,4 @@ Layer 1（机制）←→ Layer 2（设计）←→ Layer 3（领域）
 
 | 文件 | 目的 |
 |------|---------|
-| [../skills/rust-router/SKILL.md](../skills/rust-router/SKILL.md) | 主路由逻辑 |
+| [../router/SKILL.md](../router/SKILL.md) | 主路由逻辑 |

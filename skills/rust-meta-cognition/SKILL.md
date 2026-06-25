@@ -1,11 +1,13 @@
 ---
 name: rust-meta-cognition
 description: >-
-  Rust 元认知技能集包级别入口——三层认知模型（领域→设计→语言机制）。
+  Rust 元认知技能集包级别入口——三层认知模型（领域→设计→语言机制）与主路由。
   在技能包中导航、将 Rust 问题路由到合适的子技能、或应用项目级 Rust
   默认设置（edition 2024、clippy、unsafe 策略）时使用。
-  Keywords: Rust 元认知, 技能集入口, 问题路由, 三层认知模型, meta-cognition,
-  Rust skills, routing, 默认设置, ownership, borrow, lifetime, async, concurrency
+  CRITICAL: 任何 Rust 问题（编译错误/设计/编码/比较）都应先经过此路由。
+  Keywords: Rust 元认知, 技能集入口, 问题路由, 三层认知模型, Rust 路由,
+  编译错误, compile error, E0382, E0597, E0277, borrow error, 怎么用,
+  比较, compare, vs, 最佳实践, ownership, borrow, lifetime, async, concurrency
 ---
 
 # Rust 元认知技能集
@@ -17,19 +19,29 @@ description: >-
 这是 Rust 元认知技能集的包级别入口。它不给出表面修复（例如“直接 `.clone()` 就行”），
 而是将问题通过三个认知层级进行路由，输出领域正确的架构方案。
 
-每个问题的路由由 **`rust-router`** 子技能处理——对于任何具体的 Rust 问题，
-先调用 `rust-router`（参见 [rust-router 优先](#rust-router-优先强制)）。
+对于任何具体的 Rust 问题，按以下流程处理：
+
+```
+用户问题
+   │
+[1] 识别入口层级 + 领域
+   │
+[2] 加载子技能（m0x / m1x / domain-*）
+   │
+[3] 逐层追溯，以推理链形式回答
+```
 
 ## 何时使用
 
 | 情况 | 用本技能？ |
 |------|-----------|
 | 定向：这个技能包能做什么？ | ✅ |
-| 把 Rust 问题路由到合适的子技能 | ✅（随后交给 `rust-router`）|
+| 把 Rust 问题路由到合适的子技能 | ✅ |
 | 应用项目级 Rust 默认设置（edition、lints、unsafe 策略）| ✅ |
 | 理解三层元认知模型 | ✅ |
-| 具体编译错误（E0382、E0597……）| ❌ → `rust-router` |
-| 单一概念问题（"什么是 Send？"）| ❌ → `rust-router` / 子技能 |
+| 具体编译错误（E0382、E0597……）| ✅ |
+| 单一概念问题（"什么是 Send？"）| ✅ |
+| 比较 / 最佳实践 / 跨领域问题 | ✅（启用协商）|
 
 ## 元认知三层模型
 
@@ -42,25 +54,139 @@ description: >-
 > 详细定义见 [`_meta/layer-definitions.md`](_meta/layer-definitions.md)；
 > 推理框架与追踪示例见 [`_meta/reasoning-framework.md`](_meta/reasoning-framework.md)。
 
-## rust-router 优先（强制）
+## 按入口点路由
 
-**对于任何具体的 Rust 问题，先调用 `rust-router`。**
+| 用户信号 | 入口层 | 方向 | 首个技能 |
+|----------|--------|------|----------|
+| E0xxx 错误 | 第 1 层 | 向上追溯 ↑ | 见下方错误码路由 |
+| 编译错误 | 第 1 层 | 向上追溯 ↑ | 见下方错误码路由 |
+| "怎么设计……" | 第 2 层 | 检查 L3，然后向下 ↓ | m09-domain |
+| "构建 [领域] 应用" | 第 3 层 | 向下追溯 ↓ | domain-* |
+| "最佳实践……" | 第 2 层 | 双向 | m09-m15 |
+| 性能问题 | 第 1 → 2 层 | 向上再向下 | m10-performance |
 
-这是不可商量的。不要凭记忆回答 Rust 问题或跳过路由器。`rust-router` 识别入口层级，
-加载匹配的子技能，解决关键词冲突，并决定是否触发协商。
+## 双层 Skill 加载
+
+当领域关键词与错误/机制同时出现时，**必须同时加载两层技能**：
+
+| 领域关键词 | L1 技能 | L3 技能 |
+|-----------|---------|---------|
+| Web API、HTTP、axum、handler | m07-concurrency | **domain-web** |
+| 交易、支付、trading、payment | m01-ownership | **domain-fintech** |
+| CLI、terminal、clap | m07-concurrency | **domain-cli** |
+| kubernetes、grpc、microservice | m07-concurrency | **domain-cloud-native** |
+| embedded、no_std、MCU | m02-resource | **domain-embedded** |
+
+## 第 1 层 Skill（语言机制）
+
+| 模式 | 路由到 |
+|------|--------|
+| move、borrow、lifetime、E0382、E0597 | m01-ownership |
+| Box、Rc、Arc、RefCell、Cell | m02-resource |
+| mut、内部可变性、E0499、E0502、E0596 | m03-mutability |
+| generic、trait、inline、单态化 | m04-zero-cost |
+| 类型状态、phantom、newtype | m05-type-driven |
+| Result、Error、panic、?、anyhow、thiserror | m06-error-handling |
+| Send、Sync、thread、async、channel | m07-concurrency |
+| unsafe、FFI、extern、raw pointer、transmute | **unsafe-checker** |
+
+## 第 2 层 Skill（设计选择）
+
+| 模式 | 路由到 |
+|------|--------|
+| 领域模型、业务逻辑 | m09-domain |
+| 性能、优化、基准测试 | m10-performance |
+| 集成、互操作、绑定 | m11-ecosystem |
+| 资源生命周期、RAII、Drop | m12-lifecycle |
+| 领域错误、恢复策略 | m13-domain-error |
+| 心智模型、如何思考 | m14-mental-model |
+| 反模式、常见错误、陷阱 | m15-anti-pattern |
+
+## 第 3 层 Skill（领域约束）
+
+| 领域关键词 | 路由到 |
+|-----------|--------|
+| fintech、trading、decimal、currency | domain-fintech |
+| ml、tensor、model、inference | domain-ml |
+| kubernetes、docker、grpc、microservice | domain-cloud-native |
+| embedded、sensor、mqtt、iot | domain-iot |
+| web server、HTTP、REST、axum、actix | domain-web |
+| CLI、command line、clap、terminal | domain-cli |
+| no_std、microcontroller、firmware | domain-embedded |
+
+## 错误码路由
+
+| 错误码 | 路由到 | 常见原因 |
+|--------|--------|----------|
+| E0382 | m01-ownership | 使用了移动的值 |
+| E0597 | m01-ownership | 生命周期太短 |
+| E0506 | m01-ownership | 不能给借用的变量赋值 |
+| E0507 | m01-ownership | 不能移出借用内容 |
+| E0515 | m01-ownership | 返回局部引用 |
+| E0716 | m01-ownership | 临时值被丢弃 |
+| E0106 | m01-ownership | 缺少生命周期标注 |
+| E0596 | m03-mutability | 不能借用为可变 |
+| E0499 | m03-mutability | 多个可变借用 |
+| E0502 | m03-mutability | 借用冲突 |
+| E0277 | m04/m07 | Trait 约束未满足 |
+| E0308 | m04-zero-cost | 类型不匹配 |
+| E0599 | m04-zero-cost | 未找到方法 |
+| E0038 | m04-zero-cost | Trait 不是 object-safe |
+| E0433 | m11-ecosystem | 找不到 crate/模块 |
+
+## 功能路由表
+
+| 模式 | 路由到 | 操作 |
+|------|--------|------|
+| 最新版本、what's new | **rust-learner** | 使用 agent |
+| API、docs、documentation | **docs-researcher** | 使用 agent |
+| 代码风格、命名、clippy | **coding-guidelines** | 读取 skill |
+| unsafe 代码、FFI | **unsafe-checker** | 读取 skill |
+| 代码审查 | **os-checker** | 见 [`router/integrations/os-checker.md`](router/integrations/os-checker.md) |
+
+## 优先级顺序
+
+1. **识别认知层**（L1/L2/L3）
+2. **加载入口 Skill**（m0x/m1x/domain）
+3. **跨层级追溯**（向上或向下）
+4. **交叉引用**各 Skill 中“追溯”部分指示的内容
+5. **给出推理链回答**
+
+### 关键词冲突解决
+
+| 关键词 | 解决 |
+|--------|------|
+| `unsafe` | **unsafe-checker**（比 m11 更具体） |
+| `error` | 通用用 **m06**，领域特定用 **m13** |
+| `RAII` | 设计用 **m12**，实现用 **m01** |
+| `crate` | 版本用 **rust-learner**，集成用 **m11** |
+| `tokio` | API 用 **tokio-***，概念用 **m07** |
+
+**优先级层级：**
 
 ```
-用户问题
-   │
-[1] rust-router → 识别入口层级 + 领域
-   │
-[2] 加载子技能（m0x / m1x / domain-*）
-   │
-[3] 逐层追溯，以推理链形式回答
+1. 错误码（E0xxx）→ 直接查找，最高优先级
+2. 协商触发词（比较、vs、最佳实践）→ 启用协商
+3. 领域关键词 + 错误 → 同时加载领域和错误 Skill
+4. 特定 crate 关键词 → 路由到 crate 特定 Skill（如果存在）
+5. 通用概念关键词 → 路由到元问题 Skill
 ```
 
-> 完整路由表、错误码映射、关键词冲突解决规则见
-> [`skills/rust-router/SKILL.md`](skills/rust-router/SKILL.md)。
+## 协商协议触发
+
+以下查询**必须**启用协商协议：
+
+- 比较 / 对比 / compare / vs / versus / 区别 / difference
+- 最佳实践 / best practice / 推荐 / recommend
+- 领域 + 错误（如“交易系统 E0382”）
+- 多技术（如“tokio 和 async-std”）
+- 范围模糊（如“tokio 性能”）
+
+需要协商时，响应须结构化：查询类型、置信度（高/中/低/不确定）、差距、综合答案。
+
+> 完整协议、响应格式与置信度判定见
+> [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md)；
+> 协商流程示例见 [`router/examples/workflow.md`](router/examples/workflow.md)。
 
 ## 默认项目设置
 
@@ -85,19 +211,6 @@ pedantic = "warn"
 - 包含 `rust-version` 明确 MSRV
 - 默认启用 clippy `all` + `pedantic`
 
-## 协商协议触发
-
-以下查询**必须**启用协商协议：
-
-- 比较 / 对比 / compare / vs / versus / 区别 / difference
-- 最佳实践 / best practice / 推荐 / recommend
-- 领域 + 错误（如“交易系统 E0382”）
-- 多技术（如“tokio 和 async-std”）
-- 范围模糊（如“tokio 性能”）
-
-> 完整协议、响应格式与置信度判定见
-> [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md)。
-
 ## 代码风格要点
 
 - `snake_case` 变量/函数；`PascalCase` 类型/trait；`SCREAMING_SNAKE_CASE` 常量
@@ -117,7 +230,6 @@ unsafe { slice.get_unchecked(index) }
 
 ### 核心
 
-- [`rust-router`](skills/rust-router/SKILL.md) — 主路由（所有 Rust 问题先走它）
 - [`rust-learner`](skills/rust-learner/SKILL.md) — 获取最新 Rust / crate 版本
 - [`coding-guidelines`](skills/coding-guidelines/SKILL.md) — 编码规范查询
 - [`unsafe-checker`](skills/unsafe-checker/SKILL.md) — unsafe 代码审查
@@ -174,11 +286,13 @@ unsafe { slice.get_unchecked(index) }
 
 | 文件 | 用途 |
 |------|------|
-| [`skills/rust-router/SKILL.md`](skills/rust-router/SKILL.md) | 主路由逻辑、完整路由表、错误码映射 |
 | [`_meta/layer-definitions.md`](_meta/layer-definitions.md) | 三层认知模型详细定义 |
 | [`_meta/reasoning-framework.md`](_meta/reasoning-framework.md) | 推理框架与追踪示例 |
 | [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md) | 协商协议完整规范 |
 | [`_meta/externalization.md`](_meta/externalization.md) | 外部化认知（`_reasoning/` 文件模式）|
+| [`router/patterns/negotiation.md`](router/patterns/negotiation.md) | 协商协议补充细节 |
+| [`router/examples/workflow.md`](router/examples/workflow.md) | 路由工作流程示例 |
+| [`router/integrations/os-checker.md`](router/integrations/os-checker.md) | OS-Checker 集成 |
 | [`skills/coding-guidelines/SKILL.md`](skills/coding-guidelines/SKILL.md) | 编码规范（P / G 规则）|
 | [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md) | unsafe 审查规则 |
 | [`README.md`](README.md) | 人类文档（安装、特性、命令）|

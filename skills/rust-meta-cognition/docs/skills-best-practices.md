@@ -51,7 +51,7 @@ description: |
 
 ### 问题
 
-单一入口点（如 rust-router）会成为瓶颈，所有问题都要先经过它路由。
+单一入口点（如 根 SKILL.md）会成为瓶颈，所有问题都要先经过它路由。
 
 ### 解决方案
 
@@ -60,7 +60,7 @@ description: |
 ```
 用户问题 → Claude 匹配所有 skills 的 description
          → 多个 skills 可能同时触发
-         → rust-router 作为索引/fallback
+         → 根 SKILL.md 作为索引/fallback
 ```
 
 **架构对比：**

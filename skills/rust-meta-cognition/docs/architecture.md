@@ -20,7 +20,7 @@
                                   │
                                   ▼
 ┌─────────────────────────────────────────────────────────────────────┐
-│                        路由层 (rust-router)                          │
+│                        路由层 (根 SKILL.md)                          │
 │  - 识别入口层 (L1/L2/L3)                                            │
 │  - 检测领域关键词                                                    │
 │  - 决策: 双技能加载                                                  │
@@ -34,7 +34,7 @@
 │  ├── m01-m07 (L1)     │       │  ├── tokio/                        │
 │  ├── m09-m15 (L2)     │       │  ├── serde/                        │
 │  ├── domain-* (L3)    │       │  └── std/                          │
-│  ├── rust-router      │       │                                    │
+│  ├── 根 SKILL.md      │       │                                    │
 │  ├── coding-guidelines│       │  .claude/skills/ (项目级)          │
 │  └── unsafe-checker   │       │  └── project-specific-crate/       │
 └───────────┬───────────┘       └───────────────┬───────────────────┘
@@ -80,7 +80,7 @@ rust-skills/
 │
 ├── skills/                      # 静态 Skills
 │   │
-│   ├── rust-router/             # 入口路由
+│   ├── 根 SKILL.md/             # 入口路由
 │   │   └── SKILL.md
 │   │
 │   ├── m01-ownership/           # Layer 1: 语言机制
@@ -223,7 +223,7 @@ hooks/hooks.json
     │
     │ 注入元认知指令
     ▼
-skills/rust-router/SKILL.md
+router/SKILL.md
     │
     │ 路由决策
     ▼
@@ -303,7 +303,7 @@ Skills (知识框架)          Agents (信息获取)
    注入: 元认知指令 + 输出格式要求
         │
         ▼
-4. Router (rust-router)
+4. Router (根 SKILL.md)
    识别: L1 = m07-concurrency
          L3 = domain-web
    决策: 双技能加载
@@ -601,7 +601,7 @@ description: "CRITICAL: Use for [domain]. Triggers on: keyword1, keyword2"
 |------|------|------|
 | 触发层 | hooks/hooks.json | 关键词匹配，触发流程 |
 | 强制层 | rust-skill-eval-hook.sh | 注入元认知指令 |
-| 路由层 | rust-router | 识别层级，双技能加载 |
+| 路由层 | 根 SKILL.md | 识别层级，双技能加载 |
 | 知识层 | skills/* | 认知框架，决策指引 |
 | 扩展层 | ~/.claude/skills/ | 动态生成的 crate skills |
 | 数据层 | agents/* | 实时获取最新信息 |
