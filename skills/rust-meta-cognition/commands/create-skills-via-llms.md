@@ -59,7 +59,7 @@ Refer to the local files for detailed documentation:
 
 1. Read the relevant reference file(s) listed above
 2. If file read fails or file is empty:
-   - Inform user: "本地文档不完整，建议运行 `/sync-crate-skills {crate_name} --force` 更新文档"
+   - Inform user: “本地文档不完整，建议运行 `/sync-crate-skills {crate_name} --force` 更新文档”
    - Still answer based on SKILL.md patterns + built-in knowledge
 3. If reference file exists, incorporate its content into the answer
 
