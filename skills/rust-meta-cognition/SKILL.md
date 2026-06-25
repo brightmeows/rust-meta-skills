@@ -1,12 +1,10 @@
 ---
 name: rust-meta-cognition
 description: >-
-  Rust 元认知技能集包级别入口——三层认知模型（领域→设计→语言机制）与主路由。
-  在技能包中导航、将 Rust 问题路由到合适的子技能、或应用项目级 Rust
-  默认设置（edition 2024、clippy、unsafe 策略）时使用。
+  Rust 元认知技能集入口——三层认知模型（领域→设计→语言机制）与主路由。
+  在 Rust 问题路由、子技能选择、默认设置或代码风格审查时使用。
   CRITICAL: 任何 Rust 问题（编译错误/设计/编码/比较）都应先经过此路由。
-  Keywords: Rust 元认知, 技能集入口, 问题路由, 三层认知模型, Rust 路由,
-  编译错误, compile error, E0382, E0597, E0277, borrow error, 怎么用,
+  Keywords: Rust 元认知, 编译错误, E0382, E0597, E0277, borrow error,
   比较, compare, vs, 最佳实践, ownership, borrow, lifetime, async, concurrency
 ---
 
