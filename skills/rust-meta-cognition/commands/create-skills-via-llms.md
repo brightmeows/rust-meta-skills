@@ -49,9 +49,9 @@ description: |
 
 ## Documentation
 
-Refer to the local files for detailed documentation:
-- `./references/{file1}.md` - {description}
-- `./references/{file2}.md` - {description}
+请参考以下本地文件获取详细文档：
+- `./references/{file1}.md` - {说明}
+- `./references/{file2}.md` - {说明}
 
 ## IMPORTANT: Documentation Completeness Check
 
