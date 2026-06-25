@@ -21,7 +21,7 @@ impact: MEDIUM
 ## 错误示例
 
 ```rust
-// DON'T: Manual bitfield manipulation
+// 不要： Manual bitfield manipulation
 struct Flags(u32);
 
 impl Flags {
@@ -42,7 +42,7 @@ impl Flags {
     }
 }
 
-// DON'T: Manual packed bitfields for FFI
+// 不要： Manual packed bitfields for FFI
 #[repr(C)]
 struct PackedHeader {
     data: u32,
@@ -67,7 +67,7 @@ impl PackedHeader {
 ## 正确示例
 
 ```rust
-// DO: Use bitflags for flag sets
+// 应该： Use bitflags for flag sets
 use bitflags::bitflags;
 
 bitflags! {
@@ -90,7 +90,7 @@ fn use_flags() {
     }
 }
 
-// DO: Use modular-bitfield for packed structures
+// 应该： Use modular-bitfield for packed structures
 use modular_bitfield::prelude::*;
 
 #[bitfield]
@@ -111,7 +111,7 @@ fn use_packed() {
     assert_eq!(header.flags(), 0x1234);
 }
 
-// DO: Use bitvec for arbitrary bit manipulation
+// 应该： Use bitvec for arbitrary bit manipulation
 use bitvec::prelude::*;
 
 fn use_bitvec() {

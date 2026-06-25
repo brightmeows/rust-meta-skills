@@ -25,7 +25,7 @@ extern "C" {
     fn free_resource(r: *mut Resource);
 }
 
-// DON'T: Wrapper without Drop
+// 不要： Wrapper without Drop
 struct ResourceHandle {
     ptr: *mut Resource,
 }
@@ -39,7 +39,7 @@ impl ResourceHandle {
     // Memory leak! ptr is never freed
 }
 
-// DON'T: Forget to handle null
+// 不要： Forget to handle null
 impl Drop for BadHandle {
     fn drop(&mut self) {
         unsafe {
@@ -59,7 +59,7 @@ extern "C" {
     fn free_resource(r: *mut Resource);
 }
 
-// DO: Proper wrapper with Drop
+// 应该： Proper wrapper with Drop
 struct ResourceHandle {
     ptr: NonNull<Resource>,
 }
@@ -88,7 +88,7 @@ impl Drop for ResourceHandle {
 // Prevent accidental copies that would cause double-free
 impl !Clone for ResourceHandle {}
 
-// DO: Document ownership transfer
+// 应该： Document ownership transfer
 impl ResourceHandle {
     /// Consumes the handle and returns the raw pointer.
     ///

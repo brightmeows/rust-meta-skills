@@ -49,7 +49,7 @@ fn bad_usage() {
 ```rust
 use std::marker::PhantomData;
 
-// DO: Define opaque marker types
+// 应该： Define opaque marker types
 #[repr(C)]
 pub struct Database {
     _private: [u8; 0],
@@ -84,7 +84,7 @@ fn good_usage() {
     unsafe { close_database(db) };
 }
 
-// DO: Wrap in safe Rust types
+// 应该： Wrap in safe Rust types
 pub struct SafeDatabase {
     ptr: *mut Database,
 }

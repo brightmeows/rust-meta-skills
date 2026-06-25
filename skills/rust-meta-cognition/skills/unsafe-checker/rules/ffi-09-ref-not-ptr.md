@@ -25,13 +25,13 @@ extern "C" {
     fn c_process(data: *const u8, len: usize);
 }
 
-// DON'T: Expose raw pointers in safe API
+// 不要： Expose raw pointers in safe API
 pub fn process(data: *const u8, len: usize) {
     // Caller might pass null!
     unsafe { c_process(data, len); }
 }
 
-// DON'T: Unsafe function when it could be safe
+// 不要： Unsafe function when it could be safe
 pub unsafe fn process_unsafe(data: *const u8, len: usize) {
     // Why force caller to use unsafe?
     c_process(data, len);
@@ -47,14 +47,14 @@ extern "C" {
     fn c_optional(data: *const Data);  // Can be null
 }
 
-// DO: Use slice reference for safe API
+// 应该： Use slice reference for safe API
 pub fn process(data: &[u8]) {
     // Reference guarantees non-null
     // Slice guarantees valid length
     unsafe { c_process(data.as_ptr(), data.len()); }
 }
 
-// DO: Use &mut for exclusive access
+// 应该： Use &mut for exclusive access
 pub fn modify(data: &mut Data) {
     // Mutable reference guarantees:
     // - Non-null
@@ -63,13 +63,13 @@ pub fn modify(data: &mut Data) {
     unsafe { c_modify(data as *mut Data); }
 }
 
-// DO: Use Option<&T> for nullable parameters
+// 应该： Use Option<&T> for nullable parameters
 pub fn optional(data: Option<&Data>) {
     let ptr = data.map(|d| d as *const Data).unwrap_or(std::ptr::null());
     unsafe { c_optional(ptr); }
 }
 
-// DO: Wrap FFI types in safe Rust types
+// 应该： Wrap FFI types in safe Rust types
 pub struct SafeHandle(*mut c_void);
 
 impl SafeHandle {

@@ -22,7 +22,7 @@ impact: HIGH
 ## 错误示例
 
 ```rust
-// DON'T: Raw pointer without PhantomData
+// 不要： Raw pointer without PhantomData
 struct MyVec<T> {
     ptr: *mut T,
     len: usize,
@@ -41,7 +41,7 @@ struct MyVec<T> {
 use std::marker::PhantomData;
 use std::ptr::NonNull;
 
-// DO: Use PhantomData to express ownership
+// 应该： Use PhantomData to express ownership
 struct MyVec<T> {
     ptr: NonNull<T>,
     len: usize,
@@ -54,7 +54,7 @@ struct MyVec<T> {
 // For mutably borrowed: PhantomData<&'a mut T>
 // For function pointers: PhantomData<fn(T)> (contravariant)
 
-// DO: Express lifetime relationships
+// 应该： Express lifetime relationships
 struct Iter<'a, T> {
     ptr: *const T,
     end: *const T,

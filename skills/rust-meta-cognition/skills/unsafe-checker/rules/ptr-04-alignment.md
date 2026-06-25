@@ -19,14 +19,14 @@ clippy: cast_ptr_alignment
 ## 错误示例
 
 ```rust
-// DON'T: Cast without checking alignment
+// 不要： Cast without checking alignment
 fn bad_cast(bytes: &[u8]) -> u32 {
-    // BAD: bytes might not be aligned for u32
+    // 错误做法： bytes might not be aligned for u32
     let ptr = bytes.as_ptr() as *const u32;
     unsafe { *ptr }  // UB if misaligned!
 }
 
-// DON'T: Assume struct layout
+// 不要： Assume struct layout
 #[repr(C)]
 struct Header {
     flags: u8,
@@ -44,7 +44,7 @@ fn bad_field_access(bytes: &[u8]) -> u32 {
 ## 正确示例
 
 ```rust
-// DO: Use read_unaligned for potentially misaligned data
+// 应该： Use read_unaligned for potentially misaligned data
 fn good_cast(bytes: &[u8]) -> u32 {
     assert!(bytes.len() >= 4);
     let ptr = bytes.as_ptr() as *const u32;
@@ -52,7 +52,7 @@ fn good_cast(bytes: &[u8]) -> u32 {
     unsafe { ptr.read_unaligned() }
 }
 
-// DO: Check alignment before cast
+// 应该： Check alignment before cast
 fn good_aligned_cast(bytes: &[u8]) -> Option<&u32> {
     if bytes.len() >= 4 && bytes.as_ptr() as usize % std::mem::align_of::<u32>() == 0 {
         // SAFETY: Checked length and alignment
@@ -62,16 +62,16 @@ fn good_aligned_cast(bytes: &[u8]) -> Option<&u32> {
     }
 }
 
-// DO: Use from_ne_bytes for portable byte conversion
+// 应该： Use from_ne_bytes for portable byte conversion
 fn good_from_bytes(bytes: &[u8]) -> u32 {
     u32::from_ne_bytes(bytes[..4].try_into().unwrap())
 }
 
-// DO: Use bytemuck for safe transmutation
+// 应该： Use bytemuck for safe transmutation
 // use bytemuck::{Pod, Zeroable};
 // let value: u32 = bytemuck::pod_read_unaligned(bytes);
 
-// DO: Use align_to for splitting at alignment boundaries
+// 应该： Use align_to for splitting at alignment boundaries
 fn process_aligned(bytes: &[u8]) {
     let (prefix, aligned, suffix) = unsafe { bytes.align_to::<u32>() };
     // prefix and suffix are unaligned portions

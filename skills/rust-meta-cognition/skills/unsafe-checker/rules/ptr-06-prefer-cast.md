@@ -22,18 +22,18 @@ clippy: ptr_as_ptr
 ## 错误示例
 
 ```rust
-// DON'T: Use `as` for pointer casts
+// 不要： Use `as` for pointer casts
 fn bad_cast(ptr: *const u8) -> *const i32 {
     ptr as *const i32  // Works, but less clear
 }
 
-// DON'T: Accidental provenance loss
+// 不要： Accidental provenance loss
 fn bad_roundtrip(ptr: *const u8) -> *const u8 {
     let addr = ptr as usize;   // Converts to integer
     addr as *const u8          // Loses provenance information!
 }
 
-// DON'T: Multiple `as` casts in chain
+// 不要： Multiple `as` casts in chain
 fn bad_chain(ptr: *const u8) -> *mut i32 {
     ptr as *mut u8 as *mut i32  // Hard to follow
 }
@@ -42,27 +42,27 @@ fn bad_chain(ptr: *const u8) -> *mut i32 {
 ## 正确示例
 
 ```rust
-// DO: Use cast() for pointer type changes
+// 应该： Use cast() for pointer type changes
 fn good_cast(ptr: *const u8) -> *const i32 {
     ptr.cast::<i32>()
 }
 
-// DO: Use cast_mut() for const-to-mut (when valid)
+// 应该： Use cast_mut() for const-to-mut (when valid)
 fn good_cast_mut(ptr: *const u8) -> *mut u8 {
     ptr.cast_mut()  // Only use when mutation is valid!
 }
 
-// DO: Use cast_const() for mut-to-const
+// 应该： Use cast_const() for mut-to-const
 fn good_cast_const(ptr: *mut u8) -> *const u8 {
     ptr.cast_const()
 }
 
-// DO: Chain casts clearly
+// 应该： Chain casts clearly
 fn good_chain(ptr: *const u8) -> *mut i32 {
     ptr.cast_mut().cast::<i32>()
 }
 
-// DO: Use with_addr() for address manipulation (nightly)
+// 应该： Use with_addr() for address manipulation (nightly)
 #[cfg(feature = "strict_provenance")]
 fn good_provenance(ptr: *const u8, new_addr: usize) -> *const u8 {
     ptr.with_addr(new_addr)  // Preserves provenance
@@ -85,15 +85,15 @@ fn good_provenance(ptr: *const u8, new_addr: usize) -> *const u8 {
 ```rust
 // Provenance = permission to access memory
 
-// BAD: Loses provenance
+// 错误做法： Loses provenance
 let ptr: *const u8 = &data as *const u8;
 let addr = ptr as usize;
 let ptr2 = addr as *const u8;  // ptr2 has no provenance!
 
-// GOOD: Preserves provenance (nightly strict_provenance)
+// 正确做法： Preserves provenance (nightly strict_provenance)
 let ptr2 = ptr.with_addr(addr);  // Still has permission
 
-// GOOD: Use expose/from_exposed when provenance must cross integer
+// 正确做法： Use expose/from_exposed when provenance must cross integer
 let addr = ptr.expose_addr();  // "暴露" provenance
 let ptr2 = std::ptr::from_exposed_addr(addr);  // 恢复它
 ```

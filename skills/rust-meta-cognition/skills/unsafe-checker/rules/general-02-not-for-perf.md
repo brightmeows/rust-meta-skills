@@ -20,7 +20,7 @@ impact: CRITICAL
 ## 错误示例
 
 ```rust
-// DON'T: Blind unsafe for "performance"
+// 不要： Blind unsafe for "performance"
 fn sum_bad(slice: &[i32]) -> i32 {
     let mut sum = 0;
     // Unnecessary unsafe - LLVM can optimize the safe version
@@ -36,12 +36,12 @@ fn sum_bad(slice: &[i32]) -> i32 {
 ## 正确示例
 
 ```rust
-// DO: Use safe iteration - compiler optimizes bounds checks away
+// 应该： Use safe iteration - compiler optimizes bounds checks away
 fn sum_good(slice: &[i32]) -> i32 {
     slice.iter().sum()
 }
 
-// DO: If unsafe is justified, document why
+// 应该： If unsafe is justified, document why
 fn sum_justified(slice: &[i32]) -> i32 {
     let mut sum = 0;
     // This is actually slower than iter().sum() in most cases

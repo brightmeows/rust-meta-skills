@@ -20,7 +20,7 @@ impact: CRITICAL
 ```rust
 use std::thread;
 
-// DON'T: Share raw pointers across threads
+// 不要： Share raw pointers across threads
 fn bad_sharing() {
     let mut data = 42i32;
     let ptr = &mut data as *mut i32;
@@ -36,7 +36,7 @@ fn bad_sharing() {
     handle.join().unwrap();
 }
 
-// DON'T: Wrap in struct and impl Send unsafely
+// 不要： Wrap in struct and impl Send unsafely
 struct UnsafePtr(*mut i32);
 unsafe impl Send for UnsafePtr {}  // Unsound without synchronization!
 ```
@@ -47,7 +47,7 @@ unsafe impl Send for UnsafePtr {}  // Unsound without synchronization!
 use std::sync::{Arc, Mutex, atomic::{AtomicPtr, Ordering}};
 use std::thread;
 
-// DO: Use Arc<Mutex<T>> for shared mutable access
+// 应该： Use Arc<Mutex<T>> for shared mutable access
 fn good_mutex() {
     let data = Arc::new(Mutex::new(42i32));
     let data_clone = Arc::clone(&data);
@@ -60,7 +60,7 @@ fn good_mutex() {
     handle.join().unwrap();
 }
 
-// DO: Use AtomicPtr for lock-free pointer sharing
+// 应该： Use AtomicPtr for lock-free pointer sharing
 fn good_atomic() {
     let data = Box::into_raw(Box::new(42i32));
     let atomic_ptr = Arc::new(AtomicPtr::new(data));
@@ -78,7 +78,7 @@ fn good_atomic() {
     unsafe { drop(Box::from_raw(atomic_ptr.load(Ordering::Relaxed))); }
 }
 
-// DO: If you must use raw pointers, ensure exclusive access
+// 应该： If you must use raw pointers, ensure exclusive access
 fn good_exclusive() {
     let mut data = vec![1, 2, 3];
 

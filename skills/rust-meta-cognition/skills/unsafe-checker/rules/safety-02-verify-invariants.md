@@ -27,7 +27,7 @@ Unsafe 块不会禁用安全要求——它们将责任从编译器转移给了�
 ## 错误示例
 
 ```rust
-// DON'T: Blindly trust inputs
+// 不要： Blindly trust inputs
 unsafe fn process(ptr: *const Data, len: usize) {
     for i in 0..len {
         // No verification that ptr is valid or len is correct!
@@ -40,7 +40,7 @@ unsafe fn process(ptr: *const Data, len: usize) {
 ## 正确示例
 
 ```rust
-// DO: Document and verify invariants
+// 应该： Document and verify invariants
 /// Processes a slice of Data items.
 ///
 /// # Safety
@@ -60,7 +60,7 @@ unsafe fn process(ptr: *const Data, len: usize) {
     }
 }
 
-// DO: Provide safe wrapper when possible
+// 应该： Provide safe wrapper when possible
 fn process_slice(data: &[Data]) {
     // SAFETY: slice guarantees all invariants
     unsafe { process(data.as_ptr(), data.len()) }

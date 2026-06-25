@@ -21,7 +21,7 @@ impact: HIGH
 ## 错误示例
 
 ```rust
-// DON'T: Use union for space optimization in Rust-only code
+// 不要： Use union for space optimization in Rust-only code
 union IntOrFloat {
     i: i32,
     f: f32,
@@ -30,11 +30,11 @@ union IntOrFloat {
 fn bad_usage() {
     let mut u = IntOrFloat { i: 42 };
 
-    // BAD: Reading wrong field is UB
+    // 错误做法： Reading wrong field is UB
     let f = unsafe { u.f };  // UB if i was the last written field
 }
 
-// DON'T: Use union for variant types
+// 不要： Use union for variant types
 union Variant {
     string: std::mem::ManuallyDrop<String>,
     number: i64,
@@ -49,7 +49,7 @@ union Variant {
 ## 正确示例
 
 ```rust
-// DO: Use enum for variant types in Rust
+// 应该： Use enum for variant types in Rust
 enum Variant {
     String(String),
     Number(i64),
@@ -57,7 +57,7 @@ enum Variant {
 
 // Compiler tracks active variant, runs correct destructor
 
-// DO: Use union only for C FFI
+// 应该： Use union only for C FFI
 #[repr(C)]
 union CUnion {
     i: i32,
@@ -70,7 +70,7 @@ extern "C" {
     fn c_function_takes_union(u: CUnion);
 }
 
-// DO: Wrap in safe API with explicit variant tracking
+// 应该： Wrap in safe API with explicit variant tracking
 #[repr(C)]
 pub struct SafeUnion {
     tag: u8,

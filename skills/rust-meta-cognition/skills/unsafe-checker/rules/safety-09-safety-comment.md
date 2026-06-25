@@ -19,12 +19,12 @@ SAFETY 注释强制作者思考不变量，并帮助审查者验证正确性。�
 ## 错误示例
 
 ```rust
-// DON'T: Unsafe without explanation
+// 不要： Unsafe without explanation
 fn get_unchecked(slice: &[i32], index: usize) -> i32 {
     unsafe { *slice.get_unchecked(index) }
 }
 
-// DON'T: Vague or unhelpful comments
+// 不要： Vague or unhelpful comments
 fn bad_comments(ptr: *const i32) -> i32 {
     // This is unsafe
     unsafe { *ptr }
@@ -40,13 +40,13 @@ fn bad_comments(ptr: *const i32) -> i32 {
 ## 正确示例
 
 ```rust
-// DO: Explain the safety invariant
+// 应该： Explain the safety invariant
 fn get_unchecked(slice: &[i32], index: usize) -> i32 {
     // SAFETY: Caller guarantees index < slice.len()
     unsafe { *slice.get_unchecked(index) }
 }
 
-// DO: Be specific about what makes it safe
+// 应该： Be specific about what makes it safe
 fn read_header(buffer: &[u8]) -> Header {
     assert!(buffer.len() >= std::mem::size_of::<Header>());
 
@@ -59,7 +59,7 @@ fn read_header(buffer: &[u8]) -> Header {
     }
 }
 
-// DO: Document unsafe impl
+// 应该： Document unsafe impl
 struct MySendType(*mut i32);
 
 // SAFETY: The pointer is to thread-local storage that is only accessed
@@ -67,7 +67,7 @@ struct MySendType(*mut i32);
 // is being transferred between threads with proper synchronization.
 unsafe impl Send for MySendType {}
 
-// DO: Multi-line for complex invariants
+// 应该： Multi-line for complex invariants
 fn complex_operation(data: &mut [u8], ranges: &[(usize, usize)]) {
     for &(start, end) in ranges {
         // SAFETY:

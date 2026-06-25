@@ -18,7 +18,7 @@ impact: CRITICAL
 ## 错误示例
 
 ```rust
-// DON'T: Extend lifetime through union
+// 不要： Extend lifetime through union
 union LifetimeBypass<'a, 'b> {
     short: &'a str,
     long: &'b str,
@@ -26,7 +26,7 @@ union LifetimeBypass<'a, 'b> {
 
 fn bad_lifetime_extension<'a, 'b>(short: &'a str) -> &'b str {
     let u = LifetimeBypass { short };
-    // BAD: Reading with different lifetime is UB
+    // 错误做法： Reading with different lifetime is UB
     unsafe { u.long }
 }
 
@@ -45,7 +45,7 @@ fn exploit() {
 ## 正确示例
 
 ```rust
-// DO: Use same lifetime for all reference fields
+// 应该： Use same lifetime for all reference fields
 union SafeUnion<'a> {
     str_ref: &'a str,
     bytes_ref: &'a [u8],
@@ -63,7 +63,7 @@ fn better_conversion(s: &str) -> &[u8] {
     s.as_bytes()
 }
 
-// DO: Use MaybeUninit for delayed initialization, not lifetime tricks
+// 应该： Use MaybeUninit for delayed initialization, not lifetime tricks
 use std::mem::MaybeUninit;
 
 fn delayed_init<T>(init: impl FnOnce() -> T) -> T {

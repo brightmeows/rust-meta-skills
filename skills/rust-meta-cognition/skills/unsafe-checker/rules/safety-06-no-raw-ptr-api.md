@@ -18,24 +18,24 @@ impact: HIGH
 ## 错误示例
 
 ```rust
-// DON'T: Expose raw pointers in public API
+// 不要： Expose raw pointers in public API
 pub struct Buffer {
     data: *mut u8,
     len: usize,
 }
 
 impl Buffer {
-    // BAD: Returns raw pointer
+    // 错误做法： Returns raw pointer
     pub fn as_ptr(&self) -> *const u8 {
         self.data
     }
 
-    // BAD: Takes raw pointer as input
+    // 错误做法： Takes raw pointer as input
     pub fn from_ptr(ptr: *mut u8, len: usize) -> Self {
         Self { data: ptr, len }
     }
 
-    // BAD: Exposes internal pointer mutably
+    // 错误做法： Exposes internal pointer mutably
     pub fn as_mut_ptr(&mut self) -> *mut u8 {
         self.data
     }
@@ -45,7 +45,7 @@ impl Buffer {
 ## 正确示例
 
 ```rust
-// DO: Use safe abstractions
+// 应该： Use safe abstractions
 pub struct Buffer {
     data: Vec<u8>,
 }
@@ -67,7 +67,7 @@ impl Buffer {
     }
 }
 
-// DO: If raw pointers are needed, provide unsafe API with documentation
+// 应该： If raw pointers are needed, provide unsafe API with documentation
 impl Buffer {
     /// Returns a pointer to the buffer's data.
     ///

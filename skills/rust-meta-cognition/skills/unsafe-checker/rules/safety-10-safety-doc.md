@@ -19,12 +19,12 @@ clippy: missing_safety_doc
 ## 错误示例
 
 ```rust
-// DON'T: Unsafe function without safety docs
+// 不要： Unsafe function without safety docs
 pub unsafe fn process_buffer(ptr: *const u8, len: usize) {
     // ...
 }
 
-// DON'T: Safety docs that don't explain requirements
+// 不要： Safety docs that don't explain requirements
 /// Processes a buffer.
 ///
 /// This function is unsafe.  // Not helpful!

@@ -20,12 +20,12 @@ impact: HIGH
 ## 错误示例
 
 ```rust
-// DON'T: Use Rust types directly for C interop
+// 不要： Use Rust types directly for C interop
 extern "C" {
     fn c_function(x: i32, y: i64) -> i32;  // Might not match C types!
 }
 
-// DON'T: Assume sizes
+// 不要： Assume sizes
 #[repr(C)]
 struct BadStruct {
     count: i32,   // C 'int' might not be 32 bits
@@ -39,12 +39,12 @@ struct BadStruct {
 ```rust
 use std::os::raw::{c_int, c_long, c_char, c_void};
 
-// DO: Use std::os::raw types
+// 应该： Use std::os::raw types
 extern "C" {
     fn c_function(x: c_int, y: c_long) -> c_int;
 }
 
-// DO: Use libc for more types
+// 应该： Use libc for more types
 use libc::{size_t, ssize_t, off_t, pid_t, time_t};
 
 extern "C" {
@@ -53,7 +53,7 @@ extern "C" {
     fn getpid() -> pid_t;
 }
 
-// DO: Match C struct layout
+// 应该： Match C struct layout
 #[repr(C)]
 struct GoodStruct {
     count: c_int,
@@ -61,7 +61,7 @@ struct GoodStruct {
     data: *mut c_void,
 }
 
-// DO: Use isize/usize for pointer-sized integers
+// 应该： Use isize/usize for pointer-sized integers
 #[repr(C)]
 struct PointerSized {
     offset: isize,     // intptr_t equivalent

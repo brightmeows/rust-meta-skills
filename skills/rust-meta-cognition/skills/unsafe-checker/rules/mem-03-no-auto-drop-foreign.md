@@ -18,7 +18,7 @@ impact: CRITICAL
 ## 错误示例
 
 ```rust
-// DON'T: Create String from C-allocated memory
+// 不要： Create String from C-allocated memory
 extern "C" {
     fn c_get_string() -> *mut std::os::raw::c_char;
 }
@@ -26,20 +26,20 @@ extern "C" {
 fn bad_string() -> String {
     unsafe {
         let ptr = c_get_string();
-        // BAD: String will try to free with Rust allocator
+        // 错误做法： String will try to free with Rust allocator
         String::from_raw_parts(ptr as *mut u8, len, cap)
     }
 }
 
-// DON'T: Create Vec from foreign memory
+// 不要： Create Vec from foreign memory
 fn bad_vec(ptr: *mut u8, len: usize) -> Vec<u8> {
-    // BAD: Vec will free this memory incorrectly
+    // 错误做法： Vec will free this memory incorrectly
     unsafe { Vec::from_raw_parts(ptr, len, len) }
 }
 
-// DON'T: Wrap shared memory in Box
+// 不要： Wrap shared memory in Box
 fn bad_box(shared_ptr: *mut Data) -> Box<Data> {
-    // BAD: Box will try to deallocate shared memory!
+    // 错误做法： Box will try to deallocate shared memory!
     unsafe { Box::from_raw(shared_ptr) }
 }
 ```
@@ -54,7 +54,7 @@ extern "C" {
     fn c_free_string(s: *mut std::os::raw::c_char);
 }
 
-// DO: Copy data into Rust-owned allocation
+// 应该： Copy data into Rust-owned allocation
 fn good_string() -> String {
     unsafe {
         let ptr = c_get_string();
@@ -65,7 +65,7 @@ fn good_string() -> String {
     }
 }
 
-// DO: Use wrapper that calls correct deallocator
+// 应该： Use wrapper that calls correct deallocator
 struct CString {
     ptr: *mut std::os::raw::c_char,
 }
@@ -76,13 +76,13 @@ impl Drop for CString {
     }
 }
 
-// DO: Use slice for borrowed view, don't take ownership
+// 应该： Use slice for borrowed view, don't take ownership
 fn good_slice(ptr: *const u8, len: usize) -> &'static [u8] {
     // Only borrow, don't own
     unsafe { std::slice::from_raw_parts(ptr, len) }
 }
 
-// DO: For shared memory, use raw pointers or custom wrapper
+// 应该： For shared memory, use raw pointers or custom wrapper
 struct SharedBuffer {
     ptr: *mut u8,
     len: usize,

@@ -25,7 +25,7 @@ impact: HIGH
 mod bad_example {
     use std::os::unix::io::RawFd;
 
-    // DON'T: Accept raw handle without ownership
+    // 不要： Accept raw handle without ownership
     fn bad_read(fd: RawFd) -> std::io::Result<Vec<u8>> {
         // What if fd was closed? What if it's reused?
         let mut buf = vec![0u8; 1024];
@@ -40,7 +40,7 @@ mod bad_example {
         }
     }
 
-    // DON'T: Store raw handle without tracking ownership
+    // 不要： Store raw handle without tracking ownership
     struct BadFileRef {
         fd: RawFd,  // Who owns this? Who closes it?
     }
@@ -55,7 +55,7 @@ mod good_example {
     use std::os::unix::io::{AsFd, BorrowedFd, OwnedFd, FromRawFd, AsRawFd};
     use std::fs::File;
 
-    // DO: Use BorrowedFd for borrowed access (Rust 1.63+)
+    // 应该： Use BorrowedFd for borrowed access (Rust 1.63+)
     fn good_read(fd: BorrowedFd<'_>) -> std::io::Result<Vec<u8>> {
         let mut buf = vec![0u8; 1024];
         // BorrowedFd guarantees the fd is valid for this call
@@ -74,7 +74,7 @@ mod good_example {
         }
     }
 
-    // DO: Use OwnedFd for owned handles
+    // 应该： Use OwnedFd for owned handles
     struct GoodFileOwner {
         fd: OwnedFd,  // Clearly owns the handle
     }
@@ -85,7 +85,7 @@ mod good_example {
         }
     }
 
-    // DO: Use generic AsFd bound for flexibility
+    // 应该： Use generic AsFd bound for flexibility
     fn generic_read<F: AsFd>(f: &F) -> std::io::Result<Vec<u8>> {
         good_read(f.as_fd())
     }
@@ -103,7 +103,7 @@ mod good_example {
         Ok(())
     }
 
-    // DO: Take ownership from raw fd
+    // 应该： Take ownership from raw fd
     fn from_raw(fd: i32) -> Option<GoodFileOwner> {
         if fd < 0 {
             return None;

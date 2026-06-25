@@ -20,7 +20,7 @@ C 回调是无捕获状态的函数指针。要将 Rust 闭包传递给 C，使�
 ## 错误示例
 
 ```rust
-// DON'T: Try to pass closure directly
+// 不要： Try to pass closure directly
 extern "C" {
     fn set_callback(cb: fn(i32) -> i32);  // Only works for non-capturing!
 }
@@ -33,7 +33,7 @@ fn bad_closure() {
     // set_callback(closure);
 }
 
-// DON'T: Transmute closure to function pointer
+// 不要： Transmute closure to function pointer
 fn bad_transmute() {
     let closure = |x: i32| x * 2;
     let fp: fn(i32) -> i32 = unsafe { std::mem::transmute(closure) };
@@ -55,7 +55,7 @@ extern "C" {
     fn remove_callback();
 }
 
-// DO: Use trampoline pattern
+// 应该： Use trampoline pattern
 fn good_closure<F: FnMut(i32) -> i32>(mut closure: F) {
     // Trampoline function that forwards to the closure
     extern "C" fn trampoline<F: FnMut(i32) -> i32>(
@@ -74,7 +74,7 @@ fn good_closure<F: FnMut(i32) -> i32>(mut closure: F) {
     }
 }
 
-// DO: Box the closure for 'static lifetime
+// 应该： Box the closure for 'static lifetime
 struct CallbackHandle {
     closure: Box<dyn FnMut(i32) -> i32>,
 }

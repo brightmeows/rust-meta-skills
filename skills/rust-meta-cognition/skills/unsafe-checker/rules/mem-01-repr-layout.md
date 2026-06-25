@@ -28,7 +28,7 @@ Rust 的默认布局未指定，可能会在不同编译器版本之间变化。
 ## 错误示例
 
 ```rust
-// DON'T: Assume Rust struct layout matches C
+// 不要： Assume Rust struct layout matches C
 struct BadFFI {
     a: u8,
     b: u32,
@@ -36,7 +36,7 @@ struct BadFFI {
 }
 // Rust may reorder fields or add different padding than C
 
-// DON'T: Use packed without understanding the risks
+// 不要： Use packed without understanding the risks
 #[repr(packed)]
 struct Dangerous {
     a: u8,
@@ -51,7 +51,7 @@ fn bad_ref(d: &Dangerous) -> &u32 {
 ## 正确示例
 
 ```rust
-// DO: Use repr(C) for FFI
+// 应该： Use repr(C) for FFI
 #[repr(C)]
 struct GoodFFI {
     a: u8,
@@ -60,12 +60,12 @@ struct GoodFFI {
 }
 // Guaranteed: a at 0, padding 1-3, b at 4, c at 8, padding 9-11
 
-// DO: Use repr(transparent) for newtypes
+// 应该： Use repr(transparent) for newtypes
 #[repr(transparent)]
 struct Wrapper(u32);
 // Guaranteed same layout as u32, can be transmuted
 
-// DO: Use repr(packed) carefully, access via copy
+// 应该： Use repr(packed) carefully, access via copy
 #[repr(C, packed)]
 struct PackedData {
     header: u8,
@@ -81,13 +81,13 @@ impl PackedData {
     }
 }
 
-// DO: Use align for SIMD or cache line alignment
+// 应该： Use align for SIMD or cache line alignment
 #[repr(C, align(64))]
 struct CacheAligned {
     data: [u8; 64],
 }
 
-// DO: Specify enum discriminant for FFI
+// 应该： Specify enum discriminant for FFI
 #[repr(u8)]
 enum Status {
     Ok = 0,

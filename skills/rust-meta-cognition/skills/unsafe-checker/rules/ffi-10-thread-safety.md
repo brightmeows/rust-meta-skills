@@ -21,7 +21,7 @@ impact: CRITICAL
 ## 错误示例
 
 ```rust
-// DON'T: Unsynchronized global state
+// 不要： Unsynchronized global state
 static mut COUNTER: i32 = 0;
 
 #[no_mangle]
@@ -32,7 +32,7 @@ pub extern "C" fn increment() -> i32 {
     }
 }
 
-// DON'T: Thread-local assuming single thread
+// 不要： Thread-local assuming single thread
 thread_local! {
     static CONFIG: RefCell<Config> = RefCell::new(Config::default());
 }
@@ -44,7 +44,7 @@ pub extern "C" fn set_config(value: i32) {
     CONFIG.with(|c| c.borrow_mut().value = value);
 }
 
-// DON'T: Non-Send types in globals
+// 不要： Non-Send types in globals
 static mut HANDLE: Option<Rc<Data>> = None;  // Rc is not Send!
 ```
 
@@ -54,7 +54,7 @@ static mut HANDLE: Option<Rc<Data>> = None;  // Rc is not Send!
 use std::sync::atomic::{AtomicI32, Ordering};
 use std::sync::{Mutex, OnceLock};
 
-// DO: Use atomics for simple counters
+// 应该： Use atomics for simple counters
 static COUNTER: AtomicI32 = AtomicI32::new(0);
 
 #[no_mangle]
@@ -62,7 +62,7 @@ pub extern "C" fn increment() -> i32 {
     COUNTER.fetch_add(1, Ordering::SeqCst) + 1
 }
 
-// DO: Use Mutex for complex state
+// 应该： Use Mutex for complex state
 static CONFIG: OnceLock<Mutex<Config>> = OnceLock::new();
 
 fn get_config() -> &'static Mutex<Config> {
@@ -80,7 +80,7 @@ pub extern "C" fn set_config_value(value: i32) -> i32 {
     }
 }
 
-// DO: Document thread safety requirements
+// 应该： Document thread safety requirements
 /// Initializes the library. NOT thread-safe.
 /// Must be called once from main thread before any other function.
 #[no_mangle]
@@ -97,7 +97,7 @@ pub extern "C" fn process(data: *const u8, len: usize) -> i32 {
     0
 }
 
-// DO: Make non-thread-safe APIs explicit
+// 应该： Make non-thread-safe APIs explicit
 /// Handle for single-threaded use only.
 ///
 /// # Thread Safety

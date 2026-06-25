@@ -18,27 +18,27 @@ Rust 中的“unsafe”一词是对开发者的信号，表示需要额外审查
 ## 错误示例
 
 ```rust
-// DON'T: Hide unsafe behind an alias
+// 不要： Hide unsafe behind an alias
 type SafePointer = *mut u8;  // Still unsafe to dereference!
 
-// DON'T: Wrap unsafe in a "safe-looking" name
+// 不要： Wrap unsafe in a "safe-looking" name
 pub fn get_value(ptr: *const i32) -> i32 {
     unsafe { *ptr }  // Caller doesn't know this is unsafe!
 }
 
-// DON'T: Re-export unsafe functions with different names
+// 不要： Re-export unsafe functions with different names
 pub use std::mem::transmute as convert;
 ```
 
 ## 正确示例
 
 ```rust
-// DO: Keep "unsafe" visible in the API
+// 应该： Keep "unsafe" visible in the API
 pub unsafe fn get_value_unchecked(ptr: *const i32) -> i32 {
     *ptr
 }
 
-// DO: If providing a safe wrapper, make the safety contract clear
+// 应该： If providing a safe wrapper, make the safety contract clear
 /// Returns the value at the pointer.
 ///
 /// # Safety
@@ -52,7 +52,7 @@ pub fn get_value_checked(ptr: *const i32) -> Option<i32> {
     }
 }
 
-// DO: Use clear naming for raw pointer types
+// 应该： Use clear naming for raw pointer types
 type RawHandle = *mut c_void;  // "Raw" signals potential unsafety
 ```
 

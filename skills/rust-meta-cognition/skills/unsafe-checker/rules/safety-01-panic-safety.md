@@ -19,7 +19,7 @@ Unsafe 代码中的 Panic 可能使数据结构处于不一致状态，导致在
 ## 错误示例
 
 ```rust
-// DON'T: Panic can leave Vec in invalid state
+// 不要： Panic can leave Vec in invalid state
 impl<T> MyVec<T> {
     pub fn push(&mut self, value: T) {
         if self.len == self.cap {
@@ -39,7 +39,7 @@ impl<T> MyVec<T> {
 ## 正确示例
 
 ```rust
-// DO: Ensure panic safety by ordering operations correctly
+// 应该： Ensure panic safety by ordering operations correctly
 impl<T> MyVec<T> {
     pub fn push(&mut self, value: T) {
         if self.len == self.cap {
@@ -55,7 +55,7 @@ impl<T> MyVec<T> {
     }
 }
 
-// DO: Use guards for complex operations
+// 应该： Use guards for complex operations
 impl<T: Clone> MyVec<T> {
     pub fn extend_from_slice(&mut self, slice: &[T]) {
         self.reserve(slice.len());

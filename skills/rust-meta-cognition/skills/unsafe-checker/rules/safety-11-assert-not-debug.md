@@ -19,13 +19,13 @@ clippy: debug_assert_with_mut_call
 ## 错误示例
 
 ```rust
-// DON'T: Use debug_assert for safety-critical checks
+// 不要： Use debug_assert for safety-critical checks
 pub unsafe fn get_unchecked(slice: &[i32], index: usize) -> &i32 {
     debug_assert!(index < slice.len());  // Gone in release!
     &*slice.as_ptr().add(index)
 }
 
-// DON'T: Rely on debug_assert for FFI safety
+// 不要： Rely on debug_assert for FFI safety
 pub unsafe fn call_c_function(ptr: *const Data) {
     debug_assert!(!ptr.is_null());  // Won't catch bugs in release
     ffi::process_data(ptr);
@@ -35,13 +35,13 @@ pub unsafe fn call_c_function(ptr: *const Data) {
 ## 正确示例
 
 ```rust
-// DO: Use assert! for safety checks (when performance allows)
+// 应该： Use assert! for safety checks (when performance allows)
 pub unsafe fn get_unchecked(slice: &[i32], index: usize) -> &i32 {
     assert!(index < slice.len(), "index {} out of bounds for len {}", index, slice.len());
     &*slice.as_ptr().add(index)
 }
 
-// DO: Use debug_assert when CALLER is responsible
+// 应该： Use debug_assert when CALLER is responsible
 /// # Safety
 /// index must be less than slice.len()
 pub unsafe fn get_unchecked_fast(slice: &[i32], index: usize) -> &i32 {
@@ -50,7 +50,7 @@ pub unsafe fn get_unchecked_fast(slice: &[i32], index: usize) -> &i32 {
     &*slice.as_ptr().add(index)
 }
 
-// DO: Use assert for internal safety, debug_assert for caller obligations
+// 应该： Use assert for internal safety, debug_assert for caller obligations
 pub fn get_checked(slice: &[i32], index: usize) -> Option<&i32> {
     if index < slice.len() {
         // SAFETY: We just checked index < len

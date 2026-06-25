@@ -20,7 +20,7 @@ impact: HIGH
 ## 错误示例
 
 ```rust
-// DON'T: Trust external data
+// 不要： Trust external data
 extern "C" {
     fn get_status() -> u8;
 }
@@ -30,21 +30,21 @@ enum Status { Active = 0, Inactive = 1, Pending = 2 }
 
 fn bad_convert() -> Status {
     let raw = unsafe { get_status() };
-    // BAD: Assumes C returns valid enum value
+    // 错误做法： Assumes C returns valid enum value
     unsafe { std::mem::transmute(raw) }  // UB if raw > 2
 }
 
-// DON'T: Trust strings from C
+// 不要： Trust strings from C
 fn bad_string(ptr: *const c_char) -> &str {
     let cstr = unsafe { CStr::from_ptr(ptr) };
-    // BAD: Assumes valid UTF-8
+    // 错误做法： Assumes valid UTF-8
     cstr.to_str().unwrap()
 }
 
-// DON'T: Trust size values
+// 不要： Trust size values
 fn bad_size(ptr: *const u8, len: usize) -> Vec<u8> {
-    // BAD: len could be huge, causing OOM
-    // BAD: len could exceed actual data
+    // 错误做法： len could be huge, causing OOM
+    // 错误做法： len could exceed actual data
     unsafe { std::slice::from_raw_parts(ptr, len) }.to_vec()
 }
 ```
@@ -52,7 +52,7 @@ fn bad_size(ptr: *const u8, len: usize) -> Vec<u8> {
 ## 正确示例
 
 ```rust
-// DO: Validate enum values
+// 应该： Validate enum values
 #[derive(Debug, Clone, Copy)]
 #[repr(u8)]
 enum Status {
@@ -79,7 +79,7 @@ fn good_convert() -> Result<Status, InvalidStatusError> {
     Status::try_from(raw)  // Returns error for invalid values
 }
 
-// DO: Handle invalid UTF-8
+// 应该： Handle invalid UTF-8
 fn good_string(ptr: *const c_char) -> Result<String, std::str::Utf8Error> {
     if ptr.is_null() {
         return Ok(String::new());
@@ -96,7 +96,7 @@ fn good_string_lossy(ptr: *const c_char) -> String {
     cstr.to_string_lossy().into_owned()  // Replaces invalid UTF-8
 }
 
-// DO: Validate sizes
+// 应该： Validate sizes
 const MAX_REASONABLE_SIZE: usize = 100 * 1024 * 1024;  // 100 MB
 
 fn good_size(ptr: *const u8, len: usize) -> Result<Vec<u8>, ValidationError> {
@@ -113,7 +113,7 @@ fn good_size(ptr: *const u8, len: usize) -> Result<Vec<u8>, ValidationError> {
     Ok(slice.to_vec())
 }
 
-// DO: Use num_enum for safe enum conversion
+// 应该： Use num_enum for safe enum conversion
 // use num_enum::TryFromPrimitive;
 //
 // #[derive(TryFromPrimitive)]

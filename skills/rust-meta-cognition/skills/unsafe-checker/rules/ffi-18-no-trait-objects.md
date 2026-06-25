@@ -21,7 +21,7 @@ Trait 对象（`dyn Trait`）具有 Rust 特定的布局（带虚表的胖指针
 ## 错误示例
 
 ```rust
-// DON'T: Pass trait objects to C
+// 不要： Pass trait objects to C
 trait Handler {
     fn handle(&self, data: i32);
 }
@@ -31,7 +31,7 @@ extern "C" {
     fn set_handler(h: *const dyn Handler);
 }
 
-// DON'T: Store trait objects in FFI structs
+// 不要： Store trait objects in FFI structs
 #[repr(C)]
 struct BadCallback {
     handler: *const dyn Handler,  // Not C-compatible!
@@ -43,7 +43,7 @@ struct BadCallback {
 ```rust
 use std::os::raw::{c_int, c_void};
 
-// DO: Use function pointers with user_data (trampoline pattern)
+// 应该： Use function pointers with user_data (trampoline pattern)
 type HandlerFn = extern "C" fn(data: c_int, user_data: *mut c_void);
 
 extern "C" {
@@ -69,7 +69,7 @@ fn register_handler<H: Handler + 'static>(handler: H) {
     }
 }
 
-// DO: Use concrete types when possible
+// 应该： Use concrete types when possible
 struct ConcreteHandler {
     multiplier: i32,
 }
@@ -80,7 +80,7 @@ impl Handler for ConcreteHandler {
     }
 }
 
-// DO: Create C-compatible vtable manually if needed
+// 应该： Create C-compatible vtable manually if needed
 #[repr(C)]
 struct HandlerVtable {
     handle: extern "C" fn(this: *const c_void, data: c_int),

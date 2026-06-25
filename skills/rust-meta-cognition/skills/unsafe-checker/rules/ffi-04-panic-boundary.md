@@ -22,7 +22,7 @@ Panic 不能跨越 FFI 边界展开。使用 `catch_unwind` 或将函数标记�
 ## 错误示例
 
 ```rust
-// DON'T: Allow panics to escape to C
+// 不要： Allow panics to escape to C
 #[no_mangle]
 pub extern "C" fn callback(data: *const u8, len: usize) -> i32 {
     let slice = unsafe { std::slice::from_raw_parts(data, len) };
@@ -34,7 +34,7 @@ pub extern "C" fn callback(data: *const u8, len: usize) -> i32 {
     process(sum)
 }
 
-// DON'T: Unwrap in extern functions
+// 不要： Unwrap in extern functions
 #[no_mangle]
 pub extern "C" fn parse_config(path: *const c_char) -> i32 {
     let path = unsafe { CStr::from_ptr(path) };
@@ -50,7 +50,7 @@ use std::panic::{catch_unwind, AssertUnwindSafe};
 use std::ffi::CStr;
 use std::os::raw::{c_char, c_int};
 
-// DO: Catch panics at FFI boundary
+// 应该： Catch panics at FFI boundary
 #[no_mangle]
 pub extern "C" fn safe_callback(data: *const u8, len: usize) -> c_int {
     let result = catch_unwind(AssertUnwindSafe(|| {
@@ -73,7 +73,7 @@ pub extern "C" fn safe_callback(data: *const u8, len: usize) -> c_int {
     }
 }
 
-// DO: Use Result-based API internally
+// 应该： Use Result-based API internally
 #[no_mangle]
 pub extern "C" fn parse_config(path: *const c_char) -> c_int {
     let result = catch_unwind(AssertUnwindSafe(|| -> Result<(), Box<dyn std::error::Error>> {
@@ -95,7 +95,7 @@ pub extern "C" fn parse_config(path: *const c_char) -> c_int {
     }
 }
 
-// DO: For Rust-calling-Rust across C, use "C-unwind"
+// 应该： For Rust-calling-Rust across C, use "C-unwind"
 #[no_mangle]
 pub extern "C-unwind" fn rust_callback_can_unwind() {
     // This is OK to panic if called from Rust through C

@@ -18,7 +18,7 @@ impact: CRITICAL
 ## 错误示例
 
 ```rust
-// DON'T: Potential double-free on panic
+// 不要： Potential double-free on panic
 impl<T> MyVec<T> {
     pub fn pop(&mut self) -> Option<T> {
         if self.len == 0 {
@@ -34,7 +34,7 @@ impl<T> MyVec<T> {
     }
 }
 
-// DON'T: Double-free with ManuallyDrop misuse
+// 不要： Double-free with ManuallyDrop misuse
 fn bad_swap<T>(a: &mut T, b: &mut T) {
     unsafe {
         let tmp = ptr::read(a);
@@ -47,12 +47,12 @@ fn bad_swap<T>(a: &mut T, b: &mut T) {
 ## 正确示例
 
 ```rust
-// DO: Use std::mem::take or swap
+// 应该： Use std::mem::take or swap
 fn good_swap<T: Default>(a: &mut T, b: &mut T) {
     std::mem::swap(a, b);  // Safe and correct
 }
 
-// DO: Use ManuallyDrop for panic safety
+// 应该： Use ManuallyDrop for panic safety
 use std::mem::ManuallyDrop;
 
 impl<T> MyVec<T> {
@@ -70,7 +70,7 @@ impl<T> MyVec<T> {
     }
 }
 
-// DO: Use scopeguard or manual cleanup
+// 应该： Use scopeguard or manual cleanup
 fn safe_operation<T: Clone>(data: &mut [T], source: &[T]) {
     // Track what we've written for cleanup on panic
     let mut written = 0;

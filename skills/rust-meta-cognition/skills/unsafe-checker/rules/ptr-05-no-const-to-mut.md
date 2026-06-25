@@ -19,18 +19,18 @@ clippy: cast_ref_to_mut
 ## 错误示例
 
 ```rust
-// DON'T: Cast *const to *mut
+// 不要： Cast *const to *mut
 fn bad_mutate(value: &i32) {
     let ptr = value as *const i32 as *mut i32;
     unsafe { *ptr = 42; }  // UB: Mutating through &
 }
 
-// DON'T: Use transmute to convert
+// 不要： Use transmute to convert
 fn bad_transmute(value: &i32) -> &mut i32 {
     unsafe { std::mem::transmute(value) }  // UB!
 }
 
-// DON'T: "I know this is the only reference"
+// 不要： "I know this is the only reference"
 fn bad_claim(value: &i32) {
     // Even if you "know" there's only one reference,
     // the compiler assumes & means no mutation
@@ -42,12 +42,12 @@ fn bad_claim(value: &i32) {
 ## 正确示例
 
 ```rust
-// DO: Take &mut if you need to mutate
+// 应该： Take &mut if you need to mutate
 fn good_mutate(value: &mut i32) {
     *value = 42;
 }
 
-// DO: Use interior mutability
+// 应该： Use interior mutability
 use std::cell::{Cell, RefCell, UnsafeCell};
 
 struct Mutable {
@@ -60,7 +60,7 @@ impl Mutable {
     }
 }
 
-// DO: Use UnsafeCell if you need raw unsafe interior mutability
+// 应该： Use UnsafeCell if you need raw unsafe interior mutability
 struct RawMutable {
     value: UnsafeCell<i32>,
 }

@@ -20,14 +20,14 @@ FFI 函数必须使用 C 兼容的错误处理（返回码、errno、输出参�
 ## 错误示例
 
 ```rust
-// DON'T: Return Result across FFI
+// 不要： Return Result across FFI
 #[no_mangle]
 pub extern "C" fn bad_open(path: *const c_char) -> Result<Handle, Error> {
     // Result is not C-compatible!
     unimplemented!()
 }
 
-// DON'T: Return Option across FFI
+// 不要： Return Option across FFI
 #[no_mangle]
 pub extern "C" fn bad_find(id: i32) -> Option<*mut Data> {
     // Option<*mut T> might work but is confusing
@@ -48,7 +48,7 @@ const ERR_FILE_NOT_FOUND: c_int = 3;
 const ERR_PERMISSION: c_int = 4;
 const ERR_UNKNOWN: c_int = -1;
 
-// DO: Return error code, output via pointer
+// 应该： Return error code, output via pointer
 #[no_mangle]
 pub extern "C" fn open_file(
     path: *const c_char,
@@ -79,7 +79,7 @@ pub extern "C" fn open_file(
     }
 }
 
-// DO: Use errno for POSIX-style APIs
+// 应该： Use errno for POSIX-style APIs
 #[cfg(unix)]
 #[no_mangle]
 pub extern "C" fn posix_style_read(
@@ -100,7 +100,7 @@ pub extern "C" fn posix_style_read(
     count as isize
 }
 
-// DO: Provide error message function
+// 应该： Provide error message function
 thread_local! {
     static LAST_ERROR: std::cell::RefCell<Option<String>> = std::cell::RefCell::new(None);
 }

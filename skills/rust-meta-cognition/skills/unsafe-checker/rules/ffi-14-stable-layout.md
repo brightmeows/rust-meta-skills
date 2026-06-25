@@ -20,7 +20,7 @@ FFI 类型不应在不同版本之间更改布局。使用 `#[repr(C)]`，避免
 ## 错误示例
 
 ```rust
-// DON'T: Use Rust std types with unstable layout in FFI
+// 不要： Use Rust std types with unstable layout in FFI
 extern "C" {
     // Vec layout is not stable!
     fn bad_vec(v: Vec<i32>);
@@ -32,14 +32,14 @@ extern "C" {
     fn bad_map(m: std::collections::HashMap<i32, i32>);
 }
 
-// DON'T: Use Rust-specific types in C structs
+// 不要： Use Rust-specific types in C structs
 #[repr(C)]
 struct BadMixed {
     id: i32,
     data: Vec<u8>,  // Vec is not C-compatible!
 }
 
-// DON'T: Use Option with non-null optimization assumptions
+// 不要： Use Option with non-null optimization assumptions
 #[repr(C)]
 struct BadOption {
     value: Option<std::num::NonZeroU32>,  // Layout may change!
@@ -51,7 +51,7 @@ struct BadOption {
 ```rust
 use std::os::raw::{c_int, c_char, c_void};
 
-// DO: Use C-compatible types
+// 应该： Use C-compatible types
 #[repr(C)]
 struct GoodStruct {
     id: c_int,
@@ -60,7 +60,7 @@ struct GoodStruct {
     data_len: usize,
 }
 
-// DO: Use explicit struct for what Vec would provide
+// 应该： Use explicit struct for what Vec would provide
 #[repr(C)]
 struct GoodBuffer {
     ptr: *mut u8,
@@ -86,14 +86,14 @@ impl GoodBuffer {
     }
 }
 
-// DO: Use fixed-size arrays for bounded data
+// 应该： Use fixed-size arrays for bounded data
 #[repr(C)]
 struct FixedName {
     name: [c_char; 64],
     name_len: usize,
 }
 
-// DO: Define your own stable option type
+// 应该： Define your own stable option type
 #[repr(C)]
 struct OptionalU32 {
     has_value: bool,

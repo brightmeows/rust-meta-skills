@@ -20,7 +20,7 @@ impact: MEDIUM
 ## 错误示例
 
 ```rust
-// DON'T: Undocumented assumptions
+// 不要： Undocumented assumptions
 extern "C" {
     fn get_data() -> *mut Data;
 }
@@ -35,7 +35,7 @@ fn bad_use() -> &'static Data {
     unsafe { &*ptr }
 }
 
-// DON'T: Silent assumptions in function signature
+// 不要： Silent assumptions in function signature
 #[no_mangle]
 pub extern "C" fn process(data: *const Data, len: usize) {
     // What if data is null?

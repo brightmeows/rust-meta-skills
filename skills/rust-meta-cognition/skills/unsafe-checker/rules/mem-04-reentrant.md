@@ -26,7 +26,7 @@ extern "C" {
     fn rand() -> i32;
 }
 
-// DON'T: Use non-reentrant functions
+// 不要： Use non-reentrant functions
 fn bad_tokenize(s: &mut [i8]) {
     unsafe {
         let delim = b" \0".as_ptr() as *const i8;
@@ -58,7 +58,7 @@ extern "C" {
     fn rand_r(seed: *mut u32) -> i32;
 }
 
-// DO: Use reentrant versions
+// 应该： Use reentrant versions
 fn good_tokenize(s: &mut [i8]) {
     unsafe {
         let delim = b" \0".as_ptr() as *const i8;
@@ -82,7 +82,7 @@ fn good_random(seed: &mut u32) -> i32 {
     unsafe { rand_r(seed) }
 }
 
-// BETTER: Use Rust standard library
+// 更好的做法： Use Rust standard library
 fn best_time() {
     use std::time::SystemTime;
     let now = SystemTime::now();  // Thread-safe!

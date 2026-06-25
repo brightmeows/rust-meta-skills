@@ -19,7 +19,7 @@ clippy: mut_from_ref
 ## 错误示例
 
 ```rust
-// DON'T: Return &mut from &self
+// 不要： Return &mut from &self
 struct Container {
     data: i32,
 }
@@ -34,7 +34,7 @@ impl Container {
     }
 }
 
-// DON'T: Transmute & to &mut
+// 不要： Transmute & to &mut
 fn bad_transmute<T>(reference: &T) -> &mut T {
     unsafe { std::mem::transmute(reference) }  // UB!
 }
@@ -45,7 +45,7 @@ fn bad_transmute<T>(reference: &T) -> &mut T {
 ```rust
 use std::cell::{Cell, RefCell, UnsafeCell};
 
-// DO: Use interior mutability types
+// 应该： Use interior mutability types
 struct Container {
     data: Cell<i32>,          // For Copy types
     complex: RefCell<String>, // For non-Copy with runtime checks
@@ -65,7 +65,7 @@ impl Container {
     }
 }
 
-// DO: Use UnsafeCell for custom interior mutability
+// 应该： Use UnsafeCell for custom interior mutability
 struct MyMutex<T> {
     locked: std::sync::atomic::AtomicBool,
     data: UnsafeCell<T>,

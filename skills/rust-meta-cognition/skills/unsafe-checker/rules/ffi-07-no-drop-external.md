@@ -20,7 +20,7 @@ impact: HIGH
 ## 错误示例
 
 ```rust
-// DON'T: Drop on type that external code will free
+// 不要： Drop on type that external code will free
 #[repr(C)]
 struct EventHandler {
     callback: extern "C" fn(i32),
@@ -29,7 +29,7 @@ struct EventHandler {
 
 impl Drop for EventHandler {
     fn drop(&mut self) {
-        // BAD: What if the C library already freed user_data?
+        // 错误做法： What if the C library already freed user_data?
         unsafe { libc::free(self.user_data); }
     }
 }
@@ -52,7 +52,7 @@ fn bad_register() {
 ## 正确示例
 
 ```rust
-// DO: No Drop for types whose lifetime is managed externally
+// 应该： No Drop for types whose lifetime is managed externally
 #[repr(C)]
 struct EventHandler {
     callback: extern "C" fn(i32),
@@ -65,7 +65,7 @@ extern "C" {
     fn unregister_handler(h: *mut EventHandler);
 }
 
-// DO: Wrap in a Rust type that knows when it's safe to drop
+// 应该： Wrap in a Rust type that knows when it's safe to drop
 struct RegisteredHandler {
     ptr: *mut EventHandler,
     registered: bool,
@@ -96,7 +96,7 @@ impl Drop for RegisteredHandler {
     }
 }
 
-// DO: Use ManuallyDrop for explicit control
+// 应该： Use ManuallyDrop for explicit control
 use std::mem::ManuallyDrop;
 
 fn explicit_ownership() {

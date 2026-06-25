@@ -18,7 +18,7 @@ impact: MEDIUM
 ## 错误示例
 
 ```rust
-// DON'T: Only provide unsafe version
+// 不要： Only provide unsafe version
 impl<T> MySlice<T> {
     /// Gets an element by index.
     ///
@@ -29,7 +29,7 @@ impl<T> MySlice<T> {
     }
 }
 
-// DON'T: Only provide checked version when performance matters
+// 不要： Only provide checked version when performance matters
 impl<T> MySlice<T> {
     pub fn get(&self, index: usize) -> Option<&T> {
         if index < self.len {
@@ -45,7 +45,7 @@ impl<T> MySlice<T> {
 ## 正确示例
 
 ```rust
-// DO: Provide both versions
+// 应该： Provide both versions
 impl<T> MySlice<T> {
     /// Gets an element by index, returning `None` if out of bounds.
     #[inline]

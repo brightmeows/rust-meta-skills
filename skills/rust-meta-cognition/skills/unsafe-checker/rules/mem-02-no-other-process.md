@@ -21,13 +21,13 @@ impact: CRITICAL
 ## 错误示例
 
 ```rust
-// DON'T: Try to access another process's memory directly
+// 不要： Try to access another process's memory directly
 fn bad_cross_process(ptr: *mut i32) {
     // This pointer from another process is meaningless in our address space
     unsafe { *ptr = 42; }  // Undefined behavior or crash
 }
 
-// DON'T: Modify library internals
+// 不要： Modify library internals
 extern "C" {
     static mut LIBRARY_INTERNAL: i32;
 }
@@ -41,7 +41,7 @@ fn bad_library_access() {
 ## 正确示例
 
 ```rust
-// DO: Use proper IPC for cross-process communication
+// 应该： Use proper IPC for cross-process communication
 use std::io::{Read, Write};
 use std::os::unix::net::UnixStream;
 
@@ -51,7 +51,7 @@ fn ipc_communication() -> std::io::Result<()> {
     Ok(())
 }
 
-// DO: Use shared memory with proper synchronization
+// 应该： Use shared memory with proper synchronization
 #[cfg(unix)]
 fn shared_memory_example() {
     use std::sync::atomic::{AtomicI32, Ordering};
@@ -64,7 +64,7 @@ fn shared_memory_example() {
     shared.store(42, Ordering::Release);
 }
 
-// DO: Use proper FFI for library interaction
+// 应该： Use proper FFI for library interaction
 mod ffi {
     extern "C" {
         pub fn library_set_value(value: i32);
@@ -79,7 +79,7 @@ fn proper_library_access() {
     }
 }
 
-// DO: Use Rust's libloading for dynamic libraries
+// 应该： Use Rust's libloading for dynamic libraries
 fn dynamic_library() -> Result<(), Box<dyn std::error::Error>> {
     let lib = unsafe { libloading::Library::new("mylib.so")? };
     let func: libloading::Symbol<extern "C" fn(i32) -> i32> =

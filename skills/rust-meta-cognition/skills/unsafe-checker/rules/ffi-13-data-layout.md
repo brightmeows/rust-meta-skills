@@ -20,7 +20,7 @@ Rust 和 C 之间共享的类型必须使用 `#[repr(C)]` 以确保内存布局�
 ## 错误示例
 
 ```rust
-// DON'T: Rust layout for FFI types
+// 不要： Rust layout for FFI types
 struct BadStruct {
     a: u8,
     b: u32,
@@ -33,7 +33,7 @@ extern "C" {
     fn use_struct(s: *const BadStruct);  // Layout mismatch!
 }
 
-// DON'T: Assume Rust enum layout matches C
+// 不要： Assume Rust enum layout matches C
 enum BadEnum {
     A,
     B(i32),
@@ -45,7 +45,7 @@ enum BadEnum {
 ## 正确示例
 
 ```rust
-// DO: Use repr(C) for FFI structs
+// 应该： Use repr(C) for FFI structs
 #[repr(C)]
 struct GoodStruct {
     a: u8,      // offset 0
@@ -56,7 +56,7 @@ struct GoodStruct {
 }
 // Total size: 12, align: 4
 
-// DO: Use repr(C) for enums with explicit discriminant
+// 应该： Use repr(C) for enums with explicit discriminant
 #[repr(C)]
 enum GoodEnum {
     A = 0,
@@ -65,7 +65,7 @@ enum GoodEnum {
 }
 // Equivalent to C: enum { A = 0, B = 1, C = 2 };
 
-// DO: For complex enums, use tagged unions
+// 应该： For complex enums, use tagged unions
 #[repr(C)]
 struct TaggedUnion {
     tag: GoodEnum,
@@ -79,7 +79,7 @@ union GoodUnionData {
     c: [u8; 2],    // For GoodEnum::C
 }
 
-// DO: Verify layout at compile time
+// 应该： Verify layout at compile time
 const _: () = {
     assert!(std::mem::size_of::<GoodStruct>() == 12);
     assert!(std::mem::align_of::<GoodStruct>() == 4);

@@ -18,7 +18,7 @@ Unsafe Rust 不应被用作逃避借用检查器或其他编译器安全机制�
 ## 错误示例
 
 ```rust
-// DON'T: Using unsafe to bypass borrow checker
+// 不要： Using unsafe to bypass borrow checker
 fn bad_alias() {
     let mut data = vec![1, 2, 3];
     let ptr = data.as_mut_ptr();
@@ -36,14 +36,14 @@ fn bad_alias() {
 ## 正确示例
 
 ```rust
-// DO: Work with the borrow checker, not against it
+// 应该： Work with the borrow checker, not against it
 fn good_sequential() {
     let mut data = vec![1, 2, 3];
     data[0] = 10;
     data[0] = 20;  // Sequential mutations are fine
 }
 
-// DO: Use interior mutability when needed
+// 应该： Use interior mutability when needed
 use std::cell::RefCell;
 
 fn good_interior_mut() {

@@ -26,21 +26,21 @@ extern "C" {
     fn c_strlen(s: *const u8) -> usize;
 }
 
-// DON'T: Pass Rust string directly
+// 不要： Pass Rust string directly
 fn bad_print(s: &str) {
     unsafe {
         c_print(s.as_ptr());  // Not null-terminated!
     }
 }
 
-// DON'T: Assume length matches
+// 不要： Assume length matches
 fn bad_strlen(s: &str) -> usize {
     unsafe {
         c_strlen(s.as_ptr())  // May read past buffer
     }
 }
 
-// DON'T: Use String in FFI signatures
+// 不要： Use String in FFI signatures
 extern "C" fn bad_callback(s: String) {  // Wrong!
     println!("{}", s);
 }
@@ -58,7 +58,7 @@ extern "C" {
     fn c_get_string() -> *const c_char;
 }
 
-// DO: Convert to CString for passing to C
+// 应该： Convert to CString for passing to C
 fn good_print(s: &str) -> Result<(), std::ffi::NulError> {
     let c_string = CString::new(s)?;  // Adds null terminator, checks for interior nulls
     unsafe {
@@ -67,7 +67,7 @@ fn good_print(s: &str) -> Result<(), std::ffi::NulError> {
     Ok(())
 }
 
-// DO: Use CStr for receiving C strings
+// 应该： Use CStr for receiving C strings
 fn good_receive() -> String {
     unsafe {
         let ptr = c_get_string();
@@ -76,7 +76,7 @@ fn good_receive() -> String {
     }
 }
 
-// DO: Handle interior null bytes
+// 应该： Handle interior null bytes
 fn handle_nulls(s: &str) {
     match CString::new(s) {
         Ok(c_string) => unsafe { c_print(c_string.as_ptr()) },
@@ -87,7 +87,7 @@ fn handle_nulls(s: &str) {
     }
 }
 
-// DO: Use proper types in callbacks
+// 应该： Use proper types in callbacks
 extern "C" fn good_callback(s: *const c_char) {
     if !s.is_null() {
         let c_str = unsafe { CStr::from_ptr(s) };

@@ -21,7 +21,7 @@ impact: MEDIUM
 ## 错误示例
 
 ```rust
-// DON'T: Use *mut when pointer is always non-null
+// 不要： Use *mut when pointer is always non-null
 struct MyBox<T> {
     ptr: *mut T,  // Invariant: never null, but not enforced
 }
@@ -45,7 +45,7 @@ impl<T> MyBox<T> {
 ```rust
 use std::ptr::NonNull;
 
-// DO: Use NonNull when pointer is never null
+// 应该： Use NonNull when pointer is never null
 struct MyBox<T> {
     ptr: NonNull<T>,  // Type guarantees non-null
 }
@@ -71,7 +71,7 @@ impl<T> Drop for MyBox<T> {
     }
 }
 
-// DO: Niche optimization with Option
+// 应该： Niche optimization with Option
 struct OptionalBox<T> {
     ptr: Option<NonNull<T>>,  // Same size as *mut T!
 }

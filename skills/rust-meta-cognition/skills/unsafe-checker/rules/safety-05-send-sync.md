@@ -24,16 +24,16 @@ clippy: non_send_fields_in_send_ty
 ## 错误示例
 
 ```rust
-// DON'T: Unsafe Send/Sync without thread safety
+// 不要： Unsafe Send/Sync without thread safety
 struct NotThreadSafe {
     ptr: *mut i32,  // Raw pointers are not Send/Sync
 }
 
-// BAD: This is unsound!
+// 错误做法： This is unsound!
 unsafe impl Send for NotThreadSafe {}
 unsafe impl Sync for NotThreadSafe {}
 
-// DON'T: Rc-like type with unsafe Sync
+// 不要： Rc-like type with unsafe Sync
 struct MyRc<T> {
     ptr: *mut RcInner<T>,
 }
@@ -43,7 +43,7 @@ struct RcInner<T> {
     data: T,
 }
 
-// BAD: count is not atomic, concurrent access is UB
+// 错误做法： count is not atomic, concurrent access is UB
 unsafe impl<T: Send> Sync for MyRc<T> {}
 ```
 
@@ -53,7 +53,7 @@ unsafe impl<T: Send> Sync for MyRc<T> {}
 use std::sync::atomic::{AtomicUsize, Ordering};
 use std::ptr::NonNull;
 
-// DO: Use atomic operations for thread-safe reference counting
+// 应该： Use atomic operations for thread-safe reference counting
 struct MyArc<T> {
     ptr: NonNull<ArcInner<T>>,
 }
@@ -68,7 +68,7 @@ struct ArcInner<T> {
 unsafe impl<T: Send + Sync> Send for MyArc<T> {}
 unsafe impl<T: Send + Sync> Sync for MyArc<T> {}
 
-// DO: Document why it's safe
+// 应该： Document why it's safe
 /// A thread-safe wrapper around a raw file descriptor.
 ///
 /// # Safety

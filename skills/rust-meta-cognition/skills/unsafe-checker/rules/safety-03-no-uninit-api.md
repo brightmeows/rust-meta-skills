@@ -19,7 +19,7 @@ clippy: uninit_assumed_init
 ## 错误示例
 
 ```rust
-// DON'T: Expose uninitialized memory
+// 不要： Expose uninitialized memory
 pub struct Buffer {
     data: [u8; 1024],
     len: usize,
@@ -27,7 +27,7 @@ pub struct Buffer {
 
 impl Buffer {
     pub fn new() -> Self {
-        // BAD: data is uninitialized
+        // 错误做法： data is uninitialized
         unsafe {
             Self {
                 data: std::mem::MaybeUninit::uninit().assume_init(),
@@ -36,7 +36,7 @@ impl Buffer {
         }
     }
 
-    // BAD: Returns reference to potentially uninitialized data
+    // 错误做法： Returns reference to potentially uninitialized data
     pub fn as_slice(&self) -> &[u8] {
         &self.data[..self.len]  // What if len > initialized portion?
     }
@@ -48,7 +48,7 @@ impl Buffer {
 ```rust
 use std::mem::MaybeUninit;
 
-// DO: Use MaybeUninit properly and only expose initialized data
+// 应该： Use MaybeUninit properly and only expose initialized data
 pub struct Buffer {
     data: Box<[MaybeUninit<u8>; 1024]>,
     len: usize,  // Invariant: data[0..len] is initialized

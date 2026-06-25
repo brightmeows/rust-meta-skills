@@ -59,12 +59,12 @@ struct Packet {
     data: u64,
 }
 
-// DO: Copy out the value
+// 应该： Copy out the value
 fn good_read(p: &Packet) -> u32 {
     p.value  // Copies the value, no reference created
 }
 
-// DO: Use addr_of! for raw pointer (Rust 2021+)
+// 应该： Use addr_of! for raw pointer (Rust 2021+)
 fn good_ptr_read(p: &Packet) -> u32 {
     // SAFETY: read_unaligned handles misalignment
     unsafe {
@@ -72,7 +72,7 @@ fn good_ptr_read(p: &Packet) -> u32 {
     }
 }
 
-// DO: Use addr_of_mut! for writing
+// 应该： Use addr_of_mut! for writing
 fn good_ptr_write(p: &mut Packet, value: u32) {
     // SAFETY: write_unaligned handles misalignment
     unsafe {
@@ -80,7 +80,7 @@ fn good_ptr_write(p: &mut Packet, value: u32) {
     }
 }
 
-// DO: Create accessor methods
+// 应该： Create accessor methods
 impl Packet {
     fn value(&self) -> u32 {
         unsafe { std::ptr::addr_of!(self.value).read_unaligned() }
@@ -95,7 +95,7 @@ impl Packet {
     }
 }
 
-// DO: Consider using byte arrays + from_ne_bytes
+// 应该： Consider using byte arrays + from_ne_bytes
 #[repr(C, packed)]
 struct PacketBytes {
     header: u8,

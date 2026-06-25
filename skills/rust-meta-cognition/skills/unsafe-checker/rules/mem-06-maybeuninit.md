@@ -22,12 +22,12 @@ clippy: uninit_assumed_init, uninit_vec
 ## 错误示例
 
 ```rust
-// DON'T: Use deprecated uninitialized
+// 不要： Use deprecated uninitialized
 fn bad_uninit<T>() -> T {
     unsafe { std::mem::uninitialized() }  // Deprecated, UB
 }
 
-// DON'T: Use zeroed for types where zero is invalid
+// 不要： Use zeroed for types where zero is invalid
 fn bad_zeroed() -> &'static str {
     unsafe { std::mem::zeroed() }  // UB: null reference
 }
@@ -36,12 +36,12 @@ fn bad_zeroed_bool() -> bool {
     unsafe { std::mem::zeroed() }  // UB: 0 might not be valid bool
 }
 
-// DON'T: Transmute to "initialize"
+// 不要： Transmute to "initialize"
 fn bad_transmute() -> [String; 10] {
     unsafe { std::mem::transmute([0u8; std::mem::size_of::<[String; 10]>()]) }
 }
 
-// DON'T: Set Vec length without initializing
+// 不要： Set Vec length without initializing
 fn bad_vec() -> Vec<String> {
     let mut v = Vec::with_capacity(10);
     unsafe { v.set_len(10); }  // Elements are uninitialized!
@@ -54,7 +54,7 @@ fn bad_vec() -> Vec<String> {
 ```rust
 use std::mem::MaybeUninit;
 
-// DO: Use MaybeUninit for delayed initialization
+// 应该： Use MaybeUninit for delayed initialization
 fn good_array() -> [String; 10] {
     let mut arr: [MaybeUninit<String>; 10] =
         unsafe { MaybeUninit::uninit().assume_init() };
@@ -67,7 +67,7 @@ fn good_array() -> [String; 10] {
     unsafe { std::mem::transmute::<_, [String; 10]>(arr) }
 }
 
-// DO: Use MaybeUninit with arrays (cleaner with array_assume_init)
+// 应该： Use MaybeUninit with arrays (cleaner with array_assume_init)
 fn good_array_nightly() -> [String; 10] {
     let mut arr: [MaybeUninit<String>; 10] =
         [const { MaybeUninit::uninit() }; 10];
@@ -80,13 +80,13 @@ fn good_array_nightly() -> [String; 10] {
     unsafe { MaybeUninit::array_assume_init(arr) }
 }
 
-// DO: Use zeroed only for types where it's valid
+// 应该： Use zeroed only for types where it's valid
 fn good_zeroed() -> [u8; 1024] {
     // SAFETY: All-zero bytes is valid for u8
     unsafe { std::mem::zeroed() }
 }
 
-// DO: Initialize buffer properly
+// 应该： Initialize buffer properly
 fn good_vec() -> Vec<u8> {
     let mut v = Vec::with_capacity(1024);
 
@@ -103,7 +103,7 @@ fn good_vec() -> Vec<u8> {
     v
 }
 
-// DO: Use MaybeUninit::uninit_array (nightly) or const array
+// 应该： Use MaybeUninit::uninit_array (nightly) or const array
 fn good_uninit_array<const N: usize>() -> [MaybeUninit<u8>; N] {
     // Stable: create array of uninit
     [const { MaybeUninit::uninit() }; N]
