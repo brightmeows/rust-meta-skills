@@ -9,11 +9,11 @@ impact: MEDIUM
 
 ## 概要
 
-When providing performance-critical operations that skip safety checks, offer both a safe checked version and an unsafe unchecked version.
+当提供跳过安全检查的性能关键操作时，应同时提供安全的已检查版本和 Unsafe 的未检查版本。
 
 ## 理由
 
-Users who need maximum performance can opt into unsafe, while others get safety by default. This follows the "safe by default, unsafe opt-in" principle.
+需要最大性能的用户可以选择 Unsafe，而其他用户默认获得安全。这遵循“默认安全，Unsafe 可选”原则。
 
 ## 错误示例
 
@@ -79,27 +79,27 @@ impl<T> MySlice<T> {
 }
 ```
 
-## Standard Library Patterns
+## 标准库模式
 
-| Safe Method | Unsafe Counterpart |
+| 安全方法 | Unsafe 对应版本 |
 |-------------|-------------------|
 | `slice.get(i)` | `slice.get_unchecked(i)` |
 | `str.chars().nth(i)` | `str.get_unchecked(range)` |
 | `vec.pop()` | `vec.set_len()` + `ptr::read` |
 | `String::from_utf8()` | `String::from_utf8_unchecked()` |
 
-## Naming Conventions
+## 命名规范
 
-- Safe: `method_name()`
-- Unsafe: `method_name_unchecked()`
-- Or: `get()` vs `get_unchecked()`
+- 安全：`method_name()`
+- Unsafe：`method_name_unchecked()`
+- 或：`get()` vs `get_unchecked()`
 
 ## 检查清单
 
-- [ ] Does my safe method have an unsafe counterpart for hot paths?
-- [ ] Does my unsafe method have a safe alternative for normal use?
-- [ ] Are both methods documented with their trade-offs?
-- [ ] Does the unsafe version include debug assertions?
+- [ ] 我的安全方法是否有对应的 Unsafe 版本用于热路径？
+- [ ] 我的 Unsafe 方法是否有安全替代用于正常使用？
+- [ ] 两个方法是否都文档化了各自的权衡？
+- [ ] Unsafe 版本是否包含调试断言？
 
 ## 相关规则
 

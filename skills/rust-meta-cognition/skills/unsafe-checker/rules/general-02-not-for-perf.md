@@ -9,13 +9,13 @@ impact: CRITICAL
 
 ## 概要
 
-Do not assume that using `unsafe` will automatically improve performance. Always measure first and verify the safety invariants.
+不要假定使用 `unsafe` 会自动提升性能。务必先测量，再验证安全不变量。
 
 ## 理由
 
-1. Modern Rust optimizers often eliminate bounds checks when they can prove safety
-2. Unsafe code may prevent optimizations by breaking aliasing assumptions
-3. Unmeasured "optimizations" often provide no real benefit while introducing risk
+1. 现代的 Rust 优化器在能证明安全时通常会消除边界检查
+2. Unsafe 代码可能因破坏别名假设而阻止优化
+3. 未经测量的“优化”往往没有实际收益，反而引入了风险
 
 ## 错误示例
 
@@ -59,11 +59,11 @@ fn sum_justified(slice: &[i32]) -> i32 {
 }
 ```
 
-## When Unsafe Might Be Justified for Performance
+## Unsafe 出于性能可能合理的场景
 
-1. **Hot inner loops** where profiling shows bounds checks are a bottleneck
-2. **SIMD operations** that require specific memory alignment
-3. **Lock-free data structures** with carefully verified memory orderings
+1. **热点内层循环**，性能分析显示边界检查是瓶颈
+2. **SIMD 操作**，需要特定的内存对齐
+3. **无锁数据结构**，具有经过仔细验证的内存序
 
 ## Measurement Workflow
 
@@ -79,10 +79,10 @@ cargo flamegraph --bench my_bench
 
 ## 检查清单
 
-- [ ] Have I benchmarked the safe version?
-- [ ] Does profiling show this specific code as a bottleneck?
-- [ ] Have I measured the actual improvement from unsafe?
-- [ ] Is the performance gain worth the safety risk?
+- [ ] 是否已对安全版本进行基准测试？
+- [ ] 性能分析是否显示此特定代码是瓶颈？
+- [ ] 是否已测量 Unsafe 带来的实际提升？
+- [ ] 性能提升是否值得承担安全风险？
 
 ## 相关规则
 

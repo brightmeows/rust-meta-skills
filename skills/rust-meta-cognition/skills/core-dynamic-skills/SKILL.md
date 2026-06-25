@@ -83,11 +83,11 @@ For each crate:
 /sync-crate-skills [--force]
 ```
 
-1. Parse Cargo.toml for dependencies
-2. For each dependency:
-   - Check if skill exists at `~/.claude/skills/{crate}/`
-   - If missing (or --force): generate skill
-3. Report results
+1. 解析 Cargo.toml 获取依赖列表
+2. 对每个依赖：
+   - 检查 `~/.claude/skills/{crate}/` 下是否存在 skill
+   - 如果缺失（或指定 --force）：生成 skill
+3. 报告结果
 
 ---
 
@@ -95,31 +95,31 @@ For each crate:
 
 **When agent/command infrastructure is NOT available, execute manually:**
 
-### Step 1: Parse Cargo.toml
+### 步骤 1：解析 Cargo.toml
 
 ```bash
-# Read dependencies
+# 读取依赖
 cat Cargo.toml | grep -A 100 '\[dependencies\]' | grep -E '^[a-zA-Z]'
 ```
 
-Or use Read tool to parse Cargo.toml and extract:
+或使用 Read 工具解析 Cargo.toml 并提取：
 
-- `[dependencies]` section
-- `[dev-dependencies]` section (optional)
-- Workspace members (if workspace project)
+- `[dependencies]` 部分
+- `[dev-dependencies]` 部分（可选）
+- 工作空间成员（如果是工作空间项目）
 
-### Step 2: Check Existing Skills
+### 步骤 2：检查已有 Skill
 
 ```bash
-# List existing skills
+# 列出已有技能
 ls ~/.claude/skills/
 ```
 
-Compare with dependencies to find missing skills.
+与依赖列表比较，找出缺失的 skill。
 
-### Step 3: Generate Missing Skills
+### 步骤 3：生成缺失的 Skill
 
-For each missing crate:
+对每个缺失的 crate：
 
 ```bash
 # 1. Fetch crate documentation
@@ -148,41 +148,41 @@ agent-browser close
 WebFetch("https://docs.rs/{crate}/latest/{crate}/", "Extract API documentation overview, key types, and usage examples")
 ```
 
-### Step 4: Workspace Support
+### 步骤 4：工作空间支持
 
-For Cargo workspace projects:
+对于 Cargo 工作空间项目：
 
 ```bash
-# 1. Parse root Cargo.toml for workspace members
+# 1. 解析根 Cargo.toml 获取工作空间成员
 cat Cargo.toml | grep -A 10 '\[workspace\]'
 
-# 2. For each member, parse their Cargo.toml
+# 2. 对每个成员，解析其 Cargo.toml
 for member in members; do
   cat ${member}/Cargo.toml | grep -A 100 '\[dependencies\]'
 done
 
-# 3. Aggregate and deduplicate dependencies
-# 4. Generate skills for missing crates
+# 3. 聚合和去重依赖
+# 4. 为缺失的 crate 生成 skill
 ```
 
-### Clean Command (Inline)
+### 清理命令（内联）
 
 ```bash
-# Clean specific crate
+# 清理特定 crate
 rm -rf ~/.claude/skills/{crate_name}
 
-# Clean all generated skills
+# 清理所有生成的 skill
 rm -rf ~/.claude/skills/*
 ```
 
-### Update Command (Inline)
+### 更新命令（内联）
 
 ```bash
-# Remove old skill
+# 移除旧 skill
 rm -rf ~/.claude/skills/{crate_name}
 
-# Re-generate (same as sync for single crate)
-# Follow Step 3 above for the specific crate
+# 重新生成（与对单个 crate 执行同步相同）
+# 按上方步骤 3 对该特定 crate 操作
 ```
 
 ---

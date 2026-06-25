@@ -10,11 +10,11 @@ clippy: undocumented_unsafe_blocks
 
 ## 概要
 
-Every `unsafe` block or `unsafe impl` must have a `// SAFETY:` comment explaining why the operation is safe.
+每个 `unsafe` 块或 `unsafe impl` 都必须有一个 `// SAFETY:` 注释解释为什么该操作是安全的。
 
 ## 理由
 
-SAFETY comments force the author to think about invariants and help reviewers verify correctness. They serve as documentation for future maintainers.
+SAFETY 注释强制作者思考不变量，并帮助审查者验证正确性。它们为未来的维护者提供了文档。
 
 ## 错误示例
 
@@ -83,7 +83,7 @@ fn complex_operation(data: &mut [u8], ranges: &[(usize, usize)]) {
 }
 ```
 
-## SAFETY Comment Format
+## SAFETY 注释格式
 
 ```rust
 // SAFETY: <brief explanation>
@@ -95,11 +95,11 @@ fn complex_operation(data: &mut [u8], ranges: &[(usize, usize)]) {
 // - Why this is upheld: explanation
 ```
 
-## What to Include
+## 应包含的内容
 
-1. **What invariants must hold** for this to be safe
-2. **Why those invariants hold** at this specific call site
-3. **What could go wrong** if the invariants were violated (optional but helpful)
+1. **什么不变量必须成立**才能使这是安全的
+2. **为什么这些不变量**在特定的调用点成立
+3. **如果违反不变量可能会出什么问题**（可选但有帮助）
 
 ## Clippy Configuration
 
@@ -111,10 +111,10 @@ accept-comment-above-attributes = true
 
 ## 检查清单
 
-- [ ] Does every unsafe block have a SAFETY comment?
-- [ ] Does the comment explain WHY it's safe, not just WHAT it does?
-- [ ] Are all relevant invariants mentioned?
-- [ ] Would a reviewer understand the safety argument?
+- [ ] 每个 Unsafe 块是否有 SAFETY 注释？
+- [ ] 注释是否解释了为什么安全，而不仅仅是做了什么？
+- [ ] 是否提到了所有相关不变量？
+- [ ] 审查者能否理解安全论据？
 
 ## 相关规则
 

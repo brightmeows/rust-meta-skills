@@ -17,14 +17,14 @@ allowed-tools: ["Bash", "Read", "Glob"]
 /rust-deps-visualizer [--depth N] [--features]
 ```
 
-**Options:**
+**选项：**
 
-- `--depth N`: Limit tree depth (default: 3)
-- `--features`: Show feature flags
+- `--depth N`：限制树深度（默认：3）
+- `--features`：显示特性标志
 
-## Output Format
+## 输出格式
 
-### Simple Tree (Default)
+### 简单树（默认）
 
 ```
 my-project v0.1.0
@@ -36,7 +36,7 @@ my-project v0.1.0
 └── anyhow v1.x
 ```
 
-### Feature-Aware Tree
+### 特性感知树
 
 ```
 my-project v0.1.0
@@ -48,31 +48,31 @@ my-project v0.1.0
 └── anyhow v1.x [std]
 ```
 
-## Implementation
+## 实现
 
-**Step 1:** Parse Cargo.toml for direct dependencies
+**步骤 1：** 解析 Cargo.toml 获取直接依赖
 
 ```bash
 cargo metadata --format-version=1 --no-deps 2>/dev/null
 ```
 
-**Step 2:** Get full dependency tree
+**步骤 2：** 获取完整依赖树
 
 ```bash
 cargo tree --depth=${DEPTH:-3} ${FEATURES:+--features} 2>/dev/null
 ```
 
-**Step 3:** Format as ASCII art tree
+**步骤 3：** 格式化为 ASCII 艺术树
 
-Use these box-drawing characters:
+使用以下框线绘制字符：
 
-- `├──` for middle items
-- `└──` for last items
-- `│` for continuation lines
+- `├──` 中间项
+- `└──` 最后项
+- `│` 延续行
 
-## Visual Enhancements
+## 视觉增强
 
-### Dependency Categories
+### 依赖分类
 
 ```
 my-project v0.1.0
@@ -90,7 +90,7 @@ my-project v0.1.0
   └── proptest v1.x
 ```
 
-### Size Visualization (Optional)
+### 大小可视化（可选）
 
 ```
 my-project v0.1.0
@@ -99,20 +99,20 @@ my-project v0.1.0
 ├── regex v1.x           █████ 890 KB
 └── anyhow v1.x          ██ 120 KB
                          ─────────────────
-                         Total: 4.3 MB
+                         总计：4.3 MB
 ```
 
-## Workflow
+## 工作流
 
-1. Check for Cargo.toml in current directory
-2. Run `cargo tree` with specified options
-3. Parse output and generate ASCII visualization
-4. Optionally categorize by purpose (runtime, dev, build)
+1. 检查当前目录中的 Cargo.toml
+2. 使用指定选项运行 `cargo tree`
+3. 解析输出并生成 ASCII 可视化
+4. 可选：按用途分类（运行时、开发、构建）
 
-## Related Skills
+## 相关技能
 
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Crate selection advice | m11-ecosystem |
-| Workspace management | m11-ecosystem |
-| Feature flag decisions | m11-ecosystem |
+| Crate 选择建议 | m11-ecosystem |
+| 工作空间管理 | m11-ecosystem |
+| 特性标志决策 | m11-ecosystem |

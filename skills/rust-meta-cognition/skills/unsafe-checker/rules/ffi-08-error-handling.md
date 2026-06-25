@@ -9,13 +9,13 @@ impact: HIGH
 
 ## 概要
 
-FFI functions must use C-compatible error handling (return codes, errno, out parameters). Rust's Result/Option don't cross FFI boundaries.
+FFI 函数必须使用 C 兼容的错误处理（返回码、errno、输出参数）。Rust 的 Result/Option 不能跨越 FFI 边界。
 
 ## 理由
 
-- C doesn't have Result or Option
-- Exceptions don't exist in C
-- Must use patterns C code understands
+- C 没有 Result 或 Option
+- C 中不存在异常
+- 必须使用 C 代码理解的模式
 
 ## 错误示例
 
@@ -123,22 +123,22 @@ pub extern "C" fn get_error_message(buf: *mut c_char, len: usize) -> c_int {
 }
 ```
 
-## Error Handling Patterns
+## 错误处理模式
 
-| Pattern | Usage |
+| 模式 | 用途 |
 |---------|-------|
-| Return code | Simple success/failure |
-| Return code + out param | Return value on success |
-| errno | POSIX-style APIs |
-| Error message function | Detailed error info |
-| Last-error thread-local | Windows-style APIs |
+| 返回码 | 简单的成功/失败 |
+| 返回码 + 输出参数 | 成功时返回值 |
+| errno | POSIX 风格 API |
+| 错误信息函数 | 详细的错误信息 |
+| 线程本地最后错误 | Windows 风格 API |
 
 ## 检查清单
 
-- [ ] Am I returning C-compatible error indicators?
-- [ ] Are output parameters used for return values?
-- [ ] Is there a way to get detailed error info?
-- [ ] Am I documenting all possible error codes?
+- [ ] 我是否返回了 C 兼容的错误指示？
+- [ ] 输出参数是否用于返回值？
+- [ ] 是否有获取详细错误信息的方式？
+- [ ] 我是否文档化了所有可能的错误码？
 
 ## 相关规则
 

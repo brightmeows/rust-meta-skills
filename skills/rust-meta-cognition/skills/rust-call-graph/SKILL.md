@@ -17,22 +17,22 @@ allowed-tools: ["LSP", "Read", "Glob"]
 /rust-call-graph <function_name> [--depth N] [--direction in|out|both]
 ```
 
-**Options:**
+**选项：**
 
-- `--depth N`: How many levels to traverse (default: 3)
-- `--direction`: `in` (callers), `out` (callees), `both`
+- `--depth N`：遍历深度（默认：3）
+- `--direction`：`in`（调用者）、`out`（被调用者）、`both`
 
-**Examples:**
+**示例：**
 
-- `/rust-call-graph process_request` - Show both callers and callees
-- `/rust-call-graph handle_error --direction in` - Show only callers
-- `/rust-call-graph main --direction out --depth 5` - Deep callee analysis
+- `/rust-call-graph process_request` - 显示调用者和被调用者
+- `/rust-call-graph handle_error --direction in` - 仅显示调用者
+- `/rust-call-graph main --direction out --depth 5` - 深度分析被调用者
 
-## LSP Operations
+## LSP 操作
 
-### 1. Prepare Call Hierarchy
+### 1. 准备调用层级
 
-Get the call hierarchy item for a function.
+获取函数的调用层级项。
 
 ```
 LSP(
@@ -43,7 +43,7 @@ LSP(
 )
 ```
 
-### 2. Incoming Calls (Who calls this?)
+### 2. 传入调用（谁调用了这个？）
 
 ```
 LSP(
@@ -54,7 +54,7 @@ LSP(
 )
 ```
 
-### 3. Outgoing Calls (What does this call?)
+### 3. 传出调用（这个调用了什么？）
 
 ```
 LSP(
@@ -65,37 +65,37 @@ LSP(
 )
 ```
 
-## Workflow
+## 工作流
 
 ```
 User: "Show call graph for process_request"
     │
     ▼
-[1] Find function location
-    LSP(workspaceSymbol) or Grep
+[1] 查找函数位置
+    LSP(workspaceSymbol) 或 Grep
     │
     ▼
-[2] Prepare call hierarchy
+[2] 准备调用层级
     LSP(prepareCallHierarchy)
     │
     ▼
-[3] Get incoming calls (callers)
+[3] 获取传入调用（调用者）
     LSP(incomingCalls)
     │
     ▼
-[4] Get outgoing calls (callees)
+[4] 获取传出调用（被调用者）
     LSP(outgoingCalls)
     │
     ▼
-[5] Recursively expand to depth N
+[5] 递归扩展到深度 N
     │
     ▼
-[6] Generate ASCII visualization
+[6] 生成 ASCII 可视化
 ```
 
-## Output Format
+## 输出格式
 
-### Incoming Calls (Who calls this?)
+### 传入调用（谁调用了这个？）
 
 ```
 ## Callers of `process_request`
@@ -106,7 +106,7 @@ main
         └── process_request  ◄── YOU ARE HERE
 ```
 
-### Outgoing Calls (What does this call?)
+### 传出调用（这个调用了什么？）
 
 ```
 ## Callees of `process_request`
@@ -123,7 +123,7 @@ process_request  ◄── YOU ARE HERE
     └── serialize_body
 ```
 
-### Bidirectional (Both)
+### 双向（Both）
 
 ```
 ## Call Graph for `process_request`
@@ -153,42 +153,42 @@ process_request  ◄── YOU ARE HERE
              └─────────────┘ └─────────────┘
 ```
 
-## Analysis Insights
+## 分析洞察
 
-After generating the call graph, provide insights:
+生成调用图后，提供见解：
 
 ```
-## Analysis
+## 分析
 
-**Entry Points:** main, test_process_request
-**Leaf Functions:** validate_header, serialize_body
-**Hot Path:** main → run_server → handle_connection → process_request
-**Complexity:** 12 functions, 3 levels deep
+**入口点：** main、test_process_request
+**叶子函数：** validate_header、serialize_body
+**热点路径：** main → run_server → handle_connection → process_request
+**复杂度：** 12 个函数，3 层深度
 
-**Potential Issues:**
-- `authenticate` has high fan-out (4 callees)
-- `process_request` is called from 3 places (consider if this is intentional)
+**潜在问题：**
+- `authenticate` 扇出高（4 个被调用者）
+- `process_request` 被 3 处调用（考虑是否是有意设计）
 ```
 
-## Common Patterns
+## 常见模式
 
-| User Says | Direction | Use Case |
+| 用户提问 | 方向 | 用途 |
 |-----------|-----------|----------|
-| "Who calls X?" | incoming | Impact analysis |
-| "What does X call?" | outgoing | Understanding implementation |
-| "Show call graph" | both | Full picture |
-| "Trace from main to X" | outgoing | Execution path |
+| "谁调用了 X？" | incoming | 影响分析 |
+| "X 调用了什么？" | outgoing | 理解实现 |
+| "显示调用图" | both | 全貌 |
+| "从 main 追踪到 X" | outgoing | 执行路径 |
 
-## Visualization Options
+## 可视化选项
 
-| Style | Best For |
+| 样式 | 最佳用途 |
 |-------|----------|
-| Tree (default) | Simple hierarchies |
-| Box diagram | Complex relationships |
-| Flat list | Many connections |
-| Mermaid | Export to docs |
+| 树形（默认） | 简单层级 |
+| 框图 | 复杂关系 |
+| 平面列表 | 大量连接 |
+| Mermaid | 导出到文档 |
 
-### Mermaid Export
+### Mermaid 导出
 
 ```mermaid
 graph TD
@@ -200,11 +200,11 @@ graph TD
     process_request --> send_response
 ```
 
-## Related Skills
+## 相关技能
 
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Find definition | rust-code-navigator |
-| Project structure | rust-symbol-analyzer |
-| Trait implementations | rust-trait-explorer |
-| Safe refactoring | rust-refactor-helper |
+| 查找定义 | rust-code-navigator |
+| 项目结构 | rust-symbol-analyzer |
+| Trait 实现 | rust-trait-explorer |
+| 安全重构 | rust-refactor-helper |

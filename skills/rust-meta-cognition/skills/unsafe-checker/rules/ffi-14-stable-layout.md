@@ -9,13 +9,13 @@ impact: HIGH
 
 ## 概要
 
-FFI types should not change layout between versions. Use `#[repr(C)]` and avoid types with unstable layout like generic `std` types.
+FFI 类型不应在不同版本之间更改布局。使用 `#[repr(C)]`，避免使用具有不稳定布局的类型（如泛型 `std` 类型）。
 
 ## 理由
 
-- ABI compatibility requires stable layout
-- Dynamic libraries may be loaded with different compiler versions
-- Layout changes break binary compatibility
+- ABI 兼容性需要稳定的布局
+- 动态库可能使用不同的编译器版本加载
+- 布局变化会破坏二进制兼容性
 
 ## 错误示例
 
@@ -110,24 +110,24 @@ impl From<Option<u32>> for OptionalU32 {
 }
 ```
 
-## Stable Types for FFI
+## FFI 的稳定类型
 
-| Use Instead Of | Stable Type |
+| 替代 | 稳定类型 |
 |----------------|-------------|
 | `Vec<T>` | `*mut T` + `len` + `cap` |
-| `String` | `*const c_char` or `*mut c_char` + `len` |
+| `String` | `*const c_char` 或 `*mut c_char` + `len` |
 | `&[T]` | `*const T` + `len` |
-| `Option<T>` | Custom tagged struct |
-| `Result<T, E>` | Error code + out parameter |
+| `Option<T>` | 自定义标签结构体 |
+| `Result<T, E>` | 错误码 + 输出参数 |
 | `Box<T>` | `*mut T` |
-| `bool` | `c_int` or explicit `u8` |
+| `bool` | `c_int` 或显式 `u8` |
 
 ## 检查清单
 
-- [ ] Am I using only C-compatible primitive types?
-- [ ] Am I avoiding std collection types in FFI signatures?
-- [ ] Have I created stable wrappers for Rust types?
-- [ ] Is the layout documented for other languages?
+- [ ] 我是否只使用了 C 兼容的原语类型？
+- [ ] 我是否在 FFI 签名中避免了 std 集合类型？
+- [ ] 我是否为 Rust 类型创建了稳定的包装器？
+- [ ] 布局是否为其他语言文档化了？
 
 ## 相关规则
 

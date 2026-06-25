@@ -10,14 +10,14 @@ clippy: panic_in_result_fn
 
 ## 概要
 
-Panics must not unwind across FFI boundaries. Use `catch_unwind` or mark functions as `extern "C-unwind"`.
+Panic 不能跨越 FFI 边界展开。使用 `catch_unwind` 或将函数标记为 `extern "C-unwind"`。
 
 ## 理由
 
-- Unwinding across C code is undefined behavior
-- C has no concept of Rust panics
-- Can corrupt C stack frames and cause crashes
-- Even with `panic=abort`, still UB to attempt unwinding in `extern "C"`
+- 跨 C 代码展开是未定义行为
+- C 没有 Rust panic 的概念
+- 可能破坏 C 的栈帧并导致崩溃
+- 即使使用 `panic=abort`，在 `extern "C"` 中尝试展开仍然是 UB
 
 ## 错误示例
 
@@ -104,7 +104,7 @@ pub extern "C-unwind" fn rust_callback_can_unwind() {
 }
 ```
 
-## FFI Error Handling Pattern
+## FFI 错误处理模式
 
 ```rust
 // Define error codes
@@ -114,7 +114,7 @@ const ERR_INVALID_UTF8: c_int = -2;
 const ERR_IO: c_int = -3;
 const ERR_PANIC: c_int = -99;
 
-// Thread-local for detailed error
+// 线程本地存储用于详细错误信息
 thread_local! {
     static LAST_ERROR: std::cell::RefCell<Option<String>> = std::cell::RefCell::new(None);
 }
@@ -134,10 +134,10 @@ pub extern "C" fn get_last_error() -> *const c_char {
 
 ## 检查清单
 
-- [ ] Does my extern "C" function use catch_unwind?
-- [ ] Am I avoiding unwrap/expect in FFI functions?
-- [ ] Do I return error codes for error conditions?
-- [ ] Have I considered using "C-unwind" for Rust-to-Rust through C?
+- [ ] 我的 extern "C" 函数是否使用了 `catch_unwind`？
+- [ ] 我是否避免了在 FFI 函数中使用 `unwrap`/`expect`？
+- [ ] 我是否为错误条件返回了错误码？
+- [ ] 我是否考虑了使用 "C-unwind" 用于通过 C 的 Rust 到 Rust 调用？
 
 ## 相关规则
 

@@ -5,18 +5,18 @@ level: P
 impact: HIGH
 ---
 
-# Avoid Passing Strings Directly to C from Public Rust API
+# 避免从公共 Rust API 直接传递字符串给 C
 
 ## 概要
 
-Use `CString` and `CStr` for string handling at FFI boundaries. Never pass Rust `String` or `&str` directly to C.
+在 FFI 边界处使用 `CString` 和 `CStr` 处理字符串。永远不要直接将 Rust 的 `String` 或 `&str` 传递给 C。
 
 ## 理由
 
-- Rust strings are UTF-8, not null-terminated
-- C strings require null terminator
-- Rust strings may contain interior null bytes
-- Memory layout differs between Rust String and C char*
+- Rust 字符串是 UTF-8，不是以 null 结尾的
+- C 字符串需要 null 终止符
+- Rust 字符串可能包含内部 null 字节
+- Rust String 和 C char* 的内存布局不同
 
 ## 错误示例
 
@@ -98,23 +98,23 @@ extern "C" fn good_callback(s: *const c_char) {
 }
 ```
 
-## String Type Comparison
+## 字符串类型对比
 
-| Type | Null-terminated | Encoding | Use |
+| 类型 | 以 null 结尾 | 编码 | 用途 |
 |------|-----------------|----------|-----|
-| `String` | No | UTF-8 | Rust owned |
-| `&str` | No | UTF-8 | Rust borrowed |
-| `CString` | Yes | Byte | Rust-to-C owned |
-| `&CStr` | Yes | Byte | Rust-to-C borrowed |
-| `*const c_char` | Yes | Byte | FFI pointer |
-| `OsString` | Platform | Platform | Paths, env |
+| `String` | 否 | UTF-8 | Rust 所有 |
+| `&str` | 否 | UTF-8 | Rust 借用 |
+| `CString` | 是 | 字节 | Rust 到 C 所有 |
+| `&CStr` | 是 | 字节 | Rust 到 C 借用 |
+| `*const c_char` | 是 | 字节 | FFI 指针 |
+| `OsString` | 平台相关 | 平台相关 | 路径、环境变量 |
 
 ## 检查清单
 
-- [ ] Am I passing Rust strings to C? → Use CString
-- [ ] Am I receiving C strings? → Use CStr
-- [ ] Does my string contain null bytes? → Handle NulError
-- [ ] Am I checking for null pointers from C?
+- [ ] 我是否将 Rust 字符串传递给 C？→ 使用 CString
+- [ ] 我是否接收 C 字符串？→ 使用 CStr
+- [ ] 我的字符串是否包含 null 字节？→ 处理 NulError
+- [ ] 我是否检查了来自 C 的空指针？
 
 ## 相关规则
 

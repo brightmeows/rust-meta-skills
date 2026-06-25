@@ -1,15 +1,15 @@
 # Rust 思维：心智模型
 
-## Core Mental Models
+## 核心心智模型
 
-### 1. Ownership as Resource Management
+### 1. 所有权即资源管理
 
 ```
-Traditional: "Who has a pointer to this data?"
-Rust:        "Who OWNS this data and is responsible for freeing it?"
+传统思维：“谁有这个数据的指针？”
+Rust 思维：“谁**拥有**这个数据并负责释放它？”
 ```
 
-Key insight: Every value has exactly one owner. When the owner goes out of scope, the value is dropped.
+关键见解：每个值有且仅有一个所有者。当所有者离开作用域时，该值被丢弃。
 
 ```rust
 {
@@ -18,14 +18,14 @@ Key insight: Every value has exactly one owner. When the owner goes out of scope
 }  // s goes out of scope, String is dropped (memory freed)
 ```
 
-### 2. Borrowing as Temporary Access
+### 2. 借用即临时访问
 
 ```
-Traditional: "I'll just read from this pointer"
-Rust:        "I'm borrowing this value, owner still responsible for it"
+传统思维：“我就读一下这个指针”
+Rust 思维：“我是在借用这个值，所有者仍然对它负责”
 ```
 
-Key insight: Borrows are like library books - you can read them, but must return them.
+关键见解：借用就像借图书馆的书——你可以阅读，但必须归还。
 
 ```rust
 fn print_length(s: &String) {  // borrows s
@@ -37,14 +37,14 @@ print_length(&my_string);  // lend to function
 println!("{}", my_string);  // still have it
 ```
 
-### 3. Lifetimes as Validity Scopes
+### 3. 生命周期即有效性范围
 
 ```
-Traditional: "Hope this pointer is still valid"
-Rust:        "Compiler tracks exactly how long references are valid"
+传统思维：“希望这个指针还有效”
+Rust 思维：“编译器精确追踪引用的有效时长”
 ```
 
-Key insight: A reference can't outlive the data it points to.
+关键见解：引用不能比它指向的数据活得更久。
 
 ```rust
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
@@ -55,11 +55,11 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
 
 ---
 
-## Shifting Perspectives
+## 视角转换
 
-### From "Everything is a Reference" (Java/C#)
+### 来自“一切都是引用”（Java/C#）
 
-Java mental model:
+Java 心智模型：
 
 ```java
 // Everything is implicitly a reference
@@ -69,7 +69,7 @@ users.add(user);  // shares the reference
 user.setName("Bob");  // affects the list too!
 ```
 
-Rust mental model:
+Rust 心智模型：
 
 ```rust
 // Values are owned, sharing is explicit
@@ -84,93 +84,93 @@ let user = Rc::new(User::new("Alice"));
 let user2 = Rc::clone(&user);  // explicit shared ownership
 ```
 
-### From "Manual Memory Management" (C/C++)
+### 来自“手动内存管理”（C/C++）
 
-C mental model:
+C 心智模型：
 
 ```c
 char* s = malloc(100);
-// ... must remember to free(s) ...
-// ... what if we return early? ...
-// ... what if an exception occurs? ...
+// ... 必须记得 free(s) ...
+// ... 如果提前返回怎么办？...
+// ... 如果发生异常怎么办？...
 free(s);
 ```
 
-Rust mental model:
+Rust 心智模型：
 
 ```rust
 let s = String::with_capacity(100);
-// ... use s ...
-// No need to free - Rust drops s automatically when scope ends
-// Even with early returns, panics, or any control flow
+// ... 使用 s ...
+// 无需 free——Rust 在作用域结束时自动释放 s
+// 即使在提前返回、panic 或任何控制流中也是如此
 ```
 
-### From "Garbage Collection" (Go/Python)
+### 来自“垃圾回收”（Go/Python）
 
-GC mental model:
+GC 心智模型：
 
 ```python
-# Create objects, GC will figure it out
+# 创建对象，GC 会搞定
 users = []
 for name in names:
     users.append(User(name))
-# GC runs sometime later, when it feels like it
+# GC 在之后的某个时间运行，随它高兴
 ```
 
-Rust mental model:
+Rust 心智模型：
 
 ```rust
 let users: Vec<User> = names
     .iter()
     .map(|name| User::new(name))
     .collect();
-// Memory is freed EXACTLY when users goes out of scope
-// Deterministic, no GC pauses, no unpredictable memory usage
+// 内存在 users 离开作用域时**精确**释放
+// 确定性，无 GC 暂停，无可预测的内存使用
 ```
 
 ---
 
-## Key Questions to Ask
+## 关键问题清单
 
-### When Designing Functions
+### 设计函数时
 
-1. **Does this function need to own the data, or just read it?**
-   - Need to keep it: take ownership (`fn process(data: Vec<T>)`)
-   - Just reading: borrow (`fn process(data: &[T])`)
-   - Need to modify: mutable borrow (`fn process(data: &mut Vec<T>)`)
+1. **这个函数是需要拥有数据，还是只需读取？**
+   - 需要保留：取得所有权（`fn process(data: Vec<T>)`）
+   - 只需读取：借用（`fn process(data: &[T])`）
+   - 需要修改：可变借用（`fn process(data: &mut Vec<T>)`）
 
-2. **Does the return value contain references to inputs?**
-   - Yes: need lifetime annotations
-   - No: lifetime elision usually works
+2. **返回值是否包含对输入的引用？**
+   - 是：需要生命周期标注
+   - 否：生命周期省略通常够用
 
-### When Designing Structs
+### 设计结构体时
 
-1. **Should this struct own its data or reference it?**
-   - Long-lived, independent: own (`name: String`)
-   - Short-lived view: reference (`name: &'a str`)
+1. **这个结构体应该拥有数据还是引用数据？**
+   - 长生命周期、独立：拥有所有权（`name: String`）
+   - 短生命周期视图：引用（`name: &'a str`）
 
-2. **Do multiple parts need to access the same data?**
-   - Single-threaded: `Rc<T>` or `Rc<RefCell<T>>`
-   - Multi-threaded: `Arc<T>` or `Arc<Mutex<T>>`
+2. **多个部分是否需要访问同一份数据？**
+   - 单线程：`Rc<T>` 或 `Rc<RefCell<T>>`
+   - 多线程：`Arc<T>` 或 `Arc<Mutex<T>>`
 
-### When Hitting Borrow Checker Errors
+### 遇到借用检查器错误时
 
-1. **Am I trying to use a value after moving it?**
-   - Clone it, borrow it, or restructure the code
+1. **我是不是在移动值之后还在使用它？**
+   - 克隆它、借用它，或重构代码
 
-2. **Am I trying to have multiple mutable references?**
-   - Scope the mutations, use interior mutability, or redesign
+2. **我是不是试图拥有多个可变引用？**
+   - 限定可变操作的作用域、使用内部可变性，或重新设计
 
-3. **Does a reference outlive its source?**
-   - Return owned data instead, or use `'static`
+3. **引用是否比它的来源活得更久？**
+   - 改为返回拥有的数据，或使用 `'static`
 
 ---
 
-## Common Patterns
+## 常见模式
 
-### The Clone Escape Hatch
+### 克隆逃生口
 
-When fighting the borrow checker, `.clone()` often works:
+当与借用检查器搏斗时，`.clone()` 通常能解决问题：
 
 ```rust
 // Can't do this - double borrow
@@ -186,11 +186,11 @@ for key in keys {
 }
 ```
 
-But ask: "Is there a better design?" Often, restructuring is better than cloning.
+但要问一问：“有没有更好的设计？”通常，重构比克隆更好。
 
-### The "Make It Own" Pattern
+### “让它拥有”模式
 
-When lifetimes get complex, make the struct own its data:
+当生命周期变得复杂时，让结构体拥有自己的数据：
 
 ```rust
 // Complex: struct with references
@@ -206,7 +206,7 @@ struct Parser {
 }
 ```
 
-### The "Split the Borrow" Pattern
+### “拆分借用”模式
 
 ```rust
 struct Data {
@@ -230,64 +230,64 @@ fn process(&mut self) {
 
 ---
 
-## The Rust Way
+## Rust 之道
 
-### Embrace the Type System
+### 拥抱类型系统
 
 ```rust
-// Don't: stringly-typed
+// 不要：字符串类型
 fn connect(host: &str, port: &str) { ... }
-connect("8080", "localhost");  // oops, wrong order
+connect("8080", "localhost");  // 哎呀，顺序错了
 
-// Do: strongly-typed
+// 要：强类型
 struct Host(String);
 struct Port(u16);
 fn connect(host: Host, port: Port) { ... }
-// connect(Port(8080), Host("localhost".into()));  // compile error!
+// connect(Port(8080), Host("localhost".into()));  // 编译错误！
 ```
 
-### Make Invalid States Unrepresentable
+### 让无效状态无法表示
 
 ```rust
-// Don't: runtime checks
+// 不要：运行时检查
 struct Connection {
     socket: Option<Socket>,
     connected: bool,
 }
 
-// Do: types enforce states
+// 要：通过类型强制状态
 enum Connection {
     Disconnected,
     Connected { socket: Socket },
 }
 ```
 
-### Let the Compiler Guide You
+### 让编译器引导你
 
 ```rust
-// Start with what you want
+// 从你想要的结果开始
 fn process(data: ???) -> ???
 
-// Let compiler errors tell you:
-// - What types are needed
-// - What lifetimes are needed
-// - What bounds are needed
+// 让编译器错误告诉你：
+// - 需要什么类型
+// - 需要什么生命周期
+// - 需要什么约束
 
-// The error messages are documentation!
+// 错误信息就是文档！
 ```
 
 ---
 
-## Summary: The Rust Mental Model
+## 总结：Rust 心智模型
 
-1. **Values have owners** - exactly one at a time
-2. **Borrowing is lending** - temporary access, owner retains responsibility
-3. **Lifetimes are scopes** - compiler tracks validity
-4. **Types encode constraints** - use them to prevent bugs
-5. **The compiler is your friend** - work with it, not against it
+1. **值有所有者**——一次只有一个
+2. **借用即出借**——临时访问，所有者保留责任
+3. **生命周期即作用域**——编译器追踪有效性
+4. **类型编码约束**——利用它们防止错误
+5. **编译器是你的朋友**——与它合作，而非对抗
 
-When stuck:
+卡住时：
 
-- Clone to make progress
-- Restructure to own instead of borrow
-- Ask: "What is the compiler trying to tell me?"
+- 克隆以推进
+- 重构为拥有而非借用
+- 问：“编译器想告诉我什么？”

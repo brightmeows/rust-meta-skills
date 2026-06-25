@@ -17,16 +17,16 @@ allowed-tools: ["LSP", "Read", "Glob"]
 /rust-code-navigator <symbol> [in file.rs:line]
 ```
 
-**Examples:**
+**示例：**
 
-- `/rust-code-navigator parse_config` - Find definition of parse_config
-- `/rust-code-navigator MyStruct in src/lib.rs:42` - Navigate from specific location
+- `/rust-code-navigator parse_config` - 查找 parse_config 的定义
+- `/rust-code-navigator MyStruct in src/lib.rs:42` - 从指定位置导航
 
-## LSP Operations
+## LSP 操作
 
-### 1. Go to Definition
+### 1. 跳转到定义
 
-Find where a symbol is defined.
+查找符号的定义位置。
 
 ```
 LSP(
@@ -37,15 +37,15 @@ LSP(
 )
 ```
 
-**Use when:**
+**使用时机：**
 
-- User asks "where is X defined?"
-- User wants to understand a type/function
-- Ctrl+click equivalent
+- 用户问 "X 定义在哪里？"
+- 用户想理解类型/函数
+- 等同于 Ctrl+点击
 
-### 2. Find References
+### 2. 查找引用
 
-Find all usages of a symbol.
+查找符号的所有使用位置。
 
 ```
 LSP(
@@ -56,15 +56,15 @@ LSP(
 )
 ```
 
-**Use when:**
+**使用时机：**
 
-- User asks "who uses X?"
-- Before refactoring/renaming
-- Understanding impact of changes
+- 用户问 "谁在使用 X？"
+- 重构/重命名之前
+- 理解变更影响
 
-### 3. Hover Information
+### 3. 悬停信息
 
-Get type and documentation for a symbol.
+获取符号的类型和文档。
 
 ```
 LSP(
@@ -75,36 +75,36 @@ LSP(
 )
 ```
 
-**Use when:**
+**使用时机：**
 
-- User asks "what type is X?"
-- User wants documentation
-- Quick type checking
+- 用户问 "X 是什么类型？"
+- 用户想查看文档
+- 快速类型检查
 
-## Workflow
+## 工作流
 
 ```
 User: "Where is the Config struct defined?"
     │
     ▼
-[1] Search for "Config" in workspace
+[1] 在工作区搜索 "Config"
     LSP(operation: "workspaceSymbol", ...)
     │
     ▼
-[2] If multiple results, ask user to clarify
+[2] 如果多个结果，请用户澄清
     │
     ▼
-[3] Go to definition
+[3] 跳转到定义
     LSP(operation: "goToDefinition", ...)
     │
     ▼
-[4] Show file path and context
-    Read surrounding code for context
+[4] 显示文件路径和上下文
+    读取周围代码提供上下文
 ```
 
-## Output Format
+## 输出格式
 
-### Definition Found
+### 定义已找到
 
 ```
 ## Config (struct)
@@ -123,12 +123,12 @@ pub struct Config {
 **Documentation:** Configuration for the application server.
 ```
 
-### References Found
+### 引用已找到
 
 ```
 ## References to `Config` (5 found)
 
-| Location | Context |
+| 位置 | 上下文 |
 |----------|---------|
 | src/main.rs:10 | `let config = Config::load()?;` |
 | src/server.rs:25 | `fn new(config: Config) -> Self` |
@@ -139,27 +139,27 @@ pub struct Config {
 
 ## Common Patterns
 
-| User Says | LSP Operation |
+| 用户提问 | LSP 操作 |
 |-----------|---------------|
-| "Where is X defined?" | goToDefinition |
-| "Who uses X?" | findReferences |
-| "What type is X?" | hover |
-| "Find all structs" | workspaceSymbol |
-| "What's in this file?" | documentSymbol |
+| "X 定义在哪里？" | goToDefinition |
+| "谁在使用 X？" | findReferences |
+| "X 是什么类型？" | hover |
+| "查找所有 struct" | workspaceSymbol |
+| "这个文件里有什么？" | documentSymbol |
 
-## Error Handling
+## 错误处理
 
-| Error | Cause | Solution |
+| 错误 | 原因 | 解决方案 |
 |-------|-------|----------|
-| "No LSP server" | rust-analyzer not running | Suggest: `rustup component add rust-analyzer` |
-| "Symbol not found" | Typo or not in scope | Search with workspaceSymbol first |
-| "Multiple definitions" | Generics or macros | Show all and let user choose |
+| "没有 LSP 服务器" | rust-analyzer 未运行 | 建议：`rustup component add rust-analyzer` |
+| "符号未找到" | 拼写错误或不在作用域内 | 先用 workspaceSymbol 搜索 |
+| "多个定义" | 泛型或宏 | 全部展示让用户选择 |
 
-## Related Skills
+## 相关技能
 
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Call relationships | rust-call-graph |
-| Project structure | rust-symbol-analyzer |
-| Trait implementations | rust-trait-explorer |
-| Safe refactoring | rust-refactor-helper |
+| 调用关系 | rust-call-graph |
+| 项目结构 | rust-symbol-analyzer |
+| Trait 实现 | rust-trait-explorer |
+| 安全重构 | rust-refactor-helper |

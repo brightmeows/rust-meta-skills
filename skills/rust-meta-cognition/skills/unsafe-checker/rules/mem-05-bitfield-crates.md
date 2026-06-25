@@ -9,14 +9,14 @@ impact: MEDIUM
 
 ## 概要
 
-Use crates like `bitflags`, `bitvec`, or `modular-bitfield` instead of manual bit manipulation for complex bitfield operations.
+对于复杂的位域操作，使用 `bitflags`、`bitvec` 或 `modular-bitfield` 等 crate 替代手动位操作。
 
 ## 理由
 
-- Manual bit manipulation is error-prone
-- Easy to get offsets, masks, or endianness wrong
-- Crates provide type-safe, tested abstractions
-- Proc-macro crates generate efficient code
+- 手动位操作容易出错
+- 容易弄错偏移量、掩码或字节序
+- Crate 提供类型安全、经过测试的抽象
+- 过程宏 crate 生成高效的代码
 
 ## 错误示例
 
@@ -124,22 +124,22 @@ fn use_bitvec() {
 }
 ```
 
-## Recommended Crates
+## 推荐的 Crate
 
-| Crate | Use Case | Features |
+| Crate | 用例 | 特性 |
 |-------|----------|----------|
-| `bitflags` | Flag sets (like C enums) | Type-safe, const, derives |
-| `modular-bitfield` | Packed struct fields | Proc macro, repr(C) |
-| `bitvec` | Arbitrary bit arrays | Slicing, iteration |
-| `packed_struct` | Binary protocol structs | Endianness, derive |
-| `deku` | Binary parsing | Derive, read/write |
+| `bitflags` | 标志集（如 C 枚举） | 类型安全、const、派生宏 |
+| `modular-bitfield` | 压缩结构体字段 | 过程宏、repr(C) |
+| `bitvec` | 任意位数组 | 切片、迭代 |
+| `packed_struct` | 二进制协议结构体 | 字节序、派生宏 |
+| `deku` | 二进制解析 | 派生宏、读写 |
 
 ## 检查清单
 
-- [ ] Am I manipulating multiple bit flags? → Use `bitflags`
-- [ ] Am I packing fields into bytes? → Use `modular-bitfield` or `packed_struct`
-- [ ] Am I doing binary protocol work? → Consider `deku`
-- [ ] Is the manual approach really simpler?
+- [ ] 我是否在操作多个位标志？→ 使用 `bitflags`
+- [ ] 我是否将字段打包到字节中？→ 使用 `modular-bitfield` 或 `packed_struct`
+- [ ] 我是否在处理二进制协议？→ 考虑 `deku`
+- [ ] 手动方法真的更简单吗？
 
 ## 相关规则
 

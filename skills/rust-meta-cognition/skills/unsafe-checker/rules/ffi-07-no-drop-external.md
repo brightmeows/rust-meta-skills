@@ -9,13 +9,13 @@ impact: HIGH
 
 ## 概要
 
-If a type will be passed to external code that manages its lifetime, don't implement `Drop`. Otherwise, both Rust and the external code will try to free it.
+如果一个类型将被传递给管理其生命周期的外部代码，不要实现 `Drop`。否则，Rust 和外部代码都会尝试释放它。
 
 ## 理由
 
-- External code (C library) may take ownership of the data
-- If Rust also tries to drop it, you get double-free
-- Need clear ownership boundaries
+- 外部代码（C 库）可能取得数据的所有权
+- 如果 Rust 也尝试 drop 它，会导致双重释放
+- 需要清晰的所有权边界
 
 ## 错误示例
 
@@ -109,21 +109,21 @@ fn explicit_ownership() {
 }
 ```
 
-## Ownership Patterns
+## 所有权模式
 
-| Pattern | Who Owns | Rust Drop? |
+| 模式 | 谁拥有 | Rust Drop？ |
 |---------|----------|------------|
-| Rust creates, Rust frees | Rust | Yes |
-| Rust creates, C frees | C | No |
-| C creates, C frees | C | No (use wrapper) |
-| C creates, Rust frees | Rust | Yes (in wrapper) |
+| Rust 创建，Rust 释放 | Rust | 是 |
+| Rust 创建，C 释放 | C | 否 |
+| C 创建，C 释放 | C | 否（使用包装器） |
+| C 创建，Rust 释放 | Rust | 是（在包装器中） |
 
 ## 检查清单
 
-- [ ] Who will free this type's memory?
-- [ ] If external code frees it, am I avoiding Drop?
-- [ ] If ownership is conditional, do I track it?
-- [ ] Am I using ManuallyDrop or forget() when transferring ownership?
+- [ ] 谁会释放此类型的内存？
+- [ ] 如果外部代码释放它，我是否避免了 Drop？
+- [ ] 如果所有权是有条件的，我是否追踪了它？
+- [ ] 在转移所有权时，我是否使用了 `ManuallyDrop` 或 `forget()`？
 
 ## 相关规则
 

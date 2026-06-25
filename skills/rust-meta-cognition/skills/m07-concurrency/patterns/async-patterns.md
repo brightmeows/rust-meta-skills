@@ -9,20 +9,20 @@ use tokio::task;
 
 #[tokio::main]
 async fn main() {
-    // Spawn a task that runs concurrently
+    // 生成一个并发运行的任务
     let handle = task::spawn(async {
         expensive_computation().await
     });
 
-    // Do other work while task runs
+    // 在任务运行时做其他工作
     other_work().await;
 
-    // Wait for result
+    // 等待结果
     let result = handle.await.unwrap();
 }
 ```
 
-### Spawn with Shared State
+### 带共享状态的 Spawn
 
 ```rust
 use std::sync::Arc;
@@ -50,9 +50,9 @@ async fn process_with_state() {
 
 ---
 
-## Select Pattern
+## Select 模式
 
-### Racing Multiple Futures
+### 多个 Future 竞速
 
 ```rust
 use tokio::select;
@@ -70,7 +70,7 @@ async fn first_response() {
 }
 ```
 
-### Select with Timeout
+### 带超时的 Select
 
 ```rust
 use tokio::time::timeout;
@@ -84,7 +84,7 @@ async fn with_timeout() -> Result<Data, Error> {
     }
 }
 
-// Or use timeout directly
+// 或直接使用 timeout
 async fn with_timeout2() -> Result<Data, Error> {
     timeout(Duration::from_secs(5), fetch_data())
         .await
@@ -92,7 +92,7 @@ async fn with_timeout2() -> Result<Data, Error> {
 }
 ```
 
-### Select with Channel
+### 带 Channel 的 Select
 
 ```rust
 use tokio::sync::mpsc;
@@ -114,9 +114,9 @@ async fn process_messages(mut rx: mpsc::Receiver<Message>) {
 
 ---
 
-## Channel Patterns
+## Channel 模式
 
-### MPSC (Multi-Producer, Single-Consumer)
+### MPSC（多生产者，单消费者）
 
 ```rust
 use tokio::sync::mpsc;
@@ -124,25 +124,25 @@ use tokio::sync::mpsc;
 async fn producer_consumer() {
     let (tx, mut rx) = mpsc::channel(100);
 
-    // Spawn producers
+    // 生成生产者
     for i in 0..3 {
         let tx = tx.clone();
         tokio::spawn(async move {
-            tx.send(format!("Message from {}", i)).await.unwrap();
+            tx.send(format!("来自 {} 的消息", i)).await.unwrap();
         });
     }
 
-    // Drop original sender so channel closes
+    // 丢弃原始发送者，使 channel 关闭
     drop(tx);
 
-    // Consume
+    // 消费
     while let Some(msg) = rx.recv().await {
-        println!("Received: {}", msg);
+        println!("收到：{}", msg);
     }
 }
 ```
 
-### Oneshot (Single-Shot Response)
+### Oneshot（一次性响应）
 
 ```rust
 use tokio::sync::oneshot;
@@ -155,12 +155,12 @@ async fn request_response() {
         tx.send(result).unwrap();
     });
 
-    // Wait for response
+    // 等待响应
     let response = rx.await.unwrap();
 }
 ```
 
-### Broadcast (Multi-Consumer)
+### Broadcast（多消费者）
 
 ```rust
 use tokio::sync::broadcast;
@@ -168,28 +168,28 @@ use tokio::sync::broadcast;
 async fn pub_sub() {
     let (tx, _) = broadcast::channel(16);
 
-    // Subscribe multiple consumers
+    // 订阅多个消费者
     let mut rx1 = tx.subscribe();
     let mut rx2 = tx.subscribe();
 
     tokio::spawn(async move {
         while let Ok(msg) = rx1.recv().await {
-            println!("Consumer 1: {}", msg);
+            println!("消费者 1：{}", msg);
         }
     });
 
     tokio::spawn(async move {
         while let Ok(msg) = rx2.recv().await {
-            println!("Consumer 2: {}", msg);
+            println!("消费者 2：{}", msg);
         }
     });
 
-    // Publish
+    // 发布
     tx.send("Hello").unwrap();
 }
 ```
 
-### Watch (Single Latest Value)
+### Watch（单最新值）
 
 ```rust
 use tokio::sync::watch;
@@ -197,7 +197,7 @@ use tokio::sync::watch;
 async fn config_updates() {
     let (tx, mut rx) = watch::channel(Config::default());
 
-    // Consumer watches for changes
+    // 消费者监视变化
     tokio::spawn(async move {
         while rx.changed().await.is_ok() {
             let config = rx.borrow();
@@ -205,16 +205,16 @@ async fn config_updates() {
         }
     });
 
-    // Update config
+    // 更新配置
     tx.send(Config::new()).unwrap();
 }
 ```
 
 ---
 
-## Structured Concurrency
+## 结构化并发
 
-### JoinSet for Task Groups
+### JoinSet 用于任务组
 
 ```rust
 use tokio::task::JoinSet;
@@ -236,10 +236,10 @@ async fn parallel_fetch(urls: Vec<String>) -> Vec<Result<Response, Error>> {
 }
 ```
 
-### Scoped Tasks (no 'static)
+### 作用域任务（无需 'static）
 
 ```rust
-// Using tokio-scoped or async-scoped crate
+// 使用 tokio-scoped 或 async-scoped crate
 use async_scoped::TokioScope;
 
 async fn scoped_example(data: &[u32]) {
@@ -255,9 +255,9 @@ async fn scoped_example(data: &[u32]) {
 
 ---
 
-## Cancellation Patterns
+## 取消模式
 
-### Using CancellationToken
+### 使用 CancellationToken
 
 ```rust
 use tokio_util::sync::CancellationToken;
@@ -266,11 +266,11 @@ async fn cancellable_task(token: CancellationToken) {
     loop {
         select! {
             _ = token.cancelled() => {
-                println!("Task cancelled");
+                println!("任务已取消");
                 break;
             }
             _ = do_work() => {
-                // Continue working
+                // 继续工作
             }
         }
     }
@@ -282,7 +282,7 @@ async fn main_with_cancellation() {
 
     let handle = tokio::spawn(cancellable_task(task_token));
 
-    // Cancel after some condition
+    // 在某个条件满足后取消
     tokio::time::sleep(Duration::from_secs(5)).await;
     token.cancel();
 
@@ -290,7 +290,7 @@ async fn main_with_cancellation() {
 }
 ```
 
-### Graceful Shutdown
+### 优雅关闭
 
 ```rust
 async fn serve_with_shutdown(shutdown: impl Future) {
@@ -302,7 +302,7 @@ async fn serve_with_shutdown(shutdown: impl Future) {
                 tokio::spawn(handle_connection(socket));
             }
             _ = &mut shutdown => {
-                println!("Shutting down...");
+                println!("正在关闭...");
                 break;
             }
         }
@@ -321,27 +321,27 @@ async fn main() {
 
 ---
 
-## Backpressure Patterns
+## 背压模式
 
-### Bounded Channels
+### 有界 Channel
 
 ```rust
 use tokio::sync::mpsc;
 
 async fn with_backpressure() {
-    // Buffer of 10 - producers will wait if full
+    // 缓冲区大小为 10——满时生产者将等待
     let (tx, mut rx) = mpsc::channel(10);
 
     let producer = tokio::spawn(async move {
         for i in 0..1000 {
-            // This will wait if channel is full
+            // 如果 channel 满了，这里会等待
             tx.send(i).await.unwrap();
         }
     });
 
     let consumer = tokio::spawn(async move {
         while let Some(item) = rx.recv().await {
-            // Slow consumer
+            // 慢速消费者
             tokio::time::sleep(Duration::from_millis(10)).await;
             process(item);
         }
@@ -351,14 +351,14 @@ async fn with_backpressure() {
 }
 ```
 
-### Semaphore for Rate Limiting
+### 信号量用于速率限制
 
 ```rust
 use tokio::sync::Semaphore;
 use std::sync::Arc;
 
 async fn rate_limited_requests(urls: Vec<String>) {
-    let semaphore = Arc::new(Semaphore::new(10));  // max 10 concurrent
+    let semaphore = Arc::new(Semaphore::new(10));  // 最多 10 个并发
 
     let handles: Vec<_> = urls
         .into_iter()
@@ -379,9 +379,9 @@ async fn rate_limited_requests(urls: Vec<String>) {
 
 ---
 
-## Error Handling in Async
+## 异步中的错误处理
 
-### Propagating Errors
+### 传播错误
 
 ```rust
 async fn fetch_and_parse(url: &str) -> Result<Data, Error> {
@@ -391,7 +391,7 @@ async fn fetch_and_parse(url: &str) -> Result<Data, Error> {
 }
 ```
 
-### Handling Task Panics
+### 处理任务 Panic
 
 ```rust
 async fn robust_spawn() {
@@ -400,24 +400,24 @@ async fn robust_spawn() {
     });
 
     match handle.await {
-        Ok(result) => println!("Success: {:?}", result),
+        Ok(result) => println!("成功：{:?}", result),
         Err(e) if e.is_panic() => {
-            println!("Task panicked: {:?}", e);
+            println!("任务 panic：{:?}", e);
         }
         Err(e) => {
-            println!("Task cancelled: {:?}", e);
+            println!("任务已取消：{:?}", e);
         }
     }
 }
 ```
 
-### Try-Join for Multiple Results
+### Try-Join 处理多个结果
 
 ```rust
 use tokio::try_join;
 
 async fn fetch_all() -> Result<(A, B, C), Error> {
-    // All must succeed, or first error returned
+    // 全部必须成功，否则返回第一个错误
     try_join!(
         fetch_a(),
         fetch_b(),

@@ -9,14 +9,14 @@ impact: HIGH
 
 ## 概要
 
-When working with raw file descriptors or handles, ensure they are valid for the duration of use and properly ownership-tracked.
+处理原始文件描述符或句柄时，确保它们在使用期间有效，并正确追踪所有权。
 
 ## 理由
 
-- Raw handles can be closed by other code
-- Using a closed handle is undefined behavior
-- Handle reuse can cause data corruption
-- Rust 1.63+ provides I/O safety traits
+- 原始句柄可能被其他代码关闭
+- 使用已关闭的句柄是未定义行为
+- 句柄重用可能导致数据损坏
+- Rust 1.63+ 提供了 I/O 安全 trait
 
 ## 错误示例
 
@@ -115,18 +115,18 @@ mod good_example {
 }
 ```
 
-## I/O Safety Types (Rust 1.63+)
+## I/O 安全类型（Rust 1.63+）
 
-| Type | Meaning |
+| 类型 | 含义 |
 |------|---------|
-| `OwnedFd` | Owns a file descriptor, closes on drop |
-| `BorrowedFd<'a>` | Borrows a fd for lifetime 'a |
-| `RawFd` | Raw integer, no safety guarantees |
-| `AsFd` | Trait for types that have a fd |
-| `From<OwnedFd>` | Create from owned fd |
-| `Into<OwnedFd>` | Convert to owned fd |
+| `OwnedFd` | 拥有一个文件描述符，drop 时关闭 |
+| `BorrowedFd<'a>` | 借用 fd，生命周期 'a |
+| `RawFd` | 原始整数，无安全保证 |
+| `AsFd` | 具有 fd 的类型的 trait |
+| `From<OwnedFd>` | 从拥有的 fd 创建 |
+| `Into<OwnedFd>` | 转换为拥有的 fd |
 
-## Windows Equivalents
+## Windows 对应类型
 
 ```rust
 #[cfg(windows)]
@@ -140,10 +140,10 @@ use std::os::windows::io::{
 
 ## 检查清单
 
-- [ ] Am I using BorrowedFd/OwnedFd instead of RawFd?
-- [ ] Is ownership of handles clear?
-- [ ] Am I using the AsFd trait for generic code?
-- [ ] Is the fd guaranteed valid for the duration of use?
+- [ ] 我是否在使用 `BorrowedFd`/`OwnedFd` 而非 `RawFd`？
+- [ ] 句柄的所有权是否清晰？
+- [ ] 我是否对泛型代码使用了 `AsFd` trait？
+- [ ] fd 是否在使用期间保证有效？
 
 ## 相关规则
 

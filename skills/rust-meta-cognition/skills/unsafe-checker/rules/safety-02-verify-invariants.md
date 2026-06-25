@@ -9,20 +9,20 @@ impact: CRITICAL
 
 ## 概要
 
-When writing unsafe code, you are taking responsibility for upholding all safety invariants that the compiler normally enforces.
+编写 Unsafe 代码时，你需要负责维护编译器通常强制保证的所有安全不变量。
 
 ## 理由
 
-Unsafe blocks don't disable safety requirements - they transfer responsibility from the compiler to the programmer. You must manually verify what the compiler normally checks.
+Unsafe 块不会禁用安全要求——它们将责任从编译器转移给了程序员。你必须手动验证编译器通常检查的内容。
 
-## Safety Invariants to Verify
+## 需要验证的安全不变量
 
-1. **Pointer validity**: Non-null, aligned, points to valid memory
-2. **Aliasing**: No mutable aliasing (two &mut to same memory)
-3. **Initialization**: Memory is initialized before read
-4. **Lifetime**: References don't outlive their referents
-5. **Type validity**: Data matches the expected type's invariants
-6. **Thread safety**: Proper synchronization for concurrent access
+1. **指针有效性**：非空、对齐、指向有效内存
+2. **别名**：无可变别名（同一内存的两个 `&mut`）
+3. **初始化**：读取前内存已初始化
+4. **生命周期**：引用不超过其引用的存活期
+5. **类型有效性**：数据符合期望类型的不变量
+6. **线程安全**：并发访问有恰当的同步
 
 ## 错误示例
 
@@ -79,10 +79,10 @@ fn process_slice(data: &[Data]) {
 
 ## 检查清单
 
-- [ ] Have I listed all safety invariants?
-- [ ] Can I prove each invariant holds at the call site?
-- [ ] Have I added debug assertions where possible?
-- [ ] Have I documented invariants in /// # Safety section?
+- [ ] 是否已列出所有安全不变量？
+- [ ] 能否证明每个不变量在调用点成立？
+- [ ] 是否在可能的地方添加了调试断言？
+- [ ] 是否在 `/// # Safety` 章节中文档化不变量？
 
 ## 相关规则
 

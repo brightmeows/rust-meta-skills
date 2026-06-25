@@ -9,21 +9,21 @@ impact: HIGH
 
 ## 概要
 
-Use `#[repr(...)]` attributes to control data layout when interfacing with C, doing memory mapping, or needing specific guarantees.
+与 C 交互、进行内存映射或需要特定保证时，使用 `#[repr(...)]` 属性控制数据布局。
 
 ## 理由
 
-Rust's default layout is unspecified and may change between compiler versions. For FFI, persistence, or low-level memory operations, you need predictable layout.
+Rust 的默认布局未指定，可能会在不同编译器版本之间变化。对于 FFI、持久化或底层内存操作，你需要可预测的布局。
 
-## Repr Attributes
+## Repr 属性
 
-| Attribute | Use Case |
+| 属性 | 用例 |
 |-----------|----------|
-| `#[repr(C)]` | C-compatible layout, stable field order |
-| `#[repr(transparent)]` | Single-field struct with same layout as field |
-| `#[repr(packed)]` | No padding (alignment = 1), careful with references! |
-| `#[repr(align(N))]` | Minimum alignment of N bytes |
-| `#[repr(u8)]`, `#[repr(i32)]`, etc. | Enum discriminant type |
+| `#[repr(C)]` | C 兼容布局，稳定的字段顺序 |
+| `#[repr(transparent)]` | 单字段结构体，布局与字段相同 |
+| `#[repr(packed)]` | 无填充（对齐 = 1），注意引用！ |
+| `#[repr(align(N))]` | 最小对齐 N 字节 |
+| `#[repr(u8)]`、`#[repr(i32)]` 等 | 枚举判别式类型 |
 
 ## 错误示例
 
@@ -96,7 +96,7 @@ enum Status {
 }
 ```
 
-## Layout Guarantees
+## 布局保证
 
 ```rust
 use std::mem::{size_of, align_of};
@@ -118,10 +118,10 @@ assert_eq!(align_of::<Example>(), 4);
 
 ## 检查清单
 
-- [ ] Is this type used in FFI? → Use `#[repr(C)]`
-- [ ] Is this a newtype wrapper? → Consider `#[repr(transparent)]`
-- [ ] Do I need specific alignment? → Use `#[repr(align(N))]`
-- [ ] Am I using packed? → Never create references to packed fields
+- [ ] 此类型用于 FFI？→ 使用 `#[repr(C)]`
+- [ ] 这是 newtype 包装器？→ 考虑 `#[repr(transparent)]`
+- [ ] 需要特定对齐？→ 使用 `#[repr(align(N))]`
+- [ ] 使用了 packed？→ 永远不要创建对 packed 字段的引用
 
 ## 相关规则
 

@@ -9,13 +9,13 @@ impact: MEDIUM
 
 ## 概要
 
-When receiving parameters from C, document what invariants you assume (non-null, alignment, validity, lifetime) and verify them when possible.
+从 C 接收参数时，记录你假定了什么不变量（非空、对齐、有效性、生命周期），并在可能时验证它们。
 
 ## 理由
 
-- C doesn't enforce invariants at compile time
-- Rust code needs to validate or document assumptions
-- Debugging FFI bugs is hard without clear documentation
+- C 不会在编译时强制不变量
+- Rust 代码需要验证或记录假设
+- 没有清晰的文档，调试 FFI 错误很难
 
 ## 错误示例
 
@@ -121,7 +121,7 @@ pub extern "C" fn process_documented(data: *const Data, len: usize) -> i32 {
 }
 ```
 
-## Documentation Template
+## 文档模板
 
 ```rust
 /// Brief description.
@@ -153,10 +153,10 @@ pub extern "C" fn process_documented(data: *const Data, len: usize) -> i32 {
 
 ## 检查清单
 
-- [ ] Have I documented all assumptions about C parameters?
-- [ ] Which invariants can I verify at runtime?
-- [ ] Which must I trust the C caller to uphold?
-- [ ] Have I documented error conditions and return values?
+- [ ] 我是否文档化了关于 C 参数的所有假设？
+- [ ] 哪些不变量可以在运行时验证？
+- [ ] 哪些必须信任 C 调用者来维护？
+- [ ] 我是否文档化了错误条件和返回值？
 
 ## 相关规则
 

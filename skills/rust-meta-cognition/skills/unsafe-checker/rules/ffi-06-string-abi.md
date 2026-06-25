@@ -5,21 +5,21 @@ level: P
 impact: HIGH
 ---
 
-# Ensure C-ABI Compatibility for Strings Between Rust and C
+# 确保 Rust 和 C 之间字符串的 C-ABI 兼容性
 
 ## 概要
 
-When passing strings across FFI, ensure both sides agree on encoding, null-termination, and memory ownership.
+在跨 FFI 传递字符串时，确保双方在编码、null 终止和内存所有权上达成一致。
 
 ## 理由
 
-- Rust strings are UTF-8, C strings are byte arrays
-- C expects null termination, Rust strings don't have it
-- Memory ownership must be explicit to avoid leaks/double-frees
+- Rust 字符串是 UTF-8，C 字符串是字节数组
+- C 期望 null 终止，Rust 字符串没有
+- 内存所有权必须明确，以避免泄漏/双重释放
 
-## String Passing Patterns
+## 字符串传递模式
 
-### Rust to C (Caller Allocates)
+### Rust 到 C（调用者分配）
 
 ```rust
 use std::ffi::CString;
@@ -40,7 +40,7 @@ fn rust_to_c(s: &str) -> Result<(), std::ffi::NulError> {
 }
 ```
 
-### C to Rust (C Allocates, Rust Borrows)
+### C 到 Rust（C 分配，Rust 借用）
 
 ```rust
 use std::ffi::CStr;
@@ -61,7 +61,7 @@ fn c_to_rust() -> Option<String> {
 }
 ```
 
-### C to Rust (Ownership Transfer)
+### C 到 Rust（所有权转移）
 
 ```rust
 extern "C" {
@@ -96,7 +96,7 @@ impl Drop for CAllocatedString {
 }
 ```
 
-### Rust to C (Ownership Transfer)
+### Rust 到 C（所有权转移）
 
 ```rust
 extern "C" {
@@ -116,7 +116,7 @@ fn give_to_c(s: &str) -> Result<(), std::ffi::NulError> {
 }
 ```
 
-## Encoding Considerations
+## 编码考虑
 
 ```rust
 // UTF-8 to platform encoding
@@ -140,10 +140,10 @@ fn to_wide_string(s: &str) -> Vec<u16> {
 
 ## 检查清单
 
-- [ ] Is the string null-terminated when passed to C?
-- [ ] Who allocates the memory? Who frees it?
-- [ ] Is the encoding (UTF-8, ASCII, platform) documented?
-- [ ] Am I handling conversion errors (interior nulls, invalid UTF-8)?
+- [ ] 字符串传递给 C 时是否以 null 结尾？
+- [ ] 谁分配内存？谁释放它？
+- [ ] 编码（UTF-8、ASCII、平台相关）是否已文档化？
+- [ ] 我是否处理了转换错误（内部 null、无效 UTF-8）？
 
 ## 相关规则
 

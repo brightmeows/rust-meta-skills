@@ -19,20 +19,20 @@ allowed-tools: ["LSP", "Read", "Glob", "Grep", "Edit"]
 
 **Actions:**
 
-- `rename <old> <new>` - Rename symbol
-- `extract-fn <selection>` - Extract to function
-- `inline <fn>` - Inline function
-- `move <symbol> <dest>` - Move to module
+- `rename <old> <new>` - 重命名符号
+- `extract-fn <selection>` - 提取为函数
+- `inline <fn>` - 内联函数
+- `move <symbol> <dest>` - 移动到模块
 
-**Examples:**
+**示例：**
 
-- `/rust-refactor-helper rename parse_config load_config`
-- `/rust-refactor-helper extract-fn src/main.rs:20-35`
-- `/rust-refactor-helper move UserService src/services/`
+- `/rust-refactor-helper rename parse_config load_config` - 将 parse_config 重命名为 load_config
+- `/rust-refactor-helper extract-fn src/main.rs:20-35` - 提取 main.rs 第 20-35 行为函数
+- `/rust-refactor-helper move UserService src/services/` - 将 UserService 移动到 src/services/
 
-## LSP Operations Used
+## LSP 操作
 
-### Pre-Refactor Analysis
+### 重构前分析
 
 ```
 # Find all references before renaming
@@ -60,9 +60,9 @@ LSP(
 )
 ```
 
-## Refactoring Workflows
+## 重构工作流
 
-### 1. Rename Symbol
+### 1. 重命名符号
 
 ```
 User: "Rename parse_config to load_config"
@@ -87,10 +87,10 @@ User: "Rename parse_config to load_config"
 [5] Show impact analysis (--dry-run)
     │
     ▼
-[6] Apply changes with Edit tool
+[6] 使用 Edit 工具应用更改
 ```
 
-**Output:**
+**输出：**
 
 ```
 ## Rename: parse_config → load_config
@@ -100,28 +100,28 @@ User: "Rename parse_config to load_config"
 **Definition:** src/config.rs:25
 **References found:** 8
 
-| File | Line | Context | Change |
+| 文件 | 行号 | 上下文 | 变更类型 |
 |------|------|---------|--------|
-| src/config.rs | 25 | `pub fn parse_config(` | Definition |
-| src/config.rs | 45 | `parse_config(path)?` | Call |
-| src/main.rs | 12 | `config::parse_config` | Import |
-| src/main.rs | 30 | `let cfg = parse_config(` | Call |
-| src/lib.rs | 8 | `pub use config::parse_config` | Re-export |
-| tests/config_test.rs | 15 | `parse_config("test.toml")` | Test |
-| tests/config_test.rs | 25 | `parse_config("")` | Test |
-| docs/api.md | 42 | `parse_config` | Documentation |
+| src/config.rs | 25 | `pub fn parse_config(` | 定义 |
+| src/config.rs | 45 | `parse_config(path)?` | 调用 |
+| src/main.rs | 12 | `config::parse_config` | 导入 |
+| src/main.rs | 30 | `let cfg = parse_config(` | 调用 |
+| src/lib.rs | 8 | `pub use config::parse_config` | 重导出 |
+| tests/config_test.rs | 15 | `parse_config("test.toml")` | 测试 |
+| tests/config_test.rs | 25 | `parse_config("")` | 测试 |
+| docs/api.md | 42 | `parse_config` | 文档 |
 
-### Potential Issues
+### 潜在问题
 
-⚠️ **Documentation reference:** docs/api.md:42 may need manual update
-⚠️ **Re-export:** src/lib.rs:8 - public API change
+⚠️ **文档引用：** docs/api.md:42 可能需要手动更新
+⚠️ **重导出：** src/lib.rs:8 - 公共 API 变更
 
-### Proceed?
-- [x] --dry-run (preview only)
-- [ ] Apply changes
+### 继续？
+- [x] --dry-run（仅预览）
+- [ ] 应用更改
 ```
 
-### 2. Extract Function
+### 2. 提取函数
 
 ```
 User: "Extract lines 20-35 in main.rs to a function"
@@ -145,15 +145,15 @@ User: "Extract lines 20-35 in main.rs to a function"
 [5] Generate extracted function
     │
     ▼
-[6] Replace original code with call
+[6] 将原始代码替换为调用
 ```
 
-**Output:**
+**输出：**
 
 ```
-## Extract Function: src/main.rs:20-35
+## 提取函数：src/main.rs:20-35
 
-### Selected Code
+### 选中代码
 ​```rust
 let file = File::open(&path)?;
 let mut contents = String::new();
@@ -162,13 +162,13 @@ let config: Config = toml::from_str(&contents)?;
 validate_config(&config)?;
 ​```
 
-### Analysis
+### 分析
 
-**Inputs:** path: &Path
-**Outputs:** config: Config
-**Side Effects:** File I/O, may return error
+**输入：** path: &Path
+**输出：** config: Config
+**副作用：** 文件 I/O，可能返回错误
 
-### Extracted Function
+### 提取后的函数
 
 ​```rust
 fn load_and_validate_config(path: &Path) -> Result<Config> {
@@ -181,14 +181,14 @@ fn load_and_validate_config(path: &Path) -> Result<Config> {
 }
 ​```
 
-### Replacement
+### 替换后的代码
 
 ​```rust
 let config = load_and_validate_config(&path)?;
 ​```
 ```
 
-### 3. Move Symbol
+### 3. 移动符号
 
 ```
 User: "Move UserService to src/services/"
@@ -207,31 +207,31 @@ User: "Move UserService to src/services/"
 [4] Check for circular dependencies
     │
     ▼
-[5] Generate move plan
+[5] 生成移动计划
 ```
 
-**Output:**
+**输出：**
 
 ```
-## Move: UserService → src/services/user.rs
+## 移动：UserService → src/services/user.rs
 
-### Current Location
+### 当前位置
 src/handlers/auth.rs:50-120
 
-### Dependencies (will be moved together)
+### 依赖项（将一起移动）
 - struct UserService (50-80)
 - impl UserService (82-120)
 - const DEFAULT_TIMEOUT (48)
 
-### Import Changes Required
+### 需要修改的导入
 
-| File | Current | New |
+| 文件 | 当前 | 新 |
 |------|---------|-----|
 | src/main.rs | `use handlers::auth::UserService` | `use services::user::UserService` |
 | src/handlers/api.rs | `use super::auth::UserService` | `use crate::services::user::UserService` |
 | tests/auth_test.rs | `use crate::handlers::auth::UserService` | `use crate::services::user::UserService` |
 
-### New File Structure
+### 新文件结构
 
 ​```
 src/
@@ -242,36 +242,36 @@ src/
 │   └── auth.rs (UserService removed)
 ​```
 
-### Circular Dependency Check
-✅ No circular dependencies detected
+### 循环依赖检查
+✅ 未检测到循环依赖
 ```
 
-## Safety Checks
+## 安全检查
 
-| Check | Purpose |
+| 检查项 | 目的 |
 |-------|---------|
-| Reference completeness | Ensure all uses are found |
-| Name conflicts | Detect existing symbols with same name |
-| Visibility changes | Warn if pub/private scope changes |
-| Macro-generated code | Warn about code in macros |
-| Documentation | Flag doc comments mentioning symbol |
-| Test coverage | Show affected tests |
+| 引用完整性 | 确保找到所有使用点 |
+| 名称冲突 | 检测已存在的同名符号 |
+| 可见性变更 | 警告 pub/private 作用域变化 |
+| 宏生成代码 | 警告宏中的代码 |
+| 文档 | 标记提及该符号的文档注释 |
+| 测试覆盖 | 展示受影响的测试 |
 
-## Dry Run Mode
+## 试运行模式
 
-Always use `--dry-run` first to preview changes:
+始终先使用 `--dry-run` 预览更改：
 
 ```
 /rust-refactor-helper rename old_name new_name --dry-run
 ```
 
-This shows all changes without applying them.
+这会展示所有更改但不应用。
 
-## Related Skills
+## 相关技能
 
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Navigate to symbol | rust-code-navigator |
-| Understand call flow | rust-call-graph |
-| Project structure | rust-symbol-analyzer |
-| Trait implementations | rust-trait-explorer |
+| 导航到符号 | rust-code-navigator |
+| 理解调用流程 | rust-call-graph |
+| 项目结构 | rust-symbol-analyzer |
+| Trait 实现 | rust-trait-explorer |

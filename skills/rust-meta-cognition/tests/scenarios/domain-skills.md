@@ -124,9 +124,9 @@ claude -p "ML inference in Rust"
 
 ---
 
-## Validation Checklist
+## 验证检查清单
 
-- [ ] Each domain skill triggers correctly
-- [ ] Domain-specific terminology recognized
-- [ ] Chinese keywords trigger same skills
-- [ ] Cross-domain queries load multiple skills
+- [ ] 每个领域 skill 正确触发
+- [ ] 领域特定术语被识别
+- [ ] 中文关键词触发相同的 skill
+- [ ] 跨领域查询加载多个 skill

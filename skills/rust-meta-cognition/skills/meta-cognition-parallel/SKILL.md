@@ -14,7 +14,7 @@ argument-hint: "<rust_question>"
 
 ## 概念
 
-Instead of sequential analysis, this skill launches three parallel analyzers - one for each cognitive layer - then synthesizes their results.
+与串行分析不同，本技能启动三个并行分析器——每个认知层一个——然后综合它们的结果。
 
 ```
 User Question
@@ -54,11 +54,11 @@ Domain-Correct Architectural Solution
 /meta-parallel 我的交易系统报 E0382 错误，应该用 clone 吗？
 ```
 
-## Execution Mode Detection
+## 执行模式检测
 
-**CRITICAL: Check agent file availability first to determine execution mode.**
+**关键：先检查 agent 文件可用性以确定执行模式。**
 
-Try to read layer analyzer files:
+尝试读取分层分析器文件：
 
 - `../../agents/layer1-analyzer.md`
 - `../../agents/layer2-analyzer.md`
@@ -66,66 +66,66 @@ Try to read layer analyzer files:
 
 ---
 
-## Agent Mode (Plugin Install) - Parallel Execution
+## Agent 模式（插件安装）- 并行执行
 
-**When all layer analyzer files exist at `../../agents/`:**
+**当所有分层分析器文件存在于 `../../agents/` 时：**
 
-### Step 1: Parse User Query
+### 步骤 1：解析用户查询
 
-Extract from `$ARGUMENTS`:
+从 `$ARGUMENTS` 提取：
 
-- The original question
-- Any code snippets
-- Domain hints (trading, web, embedded, etc.)
+- 原始问题
+- 代码片段
+- 领域提示（交易、Web、嵌入式等）
 
-### Step 2: Launch Three Parallel Agents
+### 步骤 2：启动三个并行 Agent
 
-**CRITICAL: Launch all three Tasks in a SINGLE message to enable parallel execution.**
+**关键：在单条消息中启动全部三个 Task 以实现并行执行。**
 
 ```
-Read agent files, then launch in parallel:
+读取 agent 文件，然后并行启动：
 
 Task(
   subagent_type: "general-purpose",
   run_in_background: true,
-  prompt: <content of ../../agents/layer1-analyzer.md>
+  prompt: ../../agents/layer1-analyzer.md 的内容
           + "\n\n## User Query\n" + $ARGUMENTS
 )
 
 Task(
   subagent_type: "general-purpose",
   run_in_background: true,
-  prompt: <content of ../../agents/layer2-analyzer.md>
+  prompt: ../../agents/layer2-analyzer.md 的内容
           + "\n\n## User Query\n" + $ARGUMENTS
 )
 
 Task(
   subagent_type: "general-purpose",
   run_in_background: true,
-  prompt: <content of ../../agents/layer3-analyzer.md>
+  prompt: ../../agents/layer3-analyzer.md 的内容
           + "\n\n## User Query\n" + $ARGUMENTS
 )
 ```
 
-### Step 3: Collect Results
+### 步骤 3：收集结果
 
-Wait for all three agents to complete. Each returns structured analysis.
+等待所有三个 agent 完成。每个返回结构化分析结果。
 
-### Step 4: Cross-Layer Synthesis
+### 步骤 4：跨层综合
 
-With all three results, perform synthesis per template below.
+使用全部三个结果，按下方模板进行综合。
 
 ---
 
-## Inline Mode (Skills-only Install) - Sequential Execution
+## 内联模式（仅安装 Skill）- 串行执行
 
-**When layer analyzer files are NOT available, execute analysis directly:**
+**当分层分析器文件不可用时，直接执行分析：**
 
-### Step 1: Parse User Query
+### 步骤 1：解析用户查询
 
-Same as Agent Mode - extract question, code, and domain hints from `$ARGUMENTS`.
+与 Agent 模式相同——从 `$ARGUMENTS` 提取问题、代码和领域提示。
 
-### Step 2: Execute Layer 1 - Language Mechanics
+### 步骤 2：执行第 1 层——语言机制
 
 Analyze the Rust language mechanics involved:
 
@@ -147,16 +147,16 @@ Analyze the Rust language mechanics involved:
 **Reasoning:** [Why this confidence level]
 ```
 
-**Focus areas:**
+**关注领域：**
 
-- Ownership rules (move, copy, borrow)
-- Lifetime annotations
-- Borrowing rules (shared vs mutable)
-- Error codes and their meanings
+- 所有权规则（move、copy、borrow）
+- 生命周期标注
+- 借用规则（共享 vs 可变）
+- 错误码及其含义
 
-### Step 3: Execute Layer 2 - Design Choices
+### 步骤 3：执行第 2 层——设计选择
 
-Analyze the design patterns and trade-offs:
+分析设计模式与权衡：
 
 ```markdown
 ## Layer 2: Design Choices
@@ -178,16 +178,16 @@ Analyze the design patterns and trade-offs:
 **Reasoning:** [Why this confidence level]
 ```
 
-**Focus areas:**
+**关注领域：**
 
-- Smart pointer choices (Box, Rc, Arc)
-- Interior mutability patterns (Cell, RefCell, Mutex)
-- Ownership transfer vs sharing
-- Cloning vs references
+- 智能指针选择（Box、Rc、Arc）
+- 内部可变性模式（Cell、RefCell、Mutex）
+- 所有权转移 vs 共享
+- 克隆 vs 引用
 
-### Step 4: Execute Layer 3 - Domain Constraints
+### 步骤 4：执行第 3 层——领域约束
 
-Analyze domain-specific requirements:
+分析领域特定需求：
 
 ```markdown
 ## Layer 3: Domain Constraints
@@ -213,157 +213,157 @@ Analyze domain-specific requirements:
 **Reasoning:** [Why this confidence level]
 ```
 
-**Focus areas:**
+**关注领域：**
 
-- Industry requirements (FinTech regulations, web scalability, etc.)
-- Performance constraints
-- Safety and correctness requirements
-- Common patterns in the domain
+- 行业需求（金融科技法规、Web 可扩展性等）
+- 性能约束
+- 安全性与正确性要求
+- 领域内的常见模式
 
-### Step 5: Cross-Layer Synthesis
+### 步骤 5：跨层综合
 
-Combine all three layers:
+将所有三层结果合并：
 
 ```markdown
 ## Cross-Layer Synthesis
 
 ### Layer Results Summary
 
-| Layer | Key Finding | Confidence |
+| 层 | 关键发现 | 置信度 |
 |-------|-------------|------------|
-| L1 (Mechanics) | [Summary] | [Level] |
-| L2 (Design) | [Summary] | [Level] |
-| L3 (Domain) | [Summary] | [Level] |
+| L1（机制） | [摘要] | [级别] |
+| L2（设计） | [摘要] | [级别] |
+| L3（领域） | [摘要] | [级别] |
 
-### Cross-Layer Reasoning
+### 跨层推理
 
-1. **L3 → L2:** [How domain constraints affect design choice]
-2. **L2 → L1:** [How design choice determines mechanism]
-3. **L1 ← L3:** [Direct domain impact on language features]
+1. **L3 → L2：** [领域约束如何影响设计选择]
+2. **L2 → L1：** [设计选择如何决定机制]
+3. **L1 ← L3：** [领域对语言特性的直接影响]
 
-### Synthesized Recommendation
+### 综合建议
 
-**Problem:** [Restated with full context]
+**问题：** [在完整上下文中重述]
 
-**Solution:** [Domain-correct architectural solution]
+**解决方案：** [符合领域约束的架构方案]
 
-**Rationale:**
-- Domain requires: [L3 constraint]
-- Design pattern: [L2 pattern]
-- Mechanism: [L1 implementation]
+**理由：**
+- 领域要求：[L3 约束]
+- 设计模式：[L2 模式]
+- 机制：[L1 实现]
 
-### Confidence Assessment
+### 置信度评估
 
-- **Overall:** HIGH | MEDIUM | LOW
-- **Limiting Factor:** [Which layer had lowest confidence]
+- **总体：** HIGH | MEDIUM | LOW
+- **限制因素：** [置信度最低的层]
 ```
 
 ---
 
-## Output Template
+## 输出模板
 
-Both modes produce the same output format:
+两种模式产生相同的输出格式：
 
 ```markdown
-# Three-Layer Meta-Cognition Analysis
+# 三层元认知分析
 
-> Query: [User's question]
-
----
-
-## Layer 1: Language Mechanics
-[L1 analysis result]
+> 查询：[用户的问题]
 
 ---
 
-## Layer 2: Design Choices
-[L2 analysis result]
+## 第 1 层：语言机制
+[L1 分析结果]
 
 ---
 
-## Layer 3: Domain Constraints
-[L3 analysis result]
+## 第 2 层：设计选择
+[L2 分析结果]
 
 ---
 
-## Cross-Layer Synthesis
+## 第 3 层：领域约束
+[L3 分析结果]
 
-### Reasoning Chain
+---
+
+## 跨层综合
+
+### 推理链
 ```
 
-L3 Domain: [Constraint]
-    ↓ implies
-L2 Design: [Pattern]
-    ↓ implemented via
-L1 Mechanism: [Feature]
+L3 领域：[约束]
+    ↓ 影响
+L2 设计：[模式]
+    ↓ 通过以下实现
+L1 机制：[特性]
 
 ```
 
-### Final Recommendation
+### 最终建议
 
-**Do:** [Recommended approach]
+**要：** [推荐方案]
 
-**Don't:** [What to avoid]
+**不要：** [应避免的做法]
 
-**Code Pattern:**
+**代码模式：**
 ```rust
-// Recommended implementation
+// 推荐实现
 ```
 
 ---
 
-*Analysis performed by meta-cognition-parallel v0.2.0 (experimental)*
+*由 meta-cognition-parallel v0.2.0（实验性）执行的分析*
 
 ```
 
 ---
 
-## Test Scenarios
+## 测试场景
 
-### Test 1: Trading System E0382
+### 测试 1：交易系统 E0382
 ```
 
 /meta-parallel 交易系统报 E0382，trade record 被 move 了
 
 ```
 
-Expected: L3 identifies FinTech constraints → L2 suggests shared immutable → L1 recommends Arc<T>
+预期结果：L3 识别 FinTech 约束 → L2 建议共享不可变 → L1 推荐 Arc<T>
 
-### Test 2: Web API Concurrency
+### 测试 2：Web API 并发
 ```
 
 /meta-parallel Web API 中多个 handler 需要共享数据库连接池
 
 ```
 
-Expected: L3 identifies Web constraints → L2 suggests connection pooling → L1 recommends Arc<Pool>
+预期结果：L3 识别 Web 约束 → L2 建议连接池 → L1 推荐 Arc<Pool>
 
-### Test 3: CLI Tool Config
+### 测试 3：CLI 工具配置
 ```
 
 /meta-parallel CLI 工具如何处理配置文件和命令行参数的优先级
 
 ```
 
-Expected: L3 identifies CLI constraints → L2 suggests config precedence pattern → L1 recommends builder pattern
+预期结果：L3 识别 CLI 约束 → L2 建议配置优先级模式 → L1 推荐 builder 模式
 
 ---
 
-## Error Handling
+## 错误处理
 
-| Error | Cause | Solution |
+| 错误 | 原因 | 解决方案 |
 |-------|-------|----------|
-| Agent files not found | Skills-only install | Use inline mode (sequential) |
-| Agent timeout | Complex analysis | Wait longer or use inline mode |
-| Incomplete layer result | Agent issue | Fill in with inline analysis |
+| Agent 文件未找到 | 仅安装了 Skill | 使用内联模式（串行） |
+| Agent 超时 | 分析复杂 | 等待更长时间或使用内联模式 |
+| 层结果不完整 | Agent 问题 | 使用内联分析补充 |
 
-## Limitations
+## 局限性
 
-- **Agent Mode:** Parallel execution, faster but requires plugin install
-- **Inline Mode:** Sequential execution, slower but works everywhere
-- Cross-layer synthesis quality depends on result structure
-- May have higher latency than simple single-layer analysis
+- **Agent 模式：** 并行执行，更快但需要插件安装
+- **内联模式：** 串行执行，较慢但随处可用
+- 跨层综合质量取决于结果结构
+- 可能比简单的单层分析延迟更高
 
-## Feedback
+## 反馈
 
-This is experimental. Please report issues and suggestions to improve the three-layer analysis approach.
+此技能为实验性。请报告问题和建议以改进三层分析方法。

@@ -9,14 +9,14 @@ impact: MEDIUM
 
 ## 概要
 
-Use `NonNull<T>` instead of `*mut T` when the pointer should never be null. This enables null pointer optimization and makes the intent clear.
+当指针不应为 null 时，使用 `NonNull<T>` 替代 `*mut T`。这启用了空指针优化并使意图更清晰。
 
 ## 理由
 
-- `NonNull<T>` guarantees non-null at the type level
-- Enables niche optimization: `Option<NonNull<T>>` is the same size as `*mut T`
-- Makes invariants explicit in the type system
-- Covariant over `T` (like `&T`), which is usually what you want
+- `NonNull<T>` 在类型层面保证非空
+- 启用 niche 优化：`Option<NonNull<T>>` 与 `*mut T` 大小相同
+- 使不变量在类型系统中显式化
+- 对 `T` 协变（如 `&T`），这通常是你想要的
 
 ## 错误示例
 
@@ -96,17 +96,17 @@ let mut_ref: &mut i32 = unsafe { ptr.as_mut() };
 let ptr: NonNull<u8> = ptr.cast::<u8>();
 ```
 
-## When to Use *mut T Instead
+## 何时使用 *mut T
 
-- When null is a valid/expected value
-- FFI with C code that may return null
-- When variance matters (NonNull is covariant, sometimes you need invariance)
+- 当 null 是有效/期望的值时
+- 与可能返回 null 的 C 代码进行 FFI 时
+- 当可变性重要时（NonNull 是协变的，有时需要不变性）
 
 ## 检查清单
 
-- [ ] Is my pointer ever null? If no, use NonNull
-- [ ] Do I need null pointer optimization?
-- [ ] Is the variance correct for my use case?
+- [ ] 我的指针是否可能为 null？如果不，使用 NonNull
+- [ ] 是否需要空指针优化？
+- [ ] 可变性对我的用例是否正确？
 
 ## 相关规则
 

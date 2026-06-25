@@ -10,18 +10,16 @@ clippy: non_send_fields_in_send_ty
 
 ## 概要
 
-When manually implementing `Send` or `Sync`, you must ensure thread safety invariants are upheld.
+手动实现 `Send` 或 `Sync` 时，必须确保线程安全不变量得到维护。
 
 ## 理由
 
-`Send` and `Sync` are unsafe traits because incorrect implementations cause data
-races, which are undefined behavior. The compiler auto-implements them conservatively,
-but manual implementations require careful analysis.
+`Send` 和 `Sync` 是不安全 trait，因为错误的实现会导致数据竞争，即未定义行为。编译器保守地自动实现它们，但手动实现需要仔细分析。
 
-## Trait Meanings
+## Trait 含义
 
-- **`Send`**: Safe to transfer ownership to another thread
-- **`Sync`**: Safe to share references (`&T`) between threads (i.e., `&T: Send`)
+- **`Send`**：安全地将所有权转移到另一个线程
+- **`Sync`**：安全地在线程间共享引用（`&T`）（即 `&T: Send`）
 
 ## 错误示例
 
@@ -88,26 +86,26 @@ unsafe impl Send for ThreadSafeFd {}
 unsafe impl Sync for ThreadSafeFd {}
 ```
 
-## Decision Tree
+## 决策树
 
 ```
-Does your type contain:
-  - Raw pointers? → Probably not auto Send/Sync
-  - Rc/RefCell? → Not Sync (Rc not Send either)
-  - Cell/UnsafeCell? → Not Sync
-  - Interior mutability? → Needs synchronization for Sync
+你的类型包含：
+  - 原始指针？→ 可能不会自动 Send/Sync
+  - Rc/RefCell？→ 不是 Sync（Rc 也不是 Send）
+  - Cell/UnsafeCell？→ 不是 Sync
+  - 内部可变性？→ 需要同步才能 Sync
 
-To manually implement:
-  - Send: Can another thread safely drop this?
-  - Sync: Can multiple threads safely call &self methods?
+手动实现：
+  - Send：另一个线程能否安全地 drop 此类型？
+  - Sync：多个线程能否安全地调用 &self 方法？
 ```
 
 ## 检查清单
 
-- [ ] Does my type contain any non-Send/Sync fields?
-- [ ] Is interior mutability properly synchronized (Mutex, atomic)?
-- [ ] Would concurrent access cause data races?
-- [ ] Have I documented why the implementation is safe?
+- [ ] 我的类型是否包含任何非 Send/Sync 的字段？
+- [ ] 内部可变性是否恰当同步（Mutex、原子类型）？
+- [ ] 并发访问是否会导致数据竞争？
+- [ ] 是否记录了实现安全的原因？
 
 ## 相关规则
 

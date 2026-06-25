@@ -59,28 +59,28 @@ allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 
 ### Agent Mode Examples
 
-**Crate Version Query:**
+**Crate 版本查询：**
 
 ```
 User: "tokio latest version"
 
-Claude:
-1. Read ../../agents/crate-researcher.md
+Claude：
+1. 读取 ../../agents/crate-researcher.md
 2. Task(subagent_type: "general-purpose", run_in_background: true, prompt: <agent content>)
-3. Wait for agent
-4. Summarize results
+3. 等待 agent 完成
+4. 总结结果
 ```
 
-**Rust Changelog Query:**
+**Rust 更新日志查询：**
 
 ```
 User: "What's new in Rust 1.85?"
 
-Claude:
-1. Read ../../agents/rust-changelog.md
+Claude：
+1. 读取 ../../agents/rust-changelog.md
 2. Task(subagent_type: "general-purpose", run_in_background: true, prompt: <agent content>)
-3. Wait for agent
-4. Summarize features
+3. 等待 agent 完成
+4. 总结特性
 ```
 
 ---
@@ -89,103 +89,103 @@ Claude:
 
 **When agent files are NOT available, execute directly using these steps:**
 
-### Crate Info Query
+### Crate 信息查询
 
 ```
 1. actionbook: mcp__actionbook__search_actions("lib.rs crate info")
-2. Get action details: mcp__actionbook__get_action_by_id(<action_id>)
-3. agent-browser CLI (or WebFetch fallback):
-   - open "https://lib.rs/crates/{crate_name}"
-   - get text using selector from actionbook
-   - close
-4. Parse and format output
+2. 获取 action 详情：mcp__actionbook__get_action_by_id(<action_id>)
+3. agent-browser CLI（或 WebFetch 回退）：
+   - 打开 "https://lib.rs/crates/{crate_name}"
+   - 使用 actionbook 中的选择器获取文本
+   - 关闭
+4. 解析并格式化输出
 ```
 
-**Output Format:**
+**输出格式：**
 
 ```markdown
-## {Crate Name}
+## {Crate 名称}
 
-**Version:** {latest}
-**Description:** {description}
+**版本：** {latest}
+**描述：** {description}
 
-**Features:**
-- `feature1`: description
+**特性：**
+- `feature1`：描述
 
-**Links:**
-- [docs.rs](https://docs.rs/{crate}) | [crates.io](https://crates.io/crates/{crate}) | [repo]({repo_url})
+**链接：**
+- [docs.rs](https://docs.rs/{crate}) | [crates.io](https://crates.io/crates/{crate}) | [仓库]({repo_url})
 ```
 
-### Rust Version Query
+### Rust 版本查询
 
 ```
-1. actionbook: mcp__actionbook__search_actions("releases.rs rust changelog")
-2. Get action details for selectors
-3. agent-browser CLI (or WebFetch fallback):
-   - open "https://releases.rs/docs/1.{version}.0/"
-   - get text using selector from actionbook
-   - close
-4. Parse and format output
+1. actionbook：mcp__actionbook__search_actions("releases.rs rust changelog")
+2. 获取 action 详情和选择器
+3. agent-browser CLI（或 WebFetch 回退）：
+   - 打开 "https://releases.rs/docs/1.{version}.0/"
+   - 使用 actionbook 中的选择器获取文本
+   - 关闭
+4. 解析并格式化输出
 ```
 
-**Output Format:**
+**输出格式：**
 
 ```markdown
 ## Rust 1.{version}
 
-**Release Date:** {date}
+**发布日期：** {date}
 
-### Language Features
-- Feature 1: description
-- Feature 2: description
+### 语言特性
+- 特性 1：描述
+- 特性 2：描述
 
-### Library Changes
-- std::module: new API
+### 库变更
+- std::module：新 API
 
-### Stabilized APIs
-- `api_name`: description
+### 已稳定的 API
+- `api_name`：描述
 ```
 
-### Std Library Docs (std::*, Send, Sync, Arc, etc.)
+### 标准库文档（std::*、Send、Sync、Arc 等）
 
 ```
-1. Construct URL: "https://doc.rust-lang.org/std/{path}/"
-   - Traits: std/{module}/trait.{Name}.html
-   - Structs: std/{module}/struct.{Name}.html
-   - Modules: std/{module}/index.html
-2. agent-browser CLI (or WebFetch fallback):
-   - open <url>
-   - get text "main .docblock"
-   - close
-3. Parse and format output
+1. 构造 URL："https://doc.rust-lang.org/std/{path}/"
+   - Trait：std/{module}/trait.{Name}.html
+   - Struct：std/{module}/struct.{Name}.html
+   - 模块：std/{module}/index.html
+2. agent-browser CLI（或 WebFetch 回退）：
+   - 打开 <url>
+   - 获取文本 "main .docblock"
+   - 关闭
+3. 解析并格式化输出
 ```
 
 **Common Std Library Paths:**
 
-| Item | Path |
+| 项 | 路径 |
 |------|------|
-| Send, Sync, Copy, Clone | `std/marker/trait.{Name}.html` |
-| Arc, Mutex, RwLock | `std/sync/struct.{Name}.html` |
-| Rc, Weak | `std/rc/struct.{Name}.html` |
-| RefCell, Cell | `std/cell/struct.{Name}.html` |
+| Send、Sync、Copy、Clone | `std/marker/trait.{Name}.html` |
+| Arc、Mutex、RwLock | `std/sync/struct.{Name}.html` |
+| Rc、Weak | `std/rc/struct.{Name}.html` |
+| RefCell、Cell | `std/cell/struct.{Name}.html` |
 | Box | `std/boxed/struct.Box.html` |
 | Vec | `std/vec/struct.Vec.html` |
 | String | `std/string/struct.String.html` |
 
-**Output Format:**
+**输出格式：**
 
 ```markdown
 ## std::{path}::{Name}
 
-**Signature:**
+**签名：**
 ```rust
 {signature}
 ```
 
-**Description:**
+**描述：**
 {description}
 
-**Examples:**
+**示例：**
 
 ```rust
 {example_code}
@@ -193,32 +193,32 @@ Claude:
 
 ```
 
-### Third-Party Crate Docs (tokio, serde, etc.)
+### 第三方 Crate 文档（tokio、serde 等）
 
 ```
 
-1. Construct URL: "<https://docs.rs/{crate}/latest/{crate}/{path}>"
-2. agent-browser CLI (or WebFetch fallback):
-   - open <url>
-   - get text ".docblock"
-   - close
-3. Parse and format output
+1. 构造 URL："<https://docs.rs/{crate}/latest/{crate}/{path}>"
+2. agent-browser CLI（或 WebFetch 回退）：
+   - 打开 <url>
+   - 获取文本 ".docblock"
+   - 关闭
+3. 解析并格式化输出
 
 ```
 
-**Output Format:**
+**输出格式：**
 ```markdown
 ## {crate}::{path}
 
-**Signature:**
+**签名：**
 ```rust
 {signature}
 ```
 
-**Description:**
+**描述：**
 {description}
 
-**Examples:**
+**示例：**
 
 ```rust
 {example_code}
@@ -226,35 +226,35 @@ Claude:
 
 ```
 
-### Clippy Lints
+### Clippy Lint
 
 ```
 
-1. agent-browser CLI (or WebFetch fallback):
-   - open "<https://rust-lang.github.io/rust-clippy/stable/>"
-   - search for lint name in page
-   - get text ".lint-doc" for matching lint
-   - close
-2. Parse and format output
+1. agent-browser CLI（或 WebFetch 回退）：
+   - 打开 "<https://rust-lang.github.io/rust-clippy/stable/>"
+   - 在页面中搜索 lint 名称
+   - 获取匹配 lint 的 ".lint-doc" 文本
+   - 关闭
+2. 解析并格式化输出
 
 ```
 
-**Output Format:**
+**输出格式：**
 ```markdown
-## Clippy Lint: {lint_name}
+## Clippy Lint：{lint_name}
 
-**Level:** {warn|deny|allow}
-**Category:** {category}
+**级别：** {warn|deny|allow}
+**分类：** {category}
 
-**Description:**
+**描述：**
 {what_it_checks}
 
-**Example (Bad):**
+**不良示例：**
 ```rust
 {bad_code}
 ```
 
-**Example (Good):**
+**良好示例：**
 
 ```rust
 {good_code}
@@ -264,62 +264,62 @@ Claude:
 
 ---
 
-## Tool Chain Priority
+## 工具链优先级
 
-Both modes use the same tool chain order:
+两种模式使用相同的工具链顺序：
 
-1. **actionbook MCP** - Get pre-computed selectors first
-   - `mcp__actionbook__search_actions("site_name")` → get action ID
-   - `mcp__actionbook__get_action_by_id(id)` → get URL + selectors
+1. **actionbook MCP** - 首先获取预计算的选择器
+   - `mcp__actionbook__search_actions("site_name")` → 获取 action ID
+   - `mcp__actionbook__get_action_by_id(id)` → 获取 URL + 选择器
 
-2. **agent-browser CLI** - Primary execution tool
+2. **agent-browser CLI** - 主要执行工具
    ```bash
    agent-browser open <url>
    agent-browser get text <selector_from_actionbook>
    agent-browser close
    ```
 
-1. **WebFetch** - Last resort only if agent-browser unavailable
+1. **WebFetch** - 仅在 agent-browser 不可用时作为最后手段
 
-### Fallback Principle (CRITICAL)
+### 回退原则（关键）
 
 ```
-actionbook → agent-browser → WebFetch (only if agent-browser unavailable)
+actionbook → agent-browser → WebFetch（仅当 agent-browser 不可用时）
 ```
 
-**DO NOT:**
+**不要：**
 
-- Skip agent-browser because it's slower
-- Use WebFetch as primary when agent-browser is available
-- Block on WebFetch without trying agent-browser first
+- 因为 agent-browser 较慢而跳过它
+- 在 agent-browser 可用时使用 WebFetch 作为主要工具
+- 未先尝试 agent-browser 就使用 WebFetch
 
 ---
 
-## Deprecated Patterns
+## 已弃用的模式
 
-| Deprecated | Use Instead | Reason |
+| 已弃用 | 改用 | 原因 |
 |------------|-------------|--------|
-| WebSearch for crate info | Task + agent or inline mode | Structured data |
-| Direct WebFetch | actionbook + agent-browser | Pre-computed selectors |
-| Guessing version numbers | Always fetch from source | Prevents misinformation |
+| WebSearch 查询 crate 信息 | Task + agent 或内联模式 | 结构化数据 |
+| 直接使用 WebFetch | actionbook + agent-browser | 预计算选择器 |
+| 猜测版本号 | 始终从源获取 | 防止错误信息 |
 
-## Error Handling
+## 错误处理
 
-| Error | Cause | Solution |
+| 错误 | 原因 | 解决方案 |
 |-------|-------|----------|
-| Agent file not found | Skills-only install | Use inline mode |
-| actionbook unavailable | MCP not configured | Fall back to WebFetch |
-| agent-browser not found | CLI not installed | Fall back to WebFetch |
-| Agent timeout | Site slow/down | Retry or inform user |
-| Empty results | Selector mismatch | Report and use WebFetch fallback |
+| Agent 文件未找到 | 仅安装了 Skill | 使用内联模式 |
+| actionbook 不可用 | MCP 未配置 | 回退到 WebFetch |
+| agent-browser 未找到 | CLI 未安装 | 回退到 WebFetch |
+| Agent 超时 | 站点慢/宕机 | 重试或通知用户 |
+| 空结果 | 选择器不匹配 | 报告并使用 WebFetch 回退 |
 
-## Proactive Triggering
+## 主动触发
 
-This skill triggers AUTOMATICALLY when:
+以下情况会自动触发本技能：
 
-- Any Rust crate name mentioned (tokio, serde, axum, sqlx, etc.)
-- Questions about "latest", "new", "version", "changelog"
-- API documentation requests
-- Dependency/feature questions
+- 提及任何 Rust crate 名称（tokio、serde、axum、sqlx 等）
+- 关于 "latest"、"new"、"version"、"changelog" 的问题
+- API 文档请求
+- 依赖/特性问题
 
-**DO NOT use WebSearch for Rust crate info. Use agents or inline mode instead.**
+**不要使用 WebSearch 查询 Rust crate 信息。改用 agent 或内联模式。**

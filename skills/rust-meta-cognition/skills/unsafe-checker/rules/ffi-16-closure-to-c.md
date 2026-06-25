@@ -5,17 +5,17 @@ level: P
 impact: HIGH
 ---
 
-# Separate Data and Code When Passing Rust Closures to C
+# 将闭包的数据和代码分离传递给 C
 
 ## 概要
 
-C callbacks are function pointers without captured state. To pass Rust closures to C, separate the function pointer from the closure data using a "trampoline" pattern.
+C 回调是无捕获状态的函数指针。要将 Rust 闭包传递给 C，使用“跳板”（trampoline）模式将函数指针与闭包数据分离。
 
 ## 理由
 
-- Rust closures can capture state (like lambdas)
-- C function pointers are just addresses, no state
-- Must pass state separately via `void*` user_data
+- Rust 闭包可以捕获状态（如 lambda）
+- C 函数指针只是地址，没有状态
+- 必须通过 `void*` user_data 分别传递状态
 
 ## 错误示例
 
@@ -111,7 +111,7 @@ fn example() {
 }
 ```
 
-## Trampoline Pattern
+## 跳板模式
 
 ```
 Rust Closure: |x| x * captured_value
@@ -130,10 +130,10 @@ C sees: function pointer + void* user_data
 
 ## 检查清单
 
-- [ ] Does my closure capture any state?
-- [ ] Am I using the trampoline pattern?
-- [ ] Does the closure data live long enough?
-- [ ] Am I unregistering before dropping the closure?
+- [ ] 我的闭包是否捕获了任何状态？
+- [ ] 我是否使用了跳板模式？
+- [ ] 闭包数据是否存活得足够久？
+- [ ] 在 drop 闭包之前我是否注销了回调？
 
 ## 相关规则
 

@@ -6,17 +6,17 @@ impact: HIGH
 clippy: unaligned_references
 ---
 
-# Be Careful with UB When Referencing #[repr(packed)] Struct Fields
+# 引用 #[repr(packed)] 结构体字段时注意 UB
 
 ## 概要
 
-Creating references to fields in `#[repr(packed)]` structs is undefined behavior if the field is misaligned. Use raw pointers and `read_unaligned`/`write_unaligned` instead.
+创建对 `#[repr(packed)]` 结构体字段的引用，如果字段未对齐，则是未定义行为。使用原始指针和 `read_unaligned`/`write_unaligned` 替代。
 
 ## 理由
 
-- Packed structs have no padding, so fields may be misaligned
-- References must be aligned; misaligned references are UB
-- Even implicit references (method calls, match) can cause UB
+- Packed 结构体没有填充，因此字段可能未对齐
+- 引用必须对齐；未对齐的引用是 UB
+- 即使是隐式引用（方法调用、match）也可能导致 UB
 
 ## 错误示例
 
@@ -110,7 +110,7 @@ impl PacketBytes {
 }
 ```
 
-## Safe Alternatives
+## 安全替代方案
 
 ```rust
 // Alternative 1: Don't use packed
@@ -131,10 +131,10 @@ struct AlignedPacket {
 
 ## 检查清单
 
-- [ ] Am I creating references to packed struct fields?
-- [ ] Am I using addr_of! / addr_of_mut! for field access?
-- [ ] Am I using read_unaligned / write_unaligned?
-- [ ] Would a byte array representation be safer?
+- [ ] 我是否正在创建对 packed 结构体字段的引用？
+- [ ] 我是否对字段访问使用了 `addr_of!` / `addr_of_mut!`？
+- [ ] 我是否使用了 `read_unaligned` / `write_unaligned`？
+- [ ] 字节数组表示是否更安全？
 
 ## 相关规则
 

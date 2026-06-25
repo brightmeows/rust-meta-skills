@@ -9,13 +9,11 @@ impact: CRITICAL
 
 ## 概要
 
-Never create `String`, `Vec`, or `Box` from memory allocated outside Rust's allocator. They will try to free the memory with the wrong deallocator.
+永远不要从 Rust 分配器之外分配的内存创建 `String`、`Vec` 或 `Box`。它们会尝试用错误的释放器释放内存。
 
 ## 理由
 
-`String`, `Vec`, and `Box` assume memory was allocated by Rust's global allocator.
-When dropped, they call `dealloc`. If the memory came from C's `malloc`, a different
-allocator, or shared memory, this causes undefined behavior.
+`String`、`Vec` 和 `Box` 假定内存是由 Rust 的全局分配器分配的。当被 drop 时，它们会调用 `dealloc`。如果内存来自 C 的 `malloc`、不同的分配器或共享内存，这会导致未定义行为。
 
 ## 错误示例
 
@@ -104,23 +102,23 @@ impl Drop for SharedBuffer {
 }
 ```
 
-## Memory Allocation Compatibility
+## 内存分配兼容性
 
-| Allocator | Can use Rust Vec/String/Box? |
+| 分配器 | 能否使用 Rust Vec/String/Box？ |
 |-----------|------------------------------|
-| Rust global allocator | Yes |
-| C malloc | No - use wrapper with C free |
-| C++ new | No - use wrapper with C++ delete |
-| Custom allocator | No - use allocator_api |
-| mmap/shared memory | No - use munmap |
-| Stack/static | No - never "free" |
+| Rust 全局分配器 | 能 |
+| C malloc | 不能——使用带 C free 的包装器 |
+| C++ new | 不能——使用带 C++ delete 的包装器 |
+| 自定义分配器 | 不能——使用 allocator_api |
+| mmap/共享内存 | 不能——使用 munmap |
+| 栈/静态 | 不能——永远不要“释放” |
 
 ## 检查清单
 
-- [ ] Who allocated this memory?
-- [ ] Is it from Rust's global allocator?
-- [ ] If not, do I have a custom Drop that frees correctly?
-- [ ] Am I copying data or taking ownership?
+- [ ] 谁分配了这块内存？
+- [ ] 是否来自 Rust 的全局分配器？
+- [ ] 如果不是，我是否有正确释放的自定义 Drop？
+- [ ] 我是在复制数据还是取得所有权？
 
 ## 相关规则
 

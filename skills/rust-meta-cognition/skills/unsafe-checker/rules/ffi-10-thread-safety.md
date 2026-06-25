@@ -9,14 +9,14 @@ impact: CRITICAL
 
 ## 概要
 
-Functions exported to C with `#[no_mangle] extern "C"` may be called from multiple threads. Ensure they are thread-safe.
+通过 `#[no_mangle] extern "C"` 导出到 C 的函数可能被多个线程调用。确保它们是线程安全的。
 
 ## 理由
 
-- C code doesn't know about Rust's thread safety guarantees
-- C may call your function from any thread
-- Global state must be synchronized
-- Race conditions are undefined behavior
+- C 代码不知道 Rust 的线程安全保证
+- C 可能从任何线程调用你的函数
+- 全局状态必须同步
+- 竞争条件是未定义行为
 
 ## 错误示例
 
@@ -109,22 +109,22 @@ struct SingleThreadHandle {
 }
 ```
 
-## Synchronization Patterns
+## 同步模式
 
-| Pattern | Use Case |
+| 模式 | 用例 |
 |---------|----------|
-| `AtomicT` | Simple counters, flags |
-| `Mutex<T>` | Complex shared state |
-| `RwLock<T>` | Read-heavy shared state |
-| `OnceLock<T>` | Lazy one-time init |
-| `thread_local!` | Per-thread state (document!) |
+| `AtomicT` | 简单计数器、标志 |
+| `Mutex<T>` | 复杂共享状态 |
+| `RwLock<T>` | 读多写少的共享状态 |
+| `OnceLock<T>` | 延迟一次性初始化 |
+| `thread_local!` | 每线程状态（文档化！） |
 
 ## 检查清单
 
-- [ ] Does my exported function access global state?
-- [ ] Is that state properly synchronized?
-- [ ] Have I documented thread-safety guarantees?
-- [ ] Are any types !Send/!Sync exposed across FFI?
+- [ ] 我的导出函数是否访问了全局状态？
+- [ ] 该状态是否恰当同步？
+- [ ] 我是否文档化了线程安全保证？
+- [ ] 是否有任何 `!Send`/`!Sync` 类型跨 FFI 暴露？
 
 ## 相关规则
 

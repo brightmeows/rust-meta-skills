@@ -10,14 +10,14 @@ clippy: ptr_as_ptr
 
 ## 概要
 
-Use the `cast()` method instead of `as` for pointer type conversions. It's clearer and prevents accidental provenance loss.
+使用 `cast()` 方法而非 `as` 进行指针类型转换。它更清晰，并防止意外的 provenance 丢失。
 
 ## 理由
 
-- `cast()` only changes the pointed-to type, not pointer properties
-- `as` can accidentally convert to integer and back, losing provenance
-- `cast()` is more explicit about intent
-- Better tooling support (clippy, miri)
+- `cast()` 只改变指向的类型，不改变指针属性
+- `as` 可能意外转换为整数再转回，丢失 provenance
+- `cast()` 更明确意图
+- 更好的工具支持（clippy、miri）
 
 ## 错误示例
 
@@ -94,15 +94,15 @@ let ptr2 = addr as *const u8;  // ptr2 has no provenance!
 let ptr2 = ptr.with_addr(addr);  // Still has permission
 
 // GOOD: Use expose/from_exposed when provenance must cross integer
-let addr = ptr.expose_addr();  // "Expose" the provenance
-let ptr2 = std::ptr::from_exposed_addr(addr);  // Recover it
+let addr = ptr.expose_addr();  // "暴露" provenance
+let ptr2 = std::ptr::from_exposed_addr(addr);  // 恢复它
 ```
 
 ## 检查清单
 
-- [ ] Am I using `as` where `cast()` would be clearer?
-- [ ] Am I accidentally converting through `usize`?
-- [ ] Do I need to preserve provenance?
+- [ ] 我是否在 `cast()` 更清晰的地方使用了 `as`？
+- [ ] 我是否无意中通过 `usize` 进行了转换？
+- [ ] 是否需要保留 provenance？
 
 ## 相关规则
 

@@ -17,17 +17,17 @@ allowed-tools: ["LSP", "Read", "Glob"]
 /rust-symbol-analyzer [file.rs] [--type struct|trait|fn|mod]
 ```
 
-**Examples:**
+**示例：**
 
-- `/rust-symbol-analyzer` - Analyze entire project
-- `/rust-symbol-analyzer src/lib.rs` - Analyze single file
-- `/rust-symbol-analyzer --type trait` - List all traits in project
+- `/rust-symbol-analyzer` - 分析整个项目
+- `/rust-symbol-analyzer src/lib.rs` - 分析单个文件
+- `/rust-symbol-analyzer --type trait` - 列出项目中所有 trait
 
-## LSP Operations
+## LSP 操作
 
-### 1. Document Symbols (Single File)
+### 1. 文档符号（单文件）
 
-Get all symbols in a file with their hierarchy.
+获取文件中所有符号及其层级。
 
 ```
 LSP(
@@ -38,11 +38,11 @@ LSP(
 )
 ```
 
-**Returns:** Nested structure of modules, structs, functions, etc.
+**返回：** 模块、struct、函数等的嵌套结构
 
-### 2. Workspace Symbols (Entire Project)
+### 2. 工作区符号（整个项目）
 
-Search for symbols across the workspace.
+在工作区中搜索符号。
 
 ```
 LSP(
@@ -53,31 +53,31 @@ LSP(
 )
 ```
 
-**Note:** Query is implicit in the operation context.
+**注意：** 查询隐含在操作上下文中。
 
-## Workflow
+## 工作流
 
 ```
 User: "What's the structure of this project?"
     │
     ▼
-[1] Find all Rust files
+[1] 查找所有 Rust 文件
     Glob("**/*.rs")
     │
     ▼
-[2] Get symbols from each key file
+[2] 从每个关键文件获取符号
     LSP(documentSymbol) for lib.rs, main.rs
     │
     ▼
-[3] Categorize by type
+[3] 按类型分类
     │
     ▼
-[4] Generate structure visualization
+[4] 生成结构可视化
 ```
 
-## Output Format
+## 输出格式
 
-### Project Overview
+### 项目概览
 
 ```
 ## Project Structure: my-project
@@ -100,42 +100,42 @@ User: "What's the structure of this project?"
     └── integration.rs
 ```
 
-### By Symbol Type
+### 按符号类型
 
 ```
-## Symbols by Type
+## 按类型分类的符号
 
-### Structs (12)
-| Name | Location | Fields | Derives |
+### Struct（12 个）
+| 名称 | 位置 | 字段数 | 派生 |
 |------|----------|--------|---------|
 | Config | src/config.rs:10 | 5 | Debug, Clone |
 | User | src/models/user.rs:8 | 4 | Debug, Serialize |
 | Order | src/models/order.rs:15 | 6 | Debug, Serialize |
 | ... | | | |
 
-### Traits (4)
-| Name | Location | Methods | Implementors |
+### Trait（4 个）
+| 名称 | 位置 | 方法数 | 实现者 |
 |------|----------|---------|--------------|
 | Handler | src/handlers/mod.rs:5 | 3 | AuthHandler, ApiHandler |
 | Repository | src/db/mod.rs:12 | 5 | UserRepo, OrderRepo |
 | ... | | | |
 
-### Functions (25)
-| Name | Location | Visibility | Async |
+### 函数（25 个）
+| 名称 | 位置 | 可见性 | 异步 |
 |------|----------|------------|-------|
-| main | src/main.rs:10 | pub | yes |
-| parse_config | src/config.rs:45 | pub | no |
+| main | src/main.rs:10 | pub | 是 |
+| parse_config | src/config.rs:45 | pub | 否 |
 | ... | | | |
 
-### Enums (6)
-| Name | Location | Variants |
+### 枚举（6 个）
+| 名称 | 位置 | 变体数 |
 |------|----------|----------|
 | Error | src/error.rs:5 | 8 |
 | Status | src/models/order.rs:5 | 4 |
 | ... | | |
 ```
 
-### Single File Analysis
+### 单个文件分析
 
 ```
 ## src/handlers/auth.rs
@@ -162,64 +162,64 @@ mod auth
     └── fn name(&self) -> &str
 ```
 
-## Analysis Features
+## 分析功能
 
-### Complexity Metrics
+### 复杂度指标
 
 ```
-## Complexity Analysis
+## 复杂度分析
 
-| File | Structs | Functions | Lines | Complexity |
+| 文件 | Struct 数 | 函数数 | 行数 | 复杂度 |
 |------|---------|-----------|-------|------------|
-| src/handlers/auth.rs | 2 | 8 | 150 | Medium |
-| src/models/user.rs | 3 | 12 | 200 | High |
-| src/config.rs | 1 | 3 | 50 | Low |
+| src/handlers/auth.rs | 2 | 8 | 150 | 中 |
+| src/models/user.rs | 3 | 12 | 200 | 高 |
+| src/config.rs | 1 | 3 | 50 | 低 |
 
-**Hotspots:** Files with high complexity that may need refactoring
-- src/handlers/api.rs (15 functions, 300 lines)
+**热点：** 高复杂度文件可能需要重构
+- src/handlers/api.rs（15 个函数，300 行）
 ```
 
-### Dependency Analysis
+### 依赖分析
 
 ```
-## Internal Dependencies
+## 内部依赖
 
 auth.rs
-├── imports from: config.rs, models/user.rs, db/mod.rs
-└── imported by: main.rs, handlers/mod.rs
+├── 导入来源：config.rs、models/user.rs、db/mod.rs
+└── 被引用者：main.rs、handlers/mod.rs
 
 user.rs
-├── imports from: (none - leaf module)
-└── imported by: auth.rs, api.rs, tests/
+├── 导入来源：（无 - 叶子模块）
+└── 被引用者：auth.rs、api.rs、tests/
 ```
 
-## Symbol Types
+## 符号类型
 
-| Type | Icon | LSP Kind |
+| 类型 | 图标 | LSP 种类 |
 |------|------|----------|
-| Module | 📦 | Module |
+| 模块 | 📦 | Module |
 | Struct | 🏗️ | Struct |
-| Enum | 🔢 | Enum |
+| 枚举 | 🔢 | Enum |
 | Trait | 📜 | Interface |
-| Function | ⚡ | Function |
-| Method | 🔧 | Method |
-| Constant | 🔒 | Constant |
-| Field | 📎 | Field |
+| 函数 | ⚡ | Function |
+| 方法 | 🔧 | Method |
+| 常量 | 🔒 | Constant |
+| 字段 | 📎 | Field |
 
-## Common Queries
+## 常见查询
 
-| User Says | Analysis |
+| 用户提问 | 分析方式 |
 |-----------|----------|
-| "What structs are in this project?" | workspaceSymbol + filter |
-| "Show me src/lib.rs structure" | documentSymbol |
-| "Find all async functions" | workspaceSymbol + async filter |
-| "List public API" | documentSymbol + pub filter |
+| "这个项目中有哪些 struct？" | workspaceSymbol + 过滤 |
+| "显示 src/lib.rs 的结构" | documentSymbol |
+| "查找所有异步函数" | workspaceSymbol + async 过滤 |
+| "列出公共 API" | documentSymbol + pub 过滤 |
 
-## Related Skills
+## 相关技能
 
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Navigate to symbol | rust-code-navigator |
-| Call relationships | rust-call-graph |
-| Trait implementations | rust-trait-explorer |
-| Safe refactoring | rust-refactor-helper |
+| 导航到符号 | rust-code-navigator |
+| 调用关系 | rust-call-graph |
+| Trait 实现 | rust-trait-explorer |
+| 安全重构 | rust-refactor-helper |

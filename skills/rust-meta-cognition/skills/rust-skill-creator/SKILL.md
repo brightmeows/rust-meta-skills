@@ -16,63 +16,63 @@ agent: general-purpose
 >
 > 为 Rust crate 和标准库文档创建动态 Skill。
 
-## When to Use
+## 使用时机
 
-This skill handles requests to create skills for:
+本技能用于处理创建技能的请求：
 
-- Third-party crates (tokio, serde, axum, etc.)
-- Rust standard library (std::sync, std::marker, etc.)
-- Any Rust documentation URL
+- 第三方 crate（tokio、serde、axum 等）
+- Rust 标准库（std::sync、std::marker 等）
+- 任何 Rust 文档 URL
 
-## Execution Mode Detection
+## 执行模式检测
 
-**CRITICAL: Check if related commands/skills are available.**
+**关键：检查相关命令/skill 是否可用。**
 
-This skill relies on:
+本技能依赖：
 
-- `/create-llms-for-skills` command
-- `/create-skills-via-llms` command
+- `/create-llms-for-skills` 命令
+- `/create-skills-via-llms` 命令
 
 ---
 
-## Agent Mode (Plugin Install)
+## Agent 模式（插件安装）
 
-**When the commands above are available (full plugin installation):**
+**当上述命令可用时（完整插件安装）：**
 
-### Workflow
+### 工作流
 
-#### 1. Identify the Target
+#### 1. 识别目标
 
-| User Request | Target Type | URL Pattern |
+| 用户请求 | 目标类型 | URL 模式 |
 |--------------|-------------|-------------|
-| "create tokio skill" | Third-party crate | `docs.rs/tokio/latest/tokio/` |
-| "create Send trait skill" | Std library | `doc.rust-lang.org/std/marker/trait.Send.html` |
-| "create skill from URL" + URL | Custom URL | User-provided URL |
+| "create tokio skill" | 第三方 crate | `docs.rs/tokio/latest/tokio/` |
+| "create Send trait skill" | 标准库 | `doc.rust-lang.org/std/marker/trait.Send.html` |
+| "create skill from URL" + URL | 自定义 URL | 用户提供的 URL |
 
-#### 2. Execute the Command
+#### 2. 执行命令
 
-Use the `/create-llms-for-skills` command:
+使用 `/create-llms-for-skills` 命令：
 
 ```
 /create-llms-for-skills <url> [requirements]
 ```
 
-**Examples:**
+**示例：**
 
 ```bash
-# For third-party crate
+# 第三方 crate
 /create-llms-for-skills https://docs.rs/tokio/latest/tokio/
 
-# For std library
+# 标准库
 /create-llms-for-skills https://doc.rust-lang.org/std/marker/trait.Send.html
 
-# With specific requirements
+# 带特定要求
 /create-llms-for-skills https://docs.rs/axum/latest/axum/ "Focus on routing and extractors"
 ```
 
-#### 3. Follow-up with Skill Creation
+#### 3. 后续创建 Skill
 
-After llms.txt is generated, use:
+llms.txt 生成后，使用：
 
 ```
 /create-skills-via-llms <crate_name> <llms_path> [version]
@@ -80,21 +80,21 @@ After llms.txt is generated, use:
 
 ---
 
-## Inline Mode (Skills-only Install)
+## 内联模式（仅安装 Skill）
 
-**When the commands above are NOT available, create skills manually:**
+**当上述命令不可用时，手动创建技能：**
 
-### Step 1: Identify Target and Construct URL
+### 步骤 1：识别目标并构造 URL
 
-| Target | URL Template |
+| 目标 | URL 模板 |
 |--------|--------------|
-| Crate overview | `https://docs.rs/{crate}/latest/{crate}/` |
-| Crate module | `https://docs.rs/{crate}/latest/{crate}/{module}/` |
-| Std trait | `https://doc.rust-lang.org/std/{module}/trait.{Name}.html` |
-| Std struct | `https://doc.rust-lang.org/std/{module}/struct.{Name}.html` |
-| Std module | `https://doc.rust-lang.org/std/{module}/index.html` |
+| Crate 概览 | `https://docs.rs/{crate}/latest/{crate}/` |
+| Crate 模块 | `https://docs.rs/{crate}/latest/{crate}/{module}/` |
+| 标准库 trait | `https://doc.rust-lang.org/std/{module}/trait.{Name}.html` |
+| 标准库 struct | `https://doc.rust-lang.org/std/{module}/struct.{Name}.html` |
+| 标准库模块 | `https://doc.rust-lang.org/std/{module}/index.html` |
 
-### Step 2: Fetch Documentation
+### 步骤 2：获取文档
 
 ```bash
 # Using agent-browser CLI
@@ -109,16 +109,16 @@ agent-browser close
 WebFetch("<documentation_url>", "Extract API documentation including types, functions, and examples")
 ```
 
-### Step 3: Create Skill Directory
+### 步骤 3：创建 Skill 目录
 
 ```bash
 mkdir -p ~/.claude/skills/{crate_name}
 mkdir -p ~/.claude/skills/{crate_name}/references
 ```
 
-### Step 4: Generate SKILL.md
+### 步骤 4：生成 SKILL.md
 
-Create `~/.claude/skills/{crate_name}/SKILL.md` with this template:
+使用此模板创建 `~/.claude/skills/{crate_name}/SKILL.md`：
 
 ```markdown
 ---
@@ -130,11 +130,11 @@ description: "Documentation for {crate_name} crate. Keywords: {keywords}"
 
 > **Version:** {version} | **Source:** docs.rs
 
-## Overview
+## 概述
 
-{Brief description from documentation}
+{文档中的简要描述}
 
-## Key Types
+## 关键类型
 
 ### {Type1}
 {Description and usage}
@@ -142,31 +142,31 @@ description: "Documentation for {crate_name} crate. Keywords: {keywords}"
 ### {Type2}
 {Description and usage}
 
-## Common Patterns
+## 常见模式
 
-{Usage patterns extracted from documentation}
+{从文档中提取的使用模式}
 
-## Examples
+## 示例
 
 ```rust
 {Example code from documentation}
 ```
 
-## Documentation
+## 文档
 
-- `./references/overview.md` - Main overview
-- `./references/{module}.md` - Module documentation
+- `./references/overview.md` - 主要概览
+- `./references/{module}.md` - 模块文档
 
-## Links
+## 链接
 
 - [docs.rs](https://docs.rs/{crate})
 - [crates.io](https://crates.io/crates/{crate})
 
 ```
 
-### Step 5: Generate Reference Files
+### 步骤 5：生成引用文件
 
-For each major module or type, create a reference file:
+对每个主要模块或类型，创建引用文件： 
 
 ```bash
 # Fetch and save module documentation
@@ -175,10 +175,10 @@ agent-browser get text ".docblock" > ~/.claude/skills/{crate_name}/references/{m
 agent-browser close
 ```
 
-### Step 6: Verify Skill
+### 步骤 6：验证 Skill
 
 ```bash
-# Check skill structure
+# 检查 skill 结构
 ls -la ~/.claude/skills/{crate_name}/
 cat ~/.claude/skills/{crate_name}/SKILL.md
 ```
@@ -187,22 +187,22 @@ cat ~/.claude/skills/{crate_name}/SKILL.md
 
 ## URL Construction Helper
 
-| Target | URL Template |
+| 目标 | URL 模板 |
 |--------|--------------|
-| Crate overview | `https://docs.rs/{crate}/latest/{crate}/` |
-| Crate module | `https://docs.rs/{crate}/latest/{crate}/{module}/` |
-| Std trait | `https://doc.rust-lang.org/std/{module}/trait.{Name}.html` |
-| Std struct | `https://doc.rust-lang.org/std/{module}/struct.{Name}.html` |
-| Std module | `https://doc.rust-lang.org/std/{module}/index.html` |
+| Crate 概览 | `https://docs.rs/{crate}/latest/{crate}/` |
+| Crate 模块 | `https://docs.rs/{crate}/latest/{crate}/{module}/` |
+| 标准库 trait | `https://doc.rust-lang.org/std/{module}/trait.{Name}.html` |
+| 标准库 struct | `https://doc.rust-lang.org/std/{module}/struct.{Name}.html` |
+| 标准库模块 | `https://doc.rust-lang.org/std/{module}/index.html` |
 
-## Common Std Library Paths
+## 常见标准库路径
 
-| Item | Path |
+| 项 | 路径 |
 |------|------|
-| Send, Sync, Copy, Clone | `std/marker/trait.{Name}.html` |
-| Arc, Mutex, RwLock | `std/sync/struct.{Name}.html` |
-| Rc, Weak | `std/rc/struct.{Name}.html` |
-| RefCell, Cell | `std/cell/struct.{Name}.html` |
+| Send、Sync、Copy、Clone | `std/marker/trait.{Name}.html` |
+| Arc、Mutex、RwLock | `std/sync/struct.{Name}.html` |
+| Rc、Weak | `std/rc/struct.{Name}.html` |
+| RefCell、Cell | `std/cell/struct.{Name}.html` |
 | Box | `std/boxed/struct.Box.html` |
 | Vec | `std/vec/struct.Vec.html` |
 | String | `std/string/struct.String.html` |
@@ -211,63 +211,63 @@ cat ~/.claude/skills/{crate_name}/SKILL.md
 
 ---
 
-## Example Interactions
+## 交互示例
 
-### Example 1: Create Crate Skill (Agent Mode)
-
-```
-User: "Create a dynamic skill for tokio"
-
-Claude:
-1. Identify: Third-party crate "tokio"
-2. Execute: /create-llms-for-skills https://docs.rs/tokio/latest/tokio/
-3. Wait for llms.txt generation
-4. Execute: /create-skills-via-llms tokio ~/tmp/{timestamp}-tokio-llms.txt
-```
-
-### Example 2: Create Crate Skill (Inline Mode)
+### 示例 1：创建 Crate Skill（Agent 模式）
 
 ```
 User: "Create a dynamic skill for tokio"
 
-Claude:
-1. Identify: Third-party crate "tokio"
-2. Fetch: agent-browser open "https://docs.rs/tokio/latest/tokio/"
-3. Extract documentation
-4. Create: ~/.claude/skills/tokio/SKILL.md
-5. Create: ~/.claude/skills/tokio/references/
-6. Save reference files for key modules (sync, task, runtime, etc.)
+Claude：
+1. 识别：第三方 crate "tokio"
+2. 执行：/create-llms-for-skills https://docs.rs/tokio/latest/tokio/
+3. 等待 llms.txt 生成
+4. 执行：/create-skills-via-llms tokio ~/tmp/{timestamp}-tokio-llms.txt
 ```
 
-### Example 3: Create Std Library Skill
+### 示例 2：创建 Crate Skill（内联模式）
+
+```
+User: "Create a dynamic skill for tokio"
+
+Claude：
+1. 识别：第三方 crate "tokio"
+2. 获取：agent-browser open "https://docs.rs/tokio/latest/tokio/"
+3. 提取文档
+4. 创建：~/.claude/skills/tokio/SKILL.md
+5. 创建：~/.claude/skills/tokio/references/
+6. 保存关键模块的引用文件（sync、task、runtime 等）
+```
+
+### 示例 3：创建标准库 Skill
 
 ```
 User: "Create a skill for Send and Sync traits"
 
-Claude:
-1. Identify: Std library traits
-2. (Agent Mode) Execute: /create-llms-for-skills https://doc.rust-lang.org/std/marker/trait.Send.html https://doc.rust-lang.org/std/marker/trait.Sync.html
-   (Inline Mode) Fetch each URL, create skill manually
-3. Complete skill creation
+Claude：
+1. 识别：标准库 trait
+2. （Agent 模式）执行：/create-llms-for-skills https://doc.rust-lang.org/std/marker/trait.Send.html https://doc.rust-lang.org/std/marker/trait.Sync.html
+   （内联模式）获取每个 URL，手动创建 skill
+3. 完成 skill 创建
 ```
 
 ---
 
-## DO NOT
+## 不要
 
-- Use `best-skill-creator` for Rust-related skill creation
-- Guess documentation URLs without verification
-- Skip documentation fetching step
+- 使用 `best-skill-creator` 创建 Rust 相关技能
+- 未经验证猜测文档 URL
+- 跳过文档获取步骤
 
-## Output Location
+## 输出位置
 
-All generated skills are saved to: `~/.claude/skills/`
+所有生成的 skill 保存到：`~/.claude/skills/`
 
-## Error Handling
+## 错误处理
 
-| Error | Cause | Solution |
+| 错误 | 原因 | 解决方案 |
 |-------|-------|----------|
-| Commands not found | Skills-only install | Use inline mode |
-| URL not found | Invalid crate/module | Verify crate exists on crates.io |
-| Empty documentation | API changed | Use alternative selectors |
-| Permission denied | Directory issue | Check ~/.claude/skills/ permissions |
+| 命令未找到 | 仅安装了 Skill | 使用内联模式 |
+| URL 未找到 | 无效的 crate/模块 | 验证 crate 在 crates.io 上是否存在 |
+| 文档为空 | API 已更改 | 使用替代选择器 |
+| 权限被拒绝 | 目录问题 | 检查 ~/.claude/skills/ 权限 |

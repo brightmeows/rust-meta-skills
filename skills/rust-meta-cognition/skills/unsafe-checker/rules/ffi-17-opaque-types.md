@@ -5,18 +5,18 @@ level: P
 impact: MEDIUM
 ---
 
-# Use Dedicated Opaque Type Pointers Instead of c_void for C Opaque Types
+# 使用专用的不透明类型指针而非 c_void 表示 C 不透明类型
 
 ## 概要
 
-Instead of using `*mut c_void` for opaque C handles, create dedicated marker types that provide type safety.
+不要使用 `*mut c_void` 来表示不透明的 C 句柄，而是创建提供类型安全的专用标记类型。
 
 ## 理由
 
-- `*mut c_void` accepts any pointer, easy to mix up handles
-- Dedicated types catch mistakes at compile time
-- Self-documenting code
-- Prevents accidental use of wrong free function
+- `*mut c_void` 接受任何指针，容易混淆句柄
+- 专用类型在编译时捕获错误
+- 自文档化的代码
+- 防止意外使用错误的释放函数
 
 ## 错误示例
 
@@ -127,7 +127,7 @@ impl Drop for SafeConnection<'_> {
 }
 ```
 
-## Opaque Type Pattern
+## 不透明类型模式
 
 ```rust
 // The zero-sized array makes it impossible to construct
@@ -141,10 +141,10 @@ pub struct OpaqueHandle {
 
 ## 检查清单
 
-- [ ] Am I using `*mut c_void` for distinct handle types?
-- [ ] Would dedicated types prevent bugs?
-- [ ] Have I wrapped opaque pointers in safe Rust types?
-- [ ] Do my types enforce correct handle/function pairing?
+- [ ] 我是否对不同句柄类型使用了 `*mut c_void`？
+- [ ] 专用类型是否能防止错误？
+- [ ] 我是否将不透明指针包装在安全的 Rust 类型中？
+- [ ] 我的类型是否强制了正确的句柄/函数配对？
 
 ## 相关规则
 

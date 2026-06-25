@@ -2,156 +2,156 @@
 
 > 比较查询和跨领域问题的处理协议
 
-## When to Enable Negotiation
+## 何时启用协商
 
-For complex queries requiring structured agent responses, enable negotiation mode.
+对于需要结构化代理响应的复杂查询，启用协商模式。
 
-| Query Pattern | Enable Negotiation | Reason |
-|---------------|-------------------|--------|
-| Single error code lookup | No | Direct answer |
-| Single crate version | No | Direct lookup |
-| "Compare X and Y" | **Yes** | Multi-faceted |
-| Domain + error | **Yes** | Cross-layer context |
-| "Best practices for..." | **Yes** | Requires synthesis |
-| Ambiguous scope | **Yes** | Needs clarification |
-| Multi-crate question | **Yes** | Multiple sources |
+| 查询模式 | 启用协商 | 原因 |
+|---------|---------|------|
+| 单个错误码查询 | 否 | 直接回答 |
+| 单个 crate 版本查询 | 否 | 直接查找 |
+| “比较 X 和 Y” | **是** | 多维度 |
+| 领域 + 错误 | **是** | 跨层上下文 |
+| “最佳实践 for...” | **是** | 需要综合 |
+| 歧义范围 | **是** | 需要澄清 |
+| 多 crate 问题 | **是** | 多来源 |
 
-## Negotiation Decision Flow
+## 协商决策流程
 
 ```
-Query Received
+收到查询
      │
      ▼
 ┌─────────────────────────────┐
-│ Is query single-lookup?     │
-│ (version, error code, def)  │
+│ 是单次查找？                  │
+│（版本、错误码、定义）         │
 └─────────────────────────────┘
      │
-     ├── Yes → Direct dispatch (no negotiation)
+     ├── 是 → 直接调度（无协商）
      │
-     ▼ No
+     ▼ 否
 ┌─────────────────────────────┐
-│ Does query require:         │
-│ - Comparison?               │
-│ - Cross-domain context?     │
-│ - Synthesis/aggregation?    │
-│ - Multiple sources?         │
+│ 是否需要：                   │
+│ - 比较？                     │
+│ - 跨领域上下文？             │
+│ - 综合/聚合？               │
+│ - 多来源？                   │
 └─────────────────────────────┘
      │
-     ├── Yes → Dispatch with negotiation: true
+     ├── 是 → 调度时启用协商：true
      │
-     ▼ No
+     ▼ 否
 ┌─────────────────────────────┐
-│ Is scope ambiguous?         │
+│ 范围有歧义？                 │
 └─────────────────────────────┘
      │
-     ├── Yes → Dispatch with negotiation: true
+     ├── 是 → 调度时启用协商：true
      │
-     ▼ No
-     └── Direct dispatch (no negotiation)
+     ▼ 否
+     └── 直接调度（无协商）
 ```
 
-## Negotiation Dispatch
+## 协商调度
 
-When dispatching with negotiation:
-
-```
-1. Set `negotiation: true`
-2. Include original query context
-3. Expect structured response:
-   - Findings
-   - Confidence (HIGH/MEDIUM/LOW/UNCERTAIN)
-   - Gaps identified
-   - Context questions (if any)
-4. Evaluate response against original intent
-```
-
-## Orchestrator Evaluation
-
-After receiving negotiation response:
-
-| Confidence | Intent Coverage | Action |
-|------------|-----------------|--------|
-| HIGH | Complete | Synthesize answer |
-| HIGH | Partial | May need supplementary query |
-| MEDIUM | Complete | Accept with disclosed gaps |
-| MEDIUM | Partial | Refine with context |
-| LOW | Any | Refine or try alternative |
-| UNCERTAIN | Any | Try alternative or escalate |
-
-## Refinement Loop
-
-If response insufficient:
+使用协商调度时：
 
 ```
-Round 1: Initial query
+1. 设置 `negotiation: true`
+2. 包含原始查询上下文
+3. 期望结构化响应：
+   - 发现结果
+   - 置信度（高/中/低/不确定）
+   - 识别的差距
+   - 上下文问题（如有）
+4. 对照原始意图评估响应
+```
+
+## 编排器评估
+
+收到协商响应后：
+
+| 置信度 | 意图覆盖 | 操作 |
+|--------|---------|------|
+| 高 | 完整 | 综合回答 |
+| 高 | 部分 | 可能需要补充查询 |
+| 中 | 完整 | 接受并披露差距 |
+| 中 | 部分 | 使用上下文精炼 |
+| 低 | 任何 | 精炼或尝试替代方案 |
+| 不确定 | 任何 | 尝试替代方案或升级 |
+
+## 精炼循环
+
+如果响应不足：
+
+```
+第 1 轮：初始查询
   │
-  ▼ (LOW confidence or gaps block intent)
-Round 2: Refined query with:
-  - Answers to agent's context questions
-  - Narrowed scope
+  ▼（低置信度或差距阻碍意图）
+第 2 轮：精炼查询，包含：
+  - 对代理上下文问题的回答
+  - 缩小范围
   │
-  ▼ (still insufficient)
-Round 3: Final attempt with:
-  - Alternative agent/source
-  - Maximum context provided
+  ▼（仍不足）
+第 3 轮：最终尝试，包含：
+  - 替代代理/来源
+  - 提供最大上下文
   │
-  ▼ (still insufficient)
-Synthesize best-effort answer with disclosed gaps
+  ▼（仍不足）
+综合尽力而为的回答，并披露差距
 ```
 
-## Integration with 3-Strike Rule
+## 与三击规则的集成
 
-Negotiation follows the 3-Strike escalation:
-
-```
-Strike 1: Initial query returns LOW confidence
-  → Refine with more context
-
-Strike 2: Refined query still LOW
-  → Try alternative agent/source
-
-Strike 3: Still insufficient
-  → Synthesize best-effort answer
-  → Report gaps to user explicitly
-```
-
-See `_meta/error-protocol.md` for full escalation rules.
-
-## Negotiation Routing Examples
-
-**Example 1: No Negotiation Needed**
+协商遵循三击升级规则：
 
 ```
-Query: "What is tokio's latest version?"
-Analysis: Single lookup
-Action: Direct dispatch to crate-researcher
+第 1 击：初始查询返回低置信度
+  → 使用更多上下文精炼
+
+第 2 击：精炼后仍为低置信度
+  → 尝试替代代理/来源
+
+第 3 击：仍不足
+  → 综合尽力而为的回答
+  → 向用户明确报告差距
 ```
 
-**Example 2: Negotiation Required**
+完整升级规则见 `_meta/error-protocol.md`。
+
+## 协商路由示例
+
+**示例 1：无需协商**
 
 ```
-Query: "Compare tokio and async-std for a web server"
-Analysis: Comparative + domain context
-Action: Dispatch with negotiation: true
-Expected: Structured responses from both runtime lookups
-Evaluation: Check if web-server specific data found
+查询：“tokio 的最新版本是什么？”
+分析：单次查找
+操作：直接调度到 crate-researcher
 ```
 
-**Example 3: Cross-Domain Negotiation**
+**示例 2：需要协商**
 
 ```
-Query: "E0382 in my trading system"
-Analysis: Error code + domain context
-Action:
-  - Dispatch m01-ownership (standard - error is defined)
-  - Dispatch domain-fintech (negotiation: true - domain context)
-Synthesis: Combine error explanation with domain-appropriate fix
+查询：“比较 tokio 和 async-std 在 Web 服务器中的表现”
+分析：比较 + 领域上下文
+操作：启用协商：true
+期望：从两个运行时查找返回结构化响应
+评估：检查是否找到了 Web 服务器特定数据
 ```
 
-## Related Documents
+**示例 3：跨领域协商**
 
-- `_meta/negotiation-protocol.md` - Full protocol specification
-- `_meta/negotiation-templates.md` - Response templates
-- `_meta/error-protocol.md` - 3-Strike escalation
-- `agents/_negotiation/response-format.md` - Agent response format
+```
+查询：“我的交易系统中的 E0382”
+分析：错误码 + 领域上下文
+操作：
+  - 调度 m01-ownership（标准——错误已定义）
+  - 调度 domain-fintech（negotiation: true——领域上下文）
+综合：将错误解释与领域合适的修复方案结合
+```
+
+## 相关文档
+
+- `_meta/negotiation-protocol.md`——完整协议规范
+- `_meta/negotiation-templates.md`——响应模板
+- `_meta/error-protocol.md`——三击升级规则
+- `agents/_negotiation/response-format.md`——代理响应格式

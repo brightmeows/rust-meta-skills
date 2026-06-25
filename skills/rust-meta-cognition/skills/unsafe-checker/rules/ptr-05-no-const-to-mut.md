@@ -10,11 +10,11 @@ clippy: cast_ref_to_mut
 
 ## 概要
 
-Never cast `*const T` to `*mut T` and dereference it to write. This violates aliasing rules and is undefined behavior.
+永远不要将 `*const T` 转换为 `*mut T` 然后解引用写入。这违反了别名规则，是未定义行为。
 
 ## 理由
 
-Creating `*const T` from `&T` implies immutability. Other references might exist. Writing through a `*mut T` created from `*const T` creates mutable aliasing, which is UB.
+从 `&T` 创建 `*const T` 意味着不可变性。可能存在其他引用。通过从 `*const T` 创建的 `*mut T` 写入会创建可变别名，这是 UB。
 
 ## 错误示例
 
@@ -73,9 +73,9 @@ impl RawMutable {
 }
 ```
 
-## The UnsafeCell Exception
+## UnsafeCell 例外
 
-`UnsafeCell<T>` is the ONLY valid way to get `*mut T` from `&self`:
+`UnsafeCell<T>` 是从 `&self` 获取 `*mut T` 的唯一有效方式：
 
 ```rust
 use std::cell::UnsafeCell;
@@ -95,26 +95,26 @@ impl<T> MyMutex<T> {
 }
 ```
 
-## Why This Is Always UB
+## 为什么这总是 UB
 
-The compiler assumes:
+编译器假设：
 
-1. `&T` means no mutation will occur
-2. Multiple `&T` can exist simultaneously
-3. Optimizations can be made based on these assumptions
+1. `&T` 意味着不会发生突变
+2. 多个 `&T` 可以同时存在
+3. 基于这些假设可以进行优化
 
-When you mutate through cast pointer:
+当你通过转换后的指针突变时：
 
-1. Other `&T` references see inconsistent values
-2. Compiler may cache/eliminate reads
-3. Results are unpredictable
+1. 其他 `&T` 引用看到不一致的值
+2. 编译器可能缓存/消除读取
+3. 结果不可预测
 
 ## 检查清单
 
-- [ ] Am I trying to mutate through `&`?
-- [ ] Should I use `&mut` instead?
-- [ ] Should I use `Cell`, `RefCell`, or `UnsafeCell`?
-- [ ] Is the original type designed for interior mutability?
+- [ ] 我是否试图通过 `&` 进行突变？
+- [ ] 是否应该改为使用 `&mut`？
+- [ ] 是否应该使用 `Cell`、`RefCell` 或 `UnsafeCell`？
+- [ ] 原始类型是否为内部可变性设计？
 
 ## 相关规则
 

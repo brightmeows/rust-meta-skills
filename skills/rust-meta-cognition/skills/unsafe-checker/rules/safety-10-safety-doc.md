@@ -10,11 +10,11 @@ clippy: missing_safety_doc
 
 ## 概要
 
-Public `unsafe` functions must have a `# Safety` section in their documentation explaining the caller's obligations.
+公共 `unsafe` 函数必须在其文档中包含 `# Safety` 章节，解释调用者的义务。
 
 ## 理由
 
-Unlike SAFETY comments (which explain why an unsafe block is sound), `# Safety` docs tell callers what they must guarantee. Without this, users cannot safely call the function.
+与 SAFETY 注释（解释 unsafe 块为何合理）不同，`# Safety` 文档告诉调用者他们必须保证什么。没有这个，用户无法安全地调用该函数。
 
 ## 错误示例
 
@@ -103,23 +103,23 @@ pub unsafe fn from_raw_parts(ptr: *mut T, length: usize, capacity: usize) -> Vec
 /// ```
 ```
 
-## What to Document
+## 应文档化的内容
 
-| Category | Example |
+| 类别 | 示例 |
 |----------|---------|
-| Pointer validity | "ptr must be non-null and aligned" |
-| Memory state | "must point to initialized memory" |
-| Aliasing | "no other references to this memory may exist" |
-| Lifetime | "pointer must be valid for the duration of the call" |
-| Thread safety | "must not be called concurrently with..." |
-| Invariants | "len must not exceed isize::MAX" |
+| 指针有效性 | "ptr must be non-null and aligned" |
+| 内存状态 | "must point to initialized memory" |
+| 别名 | "no other references to this memory may exist" |
+| 生命周期 | "pointer must be valid for the duration of the call" |
+| 线程安全 | "must not be called concurrently with..." |
+| 不变量 | "len must not exceed isize::MAX" |
 
 ## 检查清单
 
-- [ ] Does the function have a `# Safety` section?
-- [ ] Are ALL caller obligations listed?
-- [ ] Is each requirement specific and verifiable?
-- [ ] Does the example show correct usage with SAFETY comment?
+- [ ] 函数是否有 `# Safety` 章节？
+- [ ] 是否列出了所有调用者义务？
+- [ ] 每个要求是否具体且可验证？
+- [ ] 示例是否展示了带 SAFETY 注释的正确用法？
 
 ## 相关规则
 

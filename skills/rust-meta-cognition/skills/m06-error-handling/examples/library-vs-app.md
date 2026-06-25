@@ -1,16 +1,16 @@
 # 错误处理：库 vs 应用
 
-## Library Error Design
+## 库错误设计
 
-### Principles
+### 原则
 
-1. **Define specific error types** - Don't use `anyhow` in libraries
-2. **Implement std::error::Error** - For compatibility
-3. **Provide error variants** - Let users match on errors
-4. **Include source errors** - Enable error chains
-5. **Be `Send + Sync`** - For async compatibility
+1. **定义特定的错误类型**——不要在库中使用 `anyhow`
+2. **实现 std::error::Error**——为了兼容性
+3. **提供错误变体**——让用户可以匹配错误
+4. **包含源错误**——支持错误链
+5. **满足 `Send + Sync`**——为了异步兼容性
 
-### Example: Library Error Type
+### 示例：库错误类型
 
 ```rust
 // lib.rs
@@ -40,10 +40,10 @@ pub enum DatabaseError {
     ConstraintViolation(String),
 }
 
-// Public Result alias
+// 公共 Result 别名
 pub type Result<T> = std::result::Result<T, DatabaseError>;
 
-// Library functions
+// 库函数
 pub fn connect(host: &str, port: u16) -> Result<Connection> {
     // ...
 }
@@ -53,7 +53,7 @@ pub fn query(conn: &Connection, sql: &str) -> Result<Rows> {
 }
 ```
 
-### Library Usage of Errors
+### 库中错误的使用
 
 ```rust
 impl Database {
@@ -72,16 +72,16 @@ impl Database {
 
 ---
 
-## Application Error Design
+## 应用错误设计
 
-### Principles
+### 原则
 
-1. **Use anyhow for convenience** - Or custom unified error
-2. **Add context liberally** - Help debugging
-3. **Log at boundaries** - Don't log in libraries
-4. **Convert to user-friendly messages** - For display
+1. **使用 anyhow 以便利**——或自定义统一错误
+2. **自由添加上下文**——帮助调试
+3. **在边界记录日志**——不在库中记录
+4. **转换为用户友好的消息**——用于展示
 
-### Example: Application Error Handling
+### 示例：应用错误处理
 
 ```rust
 // main.rs
@@ -118,7 +118,7 @@ async fn main() {
 }
 ```
 
-### Converting Library Errors
+### 转换库错误
 
 ```rust
 use mylib::DatabaseError;
@@ -136,52 +136,52 @@ async fn get_user_handler(id: &str) -> Result<Response> {
             Ok(Response::internal_error("Service unavailable"))
         }
 
-        Err(e) => {
-            error!("Database error: {}", e);
-            Err(e.into())  // Convert to anyhow::Error
-        }
+            Err(e) => {
+                error!("数据库错误：{}", e);
+                Err(e.into())  // 转换为 anyhow::Error
+            }
     }
 }
 ```
 
 ---
 
-## Error Handling Layers
+## 错误处理分层
 
 ```
 ┌─────────────────────────────────────┐
-│           Application Layer          │
-│  - Use anyhow or unified error       │
-│  - Add context at boundaries         │
-│  - Log errors                        │
-│  - Convert to user messages          │
+│            应用层                     │
+│  - 使用 anyhow 或统一错误             │
+│  - 在边界添加上下文                    │
+│  - 记录错误日志                       │
+│  - 转换为用户消息                     │
 └─────────────────────────────────────┘
                  │
-                 │ calls
+                 │ 调用
                  ▼
 ┌─────────────────────────────────────┐
-│           Service Layer              │
-│  - Map between error types           │
-│  - Add business context              │
-│  - Handle recoverable errors         │
+│            服务层                     │
+│  - 在错误类型之间映射                  │
+│  - 添加业务上下文                     │
+│  - 处理可恢复错误                     │
 └─────────────────────────────────────┘
                  │
-                 │ calls
+                 │ 调用
                  ▼
 ┌─────────────────────────────────────┐
-│           Library Layer              │
-│  - Define specific error types       │
-│  - Use thiserror                     │
-│  - Include source errors             │
-│  - No logging                        │
+│            库层                       │
+│  - 定义特定的错误类型                 │
+│  - 使用 thiserror                    │
+│  - 包含源错误                        │
+│  - 不记录日志                        │
 └─────────────────────────────────────┘
 ```
 
 ---
 
-## Practical Examples
+## 实践示例
 
-### HTTP API Error Response
+### HTTP API 错误响应
 
 ```rust
 use axum::{response::IntoResponse, http::StatusCode};
@@ -228,7 +228,7 @@ impl IntoResponse for AppError {
 }
 ```
 
-### CLI Error Handling
+### CLI 错误处理
 
 ```rust
 use anyhow::{Context, Result};
@@ -265,9 +265,9 @@ fn run() -> Result<()> {
 
 ---
 
-## Testing Error Handling
+## 测试错误处理
 
-### Testing Error Cases
+### 测试错误情况
 
 ```rust
 #[cfg(test)]
@@ -308,13 +308,13 @@ mod tests {
             source: io_err,
         };
 
-        // Check source is preserved
+        // 检查源错误是否被保留
         assert!(err.source().is_some());
     }
 }
 ```
 
-### Testing with anyhow
+### 使用 anyhow 进行测试
 
 ```rust
 #[cfg(test)]
@@ -334,7 +334,7 @@ mod tests {
             .context("processing failed")
             .unwrap_err();
 
-        // Check error chain contains expected text
+        // 检查错误链包含期望的文本
         let chain = format!("{:#}", err);
         assert!(chain.contains("processing failed"));
     }

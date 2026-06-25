@@ -2,30 +2,30 @@
 
 ## ? 运算符
 
-### Basic Usage
+### 基本用法
 
 ```rust
 fn read_config() -> Result<Config, io::Error> {
     let content = std::fs::read_to_string("config.toml")?;
-    let config: Config = toml::from_str(&content)?;  // needs From impl
+    let config: Config = toml::from_str(&content)?;  // 需要 From 实现
     Ok(config)
 }
 ```
 
-### With Different Error Types
+### 使用不同的错误类型
 
 ```rust
 use std::error::Error;
 
-// Box<dyn Error> for quick prototyping
+// Box<dyn Error> 用于快速原型
 fn process() -> Result<(), Box<dyn Error>> {
     let file = std::fs::read_to_string("data.txt")?;
-    let num: i32 = file.trim().parse()?;  // different error type
+    let num: i32 = file.trim().parse()?;  // 不同的错误类型
     Ok(())
 }
 ```
 
-### Custom Conversion with From
+### 使用 From 实现自定义转换
 
 ```rust
 #[derive(Debug)]
@@ -47,17 +47,17 @@ impl From<std::num::ParseIntError> for MyError {
 }
 
 fn process() -> Result<i32, MyError> {
-    let content = std::fs::read_to_string("num.txt")?;  // auto-converts
-    let num: i32 = content.trim().parse()?;  // auto-converts
+    let content = std::fs::read_to_string("num.txt")?;  // 自动转换
+    let num: i32 = content.trim().parse()?;  // 自动转换
     Ok(num)
 }
 ```
 
 ---
 
-## Error Type Design
+## 错误类型设计
 
-### Simple Enum Error
+### 简单枚举错误
 
 ```rust
 #[derive(Debug, Clone, PartialEq)]
@@ -80,7 +80,7 @@ impl std::fmt::Display for ConfigError {
 impl std::error::Error for ConfigError {}
 ```
 
-### Error with Source (Wrapping)
+### 带源错误的错误（包装）
 
 ```rust
 #[derive(Debug)]
@@ -115,9 +115,9 @@ impl std::error::Error for AppError {
 
 ---
 
-## Using thiserror
+## 使用 thiserror
 
-### Basic Usage
+### 基本用法
 
 ```rust
 use thiserror::Error;
@@ -137,16 +137,16 @@ pub enum DataError {
     Parse(#[from] std::num::ParseIntError),
 }
 
-// Usage
+// 使用
 fn load_data(path: &str) -> Result<Data, DataError> {
     let content = std::fs::read_to_string(path)
         .map_err(|_| DataError::NotFound { path: path.to_string() })?;
-    let num: i32 = content.trim().parse()?;  // auto-converts with #[from]
+    let num: i32 = content.trim().parse()?;  // 通过 #[from] 自动转换
     Ok(Data { value: num })
 }
 ```
 
-### Transparent Wrapper
+### 透明包装
 
 ```rust
 use thiserror::Error;
@@ -155,14 +155,14 @@ use thiserror::Error;
 #[error(transparent)]
 pub struct MyError(#[from] InnerError);
 
-// Useful for newtype error wrappers
+// 适用于 newtype 错误包装器
 ```
 
 ---
 
-## Using anyhow
+## 使用 anyhow
 
-### For Applications
+### 用于应用程序
 
 ```rust
 use anyhow::{Context, Result, bail, ensure};
@@ -190,7 +190,7 @@ fn main() -> Result<()> {
 }
 ```
 
-### Error Chain
+### 错误链
 
 ```rust
 use anyhow::{Context, Result};
@@ -213,7 +213,7 @@ fn top_function() -> Result<()> {
     Ok(())
 }
 
-// Error output shows full chain:
+// 错误输出显示完整链：
 // Error: failed in middle function
 // Caused by:
 //     0: failed in deep function
@@ -223,9 +223,9 @@ fn top_function() -> Result<()> {
 
 ---
 
-## Option Handling
+## Option 处理
 
-### Converting Option to Result
+### 将 Option 转换为 Result
 
 ```rust
 fn find_user(id: u32) -> Option<User> { ... }
@@ -241,7 +241,7 @@ fn get_user(id: u32) -> Result<User, String> {
 }
 ```
 
-### Chaining Options
+### 链式 Option
 
 ```rust
 fn get_nested_value(data: &Data) -> Option<&str> {
@@ -264,9 +264,9 @@ fn get_nested_value(data: &Data) -> Option<&str> {
 
 ---
 
-## Pattern: Result Combinators
+## 模式：Result 组合器
 
-### map and map_err
+### map 和 map_err
 
 ```rust
 fn parse_port(s: &str) -> Result<u16, ParseError> {
@@ -280,7 +280,7 @@ fn get_url(config: &Config) -> Result<String, Error> {
 }
 ```
 
-### and_then (flatMap)
+### and_then（flatMap）
 
 ```rust
 fn validate_and_save(input: &str) -> Result<(), Error> {
@@ -290,24 +290,24 @@ fn validate_and_save(input: &str) -> Result<(), Error> {
 }
 ```
 
-### unwrap_or and unwrap_or_else
+### unwrap_or 和 unwrap_or_else
 
 ```rust
-// Default value
+// 默认值
 let port = config.port().unwrap_or(8080);
 
-// Computed default
+// 计算默认值
 let port = config.port().unwrap_or_else(|| find_free_port());
 
-// Default for Result
+// Result 的默认值
 let data = load_data().unwrap_or_default();
 ```
 
 ---
 
-## Pattern: Early Return vs Combinators
+## 模式：提前返回 vs 组合器
 
-### Early Return Style
+### 提前返回风格
 
 ```rust
 fn process(input: &str) -> Result<Output, Error> {
@@ -323,7 +323,7 @@ fn process(input: &str) -> Result<Output, Error> {
 }
 ```
 
-### Combinator Style
+### 组合器风格
 
 ```rust
 fn process(input: &str) -> Result<Output, Error> {
@@ -340,85 +340,85 @@ fn process(input: &str) -> Result<Output, Error> {
 }
 ```
 
-### When to Use Which
+### 何时使用哪种
 
-| Style | Best For |
-|-------|----------|
-| Early return (`?`) | Most cases, clearer flow |
-| Combinators | Functional pipelines, one-liners |
-| Match | Complex branching on errors |
+| 风格 | 最适合 |
+|------|--------|
+| 提前返回（`?`） | 大多数情况，流程更清晰 |
+| 组合器 | 函数式管道，单行表达式 |
+| Match | 错误的复杂分支处理 |
 
 ---
 
 ## Panic vs Result
 
-### When to Panic
+### 何时使用 Panic
 
 ```rust
-// 1. Unrecoverable programmer error
+// 1. 不可恢复的程序员错误
 fn get_config() -> &'static Config {
-    CONFIG.get().expect("config must be initialized")
+    CONFIG.get().expect("config 必须被初始化")
 }
 
-// 2. In tests
+// 2. 在测试中
 #[test]
 fn test_parsing() {
-    let result = parse("valid").unwrap();  // OK in tests
+    let result = parse("valid").unwrap();  // 在测试中没问题
     assert_eq!(result, expected);
 }
 
-// 3. Prototype/examples
+// 3. 原型/示例
 fn main() {
-    let data = load().unwrap();  // OK for quick examples
+    let data = load().unwrap();  // 快速示例中没问题
 }
 ```
 
-### When to Return Result
+### 何时返回 Result
 
 ```rust
-// 1. Any I/O operation
+// 1. 任何 I/O 操作
 fn read_file(path: &str) -> Result<String, io::Error>
 
-// 2. User input validation
+// 2. 用户输入验证
 fn parse_port(s: &str) -> Result<u16, ParseError>
 
-// 3. Network operations
+// 3. 网络操作
 async fn fetch(url: &str) -> Result<Response, Error>
 
-// 4. Anything that can fail at runtime
+// 4. 任何可能在运行时失败的操作
 fn connect(addr: &str) -> Result<Connection, Error>
 ```
 
 ---
 
-## Error Context Best Practices
+## 错误上下文最佳实践
 
-### Add Context at Boundaries
+### 在边界添加上下文
 
 ```rust
 fn load_user_config(user_id: u64) -> Result<Config, Error> {
     let path = format!("/home/{}/config.toml", user_id);
 
     std::fs::read_to_string(&path)
-        .context(format!("failed to read config for user {}", user_id))?
-        // NOT: .context("failed to read file")  // too generic
+        .context(format!("无法读取用户 {} 的配置", user_id))?
+        // 不要：.context("无法读取文件")  // 太泛泛
 
     // ...
 }
 ```
 
-### Include Relevant Data
+### 包含相关数据
 
 ```rust
-// Good: includes the problematic value
+// 好：包含有问题的值
 fn parse_age(s: &str) -> Result<u8, Error> {
     s.parse()
-        .context(format!("invalid age value: '{}'", s))
+        .context(format!("无效的年龄值：'{}'", s))
 }
 
-// Bad: no context about what failed
+// 不好：没有关于失败原因的上下文
 fn parse_age(s: &str) -> Result<u8, Error> {
     s.parse()
-        .context("parse error")
+        .context("解析错误")
 }
 ```

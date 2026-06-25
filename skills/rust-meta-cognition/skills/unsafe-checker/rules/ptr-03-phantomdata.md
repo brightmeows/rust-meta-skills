@@ -5,19 +5,19 @@ level: P
 impact: HIGH
 ---
 
-# Use PhantomData<T> for Variance and Ownership with Pointer Generics
+# 使用 PhantomData<T> 管理指针泛型的可变性与所有权
 
 ## 概要
 
-When a struct contains raw pointers but logically owns or borrows the pointed-to data, use `PhantomData<T>` to tell the compiler about the relationship.
+当结构体包含原始指针但在逻辑上拥有或借用了所指向的数据时，使用 `PhantomData<T>` 告诉编译器它们之间的关系。
 
 ## 理由
 
-Raw pointers don't carry ownership or lifetime information. `PhantomData` lets you:
+原始指针不携带所有权或生命周期信息。`PhantomData` 让你可以：
 
-- Indicate ownership (for `Drop` check)
-- Control variance (covariant, contravariant, invariant)
-- Participate in lifetime elision
+- 表示所有权（用于 `Drop` 检查）
+- 控制可变性（协变、逆变、不变）
+- 参与生命周期省略
 
 ## 错误示例
 
@@ -78,19 +78,19 @@ impl<'a, T> Iterator for Iter<'a, T> {
 }
 ```
 
-## PhantomData Patterns
+## PhantomData 模式
 
-| Phantom Type | Meaning | Variance |
+| Phantom 类型 | 含义 | 可变性 |
 |--------------|---------|----------|
-| `PhantomData<T>` | Owns T | Covariant |
-| `PhantomData<&'a T>` | Borrows T for 'a | Covariant in T, covariant in 'a |
-| `PhantomData<&'a mut T>` | Mutably borrows T | Invariant in T, covariant in 'a |
-| `PhantomData<*const T>` | Just has pointer | Covariant |
-| `PhantomData<*mut T>` | Just has pointer | Invariant |
-| `PhantomData<fn(T)>` | Consumes T | Contravariant |
-| `PhantomData<fn() -> T>` | Produces T | Covariant |
+| `PhantomData<T>` | 拥有 T | 协变 |
+| `PhantomData<&'a T>` | 借用 T 在 'a 内 | 对 T 协变，对 'a 协变 |
+| `PhantomData<&'a mut T>` | 可变借用 T | 对 T 不变，对 'a 协变 |
+| `PhantomData<*const T>` | 仅持有指针 | 协变 |
+| `PhantomData<*mut T>` | 仅持有指针 | 不变 |
+| `PhantomData<fn(T)>` | 消费 T | 逆变 |
+| `PhantomData<fn() -> T>` | 产生 T | 协变 |
 
-## Drop Check
+## Drop 检查
 
 ```rust
 use std::marker::PhantomData;
@@ -115,10 +115,10 @@ impl<T> Drop for MyVec<T> {
 
 ## 检查清单
 
-- [ ] Does my pointer type logically own the pointed-to data?
-- [ ] Do I need to express a lifetime relationship?
-- [ ] What variance do I need for my generic parameter?
-- [ ] Will the type be dropped, and does it need drop check?
+- [ ] 我的指针类型在逻辑上是否拥有所指向的数据？
+- [ ] 是否需要表达生命周期关系？
+- [ ] 我的泛型参数需要什么可变性？
+- [ ] 类型会被 drop 吗，是否需要 drop 检查？
 
 ## 相关规则
 

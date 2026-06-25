@@ -10,11 +10,11 @@ clippy: debug_assert_with_mut_call
 
 ## 概要
 
-In `unsafe` functions or functions containing unsafe blocks, prefer `assert!` over `debug_assert!` for checking safety invariants.
+在 `unsafe` 函数或包含 unsafe 块的函数中，检查安全不变量时应优先使用 `assert!` 而非 `debug_assert!`。
 
 ## 理由
 
-`debug_assert!` is compiled out in release builds. If an invariant is important enough to check for safety, it should be checked in all builds to catch violations.
+`debug_assert!` 在发布构建中被编译掉。如果一个不变量重要到需要检查安全性，它应在所有构建中被检查以捕获违反。
 
 ## 错误示例
 
@@ -65,13 +65,13 @@ pub fn get_checked(slice: &[i32], index: usize) -> Option<&i32> {
 }
 ```
 
-## When to Use Each
+## 何时使用每种断言
 
-| Assertion | Use When |
+| 断言 | 使用时机 |
 |-----------|----------|
-| `assert!` | Invariant is not already checked; function is called with untrusted input |
-| `debug_assert!` | Invariant is the caller's responsibility (documented in `# Safety`); performance-critical |
-| No assert | Invariant is enforced by types or prior checks in the same function |
+| `assert!` | 不变量尚未被检查；函数使用不可信输入调用 |
+| `debug_assert!` | 不变量是调用者的责任（在 `# Safety` 中文档化）；性能关键 |
+| 不使用断言 | 不变量由类型或同一函数中的前置检查保证 |
 
 ## Hybrid Approach
 
@@ -94,10 +94,10 @@ pub unsafe fn process(slice: &[u8], index: usize) {
 
 ## 检查清单
 
-- [ ] Is this a safety-critical invariant?
-- [ ] Who is responsible for upholding it (caller or this function)?
-- [ ] Can the assertion be optimized away when provably true?
-- [ ] What's the performance impact of the assertion?
+- [ ] 这是安全关键的不变量吗？
+- [ ] 谁负责维护它（调用者还是此函数）？
+- [ ] 断言在可证明成立时能否被优化掉？
+- [ ] 断言的性能影响是什么？
 
 ## 相关规则
 

@@ -10,11 +10,11 @@ clippy: uninit_assumed_init
 
 ## 概要
 
-Public APIs must never return or expose uninitialized memory to callers.
+公共 API 绝不能向调用者返回或暴露未初始化的内存。
 
 ## 理由
 
-Reading uninitialized memory is undefined behavior in Rust. Safe code should never be able to access uninitialized memory through your API.
+读取未初始化的内存在 Rust 中是未定义行为。安全代码绝不应通过你的 API 访问未初始化的内存。
 
 ## 错误示例
 
@@ -90,7 +90,7 @@ impl Drop for Buffer {
 }
 ```
 
-## Patterns for Uninitialized Memory
+## 未初始化内存的模式
 
 ```rust
 // Pattern 1: MaybeUninit for delayed initialization
@@ -111,9 +111,9 @@ let boxed = unsafe { boxed.assume_init() };
 
 ## 检查清单
 
-- [ ] Does my API ever return references to uninitialized memory?
-- [ ] Are length/capacity invariants properly maintained?
-- [ ] Is MaybeUninit used instead of transmute for uninitialized data?
+- [ ] 我的 API 是否会返回未初始化内存的引用？
+- [ ] 长度/容量的不变量是否得到妥善维护？
+- [ ] 未初始化数据是否使用了 `MaybeUninit` 而非 `transmute`？
 
 ## 相关规则
 

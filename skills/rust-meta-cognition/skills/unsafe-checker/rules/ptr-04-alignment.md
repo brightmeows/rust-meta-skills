@@ -10,11 +10,11 @@ clippy: cast_ptr_alignment
 
 ## 概要
 
-When casting a pointer to a different type, ensure the resulting pointer is properly aligned for the target type.
+将指针转换为不同类型时，确保结果指针对目标类型正确对齐。
 
 ## 理由
 
-Misaligned pointer dereferences are undefined behavior on most architectures. Even on architectures that support unaligned access, it may cause performance penalties or subtle bugs.
+未对齐的指针解引用在大多数架构上是未定义行为。即使在支持未对齐访问的架构上，也可能导致性能损失或微妙的错误。
 
 ## 错误示例
 
@@ -79,7 +79,7 @@ fn process_aligned(bytes: &[u8]) {
 }
 ```
 
-## Alignment Check Helpers
+## 对齐检查辅助函数
 
 ```rust
 fn is_aligned<T>(ptr: *const u8) -> bool {
@@ -95,21 +95,21 @@ fn align_up<T>(ptr: *const u8) -> *const u8 {
 }
 ```
 
-## Architecture Notes
+## 架构说明
 
-| Arch | Misaligned Access |
+| 架构 | 未对齐访问 |
 |------|-------------------|
-| x86/x64 | Works but slower |
-| ARM | UB, may trap or give wrong results |
-| RISC-V | UB, may trap |
+| x86/x64 | 可行但较慢 |
+| ARM | UB，可能触发陷阱或给出错误结果 |
+| RISC-V | UB，可能触发陷阱 |
 | WASM | UB |
 
 ## 检查清单
 
-- [ ] Is my pointer cast changing alignment requirements?
-- [ ] Is the source pointer guaranteed to be aligned?
-- [ ] Should I use read_unaligned instead?
-- [ ] Can I use safe conversion methods (from_ne_bytes)?
+- [ ] 我的指针转换是否改变了对齐要求？
+- [ ] 源指针是否保证已对齐？
+- [ ] 是否应使用 `read_unaligned` 替代？
+- [ ] 能否使用安全的转换方法（`from_ne_bytes`）？
 
 ## 相关规则
 

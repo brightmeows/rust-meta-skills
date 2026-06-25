@@ -1,38 +1,38 @@
 # 基于线程的并发模式
 
-## Thread Spawning Best Practices
+## 线程生成最佳实践
 
-### Basic Thread Spawn
+### 基本线程生成
 
 ```rust
 use std::thread;
 
 fn main() {
     let handle = thread::spawn(|| {
-        println!("Hello from thread!");
-        42  // return value
+        println!("来自线程的问候！");
+        42  // 返回值
     });
 
     let result = handle.join().unwrap();
-    println!("Thread returned: {}", result);
+    println!("线程返回：{}", result);
 }
 ```
 
-### Named Threads for Debugging
+### 命名线程以便调试
 
 ```rust
 use std::thread;
 
 let builder = thread::Builder::new()
     .name("worker-1".to_string())
-    .stack_size(32 * 1024);  // 32KB stack
+    .stack_size(32 * 1024);  // 32KB 栈
 
 let handle = builder.spawn(|| {
-    println!("Thread name: {:?}", thread::current().name());
+    println!("线程名：{:?}", thread::current().name());
 }).unwrap();
 ```
 
-### Scoped Threads (No 'static Required)
+### 作用域线程（无需 'static）
 
 ```rust
 use std::thread;
@@ -57,14 +57,14 @@ fn process_data(data: &[u32]) -> Vec<u32> {
 
 fn main() {
     let data = vec![1, 2, 3, 4, 5, 6];
-    let result = process_data(&data);  // No 'static needed!
+    let result = process_data(&data);  // 无需 'static！
     println!("{:?}", result);
 }
 ```
 
 ---
 
-## Shared State Patterns
+## 共享状态模式
 
 ### Arc + Mutex (Read-Write)
 
@@ -93,7 +93,7 @@ fn shared_counter() {
 }
 ```
 
-### Arc + RwLock (Read-Heavy)
+### Arc + RwLock（读密集型）
 
 ```rust
 use std::sync::{Arc, RwLock};
@@ -102,16 +102,16 @@ use std::thread;
 fn read_heavy_cache() {
     let cache = Arc::new(RwLock::new(vec![1, 2, 3]));
 
-    // Many readers
+    // 多个读取者
     for i in 0..5 {
         let cache = Arc::clone(&cache);
         thread::spawn(move || {
             let data = cache.read().unwrap();
-            println!("Reader {}: {:?}", i, *data);
+            println!("读取者 {}: {:?}", i, *data);
         });
     }
 
-    // Occasional writer
+    // 偶尔的写入者
     {
         let cache = Arc::clone(&cache);
         thread::spawn(move || {
@@ -123,7 +123,7 @@ fn read_heavy_cache() {
 }
 ```
 
-### Atomic for Simple Types
+### 简单类型使用 Atomic
 
 ```rust
 use std::sync::atomic::{AtomicUsize, Ordering};
@@ -153,7 +153,7 @@ fn atomic_counter() {
 
 ---
 
-## Channel Patterns
+## Channel 模式
 
 ### MPSC Channel
 
@@ -164,7 +164,7 @@ use std::thread;
 fn producer_consumer() {
     let (tx, rx) = mpsc::channel();
 
-    // Multiple producers
+    // 多个生产者
     for i in 0..3 {
         let tx = tx.clone();
         thread::spawn(move || {
@@ -173,35 +173,35 @@ fn producer_consumer() {
             }
         });
     }
-    drop(tx);  // Drop original sender
+    drop(tx);  // 丢弃原始发送者
 
-    // Single consumer
+    // 单一消费者
     for received in rx {
         println!("Got: {}", received);
     }
 }
 ```
 
-### Sync Channel (Bounded)
+### Sync Channel（有界）
 
 ```rust
 use std::sync::mpsc;
 use std::thread;
 
 fn bounded_channel() {
-    let (tx, rx) = mpsc::sync_channel(2);  // buffer size 2
+    let (tx, rx) = mpsc::sync_channel(2);  // 缓冲区大小 2
 
     thread::spawn(move || {
         for i in 0..5 {
-            println!("Sending {}", i);
-            tx.send(i).unwrap();  // blocks if buffer full
-            println!("Sent {}", i);
+            println!("正在发送 {}", i);
+            tx.send(i).unwrap();  // 缓冲区满时阻塞
+            println!("已发送 {}", i);
         }
     });
 
     thread::sleep(std::time::Duration::from_millis(500));
     for received in rx {
-        println!("Received: {}", received);
+        println!("收到：{}", received);
         thread::sleep(std::time::Duration::from_millis(100));
     }
 }
@@ -209,9 +209,9 @@ fn bounded_channel() {
 
 ---
 
-## Thread Pool Patterns
+## 线程池模式
 
-### Using rayon for Parallel Iteration
+### 使用 rayon 进行并行迭代
 
 ```rust
 use rayon::prelude::*;
@@ -220,11 +220,11 @@ fn parallel_map() {
     let numbers: Vec<i32> = (0..1000).collect();
 
     let squares: Vec<i32> = numbers
-        .par_iter()  // parallel iterator
+        .par_iter()  // 并行迭代器
         .map(|x| x * x)
         .collect();
 
-    println!("Processed {} items", squares.len());
+    println!("已处理 {} 项", squares.len());
 }
 
 fn parallel_filter_map() {
@@ -238,7 +238,7 @@ fn parallel_filter_map() {
 }
 ```
 
-### Custom Thread Pool with crossbeam
+### 使用 crossbeam 自定义线程池
 
 ```rust
 use crossbeam::channel;
@@ -247,7 +247,7 @@ use std::thread;
 fn custom_pool(num_workers: usize) {
     let (tx, rx) = channel::bounded::<Box<dyn FnOnce() + Send>>(100);
 
-    // Spawn workers
+    // 生成工作线程
     let workers: Vec<_> = (0..num_workers)
         .map(|_| {
             let rx = rx.clone();
@@ -259,14 +259,14 @@ fn custom_pool(num_workers: usize) {
         })
         .collect();
 
-    // Submit tasks
+    // 提交任务
     for i in 0..100 {
         tx.send(Box::new(move || {
-            println!("Processing task {}", i);
+            println!("正在处理任务 {}", i);
         })).unwrap();
     }
 
-    drop(tx);  // Close channel
+    drop(tx);  // 关闭 channel
 
     for worker in workers {
         worker.join().unwrap();
@@ -276,9 +276,9 @@ fn custom_pool(num_workers: usize) {
 
 ---
 
-## Synchronization Primitives
+## 同步原语
 
-### Barrier (Wait for All)
+### Barrier（等待所有线程）
 
 ```rust
 use std::sync::{Arc, Barrier};
@@ -306,7 +306,7 @@ fn barrier_example() {
 }
 ```
 
-### Condvar (Condition Variable)
+### Condvar（条件变量）
 
 ```rust
 use std::sync::{Arc, Condvar, Mutex};
@@ -339,7 +339,7 @@ fn condvar_example() {
 }
 ```
 
-### Once (One-Time Initialization)
+### Once（一次性初始化）
 
 ```rust
 use std::sync::Once;
@@ -356,7 +356,7 @@ fn get_config() -> &'static Config {
     unsafe { CONFIG.as_ref().unwrap() }
 }
 
-// Better: use once_cell or lazy_static
+// 更好：使用 once_cell 或 lazy_static
 use once_cell::sync::Lazy;
 
 static CONFIG: Lazy<Config> = Lazy::new(|| {
@@ -366,34 +366,34 @@ static CONFIG: Lazy<Config> = Lazy::new(|| {
 
 ---
 
-## Error Handling in Threads
+## 线程中的错误处理
 
-### Handling Panics
+### 处理 Panic
 
 ```rust
 use std::thread;
 
 fn handle_panic() {
     let handle = thread::spawn(|| {
-        panic!("Thread panicked!");
+        panic!("线程 panic 了！");
     });
 
     match handle.join() {
-        Ok(_) => println!("Thread completed successfully"),
+        Ok(_) => println!("线程成功完成"),
         Err(e) => {
             if let Some(s) = e.downcast_ref::<&str>() {
-                println!("Thread panicked with: {}", s);
+                println!("线程 panic 消息：{}", s);
             } else if let Some(s) = e.downcast_ref::<String>() {
-                println!("Thread panicked with: {}", s);
+                println!("线程 panic 消息：{}", s);
             } else {
-                println!("Thread panicked with unknown error");
+                println!("线程发生未知错误");
             }
         }
     }
 }
 ```
 
-### Catching Panics
+### 捕获 Panic
 
 ```rust
 use std::panic;
@@ -404,8 +404,8 @@ fn catch_panic() {
     });
 
     match result {
-        Ok(value) => println!("Success: {:?}", value),
-        Err(_) => println!("Operation panicked, continuing..."),
+        Ok(value) => println!("成功：{:?}", value),
+        Err(_) => println!("操作 panic，继续执行..."),
     }
 }
 ```

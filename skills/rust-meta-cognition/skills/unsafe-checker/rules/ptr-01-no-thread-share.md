@@ -9,11 +9,11 @@ impact: CRITICAL
 
 ## 概要
 
-Raw pointers (`*const T`, `*mut T`) are not `Send` or `Sync` by default. Do not share them across threads without ensuring proper synchronization.
+原始指针（`*const T`、`*mut T`）默认不是 `Send` 或 `Sync`。在没有确保恰当同步的情况下不要跨线程共享它们。
 
 ## 理由
 
-Raw pointers have no synchronization guarantees. Sharing them across threads can lead to data races, which are undefined behavior.
+原始指针没有同步保证。跨线程共享它们可能导致数据竞争，即未定义行为。
 
 ## 错误示例
 
@@ -93,20 +93,20 @@ fn good_exclusive() {
 }
 ```
 
-## When Raw Pointers Across Threads Are Valid
+## 何时跨线程的原始指针是有效的
 
-Only with proper synchronization:
+仅在有适当同步时：
 
-- Through `AtomicPtr` with appropriate memory orderings
-- Protected by a `Mutex` (don't share the pointer, share the Mutex)
-- Using lock-free algorithms with careful memory ordering
+- 通过 `AtomicPtr` 配合适当的内存序
+- 受 `Mutex` 保护（不共享指针，共享 Mutex）
+- 使用具有仔细内存序的无锁算法
 
 ## 检查清单
 
-- [ ] Does my pointer cross thread boundaries?
-- [ ] Is there synchronization preventing concurrent access?
-- [ ] Can I use a higher-level abstraction (Arc, Mutex)?
-- [ ] If implementing Send/Sync, is thread safety proven?
+- [ ] 我的指针是否跨线程边界？
+- [ ] 是否有同步机制防止并发访问？
+- [ ] 能否使用更高级的抽象（Arc、Mutex）？
+- [ ] 如果实现 Send/Sync，线程安全性是否已证明？
 
 ## 相关规则
 

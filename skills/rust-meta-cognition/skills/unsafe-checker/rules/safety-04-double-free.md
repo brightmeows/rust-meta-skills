@@ -9,11 +9,11 @@ impact: CRITICAL
 
 ## 概要
 
-Ensure that resources are not freed twice, especially when panics can occur during operations.
+确保资源不会被释放两次，特别是在操作期间可能发生 Panic 时。
 
 ## 理由
 
-Double-free is undefined behavior. Panics during unsafe operations can cause destructors to run on already-freed or partially-constructed data.
+双重释放是未定义行为。Unsafe 操作期间的 Panic 可能导致析构函数对已释放或部分构造的数据执行。
 
 ## 错误示例
 
@@ -89,19 +89,19 @@ fn safe_operation<T: Clone>(data: &mut [T], source: &[T]) {
 }
 ```
 
-## Patterns to Avoid Double-Free
+## 避免双重释放的模式
 
-1. **Decrement length before reading**: Vec's Drop won't touch the read element
-2. **Use ManuallyDrop**: Explicitly control when Drop runs
-3. **Use std::mem::replace/swap**: Safe alternatives for move semantics
-4. **Panic guards**: RAII cleanup on unwind
+1. **先减少长度再读取**：Vec 的 Drop 不会触及已读取的元素
+2. **使用 ManuallyDrop**：显式控制 Drop 何时运行
+3. **使用 std::mem::replace/swap**：移动语义的安全替代方案
+4. **Panic 守卫**：展开时的 RAII 清理
 
 ## 检查清单
 
-- [ ] After reading memory, is it marked as "moved"?
-- [ ] Will Drop run on this memory? Should it?
-- [ ] What happens if this code panics at each point?
-- [ ] Are length/count bookkeeping updates ordered correctly?
+- [ ] 读取内存后，它是否被标记为“已移出”？
+- [ ] Drop 会在该内存上运行吗？应该运行吗？
+- [ ] 如果此代码在每个点 Panic，会发生什么？
+- [ ] 长度/计数的记账更新顺序是否正确？
 
 ## 相关规则
 

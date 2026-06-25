@@ -13,9 +13,9 @@ std::thread::spawn(move || {
 });
 ```
 
-### Fix Options
+### 修复选项
 
-**Option 1: Use Arc instead**
+**选项 1：使用 Arc 代替**
 
 ```rust
 use std::sync::Arc;
@@ -23,14 +23,14 @@ use std::sync::Arc;
 let data = Arc::new(42);
 let data_clone = Arc::clone(&data);
 std::thread::spawn(move || {
-    println!("{}", data_clone);  // OK: Arc is Send
+    println!("{}", data_clone);  // OK：Arc 实现了 Send
 });
 ```
 
-**Option 2: Move owned data**
+**选项 2：移动拥有的数据**
 
 ```rust
-let data = 42;  // i32 is Copy and Send
+let data = 42;  // i32 实现了 Copy 和 Send
 std::thread::spawn(move || {
     println!("{}", data);  // OK
 });
@@ -38,21 +38,21 @@ std::thread::spawn(move || {
 
 ---
 
-## E0277: Cannot Share Between Threads (Not Sync)
+## E0277：无法在线程间共享（非 Sync）
 
-### Error Pattern
+### 错误模式
 
 ```rust
 use std::cell::RefCell;
 use std::sync::Arc;
 
 let data = Arc::new(RefCell::new(42));
-// ERROR: RefCell is not Sync
+// 错误：RefCell 未实现 Sync
 ```
 
-### Fix Options
+### 修复选项
 
-**Option 1: Use Mutex for thread-safe interior mutability**
+**选项 1：使用 Mutex 实现线程安全的内部可变性**
 
 ```rust
 use std::sync::{Arc, Mutex};
@@ -65,7 +65,7 @@ std::thread::spawn(move || {
 });
 ```
 
-**Option 2: Use RwLock for read-heavy workloads**
+**选项 2：读密集型场景使用 RwLock**
 
 ```rust
 use std::sync::{Arc, RwLock};
@@ -80,66 +80,66 @@ std::thread::spawn(move || {
 
 ---
 
-## Deadlock Patterns
+## 死锁模式
 
-### Pattern 1: Lock Ordering Deadlock
+### 模式 1：锁顺序死锁
 
 ```rust
-// DANGER: potential deadlock
+// 危险：潜在死锁
 use std::sync::{Arc, Mutex};
 
 let a = Arc::new(Mutex::new(1));
 let b = Arc::new(Mutex::new(2));
 
-// Thread 1: locks a then b
+// 线程 1：先锁 a 再锁 b
 let a1 = Arc::clone(&a);
 let b1 = Arc::clone(&b);
 std::thread::spawn(move || {
     let _a = a1.lock().unwrap();
-    let _b = b1.lock().unwrap();  // waits for b
+    let _b = b1.lock().unwrap();  // 等待 b
 });
 
-// Thread 2: locks b then a (opposite order!)
+// 线程 2：先锁 b 再锁 a（相反顺序！）
 let a2 = Arc::clone(&a);
 let b2 = Arc::clone(&b);
 std::thread::spawn(move || {
     let _b = b2.lock().unwrap();
-    let _a = a2.lock().unwrap();  // waits for a - DEADLOCK
+    let _a = a2.lock().unwrap();  // 等待 a——死锁
 });
 ```
 
-### Fix: Consistent Lock Ordering
+### 修复：一致的锁顺序
 
 ```rust
-// SAFE: always lock in same order (a before b)
+// 安全：始终按相同顺序加锁（a 先于 b）
 std::thread::spawn(move || {
     let _a = a1.lock().unwrap();
     let _b = b1.lock().unwrap();
 });
 
 std::thread::spawn(move || {
-    let _a = a2.lock().unwrap();  // same order
+    let _a = a2.lock().unwrap();  // 相同顺序
     let _b = b2.lock().unwrap();
 });
 ```
 
-### Pattern 2: Self-Deadlock
+### 模式 2：自身死锁
 
 ```rust
-// DANGER: locking same mutex twice
+// 危险：两次锁定同一个 mutex
 let m = Mutex::new(42);
 let _g1 = m.lock().unwrap();
-let _g2 = m.lock().unwrap();  // DEADLOCK on std::Mutex
+let _g2 = m.lock().unwrap();  // std::Mutex 上的自身死锁
 
-// FIX: use parking_lot::ReentrantMutex if needed
-// or restructure code to avoid double locking
+// 修复：如果需要，使用 parking_lot::ReentrantMutex
+// 或重构代码以避免双重锁定
 ```
 
 ---
 
-## Mutex Guard Across Await
+## Mutex Guard 跨越 Await
 
-### Error Pattern
+### 错误模式
 
 ```rust
 use std::sync::Mutex;
@@ -148,48 +148,48 @@ use tokio::time::sleep;
 async fn bad_async() {
     let m = Mutex::new(42);
     let guard = m.lock().unwrap();
-    sleep(Duration::from_secs(1)).await;  // WARNING: guard held across await
+    sleep(Duration::from_secs(1)).await;  // 警告：guard 跨越 await 持有
     println!("{}", *guard);
 }
 ```
 
-### Fix Options
+### 修复选项
 
-**Option 1: Scope the lock**
+**选项 1：限定锁的作用域**
 
 ```rust
 async fn good_async() {
     let m = Mutex::new(42);
     let value = {
         let guard = m.lock().unwrap();
-        *guard  // copy value
-    };  // guard dropped here
+        *guard  // 复制值
+    };  // guard 在此处丢弃
     sleep(Duration::from_secs(1)).await;
     println!("{}", value);
 }
 ```
 
-**Option 2: Use tokio::sync::Mutex**
+**选项 2：使用 tokio::sync::Mutex**
 
 ```rust
 use tokio::sync::Mutex;
 
 async fn good_async() {
     let m = Mutex::new(42);
-    let guard = m.lock().await;  // async lock
-    sleep(Duration::from_secs(1)).await;  // OK with tokio::Mutex
+    let guard = m.lock().await;  // 异步锁
+    sleep(Duration::from_secs(1)).await;  // tokio::Mutex 下没问题
     println!("{}", *guard);
 }
 ```
 
 ---
 
-## Data Race Prevention
+## 数据竞争预防
 
-### Pattern: Missing Synchronization
+### 模式：缺少同步
 
 ```rust
-// This WON'T compile - Rust prevents data races
+// 这不会编译——Rust 防止数据竞争
 use std::sync::Arc;
 
 let data = Arc::new(0);
@@ -197,28 +197,28 @@ let d1 = Arc::clone(&data);
 let d2 = Arc::clone(&data);
 
 std::thread::spawn(move || {
-    // *d1 += 1;  // ERROR: cannot mutate through Arc
+    // *d1 += 1;  // 错误：不能通过 Arc 修改
 });
 
 std::thread::spawn(move || {
-    // *d2 += 1;  // ERROR: cannot mutate through Arc
+    // *d2 += 1;  // 错误：不能通过 Arc 修改
 });
 ```
 
-### Fix: Add Synchronization
+### 修复：添加同步
 
 ```rust
 use std::sync::{Arc, Mutex};
 use std::sync::atomic::{AtomicI32, Ordering};
 
-// Option 1: Mutex
+// 选项 1：Mutex
 let data = Arc::new(Mutex::new(0));
 let d1 = Arc::clone(&data);
 std::thread::spawn(move || {
     *d1.lock().unwrap() += 1;
 });
 
-// Option 2: Atomic (for simple types)
+// 选项 2：Atomic（用于简单类型）
 let data = Arc::new(AtomicI32::new(0));
 let d1 = Arc::clone(&data);
 std::thread::spawn(move || {
@@ -228,25 +228,25 @@ std::thread::spawn(move || {
 
 ---
 
-## Channel Errors
+## 信道错误
 
-### Disconnected Channel
+### 信道断开
 
 ```rust
 use std::sync::mpsc;
 
 let (tx, rx) = mpsc::channel();
-drop(tx);  // sender dropped
+drop(tx);  // 发送者被丢弃
 match rx.recv() {
     Ok(v) => println!("{}", v),
-    Err(_) => println!("channel disconnected"),  // this happens
+    Err(_) => println!("信道已断开"),  // 发生此情况
 }
 ```
 
-### Fix: Handle Disconnection
+### 修复：处理断开
 
 ```rust
-// Use try_recv for non-blocking
+// 使用 try_recv 实现非阻塞
 loop {
     match rx.try_recv() {
         Ok(msg) => handle(msg),
@@ -255,7 +255,7 @@ loop {
     }
 }
 
-// Or iterate (stops on disconnect)
+// 或迭代（断开时停止）
 for msg in rx {
     handle(msg);
 }
@@ -263,79 +263,79 @@ for msg in rx {
 
 ---
 
-## Async Common Errors
+## 异步常见错误
 
-### Forgetting to Spawn
+### 忘记生成任务
 
 ```rust
-// WRONG: future not polled
+// 错误：future 未被轮询
 async fn fetch_data() -> Result<Data, Error> { ... }
 
 fn process() {
-    fetch_data();  // does nothing! returns Future that's dropped
+    fetch_data();  // 什么都不做！返回的 Future 被丢弃
 }
 
-// RIGHT: await or spawn
+// 正确：await 或 spawn
 async fn process() {
-    let data = fetch_data().await;  // awaited
+    let data = fetch_data().await;  // 已等待
 }
 
 fn process_sync() {
-    tokio::spawn(fetch_data());  // spawned
+    tokio::spawn(fetch_data());  // 已生成
 }
 ```
 
-### Blocking in Async Context
+### 在异步上下文中阻塞
 
 ```rust
-// WRONG: blocks the executor
+// 错误：阻塞执行器
 async fn bad() {
-    std::thread::sleep(Duration::from_secs(1));  // blocks!
-    std::fs::read_to_string("file.txt").unwrap();  // blocks!
+    std::thread::sleep(Duration::from_secs(1));  // 阻塞！
+    std::fs::read_to_string("file.txt").unwrap();  // 阻塞！
 }
 
-// RIGHT: use async versions
+// 正确：使用异步版本
 async fn good() {
     tokio::time::sleep(Duration::from_secs(1)).await;
     tokio::fs::read_to_string("file.txt").await.unwrap();
 }
 
-// Or spawn_blocking for CPU-bound work
+// 或对 CPU 密集型工作使用 spawn_blocking
 async fn compute() {
     let result = tokio::task::spawn_blocking(|| {
-        heavy_computation()  // OK to block here
+        heavy_computation()  // 在此阻塞没问题
     }).await.unwrap();
 }
 ```
 
 ---
 
-## Thread Panic Handling
+## 线程 Panic 处理
 
-### Unhandled Panic
+### 未处理的 Panic
 
 ```rust
 let handle = std::thread::spawn(|| {
-    panic!("oops");
+    panic!("哎呀");
 });
 
-// Main thread continues, might miss the error
-handle.join().unwrap();  // panics here
+// 主线程继续，可能会错过错误
+handle.join().unwrap();  // 在此 panic
 ```
 
-### Proper Error Handling
+### 正确的错误处理
 
 ```rust
 let handle = std::thread::spawn(|| {
-    panic!("oops");
+    panic!("哎呀");
 });
 
 match handle.join() {
-    Ok(result) => println!("Success: {:?}", result),
-    Err(e) => println!("Thread panicked: {:?}", e),
+    Ok(result) => println!("成功：{:?}", result),
+    Err(e) => println!("线程 panic：{:?}", e),
 }
 
-// For async: use catch_unwind
+// 异步中：使用 catch_unwind
 use std::panic;
 
 async fn safe_task() {
@@ -345,7 +345,7 @@ async fn safe_task() {
 
     match result {
         Ok(v) => use_value(v),
-        Err(_) => log_error("task panicked"),
+        Err(_) => log_error("任务 panic"),
     }
 }
 ```

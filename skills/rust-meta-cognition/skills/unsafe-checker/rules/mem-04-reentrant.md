@@ -9,11 +9,11 @@ impact: HIGH
 
 ## 概要
 
-When calling C functions or system calls, use reentrant (`_r`) versions to avoid data races from global state.
+调用 C 函数或系统调用时，使用可重入（`_r`）版本以避免全局状态导致的数据竞争。
 
 ## 理由
 
-Many C library functions use static buffers or global state, making them unsafe in multithreaded programs. Reentrant versions use caller-provided buffers instead.
+许多 C 库函数使用静态缓冲区或全局状态，使它们在多线程程序中不安全。可重入版本改用调用者提供的缓冲区。
 
 ## 错误示例
 
@@ -94,9 +94,9 @@ fn best_random() -> u32 {
 }
 ```
 
-## Common Non-Reentrant Functions
+## 常见的非可重入函数
 
-| Non-Reentrant | Reentrant | Rust Alternative |
+| 非可重入 | 可重入 | Rust 替代 |
 |---------------|-----------|------------------|
 | `strtok` | `strtok_r` | `str::split` |
 | `localtime` | `localtime_r` | `chrono` crate |
@@ -104,16 +104,16 @@ fn best_random() -> u32 {
 | `ctime` | `ctime_r` | `chrono` crate |
 | `rand` | `rand_r` | `rand` crate |
 | `strerror` | `strerror_r` | `std::io::Error` |
-| `getenv` | None (inherent race) | `std::env::var` (not atomic) |
+| `getenv` | 无（固有竞争） | `std::env::var`（非原子） |
 | `readdir` | `readdir_r` | `std::fs::read_dir` |
 | `gethostbyname` | `getaddrinfo` | `std::net::ToSocketAddrs` |
 
 ## 检查清单
 
-- [ ] Am I calling a C function that might use global state?
-- [ ] Is there a `_r` reentrant version available?
-- [ ] Is there a Rust standard library alternative?
-- [ ] If neither, do I need synchronization?
+- [ ] 我是否在调用可能使用全局状态的 C 函数？
+- [ ] 是否有可用的 `_r` 可重入版本？
+- [ ] 是否有 Rust 标准库替代方案？
+- [ ] 如果都没有，是否需要同步？
 
 ## 相关规则
 

@@ -216,7 +216,7 @@
 
 ```bash
 # Layer 1：语言机制
-claude -p "E0382 错误怎么解决"           # m01-ownership
+claude -p "E0382 错误怎么解决"             # m01-ownership
 claude -p "E0499 multiple mutable borrows" # m03-mutability
 claude -p "newtype pattern"              # m05-type-driven
 claude -p "Send Sync trait"              # m07-concurrency

@@ -108,39 +108,39 @@ let sum: i32 = (0..1000)
 
 ## Rust vs C++
 
-### Safety Guarantees
+### 安全保障
 
-| Aspect | Rust | C++ |
-|--------|------|-----|
-| Data races | Prevented at compile-time | Undefined behavior |
-| Deadlocks | Not prevented (same as C++) | Not prevented |
-| Thread safety | Send/Sync traits | Convention only |
-| Memory ordering | Explicit Ordering enum | memory_order enum |
+| 方面 | Rust | C++ |
+|------|------|-----|
+| 数据竞争 | 编译时阻止 | 未定义行为 |
+| 死锁 | 不阻止（与 C++ 相同） | 不阻止 |
+| 线程安全 | Send/Sync trait | 仅靠约定 |
+| 内存顺序 | 显式 Ordering 枚举 | memory_order 枚举 |
 
-### Atomic Comparison
+### 原子操作对比
 
 ```rust
-// Rust: clear memory ordering
+// Rust：清晰的内存顺序
 use std::sync::atomic::{AtomicI32, Ordering};
 
 let counter = AtomicI32::new(0);
 counter.fetch_add(1, Ordering::SeqCst);
 let value = counter.load(Ordering::Acquire);
 
-// C++: similar but without safety
+// C++：类似但缺少安全性
 // std::atomic<int> counter{0};
 // counter.fetch_add(1, std::memory_order_seq_cst);
 // int value = counter.load(std::memory_order_acquire);
 ```
 
-### Mutex Comparison
+### Mutex 对比
 
 ```rust
-// Rust: data protected by Mutex
+// Rust：数据受 Mutex 保护
 use std::sync::Mutex;
 
 struct SafeCounter {
-    count: Mutex<i32>,  // Mutex contains the data
+    count: Mutex<i32>,  // Mutex 包含数据
 }
 
 impl SafeCounter {
@@ -149,46 +149,46 @@ impl SafeCounter {
     }
 }
 
-// C++: mutex separate from data (error-prone)
+// C++：mutex 与数据分离（容易出错）
 // class Counter {
 //     std::mutex mtx;
-//     int count;  // NOT protected by type system
+//     int count;  // 不受类型系统保护
 // public:
 //     void increment() {
 //         std::lock_guard<std::mutex> lock(mtx);
 //         count++;
 //     }
 //     void unsafe_increment() {
-//         count++;  // Compiles! But wrong.
+//         count++;  // 能编译！但错了。
 //     }
 // };
 ```
 
 ---
 
-## Async Models Comparison
+## 异步模型对比
 
-| Language | Model | Runtime |
-|----------|-------|---------|
-| Rust | async/await, zero-cost | tokio, async-std (bring your own) |
-| Go | goroutines | Built-in scheduler |
-| JavaScript | async/await, Promises | Event loop (single-threaded) |
-| Python | async/await | asyncio (single-threaded) |
-| Java | CompletableFuture, Virtual Threads | ForkJoinPool, Loom |
+| 语言 | 模型 | 运行时 |
+|------|------|--------|
+| Rust | async/await，零成本 | tokio, async-std（自带） |
+| Go | goroutine | 内置调度器 |
+| JavaScript | async/await, Promise | 事件循环（单线程） |
+| Python | async/await | asyncio（单线程） |
+| Java | CompletableFuture，虚拟线程 | ForkJoinPool, Loom |
 
-### Rust vs JavaScript Async
+### Rust vs JavaScript 异步
 
 ```rust
-// Rust: async requires explicit runtime, can use multiple threads
+// Rust：async 需要显式运行时，可使用多线程
 #[tokio::main]
 async fn main() {
     let results = tokio::join!(
-        fetch("url1"),  // runs concurrently
+        fetch("url1"),  // 并发运行
         fetch("url2"),
     );
 }
 
-// JavaScript: single-threaded event loop
+// JavaScript：单线程事件循环
 // async function main() {
 //     const results = await Promise.all([
 //         fetch("url1"),
@@ -197,15 +197,15 @@ async fn main() {
 // }
 ```
 
-### Rust vs Python Async
+### Rust vs Python 异步
 
 ```rust
-// Rust: true parallelism possible
+// Rust：可实现真正的并行
 #[tokio::main(flavor = "multi_thread")]
 async fn main() {
     let handles: Vec<_> = urls
         .into_iter()
-        .map(|url| tokio::spawn(fetch(url)))  // spawns on thread pool
+        .map(|url| tokio::spawn(fetch(url)))  // 在线程池上生成
         .collect();
 
     for handle in handles {
@@ -213,103 +213,103 @@ async fn main() {
     }
 }
 
-// Python: asyncio is single-threaded (use ProcessPoolExecutor for CPU)
+// Python：asyncio 是单线程的（CPU 密集型使用 ProcessPoolExecutor）
 # async def main():
 #     tasks = [asyncio.create_task(fetch(url)) for url in urls]
-#     await asyncio.gather(*tasks)  # all on same thread
+#     await asyncio.gather(*tasks)  # 都在同一线程上
 ```
 
 ---
 
-## Send and Sync: Rust's Unique Feature
+## Send 和 Sync：Rust 的独特特性
 
-No other mainstream language has compile-time thread safety markers:
+没有其他主流语言拥有编译时线程安全标记：
 
-| Trait | Meaning | Auto-impl |
-|-------|---------|-----------|
-| `Send` | Safe to transfer between threads | Most types |
-| `Sync` | Safe to share `&T` between threads | Types with thread-safe `&` |
-| `!Send` | Must stay on one thread | Rc, raw pointers |
-| `!Sync` | References can't be shared | RefCell, Cell |
+| Trait | 含义 | 自动实现 |
+|-------|------|---------|
+| `Send` | 可安全在线程间转移 | 大多数类型 |
+| `Sync` | 可安全在线程间共享 `&T` | 具有线程安全 `&` 的类型 |
+| `!Send` | 必须留在同一线程 | Rc，原始指针 |
+| `!Sync` | 引用不能被共享 | RefCell, Cell |
 
-### Why This Matters
+### 为什么这很重要
 
 ```rust
-// Rust PREVENTS this at compile time:
+// Rust 在编译时就阻止了这种情况：
 use std::rc::Rc;
 
 let rc = Rc::new(42);
 std::thread::spawn(move || {
-    println!("{}", rc);  // ERROR: Rc is not Send
+    println!("{}", rc);  // 错误：Rc 未实现 Send
 });
 
-// In other languages, this would be a runtime bug:
-// - Go: race detector might catch it
-// - Java: undefined behavior
-// - Python: GIL usually saves you
-// - C++: undefined behavior
+// 在其他语言中，这将是运行时错误：
+// - Go：竞态检测器可能捕捉到
+// - Java：未定义行为
+// - Python：GIL 通常能救你
+// - C++：未定义行为
 ```
 
 ---
 
-## Performance Characteristics
+## 性能特性
 
-| Aspect | Rust | Go | Java | C++ |
-|--------|------|-----|------|-----|
-| Thread overhead | System threads or M:N | M:N (goroutines) | System or virtual | System threads |
-| Context switch | OS-level or cooperative | Cheap (goroutines) | OS-level | OS-level |
-| Memory | Predictable (no GC) | GC pauses | GC pauses | Predictable |
-| Async overhead | Zero-cost futures | Runtime overhead | Boxing overhead | Depends |
+| 方面 | Rust | Go | Java | C++ |
+|------|------|-----|------|-----|
+| 线程开销 | 系统线程或 M:N | M:N（goroutine） | 系统或虚拟 | 系统线程 |
+| 上下文切换 | OS 级或协作 | 廉价（goroutine） | OS 级 | OS 级 |
+| 内存 | 可预测（无 GC） | GC 暂停 | GC 暂停 | 可预测 |
+| 异步开销 | 零成本 Future | 运行时开销 | 装箱开销 | 视情况 |
 
-### When to Use What
+### 何时使用什么
 
-| Scenario | Best Choice |
-|----------|-------------|
-| CPU-bound parallelism | Rust (rayon), C++ |
-| I/O-bound concurrency | Rust (tokio), Go, Node.js |
-| Low latency required | Rust, C++ |
-| Rapid development | Go, Python |
-| Complex concurrent state | Rust (compile-time safety) |
+| 场景 | 最佳选择 |
+|------|---------|
+| CPU 密集型并行 | Rust (rayon), C++ |
+| I/O 密集型并发 | Rust (tokio), Go, Node.js |
+| 低延迟要求 | Rust, C++ |
+| 快速开发 | Go, Python |
+| 复杂并发状态 | Rust（编译时安全） |
 
 ---
 
-## Mental Model Shifts
+## 心智模型转换
 
-### From Go
-
-```
-Before: "Just use goroutines and channels"
-After:  "Explicitly declare what can be shared and how"
-```
-
-Key shifts:
-
-- `Arc<Mutex<T>>` instead of implicit sharing
-- Compiler enforces thread safety
-- Async needs explicit runtime
-
-### From Java
+### 来自 Go
 
 ```
-Before: "synchronized everywhere, hope for the best"
-After:  "Types encode thread safety, compiler enforces"
+之前：“直接用 goroutine 和 channel”
+之后：“显式声明什么可以共享以及如何共享”
 ```
 
-Key shifts:
+关键转变：
 
-- No need for synchronized keyword
-- Mutex contains data, not separate
-- No GC pauses in critical sections
+- `Arc<Mutex<T>>` 替代隐式共享
+- 编译器强制执行线程安全
+- 异步需要显式运行时
 
-### From C++
+### 来自 Java
 
 ```
-Before: "Be careful, read the docs, use sanitizers"
-After:  "Compiler catches data races, trust the type system"
+之前：“到处 synchronized，听天由命”
+之后：“类型编码线程安全，编译器强制执行”
 ```
 
-Key shifts:
+关键转变：
 
-- Send/Sync replace convention
-- RAII locks are mandatory, not optional
-- Much harder to write incorrect concurrent code
+- 不再需要 synchronized 关键字
+- Mutex 包含数据，而非分离
+- 临界区中无 GC 暂停
+
+### 来自 C++
+
+```
+之前：“小心点，读文档，用 sanitizer”
+之后：“编译器捕捉数据竞争，相信类型系统”
+```
+
+关键转变：
+
+- Send/Sync 替代约定
+- RAII 锁是强制性的，而非可选的
+- 编写不正确的并发代码变得更难

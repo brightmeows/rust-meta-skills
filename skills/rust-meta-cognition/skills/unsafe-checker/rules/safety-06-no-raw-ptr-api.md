@@ -9,11 +9,11 @@ impact: HIGH
 
 ## 概要
 
-Public APIs should use safe abstractions (references, slices, smart pointers) instead of exposing raw pointers.
+公共 API 应使用安全抽象（引用、切片、智能指针）而不是暴露原始指针。
 
 ## 理由
 
-Raw pointers bypass Rust's safety guarantees. Exposing them in public APIs forces users into unsafe code and makes it easy to create undefined behavior.
+原始指针绕过了 Rust 的安全保证。在公共 API 中暴露它们迫使用户进入 Unsafe 代码，容易造成未定义行为。
 
 ## 错误示例
 
@@ -94,27 +94,27 @@ impl Buffer {
 }
 ```
 
-## Patterns for Safe Pointer APIs
+## 安全指针 API 的模式
 
 ```rust
-// Pattern 1: Use NonNull for internal pointers
+// 模式 1：使用 NonNull 作为内部指针
 use std::ptr::NonNull;
 
 pub struct MyBox<T> {
-    ptr: NonNull<T>,  // Internal use only
+    ptr: NonNull<T>,  // 仅供内部使用
 }
 
 impl<T> MyBox<T> {
-    // Safe public API
+    // 安全公共 API
     pub fn get(&self) -> &T {
         // SAFETY: ptr is always valid while MyBox exists
         unsafe { self.ptr.as_ref() }
     }
 }
 
-// Pattern 2: Callback-based access
+// 模式 2：基于回调的访问
 impl Buffer {
-    // User can work with pointer in controlled context
+    // 用户可在受控上下文中使用指针
     pub fn with_ptr<F, R>(&self, f: F) -> R
     where
         F: FnOnce(*const u8, usize) -> R,
@@ -126,10 +126,10 @@ impl Buffer {
 
 ## 检查清单
 
-- [ ] Can this API use references instead of pointers?
-- [ ] Can this API use slices instead of pointer + length?
-- [ ] If pointers are necessary, is the API marked `unsafe`?
-- [ ] Are safety requirements documented?
+- [ ] 此 API 能否使用引用而非指针？
+- [ ] 此 API 能否使用切片而非指针 + 长度？
+- [ ] 如果必须使用指针，API 是否标记为 `unsafe`？
+- [ ] 安全要求是否已文档化？
 
 ## 相关规则
 

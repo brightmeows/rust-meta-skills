@@ -4,76 +4,76 @@
 
 | # | Section | Prefix | Level | Count | Impact |
 |---|---------|--------|-------|-------|--------|
-| 1 | General Principles | `general-` | CRITICAL | 3 | Foundational unsafe usage guidance |
-| 2 | Safety Abstraction | `safety-` | CRITICAL | 11 | Building sound safe APIs |
-| 3 | Raw Pointers | `ptr-` | HIGH | 6 | Pointer manipulation safety |
-| 4 | Union | `union-` | HIGH | 2 | Union type safety |
-| 5 | Memory Layout | `mem-` | HIGH | 6 | Data representation correctness |
-| 6 | FFI | `ffi-` | CRITICAL | 18 | C interoperability safety |
-| 7 | I/O Safety | `io-` | MEDIUM | 1 | Handle/resource safety |
+| 1 | 通用原则 | `general-` | CRITICAL | 3 | 基础的 Unsafe 使用指导 |
+| 2 | 安全抽象 | `safety-` | CRITICAL | 11 | 构建正确的安全 API |
+| 3 | 原始指针 | `ptr-` | HIGH | 6 | 指针操作安全 |
+| 4 | 联合体 | `union-` | HIGH | 2 | 联合体类型安全 |
+| 5 | 内存布局 | `mem-` | HIGH | 6 | 数据表示正确性 |
+| 6 | FFI | `ffi-` | CRITICAL | 18 | C 互操作安全 |
+| 7 | I/O 安全 | `io-` | MEDIUM | 1 | 句柄/资源安全 |
 
 ## 章节详情
 
-### 1. General Principles (`general-`)
+### 1. 通用原则（`general-`）
 
-**Focus**: When and why to use unsafe
+**重点**：何时以及为何使用 Unsafe
 
-- P.UNS.01: Don't abuse unsafe to escape borrow checker
-- P.UNS.02: Don't use unsafe blindly for performance
-- G.UNS.01: Don't create aliases for "unsafe" named items
+- P.UNS.01：不滥用 Unsafe 绕过编译器安全检查
+- P.UNS.02：不盲目使用 Unsafe 追求性能
+- G.UNS.01：不为名为“Unsafe”的类型/方法创建别名
 
-### 2. Safety Abstraction (`safety-`)
+### 2. 安全抽象（`safety-`）
 
-**Focus**: Building sound safe abstractions over unsafe code
+**重点**：在 Unsafe 代码上构建安全的抽象
 
-Key invariants:
+关键不变量：
 
-- Panic safety
-- Memory initialization
-- Send/Sync correctness
-- API soundness
+- Panic 安全
+- 内存初始化
+- Send/Sync 正确性
+- API 正确性
 
-### 3. Raw Pointers (`ptr-`)
+### 3. 原始指针（`ptr-`）
 
-**Focus**: Safe pointer manipulation patterns
+**重点**：安全的指针操作模式
 
-- Aliasing rules
-- Alignment requirements
-- Null/dangling prevention
-- Type casting
+- 别名规则
+- 对齐要求
+- 空指针/悬垂指针预防
+- 类型转换
 
-### 4. Union (`union-`)
+### 4. 联合体（`union-`）
 
-**Focus**: Safe union usage (primarily for C interop)
+**重点**：安全的联合体使用（主要用于 C 互操作）
 
-- Initialization rules
-- Lifetime considerations
-- Type punning dangers
+- 初始化规则
+- 生命周期考虑
+- 类型双关危险
 
-### 5. Memory Layout (`mem-`)
+### 5. 内存布局（`mem-`）
 
-**Focus**: Correct data representation
+**重点**：正确的数据表示
 
-- `#[repr(C)]` usage
-- Alignment and padding
-- Uninitialized memory
-- Cross-process memory
+- `#[repr(C)]` 使用
+- 对齐和填充
+- 未初始化内存
+- 跨进程内存
 
-### 6. FFI (`ffi-`)
+### 6. FFI（`ffi-`）
 
-**Focus**: Safe C interoperability
+**重点**：安全的 C 互操作
 
-Subcategories:
+子类别：
 
-- String handling (CString, CStr)
-- Type compatibility
-- Error handling across FFI
-- Thread safety
-- Resource management
+- 字符串处理（`CString`、`CStr`）
+- 类型兼容性
+- 跨 FFI 的错误处理
+- 线程安全
+- 资源管理
 
-### 7. I/O Safety (`io-`)
+### 7. I/O 安全（`io-`）
 
-**Focus**: Handle and resource ownership
+**重点**：句柄和资源所有权
 
-- Raw file descriptor safety
-- Handle validity guarantees
+- 原始文件描述符安全
+- 句柄有效性保证

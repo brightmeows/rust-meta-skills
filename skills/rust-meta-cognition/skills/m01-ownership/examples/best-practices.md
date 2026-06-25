@@ -2,26 +2,26 @@
 
 ## API 设计模式
 
-### 1. Prefer Borrowing Over Ownership
+### 1. 优先借用而非所有权
 
 ```rust
-// BAD: takes ownership unnecessarily
+// 不好：不必要地取得所有权
 fn print_name(name: String) {
     println!("Name: {}", name);
 }
 
-// GOOD: borrows instead
+// 好：改为借用
 fn print_name(name: &str) {
     println!("Name: {}", name);
 }
 
-// Caller benefits:
+// 调用者受益：
 let name = String::from("Alice");
-print_name(&name);  // can reuse name
-print_name(&name);  // still valid
+print_name(&name);  // 可重复使用 name
+print_name(&name);  // 仍然有效
 ```
 
-### 2. Return Owned Values from Constructors
+### 2. 从构造函数返回拥有的值
 
 ```rust
 // GOOD: return owned value
@@ -47,7 +47,7 @@ let u1 = User::new("Alice");        // &str
 let u2 = User::new(String::from("Bob"));  // String
 ```
 
-### 3. Use AsRef for Generic Borrowing
+### 3. 使用 AsRef 实现泛型借用
 
 ```rust
 // GOOD: accepts both &str and String
@@ -61,45 +61,45 @@ process(String::from("owned")); // String
 process(&String::from("ref")); // &String
 ```
 
-### 4. Cow for Clone-on-Write
+### 4. 使用 Cow 实现写时克隆
 
 ```rust
 use std::borrow::Cow;
 
-// Return borrowed when possible, owned when needed
+// 可能时返回借用，需要时返回拥有
 fn maybe_modify(s: &str, uppercase: bool) -> Cow<'_, str> {
     if uppercase {
-        Cow::Owned(s.to_uppercase())  // allocates
+        Cow::Owned(s.to_uppercase())  // 分配
     } else {
-        Cow::Borrowed(s)  // zero-cost
+        Cow::Borrowed(s)  // 零成本
     }
 }
 
 let input = "hello";
 let result = maybe_modify(input, false);
-// result is borrowed, no allocation
+// result 是借用的，无分配
 ```
 
 ---
 
-## Struct Design Patterns
+## 结构体设计模式
 
-### 1. Owned Fields vs References
+### 1. 拥有的字段 vs 引用
 
 ```rust
-// Use owned fields for most cases
+// 大多数情况下使用拥有的字段
 struct User {
     name: String,
     email: String,
 }
 
-// Use references only when lifetime is clear
+// 仅在生命周期明确时使用引用
 struct UserView<'a> {
     name: &'a str,
     email: &'a str,
 }
 
-// Pattern: owned data + view for efficiency
+// 模式：拥有的数据 + 视图以提高效率
 impl User {
     fn view(&self) -> UserView<'_> {
         UserView {
@@ -110,7 +110,7 @@ impl User {
 }
 ```
 
-### 2. Builder Pattern with Ownership
+### 2. 带所有权的 Builder 模式
 
 ```rust
 #[derive(Default)]
@@ -125,7 +125,7 @@ impl RequestBuilder {
         Self::default()
     }
 
-    // Take self by value for chaining
+    // 按值获取 self 以实现链式调用
     fn url(mut self, url: impl Into<String>) -> Self {
         self.url = Some(url.into());
         self
@@ -145,20 +145,20 @@ impl RequestBuilder {
     }
 }
 
-// Usage:
+// 使用：
 let req = RequestBuilder::new()
     .url("https://example.com")
     .method("POST")
     .build()?;
 ```
 
-### 3. Interior Mutability When Needed
+### 3. 需要时使用内部可变性
 
 ```rust
 use std::cell::RefCell;
 use std::rc::Rc;
 
-// Shared mutable state in single-threaded context
+// 单线程上下文中的共享可变状态
 struct Counter {
     value: Rc<RefCell<u32>>,
 }
@@ -188,58 +188,58 @@ impl Counter {
 
 ---
 
-## Collection Patterns
+## 集合模式
 
-### 1. Efficient Iteration
+### 1. 高效迭代
 
 ```rust
 let items = vec![1, 2, 3, 4, 5];
 
-// Iterate by reference (no move)
+// 通过引用迭代（无移动）
 for item in &items {
     println!("{}", item);
 }
 
-// Iterate by mutable reference
+// 通过可变引用迭代
 for item in &mut items.clone() {
     *item *= 2;
 }
 
-// Consume with into_iter when done
+// 完成后用 into_iter 消费
 let sum: i32 = items.into_iter().sum();
 ```
 
-### 2. Collecting Results
+### 2. 收集结果
 
 ```rust
-// Collect into owned collection
+// 收集到拥有的集合中
 let strings: Vec<String> = (0..5)
     .map(|i| format!("item_{}", i))
     .collect();
 
-// Collect references
+// 收集引用
 let refs: Vec<&str> = strings.iter().map(|s| s.as_str()).collect();
 
-// Collect with transformation
+// 带转换的收集
 let result: Result<Vec<i32>, _> = ["1", "2", "3"]
     .iter()
     .map(|s| s.parse::<i32>())
     .collect();
 ```
 
-### 3. Entry API for Maps
+### 3. 映射表的 Entry API
 
 ```rust
 use std::collections::HashMap;
 
 let mut map: HashMap<String, Vec<i32>> = HashMap::new();
 
-// Efficient: don't search twice
+// 高效：不搜索两次
 map.entry("key".to_string())
    .or_insert_with(Vec::new)
    .push(42);
 
-// With entry modification
+// 带条目修改
 map.entry("key".to_string())
    .and_modify(|v| v.push(43))
    .or_insert_with(|| vec![43]);
@@ -247,9 +247,9 @@ map.entry("key".to_string())
 
 ---
 
-## Error Handling with Ownership
+## 带所有权的错误处理
 
-### 1. Preserve Context in Errors
+### 1. 在错误中保留上下文
 
 ```rust
 use std::error::Error;
@@ -257,83 +257,83 @@ use std::fmt;
 
 #[derive(Debug)]
 struct ParseError {
-    input: String,  // owns the problematic input
+    input: String,  // 拥有有问题的输入
     message: String,
 }
 
 impl fmt::Display for ParseError {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "Failed to parse '{}': {}", self.input, self.message)
+        write!(f, "解析 '{}' 失败：{}", self.input, self.message)
     }
 }
 
 fn parse(input: &str) -> Result<i32, ParseError> {
     input.parse().map_err(|_| ParseError {
-        input: input.to_string(),  // clone for error context
-        message: "not a valid integer".to_string(),
+        input: input.to_string(),  // 克隆到错误上下文中
+        message: "不是有效的整数".to_string(),
     })
 }
 ```
 
-### 2. Ownership in Result Chains
+### 2. Result 链中的所有权
 
 ```rust
 fn process_data(path: &str) -> Result<ProcessedData, Error> {
-    let content = std::fs::read_to_string(path)?;  // owned String
-    let parsed = parse_content(&content)?;          // borrow
-    let processed = transform(parsed)?;             // ownership moves
-    Ok(processed)                                   // return owned
+    let content = std::fs::read_to_string(path)?;  // 拥有的 String
+    let parsed = parse_content(&content)?;          // 借用
+    let processed = transform(parsed)?;             // 所有权转移
+    Ok(processed)                                   // 返回拥有的值
 }
 ```
 
 ---
 
-## Performance Considerations
+## 性能考虑
 
-### 1. Avoid Unnecessary Clones
+### 1. 避免不必要的克隆
 
 ```rust
-// BAD: cloning just to compare
+// 不好：仅仅为了比较而克隆
 fn contains_item(items: &[String], target: &str) -> bool {
-    items.iter().any(|s| s.clone() == target)  // unnecessary clone
+    items.iter().any(|s| s.clone() == target)  // 不必要的克隆
 }
 
-// GOOD: compare references
+// 好：比较引用
 fn contains_item(items: &[String], target: &str) -> bool {
-    items.iter().any(|s| s == target)  // String implements PartialEq<str>
+    items.iter().any(|s| s == target)  // String 实现了 PartialEq<str>
 }
 ```
 
-### 2. Use Slices for Flexibility
+### 2. 使用切片提高灵活性
 
 ```rust
-// BAD: requires Vec
+// 不好：要求 Vec
 fn sum(numbers: &Vec<i32>) -> i32 {
     numbers.iter().sum()
 }
 
-// GOOD: accepts any slice
+// 好：接受任何切片
 fn sum(numbers: &[i32]) -> i32 {
     numbers.iter().sum()
 }
 
-// Now works with:
+// 现在可以配合：
 sum(&vec![1, 2, 3]);     // Vec
-sum(&[1, 2, 3]);         // array
-sum(&array[1..3]);       // slice
+sum(&[1, 2, 3]);         // 数组
+sum(&array[1..3]);       // 切片
 ```
 
-### 3. In-Place Mutation
+### 3. 原地修改
 
 ```rust
-// BAD: allocates new String
+// 不好：分配新的 String
 fn make_uppercase(s: &str) -> String {
     s.to_uppercase()
 }
 
-// GOOD when you own the data: mutate in place
+// 当你拥有数据时好：原地修改
 fn make_uppercase(mut s: String) -> String {
-    s.make_ascii_uppercase();  // in-place for ASCII
+    s.make_ascii_uppercase();  // ASCII 的原地修改
     s
 }
 ```

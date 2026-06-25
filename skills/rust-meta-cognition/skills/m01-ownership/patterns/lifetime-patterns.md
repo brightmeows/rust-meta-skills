@@ -2,47 +2,47 @@
 
 ## 基本生命周期标注
 
-### When Required
+### 何时需要标注
 
 ```rust
-// ERROR: missing lifetime specifier
+// 错误：缺少生命周期说明符
 fn longest(x: &str, y: &str) -> &str {
     if x.len() > y.len() { x } else { y }
 }
 
-// FIX: explicit lifetime
+// 修复：显式生命周期
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     if x.len() > y.len() { x } else { y }
 }
 ```
 
-### Lifetime Elision Rules
+### 生命周期省略规则
 
-1. Each input reference gets its own lifetime
-2. If one input lifetime, output uses same
-3. If `&self` or `&mut self`, output uses self's lifetime
+1. 每个输入引用获得自己的生命周期
+2. 如果有一个输入生命周期，输出使用相同的
+3. 如果包含 `&self` 或 `&mut self`，输出使用 self 的生命周期
 
 ```rust
-// These are equivalent (elision applies):
+// 以下等价（省略规则适用）：
 fn first_word(s: &str) -> &str { ... }
 fn first_word<'a>(s: &'a str) -> &'a str { ... }
 
-// Method with self (elision applies):
+// 带有 self 的方法（省略规则适用）：
 impl MyStruct {
     fn get_ref(&self) -> &str { ... }
-    // Equivalent to:
+    // 等价于：
     fn get_ref<'a>(&'a self) -> &'a str { ... }
 }
 ```
 
 ---
 
-## Struct Lifetimes
+## 结构体生命周期
 
-### Struct Holding References
+### 持有引用的结构体
 
 ```rust
-// Struct must declare lifetime for references
+// 结构体必须为引用声明生命周期
 struct Excerpt<'a> {
     part: &'a str,
 }
@@ -50,14 +50,14 @@ struct Excerpt<'a> {
 impl<'a> Excerpt<'a> {
     fn level(&self) -> i32 { 3 }
 
-    // Return reference tied to self's lifetime
+    // 返回与 self 生命周期绑定的引用
     fn get_part(&self) -> &str {
         self.part
     }
 }
 ```
 
-### Multiple Lifetimes in Struct
+### 结构体中的多个生命周期
 
 ```rust
 struct Multi<'a, 'b> {
@@ -65,7 +65,7 @@ struct Multi<'a, 'b> {
     y: &'b str,
 }
 
-// Use when references may have different lifetimes
+// 当引用可能具有不同生命周期时使用
 fn make_multi<'a, 'b>(x: &'a str, y: &'b str) -> Multi<'a, 'b> {
     Multi { x, y }
 }
@@ -73,43 +73,43 @@ fn make_multi<'a, 'b>(x: &'a str, y: &'b str) -> Multi<'a, 'b> {
 
 ---
 
-## 'static Lifetime
+## 'static 生命周期
 
-### When to Use
+### 何时使用
 
 ```rust
-// String literals are 'static
+// 字符串字面量是 'static
 let s: &'static str = "hello";
 
-// Owned data can be leaked to 'static
+// 拥有的数据可以泄漏为 'static
 let leaked: &'static str = Box::leak(String::from("hello").into_boxed_str());
 
-// Thread spawn requires 'static or move
+// 线程生成需要 'static 或 move
 std::thread::spawn(move || {
-    // closure owns data, satisfies 'static
+    // 闭包拥有数据，满足 'static
 });
 ```
 
-### Avoid Overusing 'static
+### 避免过度使用 'static
 
 ```rust
-// BAD: requires 'static unnecessarily
+// 不好：不必要地要求 'static
 fn process(s: &'static str) { ... }
 
-// GOOD: use generic lifetime
+// 好：使用泛型生命周期
 fn process<'a>(s: &'a str) { ... }
-// or
-fn process(s: &str) { ... }  // lifetime elision
+// 或
+fn process(s: &str) { ... }  // 生命周期省略
 ```
 
 ---
 
-## Higher-Ranked Trait Bounds (HRTB)
+## 高阶 trait 约束（HRTB）
 
-### for<'a> Syntax
+### for<'a> 语法
 
 ```rust
-// Function that works with any lifetime
+// 适用于任何生命周期的函数
 fn apply_to_ref<F>(f: F)
 where
     F: for<'a> Fn(&'a str) -> &'a str,
@@ -120,10 +120,10 @@ where
 }
 ```
 
-### Common Use: Closure Bounds
+### 常见用途：闭包约束
 
 ```rust
-// Closure that borrows any lifetime
+// 借用任何生命周期的闭包
 fn filter_refs<F>(items: &[&str], pred: F) -> Vec<&str>
 where
     F: for<'a> Fn(&'a str) -> bool,
@@ -134,12 +134,12 @@ where
 
 ---
 
-## Lifetime Bounds
+## 生命周期约束
 
-### 'a: 'b (Outlives)
+### 'a: 'b（存活约束）
 
 ```rust
-// 'a must live at least as long as 'b
+// 'a 必须至少活得跟 'b 一样久
 fn coerce<'a, 'b>(x: &'a str) -> &'b str
 where
     'a: 'b,
@@ -148,98 +148,98 @@ where
 }
 ```
 
-### T: 'a (Type Outlives Lifetime)
+### T: 'a（类型存活于生命周期）
 
 ```rust
-// T must live at least as long as 'a
+// T 必须至少活得跟 'a 一样久
 struct Wrapper<'a, T: 'a> {
     value: &'a T,
 }
 
-// Common pattern with trait objects
+// 与 trait 对象结合的常见模式
 fn use_trait<'a, T: MyTrait + 'a>(t: &'a T) { ... }
 ```
 
 ---
 
-## Common Lifetime Mistakes
+## 常见生命周期错误
 
-### Mistake 1: Returning Reference to Local
+### 错误 1：返回局部引用
 
 ```rust
-// WRONG
+// 错误
 fn dangle() -> &String {
     let s = String::from("hello");
-    &s  // s dropped, reference invalid
+    &s  // s 被丢弃，引用无效
 }
 
-// RIGHT
+// 正确
 fn no_dangle() -> String {
     String::from("hello")
 }
 ```
 
-### Mistake 2: Conflicting Lifetimes
+### 错误 2：生命周期冲突
 
 ```rust
-// WRONG: might return reference to y which has shorter lifetime
+// 错误：可能返回 y 的引用，而 y 生命周期更短
 fn wrong<'a, 'b>(x: &'a str, y: &'b str) -> &'a str {
-    y  // ERROR: 'b might not live as long as 'a
+    y  // 错误：'b 可能活得没有 'a 长
 }
 
-// RIGHT: use same lifetime or add bound
+// 正确：使用相同生命周期或添加约束
 fn right<'a>(x: &'a str, y: &'a str) -> &'a str {
-    y  // OK: both have lifetime 'a
+    y  // OK：两者都具有生命周期 'a
 }
 ```
 
-### Mistake 3: Struct Outlives Reference
+### 错误 3：结构体比引用活得更久
 
 ```rust
-// WRONG: s might outlive the string it references
+// 错误：s 可能比它引用的字符串早被丢弃
 let r;
 {
     let s = String::from("hello");
-    r = Excerpt { part: &s };  // ERROR
+    r = Excerpt { part: &s };  // 错误
 }
-println!("{}", r.part);  // s already dropped
+println!("{}", r.part);  // s 已被丢弃
 
-// RIGHT: ensure source outlives struct
+// 正确：确保源数据比结构体活得更久
 let s = String::from("hello");
 let r = Excerpt { part: &s };
-println!("{}", r.part);  // OK: s still in scope
+println!("{}", r.part);  // OK：s 仍在作用域中
 ```
 
 ---
 
-## Subtyping and Variance
+## 子类型与变型
 
-### Covariance
+### 协变
 
 ```rust
-// &'a T is covariant in 'a
-// Can use &'long where &'short expected
+// &'a T 在 'a 上是协变的
+// 可以在期望 &'short 的地方使用 &'long
 fn example<'short, 'long: 'short>(long_ref: &'long str) {
-    let short_ref: &'short str = long_ref;  // OK: covariance
+    let short_ref: &'short str = long_ref;  // OK：协变
 }
 ```
 
-### Invariance
+### 不变
 
 ```rust
-// &'a mut T is invariant in 'a
+// &'a mut T 在 'a 上是不变的
 fn example<'a, 'b>(x: &'a mut &'b str, y: &'b str) {
-    *x = y;  // ERROR if 'a and 'b are different
+    *x = y;  // 如果 'a 和 'b 不同则出错
 }
 ```
 
-### Practical Impact
+### 实际影响
 
 ```rust
-// This works due to covariance
+// 由于协变，以下代码可以工作
 fn accept_any<'a>(s: &'a str) { ... }
 
 let s = String::from("hello");
 let long_lived: &str = &s;
-accept_any(long_lived);  // 'long coerces to 'short
+accept_any(long_lived);  // 'long 被强制转换为 'short
 ```

@@ -9,11 +9,11 @@ impact: CRITICAL
 
 ## 概要
 
-Unsafe Rust should not be used as an escape hatch from the borrow checker or other compiler safety mechanisms.
+Unsafe Rust 不应被用作逃避借用检查器或其他编译器安全机制的逃生口。
 
 ## 理由
 
-The borrow checker exists to prevent memory safety bugs. Using `unsafe` to bypass it defeats Rust's safety guarantees and introduces potential undefined behavior.
+借用检查器的存在是为了防止内存安全错误。使用 `unsafe` 绕过它会破坏 Rust 的安全保证，并引入潜在的未定义行为。
 
 ## 错误示例
 
@@ -54,16 +54,16 @@ fn good_interior_mut() {
 
 ## Unsafe 的合法用途
 
-1. **FFI**: Calling C functions or implementing C-compatible interfaces
-2. **Low-level abstractions**: Implementing collections, synchronization primitives
-3. **Performance**: Only after profiling shows measurable improvement, and with careful safety analysis
+1. **FFI**：调用 C 函数或实现 C 兼容接口
+2. **底层抽象**：实现集合、同步原语
+3. **性能**：仅在性能分析显示可衡量的提升后，并进行仔细的安全分析
 
 ## 检查清单
 
-- [ ] Have I tried all safe alternatives first?
-- [ ] Is the borrow checker preventing a genuine design need?
-- [ ] Can I restructure the code to satisfy the borrow checker?
-- [ ] If unsafe is necessary, have I documented the safety invariants?
+- [ ] 是否已先尝试所有安全替代方案？
+- [ ] 借用检查器是否阻止了一个真正的设计需求？
+- [ ] 能否重构代码以满足借用检查器？
+- [ ] 如果必须使用 Unsafe，是否已文档化安全不变量？
 
 ## 相关规则
 

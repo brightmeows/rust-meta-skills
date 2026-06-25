@@ -1,8 +1,8 @@
-# FFI Best Practices and Patterns
+# FFI 最佳实践与模式
 
-Examples of safe and idiomatic Rust-C interoperability.
+安全的、符合 Rust 风格的 Rust-C 互操作示例。
 
-## Pattern 1: Basic FFI Wrapper
+## 模式 1：基础 FFI 包装器
 
 ```rust
 use std::ffi::{CStr, CString};
@@ -75,7 +75,7 @@ impl Drop for Library {
 impl !Clone for Library {}
 ```
 
-## Pattern 2: Callback Registration
+## 模式 2：回调注册
 
 ```rust
 use std::os::raw::{c_int, c_void};
@@ -135,7 +135,7 @@ fn example() {
 }
 ```
 
-## Pattern 3: Opaque Handle Types
+## 模式 3：不透明句柄类型
 
 ```rust
 use std::marker::PhantomData;
@@ -212,7 +212,7 @@ impl Drop for Connection<'_> {
 }
 ```
 
-## Pattern 4: Error Handling Across FFI
+## 模式 4：跨 FFI 的错误处理
 
 ```rust
 use std::os::raw::c_int;
@@ -289,7 +289,7 @@ pub extern "C" fn do_operation(data: *const u8, len: usize) -> c_int {
 }
 ```
 
-## Pattern 5: Struct with C Layout
+## 模式 5：C 布局的结构体
 
 ```rust
 use std::os::raw::{c_char, c_int};
@@ -343,11 +343,11 @@ const _: () = {
 };
 ```
 
-## Key FFI Guidelines
+## FFI 关键指南
 
-1. **Always use `#[repr(C)]`** for types crossing FFI
-2. **Handle null pointers** at the boundary
-3. **Catch panics** before returning to C
-4. **Document ownership** clearly
-5. **Use opaque types** for type safety
-6. **Keep unsafe minimal** and well-documented
+1. **始终为跨越 FFI 的类型使用 `#[repr(C)]`**
+2. **在边界处处理空指针**
+3. **在返回 C 之前捕获 panic**
+4. **清晰地文档化所有权**
+5. **使用不透明类型保证类型安全**
+6. **保持 unsafe 最小化并记录完善**

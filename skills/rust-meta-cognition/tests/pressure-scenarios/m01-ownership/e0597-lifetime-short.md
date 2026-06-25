@@ -4,11 +4,11 @@
 
 m01-ownership
 
-## User Question
+## 用户问题
 
-"Why am I getting E0597: borrowed value does not live long enough?"
+“为什么我会遇到 E0597：借用的值存活时间不够长？”
 
-## Code Context
+## 代码上下文
 
 ```rust
 fn get_str() -> &str {
@@ -17,46 +17,46 @@ fn get_str() -> &str {
 }
 ```
 
-## Expected Behavior
+## 期望行为
 
-- [x] Explain stack vs heap lifetime
-- [x] Show why returned reference is invalid
-- [x] Provide fix options (return owned, 'static, lifetime params)
-- [x] Quick reference for lifetime patterns
-- [x] Reference to P.MEM.LFT.01, P.MEM.LFT.02 guidelines
+- [x] 解释栈 vs 堆生命周期
+- [x] 说明为什么返回的引用无效
+- [x] 提供修复选项（返回拥有的值、'static、生命周期参数）
+- [x] 生命周期模式快速参考
+- [x] 引用 P.MEM.LFT.01、P.MEM.LFT.02 规范
 
-## Baseline Test (without skill)
+## 基线测试（无 skill）
 
-Date: [To be filled]
+日期：[待填写]
 
-Result:
+结果：
 
-- [ ] Stack/heap lifetime: [PASS/FAIL]
-- [ ] Invalid reference: [PASS/FAIL]
-- [ ] Fix options: [PASS/FAIL]
-- [ ] Quick reference: [PASS/FAIL]
-- [ ] Guidelines: [PASS/FAIL]
+- [ ] 栈/堆生命周期：[通过/失败]
+- [ ] 无效引用：[通过/失败]
+- [ ] 修复选项：[通过/失败]
+- [ ] 快速参考：[通过/失败]
+- [ ] 规范：[通过/失败]
 
-Notes:
-[To be filled after test]
+备注：
+[测试后填写]
 
-## Post-Skill Test
+## 安装 Skill 后测试
 
-Date: [To be filled]
+日期：[待填写]
 
-Result:
+结果：
 
-- [ ] Stack/heap lifetime: [PASS/FAIL]
-- [ ] Invalid reference: [PASS/FAIL]
-- [ ] Fix options: [PASS/FAIL]
-- [ ] Quick reference: [PASS/FAIL]
-- [ ] Guidelines: [PASS/FAIL]
+- [ ] 栈/堆生命周期：[通过/失败]
+- [ ] 无效引用：[通过/失败]
+- [ ] 修复选项：[通过/失败]
+- [ ] 快速参考：[通过/失败]
+- [ ] 规范：[通过/失败]
 
-Notes:
-[To be filled after test]
+备注：
+[测试后填写]
 
-## Edge Cases
+## 边界情况
 
-1. "What if I use Box?" → Should explain heap allocation
-2. "Can I use 'static?" → Should explain when appropriate
-3. "What about Cow?" → Should suggest for flexible ownership
+1. “如果我使用 Box 呢？”→ 应解释堆分配
+2. “我可以用 'static 吗？”→ 应解释何时合适
+3. “Cow 呢？”→ 应建议用于灵活的所有权

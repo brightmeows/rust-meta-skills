@@ -1,68 +1,68 @@
-# Common Unsafe Pitfalls and Fixes
+# 常见 Unsafe 陷阱与修复
 
-A reference of frequently encountered unsafe bugs and how to fix them.
+常见 unsafe 错误的参考资料及修复方法。
 
-## Pitfall 1: Dangling Pointer from Local
+## 陷阱 1：局部变量悬垂指针
 
-**Bug:**
+**错误代码：**
 
 ```rust
 fn bad() -> *const i32 {
     let x = 42;
-    &x as *const i32  // Dangling after return!
+    &x as *const i32  // 返回后悬垂！
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 fn good() -> Box<i32> {
-    Box::new(42)  // Heap allocation lives beyond function
+    Box::new(42)  // 堆分配，生命周期超出函数
 }
 
-// Or return the value itself
+// 或者返回值本身
 fn better() -> i32 {
     42
 }
 ```
 
-## Pitfall 2: CString Lifetime
+## 陷阱 2：CString 生命周期
 
-**Bug:**
+**错误代码：****
 
 ```rust
 fn bad() -> *const c_char {
     let s = CString::new("hello").unwrap();
-    s.as_ptr()  // Dangling! CString dropped
+    s.as_ptr()  // 悬垂！CString 已被丢弃
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 fn good(s: &CString) -> *const c_char {
-    s.as_ptr()  // Caller keeps CString alive
+    s.as_ptr()  // 调用者保持 CString 存活
 }
 
-// Or take ownership
+// 或者取得所有权
 fn also_good(s: CString) -> *const c_char {
-    s.into_raw()  // Caller must free with CString::from_raw
+    s.into_raw()  // 调用者必须用 CString::from_raw 释放
 }
 ```
 
-## Pitfall 3: Vec set_len with Uninitialized Data
+## 陷阱 3：Vec set_len 与未初始化数据
 
-**Bug:**
+**错误代码：****
 
 ```rust
 fn bad() -> Vec<String> {
     let mut v = Vec::with_capacity(10);
-    unsafe { v.set_len(10); }  // Strings are uninitialized!
+    unsafe { v.set_len(10); }  // String 未初始化！
     v
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 fn good() -> Vec<String> {
@@ -73,7 +73,7 @@ fn good() -> Vec<String> {
     v
 }
 
-// Or use resize
+// 或者使用 resize
 fn also_good() -> Vec<String> {
     let mut v = Vec::new();
     v.resize(10, String::new());
@@ -81,20 +81,20 @@ fn also_good() -> Vec<String> {
 }
 ```
 
-## Pitfall 4: Reference to Packed Field
+## 陷阱 4：对 packed 结构体字段的引用
 
-**Bug:**
+**错误代码：****
 
 ```rust
 #[repr(packed)]
 struct Packed { a: u8, b: u32 }
 
 fn bad(p: &Packed) -> &u32 {
-    &p.b  // UB: misaligned reference!
+    &p.b  // UB：未对齐的引用！
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 fn good(p: &Packed) -> u32 {
@@ -102,23 +102,23 @@ fn good(p: &Packed) -> u32 {
 }
 ```
 
-## Pitfall 5: Mutable Aliasing Through Raw Pointers
+## 陷阱 5：通过原始指针的可变别名
 
-**Bug:**
+**错误代码：****
 
 ```rust
 fn bad() {
     let mut x = 42;
     let ptr1 = &mut x as *mut i32;
-    let ptr2 = &mut x as *mut i32;  // Already have ptr1!
+    let ptr2 = &mut x as *mut i32;  // 已有 ptr1！
     unsafe {
         *ptr1 = 1;
-        *ptr2 = 2;  // Aliasing mutable pointers!
+        *ptr2 = 2;  // 可变指针别名！
     }
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 fn good() {
@@ -126,45 +126,45 @@ fn good() {
     let ptr = &mut x as *mut i32;
     unsafe {
         *ptr = 1;
-        *ptr = 2;  // Same pointer, sequential access
+        *ptr = 2;  // 同一指针，顺序访问
     }
 }
 ```
 
-## Pitfall 6: Transmute to Wrong Size
+## 陷阱 6：Transmute 到错误大小
 
-**Bug:**
+**错误代码：****
 
 ```rust
 fn bad() {
     let x: u32 = 42;
-    let y: u64 = unsafe { std::mem::transmute(x) };  // UB: size mismatch!
+    let y: u64 = unsafe { std::mem::transmute(x) };  // UB：大小不匹配！
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 fn good() {
     let x: u32 = 42;
-    let y: u64 = x as u64;  // Use conversion
+    let y: u64 = x as u64;  // 使用转换
 }
 ```
 
-## Pitfall 7: Invalid Enum Discriminant
+## 陷阱 7：无效的枚举判别值
 
-**Bug:**
+**错误代码：****
 
 ```rust
 #[repr(u8)]
 enum Status { A = 0, B = 1, C = 2 }
 
 fn bad(raw: u8) -> Status {
-    unsafe { std::mem::transmute(raw) }  // UB if raw > 2!
+    unsafe { std::mem::transmute(raw) }  // 如果 raw > 2 则为 UB！
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 fn good(raw: u8) -> Option<Status> {
@@ -177,21 +177,21 @@ fn good(raw: u8) -> Option<Status> {
 }
 ```
 
-## Pitfall 8: FFI Panic Unwinding
+## 陷阱 8：FFI Panic 展开
 
-**Bug:**
+**错误代码：****
 
 ```rust
 #[no_mangle]
 extern "C" fn callback(x: i32) -> i32 {
     if x < 0 {
-        panic!("negative!");  // UB: unwinding across FFI!
+        panic!("negative!");  // UB：panic 跨越 FFI 边界展开！
     }
     x * 2
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 #[no_mangle]
@@ -201,73 +201,73 @@ extern "C" fn callback(x: i32) -> i32 {
             panic!("negative!");
         }
         x * 2
-    }).unwrap_or(-1)  // Return error code on panic
+    }).unwrap_or(-1)  // 发生 panic 时返回错误码
 }
 ```
 
-## Pitfall 9: Double Free from Clone + into_raw
+## 陷阱 9：Clone + into_raw 导致双重释放
 
-**Bug:**
+**错误代码：****
 
 ```rust
 struct Handle(*mut c_void);
 
 impl Clone for Handle {
     fn clone(&self) -> Self {
-        Handle(self.0)  // Both now "own" same pointer!
+        Handle(self.0)  // 两者现在"拥有"同一指针！
     }
 }
 
 impl Drop for Handle {
     fn drop(&mut self) {
-        unsafe { free(self.0); }  // Double free when both drop!
+        unsafe { free(self.0); }  // 两者都 Drop 时双重释放！
     }
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 struct Handle(*mut c_void);
 
-// Don't implement Clone, or implement proper reference counting
+// 不要实现 Clone，或实现正确的引用计数
 impl Handle {
     fn clone_ptr(&self) -> *mut c_void {
-        self.0  // Return raw pointer, no ownership
+        self.0  // 返回原始指针，无所有权
     }
 }
 ```
 
-## Pitfall 10: Forget Doesn't Run Destructors
+## 陷阱 10：Forget 不执行析构函数
 
-**Bug:**
+**错误代码：**
 
 ```rust
 fn bad() {
     let guard = lock.lock();
-    std::mem::forget(guard);  // Lock never released!
+    std::mem::forget(guard);  // 锁永远不会释放！
 }
 ```
 
-**Fix:**
+**修复：**
 
 ```rust
 fn good() {
     let guard = lock.lock();
-    // Let guard drop naturally
-    // or explicitly: drop(guard);
+    // 让 guard 自然 Drop
+    // 或显式调用：drop(guard);
 }
 ```
 
-## Quick Reference Table
+## 快速参考表
 
-| Pitfall | Detection | Fix |
+| 陷阱 | 检测方法 | 修复方案 |
 |---------|-----------|-----|
-| Dangling pointer | Miri | Extend lifetime or heap allocate |
-| Uninitialized read | Miri | Use MaybeUninit properly |
-| Misaligned access | Miri, UBsan | read_unaligned, copy by value |
-| Data race | TSan | Use atomics or mutex |
-| Double free | ASan | Track ownership carefully |
-| Invalid enum | Manual review | Use TryFrom |
-| FFI panic | Testing | catch_unwind |
-| Type confusion | Miri | Match types exactly |
+| 悬垂指针 | Miri | 延长生命周期或堆分配 |
+| 未初始化读取 | Miri | 正确使用 MaybeUninit |
+| 未对齐访问 | Miri, UBsan | read_unaligned、按值复制 |
+| 数据竞争 | TSan | 使用 atomics 或 mutex |
+| 双重释放 | ASan | 仔细追踪所有权 |
+| 无效枚举 | 手动审查 | 使用 TryFrom |
+| FFI panic | 测试 | catch_unwind |
+| 类型混淆 | Miri | 精确匹配类型 |

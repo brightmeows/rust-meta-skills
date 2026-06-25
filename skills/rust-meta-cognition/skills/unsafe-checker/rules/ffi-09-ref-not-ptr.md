@@ -5,18 +5,18 @@ level: P
 impact: MEDIUM
 ---
 
-# Use References Instead of Raw Pointers When Calling Safe C Functions
+# 在安全包装器中使用引用而非原始指针调用 C 函数
 
 ## 概要
 
-When wrapping C functions that don't need null pointers, use Rust references in the safe wrapper to enforce non-null at compile time.
+包装不需要空指针的 C 函数时，在安全包装器中使用 Rust 引用以在编译时强制非空。
 
 ## 理由
 
-- References guarantee non-null
-- References have lifetime tracking
-- Raw pointers should stay in the unsafe FFI layer
-- Safe Rust API should use safe types
+- 引用保证非空
+- 引用有生命周期追踪
+- 原始指针应保留在 Unsafe FFI 层中
+- 安全的 Rust API 应使用安全类型
 
 ## 错误示例
 
@@ -89,7 +89,7 @@ impl SafeHandle {
 }
 ```
 
-## Converting Between References and Pointers
+## 引用与指针之间的转换
 
 ```rust
 // Reference to pointer
@@ -116,19 +116,19 @@ unsafe fn ptr_to_mut<'a>(p: *mut Data) -> &'a mut Data {
 }
 ```
 
-## When to Use Raw Pointers
+## 何时使用原始指针
 
-- FFI declarations (`extern "C"`)
-- Implementing the unsafe boundary layer
-- When null is a valid value
-- When the pointee might not be valid Rust (e.g., uninitialized)
+- FFI 声明（`extern "C"`）
+- 实现 Unsafe 边界层
+- 当 null 是有效值时
+- 当指向的内容可能不是有效的 Rust（如未初始化）时
 
 ## 检查清单
 
-- [ ] Can this parameter be a reference instead of a pointer?
-- [ ] Am I checking for null in the unsafe layer?
-- [ ] Is the safe API free of raw pointers?
-- [ ] Do I use Option<&T> for nullable references?
+- [ ] 这个参数能否是引用而非指针？
+- [ ] 我是否在 Unsafe 层检查了 null？
+- [ ] 安全 API 是否不包含原始指针？
+- [ ] 我是否对可空引用使用了 `Option<&T>`？
 
 ## 相关规则
 

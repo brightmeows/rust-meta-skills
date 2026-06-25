@@ -5,17 +5,17 @@ level: P
 impact: CRITICAL
 ---
 
-# Implement Drop for Rust Types Wrapping Memory-Managing C Pointers
+# 为包装管理内存的 C 指针的 Rust 类型实现 Drop
 
 ## 概要
 
-When wrapping a C pointer that owns memory, implement `Drop` to call the appropriate C deallocation function.
+当包装一个拥有内存的 C 指针时，实现 `Drop` 以调用合适的 C 释放函数。
 
 ## 理由
 
-- C allocated memory must be freed with the matching C function
-- Rust's default drop won't clean up foreign memory
-- Resource leaks and double-frees are common FFI bugs
+- C 分配的内存必须用匹配的 C 函数释放
+- Rust 的默认 drop 不会清理外部内存
+- 资源泄漏和双重释放是常见的 FFI 错误
 
 ## 错误示例
 
@@ -111,7 +111,7 @@ impl ResourceHandle {
 }
 ```
 
-## Complete Pattern with Multiple Resources
+## 多资源的完整模式
 
 ```rust
 struct Connection {
@@ -150,11 +150,11 @@ impl Drop for Statement<'_> {
 
 ## 检查清单
 
-- [ ] Does my wrapper own the C resource?
-- [ ] Did I implement Drop with the correct C free function?
-- [ ] Did I handle null pointers?
-- [ ] Did I prevent Clone/Copy to avoid double-free?
-- [ ] Did I consider ownership transfer methods (into_raw/from_raw)?
+- [ ] 我的包装器是否拥有 C 资源？
+- [ ] 我是否使用正确的 C 释放函数实现了 Drop？
+- [ ] 我是否处理了空指针？
+- [ ] 我是否阻止了 Clone/Copy 以避免双重释放？
+- [ ] 我是否考虑了所有权转移方法（into_raw/from_raw）？
 
 ## 相关规则
 

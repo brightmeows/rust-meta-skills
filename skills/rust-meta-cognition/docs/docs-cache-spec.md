@@ -28,8 +28,8 @@
 
 | 文档类型 | 缓存路径 |
 |----------|----------|
-| docs.rs crate | `~/.claude/cache/rust-docs/docs.rs/{crate}/{item}.json` |
-| std library | `~/.claude/cache/rust-docs/std/{module}/{item}.json` |
+ | docs.rs crate | `~/.claude/cache/rust-docs/docs.rs/{crate}/{item}.json` |
+| std 标准库 | `~/.claude/cache/rust-docs/std/{module}/{item}.json` |
 | releases.rs | `~/.claude/cache/rust-docs/releases.rs/{version}.json` |
 | lib.rs | `~/.claude/cache/rust-docs/lib.rs/{crate}.json` |
 | clippy | `~/.claude/cache/rust-docs/clippy/{lint}.json` |
@@ -91,7 +91,7 @@ Types that can be transferred across thread boundaries...
 | lib.rs (crate info) | 1 天 | 版本信息变化快 |
 | clippy lints | 14 天 | 每次 Rust 版本更新 |
 
-## Agent 工作流程
+## 代理工作流程
 
 ### 1. 检查缓存
 
@@ -99,7 +99,7 @@ Types that can be transferred across thread boundaries...
 
 1. 构建缓存路径
 2. 检查文件是否存在
-3. 检查是否过期 (expires_at < now)
+3. 检查是否过期（expires_at < now）
 4. 如果有效，返回缓存内容
 
 ```
@@ -133,14 +133,14 @@ Types that can be transferred across thread boundaries...
 显示缓存状态：
 ```
 
-Rust Docs Cache Status:
+Rust 文档缓存状态：
 
-- std library: 45 items, 12MB
-- docs.rs: 128 items, 34MB
-- releases.rs: 15 items, 2MB
-- Total: 188 items, 48MB
+- std 标准库：45 项，12MB
+- docs.rs：128 项，34MB
+- releases.rs：15 项，2MB
+- 总计：188 项，48MB
 
-Expired: 23 items
+已过期：23 项
 
 ```
 
@@ -160,7 +160,7 @@ Expired: 23 items
 | 文件 | 职责 |
 |------|------|
 | `agents/docs-cache.md` | 缓存检查和保存的通用指令 |
-| `agents/docs-researcher.md` | 更新：添加缓存逻辑 |
-| `agents/std-docs-researcher.md` | 更新：添加缓存逻辑 |
+| `agents/docs-researcher.md` | 已更新：添加缓存逻辑 |
+| `agents/std-docs-researcher.md` | 已更新：添加缓存逻辑 |
 | `commands/cache-status.md` | 缓存状态命令 |
 | `commands/cache-clean.md` | 缓存清理命令 |

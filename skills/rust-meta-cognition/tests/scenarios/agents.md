@@ -2,212 +2,212 @@
 
 ## Crate-Researcher 测试
 
-### Test 1: Popular Crate Query
+### Test 1：查询热门 Crate
 
-**Prompt:** "What's the latest version of tokio?"
-**Expected Agent:** crate-researcher
-**Expected Sources (priority order):**
+**提示词：** “tokio 的最新版本是什么？”
+**预期代理：** crate-researcher
+**预期数据源（优先级顺序）：**
 
 1. cache/crates/tokio.json (if exists and fresh)
 2. actionbook MCP → lib.rs
 3. agent-browser → lib.rs
 4. cargo search (last resort)
 
-**Verification:**
+**验证清单：**
 
-- [ ] Agent launched correctly
-- [ ] Returns version number
-- [ ] Returns features list
-- [ ] Cache updated after fetch
+- [ ] 代理启动正确
+- [ ] 返回版本号
+- [ ] 返回特性列表
+- [ ] 获取后更新缓存
 
-### Test 2: Less Popular Crate
+### Test 2：查询较冷门 Crate
 
-**Prompt:** "Info about the 'thirtyfour' crate"
-**Expected Agent:** crate-researcher
-**Verification:**
+**提示词：** “查询 ‘thirtyfour’ crate 的信息”
+**预期代理：** crate-researcher
+**验证清单：**
 
-- [ ] Falls back correctly if not in cache
-- [ ] Returns accurate info
+- [ ] 缓存未命中时正确回退
+- [ ] 返回准确信息
 
-### Test 3: Cache Hit
+### Test 3：缓存命中
 
-**Setup:** Create cache/crates/serde.json with recent timestamp
-**Prompt:** "serde latest version"
-**Verification:**
+**准备：** 创建带有最新时间戳的 cache/crates/serde.json
+**提示词：** “serde 的最新版本”
+**验证清单：**
 
-- [ ] Returns cached data
-- [ ] Response indicates "Cached: yes"
-- [ ] No network fetch
+- [ ] 返回缓存数据
+- [ ] 响应包含 “Cached: yes”
+- [ ] 无网络请求
 
 ---
 
-## Rust-Changelog Tests
+## Rust-Changelog 测试
 
-### Test 4: Specific Version Query
+### Test 4：特定版本查询
 
-**Prompt:** "What's new in Rust 1.75?"
-**Expected Agent:** rust-changelog
-**Expected Sources (priority order):**
+**提示词：** “Rust 1.75 有哪些新特性？”
+**预期代理：** rust-changelog
+**预期数据源（优先级顺序）：**
 
 1. cache/rust-versions/1.75.json
 2. actionbook → releases.rs
 3. agent-browser → releases.rs
 
-**Verification:**
+**验证清单：**
 
-- [ ] Agent launched correctly
-- [ ] Returns release date
-- [ ] Returns key features
-- [ ] Returns stabilized APIs
+- [ ] 代理启动正确
+- [ ] 返回发布日期
+- [ ] 返回主要特性
+- [ ] 返回稳定的 API
 
-### Test 5: Latest Version Query
+### Test 5：最新版本查询
 
-**Prompt:** "Latest Rust version features"
-**Expected Agent:** rust-changelog
-**Verification:**
+**提示词：** “Rust 最新版本的特性”
+**预期代理：** rust-changelog
+**验证清单：**
 
-- [ ] Determines latest version
-- [ ] Returns current stable info
-
----
-
-## Docs-Researcher Tests
-
-### Test 6: API Documentation Query
-
-**Prompt:** "How to use tokio::spawn?"
-**Expected Agent:** docs-researcher
-**Verification:**
-
-- [ ] Fetches from docs.rs
-- [ ] Returns function signature
-- [ ] Returns examples
-- [ ] Returns parameters
-
-### Test 7: Module Documentation
-
-**Prompt:** "What's in tokio::sync?"
-**Expected Agent:** docs-researcher
-**Verification:**
-
-- [ ] Lists module contents
-- [ ] Brief descriptions
+- [ ] 确定最新版本
+- [ ] 返回当前稳定版信息
 
 ---
 
-## Clippy-Researcher Tests
+## Docs-Researcher 测试
 
-### Test 8: Lint Query
+### Test 6：API 文档查询
 
-**Prompt:** "/guideline --clippy needless_clone"
-**Expected Agent:** clippy-researcher
-**Verification:**
+**提示词：** “如何使用 tokio::spawn？”
+**预期代理：** docs-researcher
+**验证清单：**
 
-- [ ] Returns lint description
-- [ ] Maps to guideline rule
-- [ ] Provides fix suggestion
+- [ ] 从 docs.rs 获取
+- [ ] 返回函数签名
+- [ ] 返回示例
+- [ ] 返回参数
 
-### Test 9: Unknown Lint
+### Test 7：模块文档查询
 
-**Prompt:** "/guideline --clippy nonexistent_lint"
-**Verification:**
+**提示词：** “tokio::sync 里有什么？”
+**预期代理：** docs-researcher
+**验证清单：**
 
-- [ ] Graceful error handling
-- [ ] Suggests similar lints if possible
-
----
-
-## Cache Behavior Tests
-
-### Test 10: Cache Expiry
-
-**Setup:**
-
-1. Create cache/crates/test.json with timestamp 48 hours ago
-2. Set TTL to 24 hours
-
-**Prompt:** "test crate info"
-**Verification:**
-
-- [ ] Detects expired cache
-- [ ] Fetches fresh data
-- [ ] Updates cache
-
-### Test 11: Stale-While-Revalidate
-
-**Setup:**
-
-1. Create expired cache
-2. Simulate network failure
-
-**Verification:**
-
-- [ ] Returns stale data with warning
-- [ ] Indicates data may be outdated
+- [ ] 列出模块内容
+- [ ] 简要说明
 
 ---
 
-## Error Handling Tests
+## Clippy-Researcher 测试
 
-### Test 12: Network Failure
+### Test 8：Lint 查询
 
-**Setup:** Simulate actionbook/agent-browser unavailable
-**Prompt:** "latest serde version"
-**Verification:**
+**提示词：** “/guideline --clippy needless_clone”
+**预期代理：** clippy-researcher
+**验证清单：**
 
-- [ ] Falls back to cargo search
-- [ ] Returns data (possibly less detailed)
-- [ ] Logs the fallback
+- [ ] 返回 lint 描述
+- [ ] 映射到规则
+- [ ] 提供修复建议
 
-### Test 13: Invalid Crate
+### Test 9：未知 Lint
 
-**Prompt:** "info about nonexistent-crate-xyz"
-**Verification:**
+**提示词：** “/guideline --clippy nonexistent_lint”
+**验证清单：**
 
-- [ ] Returns "crate not found"
-- [ ] Does not cache error
-- [ ] Suggests similar crates if possible
-
----
-
-## Concurrent Agent Tests
-
-### Test 14: Parallel Crate Queries
-
-**Prompt:** "Compare tokio vs async-std"
-**Verification:**
-
-- [ ] Launches multiple agents if needed
-- [ ] Aggregates results
-- [ ] No race conditions in cache
-
-### Test 15: Agent + Skill Combination
-
-**Prompt:** "How to use async/await with tokio?"
-**Verification:**
-
-- [ ] m07-concurrency skill content
-- [ ] tokio-specific info from agent
-- [ ] Combined, coherent response
+- [ ] 优雅的错误处理
+- [ ] 尽可能建议相近的 lint
 
 ---
 
-## Performance Tests
+## 缓存行为测试
 
-### Test 16: Cache Speed
+### Test 10：缓存过期
 
-**Setup:** Warm cache
-**Prompt:** "serde version"
-**Verification:**
+**准备：**
 
-- [ ] Response < 1 second
-- [ ] No network calls
+1. 创建 cache/crates/test.json，时间戳设为 48 小时前
+2. 将 TTL 设为 24 小时
 
-### Test 17: Cold Start
+**提示词：** “test crate 的信息”
+**验证清单：**
 
-**Prompt:** New crate query (no cache)
-**Verification:**
+- [ ] 检测到缓存过期
+- [ ] 获取新数据
+- [ ] 更新缓存
 
-- [ ] Agent launches correctly
-- [ ] Reasonable response time
-- [ ] Cache populated for next query
+### Test 11：过期时重新验证
+
+**准备：**
+
+1. 创建已过期的缓存
+2. 模拟网络故障
+
+**验证清单：**
+
+- [ ] 返回过期数据并附带警告
+- [ ] 提示数据可能过期
+
+---
+
+## 错误处理测试
+
+### Test 12：网络故障
+
+**准备：** 模拟 actionbook/agent-browser 不可用
+**提示词：** “serde 的最新版本”
+**验证清单：**
+
+- [ ] 回退到 cargo search
+- [ ] 返回数据（可能不完整）
+- [ ] 记录回退日志
+
+### Test 13：无效 Crate
+
+**提示词：** “查询不存在的 nonexistent-crate-xyz”
+**验证清单：**
+
+- [ ] 返回 “crate not found”
+- [ ] 不缓存错误
+- [ ] 尽可能建议相近的 crate
+
+---
+
+## 并发代理测试
+
+### Test 14：并行 Crate 查询
+
+**提示词：** “比较 tokio 和 async-std”
+**验证清单：**
+
+- [ ] 需要时启动多个代理
+- [ ] 汇总结果
+- [ ] 缓存无竞态条件
+
+### Test 15：代理 + 技能组合
+
+**提示词：** “如何在 tokio 中使用 async/await？”
+**验证清单：**
+
+- [ ] m07-concurrency 技能内容
+- [ ] 代理提供的 tokio 特定信息
+- [ ] 组合成连贯的回复
+
+---
+
+## 性能测试
+
+### Test 16：缓存速度
+
+**准备：** 预热缓存
+**提示词：** “serde 的版本”
+**验证清单：**
+
+- [ ] 响应时间 < 1 秒
+- [ ] 无网络请求
+
+### Test 17：冷启动
+
+**提示词：** 新 crate 查询（无缓存）
+**验证清单：**
+
+- [ ] 代理启动正确
+- [ ] 合理的响应时间
+- [ ] 缓存已填充以备下次查询

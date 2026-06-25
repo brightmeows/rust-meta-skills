@@ -25,9 +25,9 @@ argument-hint: [day|week|month] [--category ecosystem|official|foundation] [--sa
 
 ---
 
-## Instructions
+## 说明
 
-### 1. Parse Arguments
+### 1. 解析参数
 
 ```
 /rust-daily              → week, all categories, display only
@@ -41,22 +41,22 @@ argument-hint: [day|week|month] [--category ecosystem|official|foundation] [--sa
 /rust-daily day --save   → day report, save to default location
 ```
 
-### 2. Check Cache
+### 2. 检查缓存
 
-Check if recent cache exists:
+检查近期缓存是否存在：
 
 ```bash
 cache_dir=~/.claude/cache/rust-daily/
 cache_file=${cache_dir}/report-{date}-{time_range}-{category}.json
 
-# If cache exists and < 4 hours old, use cached data
+# 如果缓存存在且不超过 4 小时，使用缓存数据
 ```
 
-### 3. Fetch Content
+### 3. 获取内容
 
-**YOU MUST USE THE BASH TOOL TO RUN agent-browser COMMANDS.**
+**你必须使用 Bash 工具运行 agent-browser 命令。**
 
-Do NOT assume agent-browser is unavailable. It IS installed at `/opt/homebrew/bin/agent-browser`.
+不要假设 agent-browser 不可用。它已安装在 `/opt/homebrew/bin/agent-browser`。
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -71,9 +71,9 @@ Do NOT assume agent-browser is unavailable. It IS installed at `/opt/homebrew/bi
 └─────────────────────────────────────────────────────────┘
 ```
 
-#### Step 3a: Reddit (Bash + agent-browser REQUIRED)
+#### 步骤 3a：Reddit（必须使用 Bash + agent-browser）
 
-**Use the Bash tool to execute these commands:**
+**使用 Bash 工具执行以下命令：**
 
 ```
 Bash("agent-browser open 'https://www.reddit.com/r/rust/top/?t=day'")
@@ -81,11 +81,11 @@ Bash("agent-browser get text '[data-testid=\"post-container\"]' --limit 15")
 Bash("agent-browser close")
 ```
 
-Reddit requires JavaScript. WebFetch will fail. Only mark unavailable if Bash command fails.
+Reddit 需要 JavaScript。WebFetch 会失败。仅在 Bash 命令失败时才标记为不可用。
 
-#### Step 3b: This Week in Rust (Bash first)
+#### 步骤 3b：This Week in Rust（优先使用 Bash）
 
-**Use the Bash tool:**
+**使用 Bash 工具：**
 
 ```
 Bash("agent-browser open 'https://this-week-in-rust.org/'")
@@ -93,11 +93,11 @@ Bash("agent-browser get text '.post-content'")
 Bash("agent-browser close")
 ```
 
-If Bash fails → Use WebFetch tool
+如果 Bash 失败 → 使用 WebFetch 工具
 
-#### Step 3c: Rust Blog (Bash first)
+#### 步骤 3c：Rust Blog（优先使用 Bash）
 
-**Use the Bash tool:**
+**使用 Bash 工具：**
 
 ```
 Bash("agent-browser open 'https://blog.rust-lang.org/'")
@@ -105,11 +105,11 @@ Bash("agent-browser get text '.post-list'")
 Bash("agent-browser close")
 ```
 
-If Bash fails → Use WebFetch tool
+如果 Bash 失败 → 使用 WebFetch 工具
 
-#### Step 3d: Foundation News (Bash first)
+#### 步骤 3d：基金会新闻（优先使用 Bash）
 
-**Use the Bash tool:**
+**使用 Bash 工具：**
 
 ```
 Bash("agent-browser open 'https://foundation.rust-lang.org/news/'")
@@ -117,22 +117,22 @@ Bash("agent-browser get text '.news-list'")
 Bash("agent-browser close")
 ```
 
-If Bash fails → Use WebFetch tool
+如果 Bash 失败 → 使用 WebFetch 工具
 
-#### Step 3e: FORBIDDEN
+#### 步骤 3e：禁止事项
 
-- ❌ **Assuming agent-browser unavailable without trying** - YOU MUST RUN BASH COMMANDS
-- ❌ **WebSearch** - Never use for fetching news
-- ❌ **WebFetch for Reddit** - Will always fail
+- ❌ **未尝试就假设 agent-browser 不可用**——你必须执行 Bash 命令
+- ❌ **WebSearch**——绝不用于获取新闻
+- ❌ **WebFetch 用于 Reddit**——总会失败
 
-### 4. Format Output
+### 4. 格式化输出
 
-**CRITICAL: Every item MUST include:**
+**关键：每个条目必须包含：**
 
-1. ✅ Real source link (not fabricated)
-2. ✅ Key takeaway summary (1-2 sentences)
-3. ✅ Engagement metrics (upvotes, comments)
-4. ✅ Publication date/time
+1. ✅ 真实的来源链接（不是编造的）
+2. ✅ 要点摘要（1-2 句话）
+3. ✅ 互动指标（点赞数、评论数）
+4. ✅ 发布日期/时间
 
 Display the report in markdown format:
 
@@ -261,9 +261,9 @@ Based on engagement and discussion volume:
 🔄 **Refresh:** `/rust-daily` | 💾 **Save:** `/rust-daily --save`
 ```
 
-### 5. Save Report (if --save specified)
+### 5. 保存报告（如果指定了 --save）
 
-If `--save` flag is present:
+如果存在 `--save` 标志：
 
 ```bash
 # Determine save path
@@ -291,15 +291,15 @@ Write("$filename", "{report_content}")
 Write("{save_dir}/{date}-rust-{time_range}.md", "{full_report_markdown}")
 ```
 
-After saving, inform user:
+保存后，通知用户：
 
 ```
-✅ Report saved to: {filename}
+✅ 报告已保存到：{filename}
 ```
 
-### 6. Save Cache
+### 6. 保存缓存
 
-Save results for faster subsequent queries:
+保存结果以便后续更快查询：
 
 ```bash
 mkdir -p ~/.claude/cache/rust-daily/
@@ -468,28 +468,28 @@ mkdir -p ~/.claude/cache/rust-daily/
 
 ---
 
-## Tool Priority
+## 工具优先级
 
 ```
 ┌────────────────────────────────────────────────────┐
-│  1. agent-browser CLI  ←── PRIMARY (always first) │
-│  2. WebFetch           ←── FALLBACK (static only) │
-│  3. ❌ WebSearch       ←── FORBIDDEN              │
+│  1. agent-browser CLI  ←── 主要（始终优先）       │
+│  2. WebFetch           ←── 回退（仅限静态页面）   │
+│  3. ❌ WebSearch       ←── 禁止                   │
 └────────────────────────────────────────────────────┘
 ```
 
-| Site | agent-browser | WebFetch | WebSearch |
+| 站点 | agent-browser | WebFetch | WebSearch |
 |------|---------------|----------|-----------|
-| Reddit | ✅ Required | ❌ Fails | ❌ Never |
-| TWIR | ✅ First | ✅ Fallback | ❌ Never |
-| Rust Blog | ✅ First | ✅ Fallback | ❌ Never |
-| Foundation | ✅ First | ✅ Fallback | ❌ Never |
+| Reddit | ✅ 必须 | ❌ 失败 | ❌ 绝不 |
+| TWIR | ✅ 优先 | ✅ 回退 | ❌ 绝不 |
+| Rust Blog | ✅ 优先 | ✅ 回退 | ❌ 绝不 |
+| Foundation | ✅ 优先 | ✅ 回退 | ❌ 绝不 |
 
-**DO NOT:**
+**不要：**
 
-- Skip agent-browser and go directly to WebFetch
-- Use WebFetch for Reddit (will fail)
-- Use WebSearch for any news fetching
+- 跳过 agent-browser 直接使用 WebFetch
+- 对 Reddit 使用 WebFetch（会失败）
+- 使用 WebSearch 获取任何新闻
 
 ---
 

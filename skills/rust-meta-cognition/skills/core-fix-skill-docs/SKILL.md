@@ -33,34 +33,34 @@ agent: general-purpose
 
 ---
 
-## Agent Mode (Plugin Install)
+## Agent 模式（插件安装）
 
-**When agent infrastructure is available, use background agents for fetching:**
+**当 agent 基础设施可用时，使用后台 agent 获取文档：**
 
-### Instructions
+### 操作说明
 
-#### 1. Scan Skills Directory
+#### 1. 扫描 Skill 目录
 
 ```bash
-# If crate_name provided
+# 如果提供了 crate_name
 skill_dir=~/.claude/skills/{crate_name}
 
-# Otherwise scan all
+# 否则扫描全部
 for dir in ~/.claude/skills/*/; do
-    # Process each skill
+    # 处理每个 skill
 done
 ```
 
-#### 2. Parse SKILL.md for References
+#### 2. 解析 SKILL.md 中的引用
 
-Extract referenced files from Documentation section:
+从文档部分提取引用的文件：
 
 ```markdown
 ## Documentation
 - `./references/file1.md` - Description
 ```
 
-#### 3. Check File Existence
+#### 3. 检查文件是否存在
 
 ```bash
 if [ ! -f "{skill_dir}/references/{filename}" ]; then
@@ -68,7 +68,7 @@ if [ ! -f "{skill_dir}/references/{filename}" ]; then
 fi
 ```
 
-#### 4. Report Status
+#### 4. 报告状态
 
 ```
 === {crate_name} ===
@@ -80,9 +80,9 @@ references/:
 Action needed: 1 file missing
 ```
 
-#### 5. Fix Missing Files (Agent Mode)
+#### 5. 修复缺失文件（Agent 模式）
 
-Launch background agent to fetch documentation:
+启动后台 agent 获取文档：
 
 ```
 Task(
@@ -96,23 +96,23 @@ Task(
 
 ---
 
-## Inline Mode (Skills-only Install)
+## 内联模式（仅安装 Skill）
 
-**When agent infrastructure is NOT available, execute directly:**
+**当 agent 基础设施不可用时，直接执行：**
 
-### Step 1: Scan Skills Directory
+### 步骤 1：扫描 Skill 目录
 
 ```bash
-# List all skills
+# 列出所有 skill
 ls ~/.claude/skills/
 
-# Or check specific skill
+# 或检查特定 skill
 ls ~/.claude/skills/{crate_name}/
 ```
 
-### Step 2: Parse SKILL.md for References
+### 步骤 2：解析 SKILL.md 中的引用
 
-Read SKILL.md and extract all `./references/*.md` patterns:
+读取 SKILL.md 并提取所有 `./references/*.md` 模式：
 
 ```bash
 # Using Read tool
@@ -123,10 +123,10 @@ Read("~/.claude/skills/{crate_name}/SKILL.md")
 # - `./references/runtime.md` - Runtime configuration
 ```
 
-### Step 3: Check File Existence
+### 步骤 3：检查文件是否存在
 
 ```bash
-# Check each referenced file
+# 检查每个引用的文件
 for ref in references; do
   if [ ! -f "~/.claude/skills/{crate_name}/references/${ref}.md" ]; then
     echo "MISSING: ${ref}.md"
@@ -134,9 +134,9 @@ for ref in references; do
 done
 ```
 
-### Step 4: Report Status
+### 步骤 4：报告状态
 
-Output format:
+输出格式：
 
 ```
 === {crate_name} ===
@@ -148,9 +148,9 @@ references/:
 Action needed: 1 file missing
 ```
 
-### Step 5: Fix Missing Files (Inline)
+### 步骤 5：修复缺失文件（内联）
 
-For each missing file:
+对每个缺失的文件：
 
 **Using agent-browser CLI:**
 
@@ -174,9 +174,9 @@ Then write the content:
 Write("~/.claude/skills/{crate_name}/references/{module}.md", <fetched_content>)
 ```
 
-### Step 6: Update SKILL.md (if --remove-invalid)
+### 步骤 6：更新 SKILL.md（如果指定 --remove-invalid）
 
-If `--remove-invalid` flag is set and file cannot be fetched:
+如果设置了 `--remove-invalid` 标志且文件无法获取：
 
 ```bash
 # Read current SKILL.md
@@ -190,17 +190,17 @@ Edit("~/.claude/skills/{crate_name}/SKILL.md",
 
 ---
 
-## Tool Priority
+## 工具优先级
 
-1. **agent-browser CLI** - Primary tool for fetching documentation
-2. **WebFetch** - Fallback if agent-browser unavailable
-3. **Edit SKILL.md** - For removing invalid references (--remove-invalid only)
+1. **agent-browser CLI** - 获取文档的主要工具
+2. **WebFetch** - 如果 agent-browser 不可用时的回退
+3. **Edit SKILL.md** - 用于移除无效引用（仅 --remove-invalid）
 
 ---
 
-## Examples
+## 示例
 
-### Check All Skills (--check-only)
+### 检查所有 Skill（--check-only）
 
 ```bash
 /fix-skill-docs --check-only

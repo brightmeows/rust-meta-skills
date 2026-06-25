@@ -2,191 +2,191 @@
 
 ## 元问题路由测试
 
-### Test 1: Ownership Route
+### Test 1：所有权路由
 
-**Prompt:** "E0382 use of moved value"
-**Expected Route:** m01-ownership
-**Verification:**
+**提示词：** “E0382 use of moved value”
+**预期路由：** m01-ownership
+**验证清单：**
 
-- [ ] Correct skill triggered
-- [ ] Ownership-specific content returned
+- [ ] 正确触发技能
+- [ ] 返回所有权相关内容
 
-### Test 2: Error Handling Route
+### Test 2：错误处理路由
 
-**Prompt:** "When to use Result vs panic?"
-**Expected Route:** m06-error-handling
-**Verification:**
+**提示词：** “何时使用 Result vs panic？”
+**预期路由：** m06-error-handling
+**验证清单：**
 
-- [ ] Correct skill triggered
-- [ ] Error handling patterns explained
+- [ ] 正确触发技能
+- [ ] 解释了错误处理模式
 
-### Test 3: Concurrency Route
+### Test 3：并发路由
 
-**Prompt:** "Why is Rc not Send?"
-**Expected Route:** m07-concurrency
-**Verification:**
+**提示词：** “为什么 Rc 不是 Send？”
+**预期路由：** m07-concurrency
+**验证清单：**
 
-- [ ] Correct skill triggered
-- [ ] Send/Sync traits explained
+- [ ] 正确触发技能
+- [ ] 解释了 Send/Sync trait
 
-### Test 4: Performance Route
+### Test 4：性能路由
 
-**Prompt:** "How to profile Rust code?"
-**Expected Route:** m10-performance
-**Verification:**
+**提示词：** “如何分析 Rust 代码性能？”
+**预期路由：** m10-performance
+**验证清单：**
 
-- [ ] Correct skill triggered
-- [ ] Profiling tools listed
+- [ ] 正确触发技能
+- [ ] 列出性能分析工具
 
-### Test 5: Anti-Pattern Route
+### Test 5：反模式路由
 
-**Prompt:** "Is .clone() everywhere bad?"
-**Expected Route:** m15-anti-pattern
-**Verification:**
+**提示词：** “到处使用 .clone() 不好吗？”
+**预期路由：** m15-anti-pattern
+**验证清单：**
 
-- [ ] Correct skill triggered
-- [ ] Clone anti-pattern explained
-
----
-
-## Unsafe Routing Tests
-
-### Test 6: Unsafe to Unsafe-Checker
-
-**Prompt:** "Review my unsafe code"
-**Expected Route:** unsafe-checker (NOT m08-safety)
-**Verification:**
-
-- [ ] Routed to unsafe-checker skill
-- [ ] Detailed checklist provided
-
-### Test 7: FFI to Unsafe-Checker
-
-**Prompt:** "How to call extern C function?"
-**Expected Route:** unsafe-checker
-**Verification:**
-
-- [ ] FFI rules from unsafe-checker
-- [ ] Not just general concurrency
-
-### Test 8: Raw Pointer to Unsafe-Checker
-
-**Prompt:** "*mut T dereference safety"
-**Expected Route:** unsafe-checker
-**Verification:**
-
-- [ ] Pointer safety rules
-- [ ] Detailed checklist
+- [ ] 正确触发技能
+- [ ] 解释了 Clone 反模式
 
 ---
 
-## Functional Routing Tests
+## Unsafe 路由测试
 
-### Test 9: Version Query to Rust-Learner
+### Test 6：Unsafe 到 Unsafe-Checker
 
-**Prompt:** "What's new in Rust 1.75?"
-**Expected Route:** rust-learner → rust-changelog agent
-**Verification:**
+**提示词：** “审查我的 unsafe 代码”
+**预期路由：** unsafe-checker（非 m08-safety）
+**验证清单：**
 
-- [ ] Uses rust-changelog agent
-- [ ] Does NOT use WebSearch
+- [ ] 路由到 unsafe-checker 技能
+- [ ] 提供详细检查清单
 
-### Test 10: Crate Query to Crate-Researcher
+### Test 7：FFI 到 Unsafe-Checker
 
-**Prompt:** "Latest version of serde?"
-**Expected Route:** rust-learner → crate-researcher agent
-**Verification:**
+**提示词：** “如何调用 extern C 函数？”
+**预期路由：** unsafe-checker
+**验证清单：**
 
-- [ ] Uses crate-researcher agent
-- [ ] Does NOT use WebSearch
+- [ ] 来自 unsafe-checker 的 FFI 规则
+- [ ] 不只是一般并发知识
 
-### Test 11: Clippy to Clippy-Researcher
+### Test 8：原始指针到 Unsafe-Checker
 
-**Prompt:** "/guideline --clippy needless_clone"
-**Expected Route:** clippy-researcher agent
-**Verification:**
+**提示词：** “*mut T 解引用安全性”
+**预期路由：** unsafe-checker
+**验证清单：**
 
-- [ ] Uses clippy-researcher agent
-- [ ] Maps to guideline rules
-
-### Test 12: Style to Coding-Guidelines
-
-**Prompt:** "Rust naming conventions"
-**Expected Route:** coding-guidelines
-**Verification:**
-
-- [ ] coding-guidelines skill
-- [ ] Style rules returned
+- [ ] 指针安全规则
+- [ ] 详细检查清单
 
 ---
 
-## Multi-Topic Routing Tests
+## 功能路由测试
 
-### Test 13: Ownership + Concurrency
+### Test 9：版本查询到 Rust-Learner
 
-**Prompt:** "Why can't I use Rc across threads?"
-**Expected Routes:** m07-concurrency (primary), m01-ownership (related)
-**Verification:**
+**提示词：** “Rust 1.75 有哪些新特性？”
+**预期路由：** rust-learner → rust-changelog agent
+**验证清单：**
 
-- [ ] Send/Sync explanation
-- [ ] Ownership context
+- [ ] 使用 rust-changelog 代理
+- [ ] 不使用 WebSearch
 
-### Test 14: Error + Domain
+### Test 10：Crate 查询到 Crate-Researcher
 
-**Prompt:** "Error handling in async web server"
-**Expected Routes:** m06-error-handling, m07-concurrency
-**Verification:**
+**提示词：** “serde 的最新版本？”
+**预期路由：** rust-learner → crate-researcher agent
+**验证清单：**
 
-- [ ] Async error patterns
-- [ ] Result propagation in async
+- [ ] 使用 crate-researcher 代理
+- [ ] 不使用 WebSearch
 
----
+### Test 11：Clippy 到 Clippy-Researcher
 
-## Error Code Routing Tests
+**提示词：** “/guideline --clippy needless_clone”
+**预期路由：** clippy-researcher agent
+**验证清单：**
 
-### Test 15: E0382 → m01
+- [ ] 使用 clippy-researcher 代理
+- [ ] 映射到规则
 
-**Prompt:** "E0382"
-**Expected Route:** m01-ownership
+### Test 12：风格指南到 Coding-Guidelines
 
-### Test 16: E0277 → m04 or m07
+**提示词：** “Rust 命名规范”
+**预期路由：** coding-guidelines
+**验证清单：**
 
-**Prompt:** "E0277 trait bound not satisfied"
-**Expected Route:** m04-zero-cost or m07-concurrency
-**Verification:**
-
-- [ ] Depends on context (Send/Sync → m07)
-
-### Test 17: E0596 → m03
-
-**Prompt:** "E0596 cannot borrow as mutable"
-**Expected Route:** m03-mutability
+- [ ] coding-guidelines 技能
+- [ ] 返回风格规则
 
 ---
 
-## Chinese Trigger Tests
+## 多主题路由测试
 
-### Test 18: Chinese Ownership Query
+### Test 13：所有权 + 并发
 
-**Prompt:** "所有权是什么？"
-**Expected Route:** m01-ownership
-**Verification:**
+**提示词：** “为什么不能在多线程中使用 Rc？”
+**预期路由：** m07-concurrency（主要），m01-ownership（相关）
+**验证清单：**
 
-- [ ] Correct skill triggered
-- [ ] Response can be in Chinese
+- [ ] Send/Sync 解释
+- [ ] 所有权上下文
 
-### Test 19: Chinese Version Query
+### Test 14：错误 + 领域
 
-**Prompt:** "Rust 最新版本是什么？"
-**Expected Route:** rust-learner
-**Verification:**
+**提示词：** “异步 Web 服务器中的错误处理”
+**预期路由：** m06-error-handling, m07-concurrency
+**验证清单：**
 
-- [ ] Uses agents, not WebSearch
+- [ ] 异步错误模式
+- [ ] 异步中的 Result 传播
 
-### Test 20: Chinese Error Query
+---
 
-**Prompt:** "借用检查器报错怎么办？"
-**Expected Route:** m01-ownership
-**Verification:**
+## 错误码路由测试
 
-- [ ] Borrow checker help provided
+### Test 15：E0382 → m01
+
+**提示词：** “E0382”
+**预期路由：** m01-ownership
+
+### Test 16：E0277 → m04 或 m07
+
+**提示词：** “E0277 trait bound not satisfied”
+**预期路由：** m04-zero-cost 或 m07-concurrency
+**验证清单：**
+
+- [ ] 取决于上下文（Send/Sync → m07）
+
+### Test 17：E0596 → m03
+
+**提示词：** “E0596 cannot borrow as mutable”
+**预期路由：** m03-mutability
+
+---
+
+## 中文触发词测试
+
+### Test 18：中文所有权查询
+
+**提示词：** “所有权是什么？”
+**预期路由：** m01-ownership
+**验证清单：**
+
+- [ ] 正确触发技能
+- [ ] 回复可以用中文
+
+### Test 19：中文版本查询
+
+**提示词：** “Rust 最新版本是什么？”
+**预期路由：** rust-learner
+**验证清单：**
+
+- [ ] 使用代理，而非 WebSearch
+
+### Test 20：中文错误查询
+
+**提示词：** “借用检查器报错怎么办？”
+**预期路由：** m01-ownership
+**验证清单：**
+
+- [ ] 提供借用检查器帮助

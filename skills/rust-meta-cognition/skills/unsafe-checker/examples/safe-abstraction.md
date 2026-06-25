@@ -1,8 +1,8 @@
-# Safe Abstraction Examples
+# 安全抽象示例
 
-Examples of building safe APIs on top of unsafe code.
+在 unsafe 代码之上构建安全 API 的示例。
 
-## Example 1: Simple Wrapper with Bounds Check
+## 示例 1：带边界检查的简单包装器
 
 ```rust
 /// A slice wrapper that provides unchecked access internally
@@ -48,7 +48,7 @@ impl<'a, T> SafeSlice<'a, T> {
 }
 ```
 
-## Example 2: Resource Wrapper with Drop
+## 示例 2：带 Drop 的资源包装器
 
 ```rust
 use std::ptr::NonNull;
@@ -98,7 +98,7 @@ impl !Clone for CBuffer {}
 unsafe impl Send for CBuffer {}
 ```
 
-## Example 3: Interior Mutability with UnsafeCell
+## 示例 3：使用 UnsafeCell 实现内部可变性
 
 ```rust
 use std::cell::UnsafeCell;
@@ -163,7 +163,7 @@ unsafe impl<T: Send> Sync for SpinLock<T> {}
 unsafe impl<T: Send> Send for SpinLock<T> {}
 ```
 
-## Example 4: Iterator with Lifetime Tracking
+## 示例 4：带生命周期追踪的迭代器
 
 ```rust
 use std::marker::PhantomData;
@@ -206,7 +206,7 @@ impl<'a, T> Iterator for PtrIter<'a, T> {
 }
 ```
 
-## Example 5: Builder Pattern with Delayed Initialization
+## 示例 5：延迟初始化的 Builder 模式
 
 ```rust
 use std::mem::MaybeUninit;
@@ -263,10 +263,10 @@ impl<T, const N: usize> Drop for ArrayBuilder<T, N> {
 }
 ```
 
-## Key Patterns
+## 关键模式
 
-1. **Encapsulation**: Hide unsafe behind safe public API
-2. **Invariant maintenance**: Use private fields to maintain invariants
-3. **PhantomData**: Track lifetimes and ownership for pointers
-4. **RAII**: Use Drop for cleanup
-5. **Type state**: Use types to encode valid states
+1. **封装**：将 unsafe 隐藏在安全的公开 API 之后
+2. **不变量维护**：使用私有字段维护不变量
+3. **PhantomData**：为指针追踪生命周期和所有权
+4. **RAII**：使用 Drop 进行清理
+5. **类型状态**：使用类型编码有效状态

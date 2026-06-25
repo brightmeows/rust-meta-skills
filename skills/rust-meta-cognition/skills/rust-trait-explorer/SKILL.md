@@ -17,16 +17,16 @@ allowed-tools: ["LSP", "Read", "Glob", "Grep"]
 /rust-trait-explorer <TraitName|StructName>
 ```
 
-**Examples:**
+**示例：**
 
-- `/rust-trait-explorer Handler` - Find all implementors of Handler trait
-- `/rust-trait-explorer MyStruct` - Find all traits implemented by MyStruct
+- `/rust-trait-explorer Handler` - 查找 Handler trait 的所有实现者
+- `/rust-trait-explorer MyStruct` - 查找 MyStruct 实现的所有 trait
 
-## LSP Operations
+## LSP 操作
 
-### Go to Implementation
+### 跳转到实现
 
-Find all implementations of a trait.
+查找 trait 的所有实现。
 
 ```
 LSP(
@@ -37,57 +37,57 @@ LSP(
 )
 ```
 
-**Use when:**
+**使用时机：**
 
-- Trait name is known
-- Want to find all implementors
-- Understanding polymorphic code
+- 已知 trait 名称
+- 需要查找所有实现者
+- 理解多态代码
 
-## Workflow
+## 工作流
 
-### Find Trait Implementors
+### 查找 Trait 实现者
 
 ```
 User: "Who implements the Handler trait?"
     │
     ▼
-[1] Find trait definition
-    LSP(goToDefinition) or workspaceSymbol
+[1] 查找 trait 定义
+    LSP(goToDefinition) 或 workspaceSymbol
     │
     ▼
-[2] Get implementations
+[2] 获取实现列表
     LSP(goToImplementation)
     │
     ▼
-[3] For each impl, get details
-    LSP(documentSymbol) for methods
+[3] 对每个实现获取详情
+    LSP(documentSymbol) 获取方法列表
     │
     ▼
-[4] Generate implementation map
+[4] 生成实现映射
 ```
 
-### Find Traits for a Type
+### 查找类型的 Trait
 
 ```
 User: "What traits does MyStruct implement?"
     │
     ▼
-[1] Find struct definition
+[1] 查找 struct 定义
     │
     ▼
-[2] Search for "impl * for MyStruct"
-    Grep pattern matching
+[2] 搜索 "impl * for MyStruct"
+    Grep 模式匹配
     │
     ▼
-[3] Get trait details for each
+[3] 获取每个 trait 的详情
     │
     ▼
-[4] Generate trait list
+[4] 生成 trait 列表
 ```
 
-## Output Format
+## 输出格式
 
-### Trait Implementors
+### Trait 实现者
 
 ```
 ## Implementations of `Handler`
@@ -103,14 +103,14 @@ pub trait Handler {
 
 ### Implementors (4)
 
-| Type | Location | Notes |
+| 类型 | 位置 | 说明 |
 |------|----------|-------|
-| AuthHandler | src/handlers/auth.rs:20 | Handles authentication |
-| ApiHandler | src/handlers/api.rs:15 | REST API endpoints |
-| WebSocketHandler | src/handlers/ws.rs:10 | WebSocket connections |
-| MockHandler | tests/mocks.rs:5 | Test mock |
+| AuthHandler | src/handlers/auth.rs:20 | 处理认证 |
+| ApiHandler | src/handlers/api.rs:15 | REST API 端点 |
+| WebSocketHandler | src/handlers/ws.rs:10 | WebSocket 连接 |
+| MockHandler | tests/mocks.rs:5 | 测试模拟 |
 
-### Implementation Details
+### 实现详情
 
 #### AuthHandler
 ​```rust
@@ -139,34 +139,34 @@ impl Handler for ApiHandler {
 ​```
 ```
 
-### Traits for a Type
+### 类型的 Trait
 
 ```
 ## Traits implemented by `User`
 
-**Struct defined at:** src/models/user.rs:10
+**Struct 定义于：** src/models/user.rs:10
 
-### Standard Library Traits
-| Trait | Derived/Manual | Notes |
+### 标准库 Trait
+| Trait | 派生/手动 | 说明 |
 |-------|----------------|-------|
-| Debug | #[derive] | Auto-generated |
-| Clone | #[derive] | Auto-generated |
-| Default | manual | Custom defaults |
-| Display | manual | User-friendly output |
+| Debug | #[derive] | 自动生成 |
+| Clone | #[derive] | 自动生成 |
+| Default | manual | 自定义默认值 |
+| Display | manual | 用户友好输出 |
 
-### Serde Traits
-| Trait | Location |
+### Serde Trait
+| Trait | 位置 |
 |-------|----------|
 | Serialize | #[derive] |
 | Deserialize | #[derive] |
 
-### Project Traits
-| Trait | Location | Methods |
+### 项目内 Trait
+| Trait | 位置 | 方法 |
 |-------|----------|---------|
 | Entity | src/db/entity.rs:30 | id(), created_at() |
 | Validatable | src/validation.rs:15 | validate() |
 
-### Implementation Hierarchy
+### 实现层级
 
 ​```
 User
@@ -183,7 +183,7 @@ User
 ​```
 ```
 
-## Trait Hierarchy Visualization
+## Trait 层级可视化
 
 ```
 ## Trait Hierarchy
@@ -203,50 +203,50 @@ User
       └───────────────┘         └───────────────┘
 ```
 
-## Analysis Features
+## 分析功能
 
-### Coverage Check
+### 覆盖度检查
 
 ```
 ## Trait Implementation Coverage
 
 Trait: Handler (3 required methods)
 
-| Implementor | handle() | name() | priority() | Complete |
+| 实现者 | handle() | name() | priority() | 完整 |
 |-------------|----------|--------|------------|----------|
 | AuthHandler | ✅ | ✅ | ✅ | Yes |
 | ApiHandler | ✅ | ✅ | ❌ default | Yes |
 | MockHandler | ✅ | ✅ | ✅ | Yes |
 ```
 
-### Blanket Implementations
+### 全面实现
 
 ```
-## Blanket Implementations
+## 全面实现
 
-The following blanket impls may apply to your types:
+以下全面实现可能适用于您的类型：
 
-| Trait | Blanket Impl | Applies To |
+| Trait | 全面实现 | 适用范围 |
 |-------|--------------|------------|
-| From<T> | `impl<T> From<T> for T` | All types |
-| Into<U> | `impl<T, U> Into<U> for T where U: From<T>` | Types with From |
-| ToString | `impl<T: Display> ToString for T` | Types with Display |
+| From<T> | `impl<T> From<T> for T` | 所有类型 |
+| Into<U> | `impl<T, U> Into<U> for T where U: From<T>` | 实现了 From 的类型 |
+| ToString | `impl<T: Display> ToString for T` | 实现了 Display 的类型 |
 ```
 
-## Common Patterns
+## 常见模式
 
-| User Says | Action |
+| 用户提问 | 操作 |
 |-----------|--------|
-| "Who implements X?" | goToImplementation on trait |
-| "What traits does Y impl?" | Grep for `impl * for Y` |
-| "Show trait hierarchy" | Find super-traits recursively |
-| "Is X: Send + Sync?" | Check std trait impls |
+| "谁实现了 X？" | 对 trait 执行 goToImplementation |
+| "Y 实现了哪些 trait？" | Grep 搜索 `impl * for Y` |
+| "显示 trait 层级" | 递归查找超 trait |
+| "X: Send + Sync 吗？" | 检查标准库 trait 实现 |
 
-## Related Skills
+## 相关技能
 
-| When | See |
+| 场景 | 参考 |
 |------|-----|
-| Navigate to impl | rust-code-navigator |
-| Call relationships | rust-call-graph |
-| Project structure | rust-symbol-analyzer |
-| Safe refactoring | rust-refactor-helper |
+| 导航到实现 | rust-code-navigator |
+| 调用关系 | rust-call-graph |
+| 项目结构 | rust-symbol-analyzer |
+| 安全重构 | rust-refactor-helper |

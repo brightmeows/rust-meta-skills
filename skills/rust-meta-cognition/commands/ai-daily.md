@@ -7,10 +7,10 @@ argument-hint: [day|week|month] [--save [path]]
 
 生成 Reddit 社区 AI 新闻的汇总报告。
 
-Arguments: $ARGUMENTS
+参数：$ARGUMENTS
 
-- `time_range` (optional): `day` | `week` | `month` (default: `day`)
-- `--save` (optional): Save report to file. If path not specified, saves to `~/Documents/reports/ai-daily/`
+- `time_range`（可选）：`day` | `week` | `month`（默认：`day`）
+- `--save`（可选）：保存报告到文件。未指定路径时保存到 `~/Documents/reports/ai-daily/`
 
 ---
 
@@ -38,13 +38,13 @@ Arguments: $ARGUMENTS
 /ai-daily week --save  → 周报，保存到默认位置
 ```
 
-### 2. Fetch Content
+### 2. 获取内容
 
-**YOU MUST USE THE BASH TOOL TO RUN agent-browser COMMANDS.**
+**你必须使用 Bash 工具运行 agent-browser 命令。**
 
-agent-browser IS installed at `/opt/homebrew/bin/agent-browser`.
+agent-browser 已安装在 `/opt/homebrew/bin/agent-browser`。
 
-**Use `--headed` flag to use local browser with user's cookies/login state.**
+**使用 `--headed` 标志以使用本地浏览器和用户的 cookies/登录状态。**
 
 ```
 ┌─────────────────────────────────────────────────────────┐
@@ -60,9 +60,9 @@ agent-browser IS installed at `/opt/homebrew/bin/agent-browser`.
 └─────────────────────────────────────────────────────────┘
 ```
 
-#### Step 2a: r/AI_Agents
+#### 步骤 2a：r/AI_Agents
 
-**Use the Bash tool to execute these commands:**
+**使用 Bash 工具执行以下命令：**
 
 ```
 Bash("agent-browser --headed open 'https://www.reddit.com/r/AI_Agents/top/?t={time_range}'")
@@ -70,11 +70,11 @@ Bash("agent-browser get text 'article' --limit 20")
 Bash("agent-browser close")
 ```
 
-Where `{time_range}` is: `day`, `week`, or `month`
+其中 `{time_range}` 为：`day`、`week` 或 `month`
 
-#### Step 2b: r/ClaudeAI
+#### 步骤 2b：r/ClaudeAI
 
-**Use the Bash tool:**
+**使用 Bash 工具：**
 
 ```
 Bash("agent-browser --headed open 'https://www.reddit.com/r/ClaudeAI/top/?t={time_range}'")
@@ -82,9 +82,9 @@ Bash("agent-browser get text 'article' --limit 20")
 Bash("agent-browser close")
 ```
 
-#### Step 2c: r/ChatGPT
+#### 步骤 2c：r/ChatGPT
 
-**Use the Bash tool:**
+**使用 Bash 工具：**
 
 ```
 Bash("agent-browser --headed open 'https://www.reddit.com/r/ChatGPT/top/?t={time_range}'")
@@ -92,9 +92,9 @@ Bash("agent-browser get text 'article' --limit 20")
 Bash("agent-browser close")
 ```
 
-#### Step 2d: Alternative Selectors (if 'article' returns empty)
+#### 步骤 2d：替代选择器（如果 'article' 返回空）
 
-Try these selectors in order:
+按顺序尝试这些选择器：
 
 ```
 "[data-testid='post-container']"
@@ -103,14 +103,14 @@ Try these selectors in order:
 "div[data-fullname]"
 ```
 
-### 3. Format Output
+### 3. 格式化输出
 
-**CRITICAL: Every item MUST include:**
+**关键：每个条目必须包含：**
 
-1. ✅ Real source link (not fabricated)
-2. ✅ Key takeaway summary (1-2 sentences)
-3. ✅ Engagement metrics (upvotes, comments)
-4. ✅ Publication date/time
+1. ✅ 真实的来源链接（不是编造的）
+2. ✅ 要点摘要（1-2 句话）
+3. ✅ 互动指标（点赞数、评论数）
+4. ✅ 发布日期/时间
 
 Display the report in markdown format:
 
@@ -271,17 +271,17 @@ Based on today's discussions, consider:
 📅 **Weekly:** `/ai-daily week` | 📆 **Monthly:** `/ai-daily month`
 ```
 
-### 4. Summarize Trends
+### 4. 总结趋势
 
-After collecting posts from all subreddits:
+收集完所有 subreddit 的帖子后：
 
-- Identify common themes across communities
-- Note any major announcements or releases
-- Highlight highly-engaged discussions (high comment counts)
+- 识别跨社区的共同主题
+- 记录重大公告或发布
+- 突出高参与度的讨论（高评论数）
 
-### 5. Save Report (if --save specified)
+### 5. 保存报告（如果指定了 --save）
 
-If `--save` flag is present:
+如果存在 `--save` 标志：
 
 ```bash
 # Determine save path
@@ -306,36 +306,36 @@ filename="${save_dir}/$(date +%Y%m%d)-ai-${time_range}.md"
 Write("{save_dir}/{date}-ai-{time_range}.md", "{full_report_markdown}")
 ```
 
-After saving, inform user:
+保存后，通知用户：
 
 ```
-✅ Report saved to: {filename}
+✅ 报告已保存到：{filename}
 ```
 
 ---
 
-## Tool Priority
+## 工具优先级
 
 ```
 ┌────────────────────────────────────────────────────────┐
-│  1. agent-browser --headed  ←── REQUIRED (Reddit=JS)  │
-│  2. ❌ WebFetch             ←── WILL FAIL for Reddit  │
-│  3. ❌ WebSearch            ←── FORBIDDEN             │
+│  1. agent-browser --headed  ←── 必须（Reddit 需 JS）  │
+│  2. ❌ WebFetch             ←── Reddit 会失败         │
+│  3. ❌ WebSearch            ←── 禁止                  │
 └────────────────────────────────────────────────────────┘
 ```
 
-**Why --headed?**
+**为什么使用 --headed？**
 
-- Uses local browser instance
-- Preserves user's cookies and login state
-- Can bypass some anti-bot measures
-- User can see what's happening
+- 使用本地浏览器实例
+- 保留用户的 cookies 和登录状态
+- 可以绕过某些反机器人措施
+- 用户可以看到正在发生什么
 
-**DO NOT:**
+**不要：**
 
-- Skip agent-browser and assume it's unavailable
-- Use WebFetch for Reddit (will fail - requires JS)
-- Use WebSearch for fetching posts
+- 跳过 agent-browser 并假设它不可用
+- 对 Reddit 使用 WebFetch（会失败——需要 JS）
+- 使用 WebSearch 获取帖子
 
 ---
 

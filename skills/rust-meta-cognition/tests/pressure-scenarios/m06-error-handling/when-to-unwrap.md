@@ -4,50 +4,50 @@
 
 m06-error-handling
 
-## User Question
+## 用户问题
 
-"When is it okay to use .unwrap() in Rust?"
+“在 Rust 中什么时候使用 .unwrap() 是可以的？”
 
-## Expected Behavior
+## 期望行为
 
-- [x] Explain unwrap() semantics (panic on None/Err)
-- [x] List acceptable use cases (tests, examples, guaranteed values)
-- [x] Explain alternatives (?, expect, unwrap_or, match)
-- [x] Quick reference for error handling patterns
-- [x] Reference to G.ERR.01, P.ERR.02 guidelines
+- [x] 解释 unwrap() 语义（在 None/Err 时 panic）
+- [x] 列出可接受的用例（测试、示例、保证有值的情况）
+- [x] 解释替代方案（?、expect、unwrap_or、match）
+- [x] 错误处理模式快速参考
+- [x] 引用 G.ERR.01、P.ERR.02 规范
 
-## Baseline Test (without skill)
+## 基线测试（无 skill）
 
-Date: [To be filled]
+日期：[待填写]
 
-Result:
+结果：
 
-- [ ] Semantics explanation: [PASS/FAIL]
-- [ ] Use case list: [PASS/FAIL]
-- [ ] Alternatives: [PASS/FAIL]
-- [ ] Quick reference: [PASS/FAIL]
-- [ ] Guidelines: [PASS/FAIL]
+- [ ] 语义解释：[通过/失败]
+- [ ] 用例列表：[通过/失败]
+- [ ] 替代方案：[通过/失败]
+- [ ] 快速参考：[通过/失败]
+- [ ] 规范：[通过/失败]
 
-Notes:
-[To be filled after test]
+备注：
+[测试后填写]
 
-## Post-Skill Test
+## 安装 Skill 后测试
 
-Date: [To be filled]
+日期：[待填写]
 
-Result:
+结果：
 
-- [ ] Semantics explanation: [PASS/FAIL]
-- [ ] Use case list: [PASS/FAIL]
-- [ ] Alternatives: [PASS/FAIL]
-- [ ] Quick reference: [PASS/FAIL]
-- [ ] Guidelines: [PASS/FAIL]
+- [ ] 语义解释：[通过/失败]
+- [ ] 用例列表：[通过/失败]
+- [ ] 替代方案：[通过/失败]
+- [ ] 快速参考：[通过/失败]
+- [ ] 规范：[通过/失败]
 
-Notes:
-[To be filled after test]
+备注：
+[测试后填写]
 
-## Edge Cases
+## 边界情况
 
-1. "My code will never have None" → Should encourage defensive coding
-2. "unwrap vs expect?" → Should explain expect's documentation value
-3. "What about unwrap_or_default?" → Should explain lazy evaluation
+1. “我的代码永远不会出现 None”→ 应鼓励防御性编程
+2. “unwrap vs expect？”→ 应解释 expect 的文档价值
+3. “unwrap_or_default 呢？”→ 应解释惰性求值

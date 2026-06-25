@@ -5,18 +5,18 @@ level: P
 impact: CRITICAL
 ---
 
-# Do Not Modify Memory Variables of Other Processes or Dynamic Libraries
+# 不要修改其他进程或动态库的内存变量
 
 ## 概要
 
-Do not directly manipulate memory belonging to other processes or dynamically loaded libraries. Use proper IPC or FFI mechanisms.
+不要直接操作属于其他进程或动态加载库的内存。使用合适的 IPC 或 FFI 机制。
 
 ## 理由
 
-- Other processes have separate address spaces; direct access is impossible on modern OSes
-- Shared memory requires explicit setup and synchronization
-- Dynamic library memory has ownership rules that must be respected
-- Violating these causes undefined behavior or security vulnerabilities
+- 其他进程有独立的地址空间；现代操作系统上无法直接访问
+- 共享内存需要显式设置和同步
+- 动态库的内存有必须遵守的所有权规则
+- 违反这些会导致未定义行为或安全漏洞
 
 ## 错误示例
 
@@ -89,23 +89,23 @@ fn dynamic_library() -> Result<(), Box<dyn std::error::Error>> {
 }
 ```
 
-## Memory Ownership Rules
+## 内存所有权规则
 
-| Memory Type | Owner | Safe Access |
+| 内存类型 | 所有者 | 安全访问 |
 |-------------|-------|-------------|
-| Stack variables | Current function | Direct |
-| Heap (Box, Vec) | Rust allocator | Through smart pointers |
-| Static | Program | With proper synchronization |
-| Shared memory | Multiple processes | Atomic ops, mutexes |
-| Library memory | Library | Through library API |
-| FFI-allocated | C allocator | Through C free functions |
+| 栈变量 | 当前函数 | 直接 |
+| 堆（Box、Vec） | Rust 分配器 | 通过智能指针 |
+| 静态变量 | 程序 | 使用恰当的同步 |
+| 共享内存 | 多进程 | 原子操作、互斥锁 |
+| 库内存 | 库 | 通过库 API |
+| FFI 分配 | C 分配器 | 通过 C free 函数 |
 
 ## 检查清单
 
-- [ ] Who allocated this memory?
-- [ ] Who is responsible for freeing it?
-- [ ] Is proper synchronization in place for shared access?
-- [ ] Am I using the correct API for cross-boundary access?
+- [ ] 谁分配了这块内存？
+- [ ] 谁负责释放它？
+- [ ] 共享访问是否有恰当的同步机制？
+- [ ] 我是否对跨边界访问使用了正确的 API？
 
 ## 相关规则
 

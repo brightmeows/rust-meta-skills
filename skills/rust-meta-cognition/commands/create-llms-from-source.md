@@ -23,7 +23,7 @@ argument-hint: [source_path] [output_path]
 
 ## 说明
 
-### 1. Validate Project
+### 1. 验证项目
 
 ```bash
 # Check if Cargo.toml exists
@@ -33,22 +33,22 @@ if [ ! -f "${source_path}/Cargo.toml" ]; then
 fi
 ```
 
-### 2. Read Project Metadata
+### 2. 读取项目元数据
 
-Extract from `Cargo.toml`:
+从 `Cargo.toml` 提取：
 
-- `name` - crate name
-- `version` - crate version
-- `description` - crate description
-- `[features]` - feature flags
-- `[dependencies]` - dependencies list
+- `name`——crate 名称
+- `version`——crate 版本
+- `description`——crate 描述
+- `[features]`——特性标志
+- `[dependencies]`——依赖列表
 
 ```bash
 # Parse Cargo.toml
 grep -E "^name|^version|^description" Cargo.toml
 ```
 
-### 3. Check for Workspace
+### 3. 检查工作空间
 
 ```bash
 # Detect workspace
@@ -59,11 +59,11 @@ if grep -q "\[workspace\]" Cargo.toml; then
 fi
 ```
 
-**Workspace handling:**
+**工作空间处理：**
 
-- If `[workspace]` section exists, identify all members
-- Generate llms.txt for each member crate
-- Or combine into single llms.txt with sections per crate
+- 如果存在 `[workspace]` 部分，识别所有成员
+- 为每个成员 crate 生成 llms.txt
+- 或合并为单个 llms.txt，每个 crate 一个段落
 
 ### 4. 提取 API 文档
 
@@ -127,16 +127,16 @@ grep -E "^pub (fn|struct|enum|trait|type|mod|const|static)" src/**/*.rs
 | `pub type` | 类型别名 |
 | `pub mod` | 公开模块 |
 
-### 5. Read README.md
+### 5. 读取 README.md
 
 ```bash
 if [ -f "${source_path}/README.md" ]; then
-    # Extract overview section (first 100 lines or until ## section)
+    # 提取概述段落（前 100 行或直到 ## 段落）
     head -100 README.md
 fi
 ```
 
-### 6. Extract Feature Flags
+### 6. 提取特性标志
 
 ```bash
 # From Cargo.toml [features] section
@@ -216,7 +216,7 @@ src/
 ```
 ````
 
-### 8. Save Output
+### 8. 保存输出
 
 ```bash
 # Generate timestamp
@@ -237,71 +237,71 @@ echo "Output saved to: $output"
 
 ---
 
-## Fallback Strategy
+## 回退策略
 
 ```
-1. Try rustdoc JSON
-   ↓ (if failed)
-2. Use source code parsing
-   ↓ (always)
-3. Supplement with Cargo.toml + README.md
+1. 尝试 rustdoc JSON
+   ↓（如果失败）
+2. 使用源码解析
+   ↓（总是）
+3. 用 Cargo.toml + README.md 补充
 ```
 
-**Automatic fallback triggers:**
+**自动回退触发条件：**
 
-- No nightly toolchain installed
-- Project has compilation errors
-- Missing dependencies
-- Build script failures
+- 未安装 nightly 工具链
+- 项目存在编译错误
+- 缺少依赖
+- 构建脚本失败
 
-When falling back, inform user:
+回退时，通知用户：
 
 ```
-rustdoc JSON generation failed, using source code parsing.
-Some type information may be incomplete.
+rustdoc JSON 生成失败，正在使用源码解析。
+某些类型信息可能不完整。
 ```
 
 ---
 
-## Quality Requirements
+## 质量要求
 
-- [ ] All pub items documented
-- [ ] Module hierarchy preserved
-- [ ] Code examples included
-- [ ] Feature flags documented
-- [ ] Dependencies listed
-- [ ] Source structure shown
-- [ ] Consistent markdown formatting
-- [ ] Version information accurate
+- [ ] 所有公开项已记录
+- [ ] 模块层次结构已保留
+- [ ] 包含代码示例
+- [ ] 特性标志已记录
+- [ ] 依赖已列出
+- [ ] 源结构已展示
+- [ ] 一致的 markdown 格式
+- [ ] 版本信息准确
 
 ---
 
-## Workspace Handling
+## 工作空间处理
 
-For workspaces with multiple crates:
+对于包含多个 crate 的工作空间：
 
-**Option 1: Combined llms.txt**
+**选项 1：合并的 llms.txt**
 
 ```
 ~/tmp/{timestamp}-{workspace}-llms.txt
 ```
 
-Contains sections for each member crate.
+包含每个成员 crate 的段落。
 
-**Option 2: Separate files**
+**选项 2：单独文件**
 
 ```
 ~/tmp/{timestamp}-{crate1}-llms.txt
 ~/tmp/{timestamp}-{crate2}-llms.txt
 ```
 
-Ask user which approach they prefer for workspaces.
+询问用户更喜欢哪种方式。
 
 ---
 
-## Workflow Integration
+## 工作流集成
 
-This command integrates with the Skills creation workflow:
+此命令与 Skill 创建工作流集成：
 
 ```
 Local Rust Source
@@ -341,9 +341,9 @@ Local Rust Source
 
 ---
 
-## Limitations
+## 限制
 
-- Private items (`pub(crate)`, `pub(super)`) are excluded
-- Macro-generated code may not be fully captured in source parsing mode
-- Generic constraints shown as-is without resolution
-- Inline documentation preferred over external doc files
+- 私有项（`pub(crate)`、`pub(super)`）被排除
+- 宏生成的代码在源码解析模式下可能无法完全捕获
+- 泛型约束按原样显示，不经解析
+- 内联文档优先于外部文档文件

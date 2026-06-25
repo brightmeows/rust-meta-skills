@@ -1,84 +1,84 @@
-# Checklist: Before Writing Unsafe Code
+# 检查清单：编写 Unsafe 代码前
 
-Use this checklist before writing any `unsafe` block or `unsafe fn`.
+在编写任何 `unsafe` 块或 `unsafe fn` 之前使用此清单。
 
-## 1. Do You Really Need Unsafe?
+## 1. 你真的需要 Unsafe 吗？
 
-- [ ] Have you tried all safe alternatives?
-- [ ] Can you restructure the code to satisfy the borrow checker?
-- [ ] Would interior mutability (`Cell`, `RefCell`, `Mutex`) solve the problem?
-- [ ] Is there a safe crate that already does this?
-- [ ] Is the performance gain (if any) worth the safety risk?
+- [ ] 你尝试过所有安全的替代方案吗？
+- [ ] 你能重构代码以满足借用检查器吗？
+- [ ] 内部可变性（`Cell`、`RefCell`、`Mutex`）能解决问题吗？
+- [ ] 是否已有安全的 crate 能完成这项工作？
+- [ ] 性能提升（如果有的话）是否值得安全风险？
 
-**If you answered "no" to all, proceed with unsafe.**
+**如果你对所有问题都回答了"否"，请继续使用 unsafe。**
 
-## 2. What Unsafe Operation Do You Need?
+## 2. 你需要什么 Unsafe 操作？
 
-Identify which specific unsafe operation you're performing:
+确定你正在执行的具体 unsafe 操作：
 
-- [ ] Dereferencing a raw pointer (`*const T`, `*mut T`)
-- [ ] Calling an `unsafe` function
-- [ ] Accessing a mutable static variable
-- [ ] Implementing an unsafe trait (`Send`, `Sync`, etc.)
-- [ ] Accessing fields of a `union`
-- [ ] Using `extern "C"` functions (FFI)
+- [ ] 解引用裸指针（`*const T`、`*mut T`）
+- [ ] 调用 `unsafe` 函数
+- [ ] 访问可变静态变量
+- [ ] 实现 unsafe trait（`Send`、`Sync` 等）
+- [ ] 访问 `union` 的字段
+- [ ] 使用 `extern "C"` 函数（FFI）
 
-## 3. Safety Invariants
+## 3. 安全不变量
 
-For each unsafe operation, document the invariants:
+为每个 unsafe 操作记录不变量：
 
-### For Pointer Dereference
+### 对于指针解引用
 
-- [ ] Is the pointer non-null?
-- [ ] Is the pointer properly aligned for the type?
-- [ ] Does the pointer point to valid, initialized memory?
-- [ ] Is the memory not being mutated by other code?
-- [ ] Will the memory remain valid for the entire duration of use?
+- [ ] 指针是否非空？
+- [ ] 指针是否针对类型正确对齐？
+- [ ] 指针是否指向有效、已初始化的内存？
+- [ ] 该内存是否没有被其他代码修改？
+- [ ] 该内存在整个使用期间是否保持有效？
 
-### For Mutable Aliasing
+### 对于可变别名
 
-- [ ] Are you creating multiple mutable references to the same memory?
-- [ ] Is there any possibility of aliasing `&mut` and `&`?
-- [ ] Have you verified no other code can access this memory?
+- [ ] 你是否在创建指向同一内存的多个可变引用？
+- [ ] 是否存在 `&mut` 和 `&` 别名的可能性？
+- [ ] 你是否已验证没有其他代码可访问此内存？
 
-### For FFI
+### 对于 FFI
 
-- [ ] Is the function signature correct (types, ABI)?
-- [ ] Are you handling potential null pointers?
-- [ ] Are you handling potential panics (catch_unwind)?
-- [ ] Is memory ownership clear (who allocates, who frees)?
+- [ ] 函数签名是否正确（类型、ABI）？
+- [ ] 你是否处理了潜在的空指针？
+- [ ] 你是否处理了潜在的 panic（catch_unwind）？
+- [ ] 内存所有权是否明确（谁分配、谁释放）？
 
-### For Send/Sync
+### 对于 Send/Sync
 
-- [ ] Is concurrent access properly synchronized?
-- [ ] Are there any data races possible?
-- [ ] Does the type truly satisfy the trait requirements?
+- [ ] 并发访问是否正确同步？
+- [ ] 是否可能存在数据竞争？
+- [ ] 该类型是否真正满足 trait 要求？
 
-## 4. Panic Safety
+## 4. Panic 安全性
 
-- [ ] What happens if this code panics at any line?
-- [ ] Are data structures left in a valid state on panic?
-- [ ] Do you need a panic guard for cleanup?
-- [ ] Could a destructor see invalid state?
+- [ ] 如果这段代码在任何一行 panic，会发生什么？
+- [ ] 数据结构在 panic 时是否保持有效状态？
+- [ ] 你是否需要 panic guard 进行清理？
+- [ ] 析构函数是否会看到无效状态？
 
-## 5. Documentation
+## 5. 文档
 
-- [ ] Have you written a `// SAFETY:` comment explaining:
-  - What invariants must hold?
-  - Why those invariants are upheld here?
+- [ ] 你是否编写了 `// SAFETY:` 注释，说明：
+  - 哪些不变量必须成立？
+  - 为什么这些不变量在此处得以保持？
 
-- [ ] For `unsafe fn`, have you written `# Safety` docs explaining:
-  - What the caller must guarantee?
-  - What happens if requirements are violated?
+- [ ] 对于 `unsafe fn`，你是否编写了 `# Safety` 文档，说明：
+  - 调用者必须保证什么？
+  - 如果违反要求会发生什么？
 
-## 6. Testing and Verification
+## 6. 测试和验证
 
-- [ ] Can you add debug assertions to verify invariants?
-- [ ] Have you tested with Miri (`cargo miri test`)?
-- [ ] Have you tested with address sanitizer (`RUSTFLAGS="-Zsanitizer=address"`)?
-- [ ] Have you considered fuzzing the unsafe code?
+- [ ] 你能添加调试断言来验证不变量吗？
+- [ ] 你是否使用 Miri 进行了测试（`cargo miri test`）？
+- [ ] 你是否使用地址消毒剂进行了测试（`RUSTFLAGS="-Zsanitizer=address"`）？
+- [ ] 你是否考虑过对 unsafe 代码进行模糊测试？
 
-## Quick Reference: Common SAFETY Comments
+## 快速参考：常见 SAFETY 注释
 
 ```rust
 // SAFETY: We checked that index < len above, so this is in bounds.
@@ -92,7 +92,7 @@ For each unsafe operation, document the invariants:
 // SAFETY: Caller guarantees the pointer is non-null and properly aligned.
 ```
 
-## Decision Flowchart
+## 决策流程图
 
 ```
 Need unsafe?

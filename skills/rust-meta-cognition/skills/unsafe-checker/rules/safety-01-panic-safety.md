@@ -10,11 +10,11 @@ clippy: panic_in_result_fn
 
 ## 概要
 
-Panics in unsafe code can leave data structures in an inconsistent state, leading to undefined behavior when the panic is caught.
+Unsafe 代码中的 Panic 可能使数据结构处于不一致状态，导致在捕获 Panic 时出现未定义行为。
 
 ## 理由
 
-When a panic occurs, Rust unwinds the stack and runs destructors. If unsafe code has partially modified data, the destructors may observe invalid state.
+当 Panic 发生时，Rust 会展开栈并运行析构函数。如果 Unsafe 代码已部分修改了数据，析构函数可能会观察到无效状态。
 
 ## 错误示例
 
@@ -95,17 +95,17 @@ impl<T> Drop for PanicGuard<'_, T> {
 }
 ```
 
-## Key Patterns
+## 关键模式
 
-1. **Update bookkeeping after operations**: Increment length only after writing
-2. **Use panic guards**: RAII types that clean up on panic
-3. **Order operations carefully**: Ensure invariants hold if panic occurs at any point
+1. **操作后更新记账信息**：仅在写入后增加长度
+2. **使用 Panic 守卫**：在 Panic 时进行清理的 RAII 类型
+3. **仔细安排操作顺序**：确保在任何点发生 Panic 时不变量仍然成立
 
 ## 检查清单
 
-- [ ] What happens if this code panics at each line?
-- [ ] Are all invariants maintained if we unwind from here?
-- [ ] Do I need a panic guard for cleanup?
+- [ ] 如果此代码在每一行 Panic，会发生什么？
+- [ ] 如果从此处展开，所有不变量是否都得以维持？
+- [ ] 是否需要 Panic 守卫进行清理？
 
 ## 相关规则
 

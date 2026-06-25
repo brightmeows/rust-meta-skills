@@ -9,11 +9,11 @@ impact: CRITICAL
 
 ## 概要
 
-Do not write to one union field and read from another field that has a different lifetime or references data with a different lifetime.
+不要写入一个联合体字段并读取另一个具有不同生命周期或引用不同生命周期数据的字段。
 
 ## 理由
 
-Union fields share the same memory. If one field stores a reference with lifetime `'a` and you read it as a reference with lifetime `'b`, you bypass lifetime checking and can create dangling references.
+联合体字段共享同一块内存。如果一个字段存储了生命周期 `'a` 的引用，而你将读取为生命周期 `'b` 的引用，你就绕过了生命周期检查并可能创建悬垂引用。
 
 ## 错误示例
 
@@ -73,9 +73,9 @@ fn delayed_init<T>(init: impl FnOnce() -> T) -> T {
 }
 ```
 
-## Why This Is Dangerous
+## 为什么这很危险
 
-The Rust lifetime system prevents use-after-free by tracking how long references are valid. Unions can subvert this:
+Rust 的生命周期系统通过追踪引用有效的时间来防止释放后使用。联合体可以破坏这个机制：
 
 ```
 Memory: [pointer to "hello"]
@@ -86,7 +86,7 @@ Union as 'long:  claims to point to valid memory forever
 Reality: After function returns, pointer is dangling
 ```
 
-## Safe Union Patterns
+## 安全的联合体模式
 
 ```rust
 // Pattern 1: All fields have same lifetime
@@ -111,9 +111,9 @@ union OwnedUnion {
 
 ## 检查清单
 
-- [ ] Do all reference fields have the same lifetime parameter?
-- [ ] Am I trying to extend a lifetime through union? (If yes, stop!)
-- [ ] For owned types, am I handling Drop correctly?
+- [ ] 所有引用字段是否具有相同的生命周期参数？
+- [ ] 我是否试图通过联合体延长生命周期？（如果是，停！）
+- [ ] 对于拥有的类型，我是否正确处理了 Drop？
 
 ## 相关规则
 

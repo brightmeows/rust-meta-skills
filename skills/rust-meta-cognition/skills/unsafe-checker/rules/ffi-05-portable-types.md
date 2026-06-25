@@ -9,13 +9,13 @@ impact: HIGH
 
 ## 概要
 
-Use type aliases from `std::os::raw` or the `libc` crate for C-compatible types. Don't assume sizes of C types.
+使用 `std::os::raw` 或 `libc` crate 的类型别名作为 C 兼容类型。不要假定 C 类型的大小。
 
 ## 理由
 
-- C types have platform-dependent sizes (`int` is not always 32 bits)
-- `long` is 32 bits on Windows, 64 bits on Unix
-- Using Rust primitives directly causes portability bugs
+- C 类型的大小依赖于平台（`int` 不总是 32 位）
+- `long` 在 Windows 上是 32 位，在 Unix 上是 64 位
+- 直接使用 Rust 原语会导致可移植性错误
 
 ## 错误示例
 
@@ -69,25 +69,25 @@ struct PointerSized {
 }
 ```
 
-## Type Mapping Reference
+## 类型映射参考
 
-| C Type | Rust Type | Notes |
+| C 类型 | Rust 类型 | 备注 |
 |--------|-----------|-------|
-| `char` | `c_char` | May be signed or unsigned! |
+| `char` | `c_char` | 可能是有符号或无符号！ |
 | `signed char` | `i8` | |
 | `unsigned char` | `u8` | |
-| `short` | `c_short` | Usually i16 |
-| `int` | `c_int` | Usually i32 |
-| `long` | `c_long` | 32 or 64 bits! |
-| `long long` | `c_longlong` | Usually i64 |
-| `size_t` | `usize` or `libc::size_t` | |
-| `ssize_t` | `isize` or `libc::ssize_t` | |
+| `short` | `c_short` | 通常为 i16 |
+| `int` | `c_int` | 通常为 i32 |
+| `long` | `c_long` | 32 或 64 位！ |
+| `long long` | `c_longlong` | 通常为 i64 |
+| `size_t` | `usize` 或 `libc::size_t` | |
+| `ssize_t` | `isize` 或 `libc::ssize_t` | |
 | `float` | `c_float` / `f32` | |
 | `double` | `c_double` / `f64` | |
 | `void*` | `*mut c_void` | |
 | `const void*` | `*const c_void` | |
 
-## Platform Differences
+## 平台差异
 
 ```rust
 #[cfg(target_pointer_width = "64")]
@@ -96,16 +96,16 @@ type PtrDiff = i64;
 #[cfg(target_pointer_width = "32")]
 type PtrDiff = i32;
 
-// Better: use isize
+// 更好：使用 isize
 let diff: isize = ptr1 as isize - ptr2 as isize;
 ```
 
 ## 检查清单
 
-- [ ] Am I using std::os::raw or libc types for FFI?
-- [ ] Have I avoided assuming c_long is 64 bits?
-- [ ] Am I using size_t/usize for sizes?
-- [ ] Have I tested on multiple platforms?
+- [ ] 我是否在 FFI 中使用了 `std::os::raw` 或 `libc` 类型？
+- [ ] 我是否避免假定 `c_long` 是 64 位？
+- [ ] 我是否使用 `size_t`/`usize` 表示大小？
+- [ ] 我是否在多个平台上测试过？
 
 ## 相关规则
 

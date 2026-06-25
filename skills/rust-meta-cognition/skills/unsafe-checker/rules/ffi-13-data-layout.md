@@ -9,13 +9,13 @@ impact: HIGH
 
 ## 概要
 
-Types shared between Rust and C must have `#[repr(C)]` to ensure the memory layout matches what C expects.
+Rust 和 C 之间共享的类型必须使用 `#[repr(C)]` 以确保内存布局与 C 期望的一致。
 
 ## 理由
 
-- Rust's default layout is unspecified and may change
-- C has specific, standardized layout rules
-- Mismatched layouts cause memory corruption
+- Rust 的默认布局未指定且可能变化
+- C 有特定的标准化布局规则
+- 不匹配的布局会导致内存损坏
 
 ## 错误示例
 
@@ -86,7 +86,7 @@ const _: () = {
 };
 ```
 
-## Layout Verification
+## 布局验证
 
 ```rust
 use std::mem::{size_of, align_of, offset_of};
@@ -123,22 +123,22 @@ fn verify_layout() {
 }
 ```
 
-## repr Options
+## repr 选项
 
-| Attribute | Effect |
+| 属性 | 效果 |
 |-----------|--------|
-| `#[repr(C)]` | C-compatible layout |
-| `#[repr(C, packed)]` | C layout, no padding |
-| `#[repr(C, align(N))]` | C layout, minimum align N |
-| `#[repr(transparent)]` | Same layout as single field |
-| `#[repr(u8)]` etc. | Enum discriminant type |
+| `#[repr(C)]` | C 兼容布局 |
+| `#[repr(C, packed)]` | C 布局，无填充 |
+| `#[repr(C, align(N))]` | C 布局，最小对齐 N |
+| `#[repr(transparent)]` | 与单字段布局相同 |
+| `#[repr(u8)]` 等 | 枚举判别式类型 |
 
 ## 检查清单
 
-- [ ] Is every FFI struct marked `#[repr(C)]`?
-- [ ] Is every FFI enum using explicit discriminants?
-- [ ] Have I verified the layout matches the C header?
-- [ ] Have I added compile-time assertions?
+- [ ] 每个 FFI 结构体是否标有 `#[repr(C)]`？
+- [ ] 每个 FFI 枚举是否使用了显式判别式？
+- [ ] 我是否验证了布局与 C 头文件匹配？
+- [ ] 我是否添加了编译时断言？
 
 ## 相关规则
 

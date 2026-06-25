@@ -10,13 +10,11 @@ clippy: mut_from_ref
 
 ## 概要
 
-A function taking `&self` or `&T` must not return `&mut T` to the same data without interior mutability.
+接收 `&self` 或 `&T` 的函数不能在没有内部可变性的情况下返回指向同一数据的 `&mut T`。
 
 ## 理由
 
-Returning `&mut` from `&` violates Rust's aliasing rules. The caller has an
-immutable borrow, so they can create additional `&` references. Returning `&mut`
-creates mutable aliasing, which is undefined behavior.
+从 `&` 返回 `&mut` 违反了 Rust 的别名规则。调用者有不可变借用，因此他们可以创建额外的 `&` 引用。返回 `&mut` 会创建可变别名，这是未定义行为。
 
 ## 错误示例
 
@@ -92,9 +90,9 @@ impl<T> std::ops::DerefMut for MutexGuard<'_, T> {
 }
 ```
 
-## The Only Valid Pattern
+## 唯一有效的模式
 
-The ONLY way to get `&mut` from `&` is through `UnsafeCell`:
+从 `&` 获取 `&mut` 的唯一方法是通过 `UnsafeCell`：
 
 ```rust
 use std::cell::UnsafeCell;
@@ -115,10 +113,10 @@ impl ValidInteriorMut {
 
 ## 检查清单
 
-- [ ] Am I trying to return &mut from a & method?
-- [ ] If yes, am I using UnsafeCell or a type built on it?
-- [ ] Am I guaranteeing exclusive access before creating &mut?
-- [ ] Would Cell, RefCell, or Mutex solve my problem safely?
+- [ ] 我是否试图从 `&` 方法返回 `&mut`？
+- [ ] 如果是，是否使用了 `UnsafeCell` 或基于它构建的类型？
+- [ ] 在创建 `&mut` 之前是否保证了独占访问？
+- [ ] `Cell`、`RefCell` 或 `Mutex` 能否安全解决我的问题？
 
 ## 相关规则
 

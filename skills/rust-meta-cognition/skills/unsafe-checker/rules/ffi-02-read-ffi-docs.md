@@ -5,15 +5,15 @@ level: P
 impact: MEDIUM
 ---
 
-# Read Documentation Carefully When Using std::ffi Types
+# 在使用 std::ffi 类型时仔细阅读文档
 
 ## 概要
 
-The `std::ffi` module has many types with subtle differences. Read their documentation carefully to avoid misuse.
+`std::ffi` 模块有许多具有微妙差异的类型。仔细阅读它们的文档以避免误用。
 
-## Key Types in std::ffi
+## std::ffi 中的关键类型
 
-### CString vs CStr
+### CString 与 CStr
 
 ```rust
 use std::ffi::{CString, CStr};
@@ -33,7 +33,7 @@ let borrowed: &CStr = unsafe { CStr::from_ptr(ptr) };
 // borrowed valid as long as ptr is valid
 ```
 
-### OsString vs OsStr
+### OsString 与 OsStr
 
 ```rust
 use std::ffi::{OsString, OsStr};
@@ -53,7 +53,7 @@ if let Some(s) = os_str.to_str() {
 }
 ```
 
-### c_void and Opaque Types
+### c_void 与不透明类型
 
 ```rust
 use std::ffi::c_void;
@@ -67,7 +67,7 @@ extern "C" {
 // Better: use dedicated opaque types (see ffi-17)
 ```
 
-## Common Pitfalls
+## 常见陷阱
 
 ```rust
 use std::ffi::CString;
@@ -109,23 +109,23 @@ unsafe {
 }
 ```
 
-## Type Selection Guide
+## 类型选择指南
 
-| Scenario | Type |
+| 场景 | 类型 |
 |----------|------|
-| Create string for C | `CString` |
-| Borrow string from C | `&CStr` |
-| File paths | `OsString`, `Path` |
-| Environment variables | `OsString` |
-| Opaque C pointers | Newtype over `*mut c_void` |
-| C integers | `c_int`, `c_long`, etc. |
+| 为 C 创建字符串 | `CString` |
+| 从 C 借用字符串 | `&CStr` |
+| 文件路径 | `OsString`、`Path` |
+| 环境变量 | `OsString` |
+| 不透明 C 指针 | 覆盖 `*mut c_void` 的 newtype |
+| C 整数 | `c_int`、`c_long` 等 |
 
 ## 检查清单
 
-- [ ] Have I read the docs for the std::ffi type I'm using?
-- [ ] Am I aware of the lifetime constraints?
-- [ ] Am I handling potential errors (NulError, UTF-8 errors)?
-- [ ] Is there a better type for my use case?
+- [ ] 我是否阅读了所使用的 `std::ffi` 类型的文档？
+- [ ] 我是否了解生命周期约束？
+- [ ] 我是否处理了潜在错误（NulError、UTF-8 错误）？
+- [ ] 有没有更适合我的用例的类型？
 
 ## 相关规则
 

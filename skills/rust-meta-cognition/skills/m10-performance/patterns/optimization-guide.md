@@ -1,26 +1,26 @@
 # Rust 性能优化指南
 
-## Profiling First
+## 先分析再优化
 
-### Tools
+### 工具
 
 ```bash
-# CPU profiling
+# CPU 性能分析
 cargo install flamegraph
 cargo flamegraph --bin myapp
 
-# Memory profiling
+# 内存性能分析
 cargo install cargo-instruments  # macOS
 heaptrack ./target/release/myapp  # Linux
 
-# Benchmarking
-cargo bench  # with criterion
+# 基准测试
+cargo bench  # 配合 criterion
 
-# Cache analysis
+# 缓存分析
 valgrind --tool=cachegrind ./target/release/myapp
 ```
 
-### Criterion Benchmarks
+### Criterion 基准测试
 
 ```rust
 use criterion::{criterion_group, criterion_main, Criterion};
@@ -43,17 +43,17 @@ criterion_main!(benches);
 
 ---
 
-## Common Optimizations
+## 常见优化
 
-### 1. Avoid Unnecessary Allocations
+### 1. 避免不必要的分配
 
 ```rust
-// BAD: allocates on every call
+// 不好：每次调用都分配
 fn to_uppercase(s: &str) -> String {
     s.to_uppercase()
 }
 
-// GOOD: return Cow, allocate only if needed
+// 好：返回 Cow，仅在需要时分配
 use std::borrow::Cow;
 
 fn to_uppercase(s: &str) -> Cow<'_, str> {
@@ -65,16 +65,16 @@ fn to_uppercase(s: &str) -> Cow<'_, str> {
 }
 ```
 
-### 2. Reuse Allocations
+### 2. 复用分配
 
 ```rust
-// BAD: creates new Vec each iteration
+// 不好：每次迭代都创建新 Vec
 for item in items {
     let mut buffer = Vec::new();
     process(&mut buffer, item);
 }
 
-// GOOD: reuse buffer
+// 好：复用 buffer
 let mut buffer = Vec::new();
 for item in items {
     buffer.clear();
@@ -82,26 +82,26 @@ for item in items {
 }
 ```
 
-### 3. Use Appropriate Collections
+### 3. 选择合适的集合
 
-| Need | Collection | Notes |
-|------|------------|-------|
-| Sequential access | `Vec<T>` | Best cache locality |
-| Random access by key | `HashMap<K, V>` | O(1) lookup |
-| Ordered keys | `BTreeMap<K, V>` | O(log n) lookup |
-| Small sets (<20) | `Vec<T>` + linear search | Lower overhead |
-| FIFO queue | `VecDeque<T>` | O(1) push/pop both ends |
+| 需求 | 集合 | 说明 |
+|------|------|------|
+| 顺序访问 | `Vec<T>` | 最佳缓存局部性 |
+| 按键随机访问 | `HashMap<K, V>` | O(1) 查找 |
+| 有序键 | `BTreeMap<K, V>` | O(log n) 查找 |
+| 小集合（<20） | `Vec<T>` + 线性搜索 | 低开销 |
+| FIFO 队列 | `VecDeque<T>` | 两端 O(1) push/pop |
 
-### 4. Pre-allocate Capacity
+### 4. 预分配容量
 
 ```rust
-// BAD: many reallocations
+// 不好：多次重新分配
 let mut v = Vec::new();
 for i in 0..10000 {
     v.push(i);
 }
 
-// GOOD: single allocation
+// 好：单次分配
 let mut v = Vec::with_capacity(10000);
 for i in 0..10000 {
     v.push(i);
@@ -110,111 +110,111 @@ for i in 0..10000 {
 
 ---
 
-## String Optimization
+## 字符串优化
 
-### Avoid String Concatenation in Loops
+### 避免循环中的字符串拼接
 
 ```rust
-// BAD: O(n²) allocations
+// 不好：O(n²) 分配
 let mut result = String::new();
 for s in strings {
     result = result + &s;
 }
 
-// GOOD: O(n) with push_str
+// 好：O(n) 使用 push_str
 let mut result = String::new();
 for s in strings {
     result.push_str(&s);
 }
 
-// BETTER: pre-calculate capacity
+// 更好：预先计算容量
 let total_len: usize = strings.iter().map(|s| s.len()).sum();
 let mut result = String::with_capacity(total_len);
 for s in strings {
     result.push_str(&s);
 }
 
-// BEST: use join for simple cases
+// 最佳：简单情况使用 join
 let result = strings.join("");
 ```
 
-### Use &str When Possible
+### 尽可能使用 &str
 
 ```rust
-// BAD: requires allocation
+// 不好：需要分配
 fn greet(name: String) {
     println!("Hello, {}", name);
 }
 
-// GOOD: borrows, no allocation
+// 好：借用，无分配
 fn greet(name: &str) {
     println!("Hello, {}", name);
 }
 
-// Works with both:
+// 两者皆可：
 greet("world");                    // &str
-greet(&String::from("world"));     // &String coerces to &str
+greet(&String::from("world"));     // &String 自动转换为 &str
 ```
 
 ---
 
-## Iterator Optimization
+## 迭代器优化
 
-### Use Iterators Over Indexing
+### 优先使用迭代器而非索引
 
 ```rust
-// BAD: bounds checking on each access
+// 不好：每次访问都做边界检查
 let mut sum = 0;
 for i in 0..vec.len() {
     sum += vec[i];
 }
 
-// GOOD: no bounds checking
+// 好：无边界检查
 let sum: i32 = vec.iter().sum();
 
-// GOOD: when index needed
+// 好：当需要索引时
 for (i, item) in vec.iter().enumerate() {
     // ...
 }
 ```
 
-### Lazy Evaluation
+### 惰性求值
 
 ```rust
-// Iterators are lazy - computation happens at collect
+// 迭代器是惰性的——计算在 collect 时发生
 let result: Vec<_> = data
     .iter()
     .filter(|x| x.is_valid())
     .map(|x| x.process())
-    .take(10)  // stop after 10 items
+    .take(10)  // 10 项后停止
     .collect();
 ```
 
-### Avoid Collecting When Not Needed
+### 避免不必要的 collect
 
 ```rust
-// BAD: unnecessary intermediate allocation
+// 不好：不必要的中间分配
 let filtered: Vec<_> = items.iter().filter(|x| x.valid).collect();
 let count = filtered.len();
 
-// GOOD: no allocation
+// 好：无分配
 let count = items.iter().filter(|x| x.valid).count();
 ```
 
 ---
 
-## Parallelism with Rayon
+## 使用 Rayon 并行化
 
 ```rust
 use rayon::prelude::*;
 
-// Sequential
+// 串行
 let sum: i32 = (0..1_000_000).map(|x| x * x).sum();
 
-// Parallel (automatic work stealing)
+// 并行（自动任务窃取）
 let sum: i32 = (0..1_000_000).into_par_iter().map(|x| x * x).sum();
 
-// Parallel with custom chunk size
+// 自定义块大小的并行
 let results: Vec<_> = data
     .par_chunks(1000)
     .map(|chunk| process_chunk(chunk))
@@ -223,73 +223,73 @@ let results: Vec<_> = data
 
 ---
 
-## Memory Layout
+## 内存布局
 
-### Use Appropriate Integer Sizes
+### 使用合适的整数大小
 
 ```rust
-// If values are small, use smaller types
+// 如果值很小，用更小的类型
 struct Item {
-    count: u8,      // 0-255, not u64
-    flags: u8,      // small enum
-    id: u32,        // if 4 billion is enough
+    count: u8,      // 0-255，不需要 u64
+    flags: u8,      // 小型枚举
+    id: u32,        // 如果 40 亿足够的话
 }
 ```
 
-### Pack Structs Efficiently
+### 高效打包结构体
 
 ```rust
-// BAD: 24 bytes due to padding
+// 不好：因填充导致 24 字节
 struct Bad {
-    a: u8,   // 1 byte + 7 padding
-    b: u64,  // 8 bytes
-    c: u8,   // 1 byte + 7 padding
+    a: u8,   // 1 字节 + 7 填充
+    b: u64,  // 8 字节
+    c: u8,   // 1 字节 + 7 填充
 }
 
-// GOOD: 16 bytes (or use #[repr(packed)])
+// 好：16 字节（或使用 #[repr(packed)]）
 struct Good {
-    b: u64,  // 8 bytes
-    a: u8,   // 1 byte
-    c: u8,   // 1 byte + 6 padding
+    b: u64,  // 8 字节
+    a: u8,   // 1 字节
+    c: u8,   // 1 字节 + 6 填充
 }
 ```
 
-### Box Large Values
+### 将大值装箱
 
 ```rust
-// Large enum variants waste space
+// 大型枚举变体浪费空间
 enum Message {
     Quit,
-    Data([u8; 10000]),  // all variants are 10000+ bytes
+    Data([u8; 10000]),  // 所有变体都是 10000+ 字节
 }
 
-// Better: box the large variant
+// 更好：将大型变体装箱
 enum Message {
     Quit,
-    Data(Box<[u8; 10000]>),  // variants are pointer-sized
+    Data(Box<[u8; 10000]>),  // 变体变为指针大小
 }
 ```
 
 ---
 
-## Async Performance
+## 异步性能
 
-### Avoid Blocking in Async
+### 避免在异步中阻塞
 
 ```rust
-// BAD: blocks the executor
+// 不好：阻塞执行器
 async fn bad() {
-    std::thread::sleep(Duration::from_secs(1));  // blocking!
-    std::fs::read_to_string("file.txt").unwrap();  // blocking!
+    std::thread::sleep(Duration::from_secs(1));  // 阻塞！
+    std::fs::read_to_string("file.txt").unwrap();  // 阻塞！
 }
 
-// GOOD: use async versions
+// 好：使用异步版本
 async fn good() {
     tokio::time::sleep(Duration::from_secs(1)).await;
     tokio::fs::read_to_string("file.txt").await.unwrap();
 }
 
-// For CPU work: spawn_blocking
+// 对于 CPU 密集型工作：spawn_blocking
 async fn compute() -> i32 {
     tokio::task::spawn_blocking(|| {
         heavy_computation()
@@ -297,12 +297,12 @@ async fn compute() -> i32 {
 }
 ```
 
-### Buffer Async I/O
+### 缓冲异步 I/O
 
 ```rust
 use tokio::io::{AsyncBufReadExt, BufReader};
 
-// BAD: many small reads
+// 不好：多次小读取
 async fn bad(file: File) {
     let mut byte = [0u8];
     while file.read(&mut byte).await.unwrap() > 0 {
@@ -310,7 +310,7 @@ async fn bad(file: File) {
     }
 }
 
-// GOOD: buffered reading
+// 好：缓冲读取
 async fn good(file: File) {
     let reader = BufReader::new(file);
     let mut lines = reader.lines();
@@ -322,30 +322,30 @@ async fn good(file: File) {
 
 ---
 
-## Release Build Optimization
+## 发布构建优化
 
-### Cargo.toml Settings
+### Cargo.toml 设置
 
 ```toml
 [profile.release]
-lto = true           # Link-time optimization
-codegen-units = 1    # Single codegen unit (slower compile, faster code)
-panic = "abort"      # Smaller binary, no unwinding
-strip = true         # Strip symbols
+lto = true           # 链接时优化
+codegen-units = 1    # 单代码生成单元（编译更慢，代码更快）
+panic = "abort"      # 更小的二进制，无栈展开
+strip = true         # 去除符号
 
 [profile.release-fast]
 inherits = "release"
-opt-level = 3        # Maximum optimization
+opt-level = 3        # 最大优化
 
 [profile.release-small]
 inherits = "release"
-opt-level = "s"      # Optimize for size
+opt-level = "s"      # 优化体积
 ```
 
-### Compile-Time Assertions
+### 编译时断言
 
 ```rust
-// Zero runtime cost
+// 零运行时开销
 const _: () = assert!(std::mem::size_of::<MyStruct>() <= 64);
 ```
 
@@ -353,17 +353,17 @@ const _: () = assert!(std::mem::size_of::<MyStruct>() <= 64);
 
 ## Checklist
 
-Before optimizing:
+优化前：
 
-- [ ] Profile to find actual bottlenecks
-- [ ] Have benchmarks to measure improvement
-- [ ] Consider if optimization is worth complexity
+- [ ] 做性能分析找到真正的瓶颈
+- [ ] 有基准测试来衡量改进
+- [ ] 考虑优化是否值得增加复杂度
 
-Common wins:
+常见收益点：
 
-- [ ] Reduce allocations (Cow, reuse buffers)
-- [ ] Use appropriate collections
-- [ ] Pre-allocate with_capacity
-- [ ] Use iterators instead of indexing
-- [ ] Enable LTO for release builds
-- [ ] Use rayon for parallel workloads
+- [ ] 减少分配（Cow、复用缓冲区）
+- [ ] 使用合适的集合
+- [ ] 使用 with_capacity 预分配
+- [ ] 使用迭代器代替索引
+- [ ] 为发布构建启用 LTO
+- [ ] 使用 rayon 处理并行工作负载

@@ -9,13 +9,13 @@ impact: HIGH
 
 ## 概要
 
-Data received from external sources (FFI, files, network) may be invalid. Validate before using it as Rust types with stricter invariants.
+从外部来源（FFI、文件、网络）接收的数据可能是无效的。在使用它作为具有更严格不变量的 Rust 类型之前进行验证。
 
 ## 理由
 
-- External data can be malicious or corrupted
-- Rust types have invariants (e.g., valid UTF-8 for str)
-- Invalid data causes undefined behavior
+- 外部数据可能是恶意的或损坏的
+- Rust 类型有不变量（例如 str 的有效 UTF-8）
+- 无效数据会导致未定义行为
 
 ## 错误示例
 
@@ -121,23 +121,23 @@ fn good_size(ptr: *const u8, len: usize) -> Result<Vec<u8>, ValidationError> {
 // enum Status { Active = 0, Inactive = 1, Pending = 2 }
 ```
 
-## Validation Patterns
+## 验证模式
 
-| External Data | Validation |
+| 外部数据 | 验证方式 |
 |---------------|------------|
-| Enum discriminant | Match against valid values |
-| String | Check UTF-8 or use lossy conversion |
-| Size/length | Check against maximum |
-| Pointer | Check for null |
-| Boolean | Explicit 0/1 check or treat any non-zero as true |
-| Float | Check for NaN, infinity if problematic |
+| 枚举判别式 | 匹配有效值 |
+| 字符串 | 检查 UTF-8 或使用 lossy 转换 |
+| 大小/长度 | 检查是否超出最大值 |
+| 指针 | 检查 null |
+| 布尔值 | 显式 0/1 检查，或将任何非零视作 true |
+| 浮点数 | 检查 NaN、无穷大（如果有问题） |
 
 ## 检查清单
 
-- [ ] Am I validating external enum values?
-- [ ] Am I handling potential invalid UTF-8?
-- [ ] Am I checking sizes against reasonable limits?
-- [ ] Am I using TryFrom instead of transmute?
+- [ ] 我是否验证了外部枚举值？
+- [ ] 我是否处理了潜在的无效 UTF-8？
+- [ ] 我是否检查了大小是否在合理限制内？
+- [ ] 我是否使用了 `TryFrom` 而非 `transmute`？
 
 ## 相关规则
 

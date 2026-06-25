@@ -5,18 +5,18 @@ level: P
 impact: HIGH
 ---
 
-# Avoid Passing Trait Objects to C Interfaces
+# 避免将 trait 对象传递给 C 接口
 
 ## 概要
 
-Trait objects (`dyn Trait`) have Rust-specific layout (fat pointers with vtable) that is not compatible with C.
+Trait 对象（`dyn Trait`）具有 Rust 特定的布局（带虚表的胖指针），与 C 不兼容。
 
 ## 理由
 
-- Trait objects are "fat pointers": data ptr + vtable ptr
-- C expects thin pointers (single pointer)
-- Vtable layout is not stable across Rust versions
-- C cannot call Rust vtable methods
+- Trait 对象是“胖指针”：数据指针 + 虚表指针
+- C 期望瘦指针（单个指针）
+- 虚表布局在 Rust 版本之间不稳定
+- C 无法调用 Rust 虚表方法
 
 ## 错误示例
 
@@ -131,7 +131,7 @@ impl Drop for CCompatibleHandler {
 }
 ```
 
-## Why Trait Objects Don't Work
+## 为什么 Trait 对象不工作
 
 ```
 Rust trait object (*const dyn Handler):
@@ -143,21 +143,21 @@ C pointer (void*):
 The sizes don't match!
 ```
 
-## Alternatives to Trait Objects
+## Trait 对象的替代方案
 
-| Instead of | Use |
+| 替代 | 使用 |
 |------------|-----|
-| `dyn Trait` | Function pointer + user_data |
-| `Box<dyn Trait>` | Boxed concrete type + trampoline |
-| `&dyn Trait` | C-compatible vtable struct |
-| `Arc<dyn Trait>` | Reference counting wrapper |
+| `dyn Trait` | 函数指针 + user_data |
+| `Box<dyn Trait>` | Boxed 具体类型 + 跳板 |
+| `&dyn Trait` | C 兼容虚表结构体 |
+| `Arc<dyn Trait>` | 引用计数包装器 |
 
 ## 检查清单
 
-- [ ] Am I passing trait objects across FFI?
-- [ ] Can I use concrete types instead?
-- [ ] Have I used the trampoline pattern for callbacks?
-- [ ] If vtable is needed, is it C-compatible?
+- [ ] 我是否在跨 FFI 传递 trait 对象？
+- [ ] 能否改用具体类型？
+- [ ] 我是否对回调使用了跳板模式？
+- [ ] 如果需要虚表，它是否 C 兼容？
 
 ## 相关规则
 

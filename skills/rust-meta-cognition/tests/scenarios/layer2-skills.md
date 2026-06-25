@@ -146,9 +146,9 @@ claude -p "clone 滥用"
 
 ---
 
-## Validation Checklist
+## 验证检查清单
 
-- [ ] All Layer 2 skills trigger correctly
-- [ ] Design-related queries route properly
-- [ ] Chinese keywords work
-- [ ] No conflicts with Layer 1 skills
+- [ ] 所有 Layer 2 skill 正确触发
+- [ ] 设计相关查询正确路由
+- [ ] 中文关键词正常工作
+- [ ] 不与 Layer 1 skill 冲突
