@@ -308,7 +308,7 @@ mkdir -p ~/.claude/cache/rust-daily/
 
 ---
 
-## Example Usage
+## 使用示例
 
 ```bash
 # Get weekly Rust news (default)
@@ -347,123 +347,123 @@ mkdir -p ~/.claude/cache/rust-daily/
 
 ---
 
-## Output Example
+## 输出示例
 
 ```markdown
-# 🦀 Rust Daily Report
+# 🦀 Rust 日报
 
-**Period:** 2026-01-19 - 2026-01-20 | **Generated:** 2026-01-20 15:30
-**Sources:** 18 items from 5 sources
+**期间：** 2026-01-19 - 2026-01-20 | **生成时间：** 2026-01-20 15:30
+**来源：** 来自 5 个来源的 18 条内容
 
 ---
 
-## 📊 Quick Stats
+## 📊 快速统计
 
-| Metric | Value |
+| 指标 | 数值 |
 |--------|-------|
-| Total Posts | 18 |
-| Hot Discussions (>50 comments) | 4 |
-| Official Announcements | 2 |
-| Top Topic | Async improvements |
+| 帖子总数 | 18 |
+| 热门讨论（评论 >50） | 4 |
+| 官方公告 | 2 |
+| 热门话题 | 异步改进 |
 
 ---
 
-## 🌐 Ecosystem Highlights
+## 🌐 生态亮点
 
 ### Reddit r/rust
 
-#### 1. Tokio 2.0 Released with Major Performance Improvements
-- **Link:** https://reddit.com/r/rust/comments/abc123
-- **Score:** 542 ⬆️ | **Comments:** 89 💬 | **Posted:** 6 hours ago
-- **Author:** u/tokio_maintainer
-- **Key Takeaway:** Tokio 2.0 brings 40% better throughput and simplified APIs. If you're using async Rust, this is a must-upgrade with mostly backward-compatible changes.
-- **Tags:** `async` `tokio` `release`
+#### 1. Tokio 2.0 发布，性能大幅提升
+- **链接：** https://reddit.com/r/rust/comments/abc123
+- **评分：** 542 ⬆️ | **评论：** 89 💬 | **发布时间：** 6 小时前
+- **作者：** u/tokio_maintainer
+- **要点：** Tokio 2.0 带来 40% 的吞吐量提升和简化的 API。如果你在使用异步 Rust，这是一个基本向后兼容的必升版本。
+- **标签：** `async` `tokio` `release`
 
-#### 2. Why I Switched My Company from Go to Rust
-- **Link:** https://reddit.com/r/rust/comments/def456
-- **Score:** 423 ⬆️ | **Comments:** 156 💬 | **Posted:** 12 hours ago
-- **Author:** u/startup_cto
-- **Key Takeaway:** Real-world experience report showing 60% reduction in production bugs after migrating. Key challenges were learning curve and compile times, but reliability gains outweighed costs.
-- **Tags:** `experience-report` `go-comparison` `production`
+#### 2. 我为什么将公司从 Go 迁移到 Rust
+- **链接：** https://reddit.com/r/rust/comments/def456
+- **评分：** 423 ⬆️ | **评论：** 156 💬 | **发布时间：** 12 小时前
+- **作者：** u/startup_cto
+- **要点：** 真实经验报告显示迁移后生产环境 bug 减少了 60%。主要挑战是学习曲线和编译时间，但可靠性提升超过了成本。
+- **标签：** `experience-report` `go-comparison` `production`
 
-### This Week in Rust #634
-- **Link:** https://this-week-in-rust.org/blog/2026/01/14/this-week-in-rust-634/
-- **Published:** 2026-01-14
+### 本周 Rust 第 #634 期
+- **链接：** https://this-week-in-rust.org/blog/2026/01/14/this-week-in-rust-634/
+- **发布时间：** 2026-01-14
 
-**Crate of the Week:** [axum](https://crates.io/crates/axum)
-> Selected for its elegant API design and strong ecosystem integration with tower middleware.
+**本周 Crate：** [axum](https://crates.io/crates/axum)
+> 因其优雅的 API 设计和与 tower 中间件的强大生态集成而入选。
 
-**Notable Updates:**
-| Item | Summary | Link |
+**值得关注的更新：**
+| 项目 | 摘要 | 链接 |
 |------|---------|------|
-| Rust 1.85 beta | New async closures stabilized | [→](https://blog.rust-lang.org) |
-| cargo-semver | Now detects more breaking changes | [→](https://github.com/...) |
+| Rust 1.85 beta | 新的异步闭包已稳定 | [→](https://blog.rust-lang.org) |
+| cargo-semver | 现在能检测更多破坏性变更 | [→](https://github.com/...) |
 
 ---
 
-## 📢 Official Announcements
+## 📢 官方公告
 
 ### Rust Blog
 
-#### Announcing Rust 1.85.0
-- **Link:** https://blog.rust-lang.org/2026/01/15/Rust-1.85.0.html
-- **Published:** 2026-01-15
-- **Key Takeaway:** Async closures are now stable! This enables more ergonomic async code patterns. Also includes improved compile times for large projects.
-- **Action Required:** Yes - update with `rustup update stable`
+#### Rust 1.85.0 发布
+- **链接：** https://blog.rust-lang.org/2026/01/15/Rust-1.85.0.html
+- **发布时间：** 2026-01-15
+- **要点：** 异步闭包现已稳定！这实现了更符合人体工学的异步代码模式。还包括大型项目的编译时间改进。
+- **需要操作：** 是——使用 `rustup update stable` 更新
 
 ### Inside Rust Blog
 
-#### Lang Team Design Meeting: Edition 2027 Planning
-- **Link:** https://blog.rust-lang.org/inside-rust/2026/01/14/lang-meeting.html
-- **Published:** 2026-01-14
-- **Key Takeaway:** Early discussions on potential Edition 2027 features including keyword generics and effect systems.
-- **Relevant Teams:** lang, compiler
+#### 语言团队设计会议：Edition 2027 规划
+- **链接：** https://blog.rust-lang.org/inside-rust/2026/01/14/lang-meeting.html
+- **发布时间：** 2026-01-14
+- **要点：** 关于潜在 Edition 2027 功能的早期讨论，包括关键字泛型和效果系统。
+- **相关团队：** lang, compiler
 
 ---
 
-## 🏛️ Rust Foundation
+## 🏛️ Rust 基金会
 
-### News & Announcements
+### 新闻与公告
 
-#### Google Joins as Platinum Member
-- **Link:** https://foundation.rust-lang.org/news/2026-01-13-google-platinum/
-- **Published:** 2026-01-13
-- **Key Takeaway:** $2M annual commitment will fund security audits and compiler infrastructure. Shows continued enterprise investment in Rust.
+#### Google 成为白金会员
+- **链接：** https://foundation.rust-lang.org/news/2026-01-13-google-platinum/
+- **发布时间：** 2026-01-13
+- **要点：** 每年 200 万美元的承诺将用于资助安全审计和编译器基础设施。显示企业对 Rust 的持续投入。
 
-### Upcoming Events
+### 即将举行的活动
 
-| Date | Event | Location | Link | Why Attend |
+| 日期 | 活动 | 地点 | 链接 | 参加理由 |
 |------|-------|----------|------|------------|
-| Feb 1-3 | RustConf 2026 | Seattle, WA | [Register](https://rustconf.com) | Keynote on Rust in Linux kernel |
-| Feb 15 | Rust Meetup | Virtual | [Join](https://meetup.com/...) | Free, beginner-friendly |
+| 2 月 1-3 日 | RustConf 2026 | 西雅图, WA | [注册](https://rustconf.com) | Rust 在 Linux 内核中的主题演讲 |
+| 2 月 15 日 | Rust Meetup | 线上 | [加入](https://meetup.com/...) | 免费，适合初学者 |
 
 ---
 
-## 🔥 Trending Topics
+## 🔥 热门话题
 
-1. **Async Ecosystem Maturation** - Multiple posts discussing Tokio 2.0 and async closures
-   - Related: [Tokio 2.0](https://reddit.com/...), [Async Patterns](https://reddit.com/...)
+1. **异步生态成熟** — 多篇帖子讨论 Tokio 2.0 和异步闭包
+   - 相关：[Tokio 2.0](https://reddit.com/...)、[异步模式](https://reddit.com/...)
 
-2. **Rust in Production** - Growing number of experience reports from companies
-   - Related: [Go to Rust Migration](https://reddit.com/...)
-
----
-
-## 💡 AI Analysis
-
-**Key Themes This Period:**
-- Async Rust reaching new maturity level with Tokio 2.0 and language improvements
-- Increasing enterprise adoption evidenced by Foundation membership and experience reports
-
-**What to Watch:**
-- Edition 2027 discussions starting - may influence long-term project planning
-
-**Community Sentiment:** Positive - excitement about async improvements and ecosystem growth
+2. **Rust 在生产环境的应用** — 来自企业经验报告越来越多
+   - 相关：[Go 到 Rust 迁移](https://reddit.com/...)
 
 ---
 
-📊 **Stats:** 18 posts | 523 comments | 5 sources
-🔄 **Refresh:** `/rust-daily` | 💾 **Save:** `/rust-daily --save`
+## 💡 AI 分析
+
+**本期关键主题：**
+- 异步 Rust 借助 Tokio 2.0 和语言改进达到新的成熟度
+- 企业采纳度提升，基金会会员和经验报告证明了这一点
+
+**值得关注：**
+- Edition 2027 讨论已开始——可能影响长期项目规划
+
+**社区情绪：** 积极——对异步改进和生态增长感到兴奋
+
+---
+
+📊 **统计：** 18 篇帖子 | 523 条评论 | 5 个来源
+🔄 **刷新：** `/rust-daily` | 💾 **保存：** `/rust-daily --save`
 ```
 
 ---
