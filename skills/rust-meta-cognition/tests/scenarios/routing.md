@@ -112,10 +112,10 @@
 ### Test 12：风格指南到 Coding-Guidelines
 
 **提示词：** “Rust 命名规范”
-**预期路由：** coding-guidelines
+**预期路由：** 根 SKILL.md 代码风格
 **验证清单：**
 
-- [ ] coding-guidelines 技能
+- [ ] 根 SKILL.md 代码风格 技能
 - [ ] 返回风格规则
 
 ---

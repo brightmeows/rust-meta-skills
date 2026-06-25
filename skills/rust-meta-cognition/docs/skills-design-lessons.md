@@ -137,7 +137,7 @@ skills/
 ├── ...
 ├── core-actionbook/SKILL.md   # 工具类
 ├── 根 SKILL.md/SKILL.md       # 路由器
-└── coding-guidelines/SKILL.md # 编码规范
+└── 根 SKILL.md 代码风格/SKILL.md # 编码规范
 ```
 
 **不要嵌套 skill：**
@@ -160,7 +160,7 @@ skills/core-actionbook/SKILL.md
 | Layer 2（设计） | `m1x-` | m09-domain, m15-anti-pattern |
 | Layer 3（领域） | `domain-` | domain-web, domain-fintech |
 | 核心工具 | `core-` | core-actionbook, core-dynamic-skills |
-| 其他 | 描述性名称 | 根 SKILL.md, coding-guidelines |
+| 其他 | 描述性名称 | 根 SKILL.md, 根 SKILL.md 代码风格 |
 
 ---
 

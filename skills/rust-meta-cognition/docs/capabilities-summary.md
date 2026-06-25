@@ -134,7 +134,7 @@
 |-------|------|
 | **根 SKILL.md** | 路由所有 Rust 问题，实现元认知 |
 | **rust-learner** | 通过 agents 获取最新 Rust/crate 版本 |
-| **coding-guidelines** | 80+ Rust 编码规则 (命名, 风格, 模式) |
+| **根 SKILL.md 代码风格** | 80+ Rust 编码规则 (命名, 风格, 模式) |
 | **unsafe-checker** | 47 条 unsafe 规则, SAFETY 注释, FFI 审查 |
 | **rust-daily** | 聚合 Reddit, TWIR, 博客的 Rust 新闻 |
 | **rust-skill-creator** | 从文档生成新 skills |

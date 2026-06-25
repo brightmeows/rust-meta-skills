@@ -46,7 +46,6 @@ dirs=(
     "skills/m14-mental-model"
     "skills/m15-anti-pattern"
     "skills/unsafe-checker"
-    "skills/coding-guidelines"
     "router"
     "skills/rust-learner"
     "agents"
@@ -75,7 +74,6 @@ skill_files=(
     "skills/m06-error-handling/SKILL.md"
     "skills/m07-concurrency/SKILL.md"
     "skills/unsafe-checker/SKILL.md"
-    "skills/coding-guidelines/SKILL.md"
     "SKILL.md"
     "skills/rust-learner/SKILL.md"
 )

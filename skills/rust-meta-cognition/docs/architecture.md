@@ -35,7 +35,7 @@
 │  ├── m09-m15 (L2)     │       │  ├── serde/                        │
 │  ├── domain-* (L3)    │       │  └── std/                          │
 │  ├── 根 SKILL.md      │       │                                    │
-│  ├── coding-guidelines│       │  .claude/skills/ (项目级)          │
+│  ├── 根 SKILL.md 代码风格│       │  .claude/skills/ (项目级)          │
 │  └── unsafe-checker   │       │  └── project-specific-crate/       │
 └───────────┬───────────┘       └───────────────┬───────────────────┘
             │                                   │
@@ -107,7 +107,7 @@ rust-skills/
 │   ├── domain-iot/
 │   ├── domain-ml/
 │   │
-│   ├── coding-guidelines/       # 编码规范
+│   ├── 根 SKILL.md 代码风格/       # 编码规范
 │   ├── unsafe-checker/          # Unsafe 审查
 │   ├── rust-learner/            # 信息获取路由
 │   ├── rust-daily/              # 新闻聚合

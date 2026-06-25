@@ -38,7 +38,7 @@
 |------|------|------------|
 | 根 SKILL.md 路由 | 所有 Rust 问题的主路由器 | Rust, cargo, rustc, crate, error codes |
 | rust-learner | Rust 版本和 crate 信息 | version, changelog, crate info |
-| coding-guidelines | 代码风格和最佳实践 | style, naming, clippy, formatting |
+| 根 SKILL.md 代码风格 | 代码风格和最佳实践 | style, naming, clippy, formatting |
 | unsafe-checker | Unsafe 代码审查和 FFI 指南 | unsafe, FFI, raw pointer, transmute |
 
 ---

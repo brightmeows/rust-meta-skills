@@ -61,7 +61,7 @@ cat >> "$INDEX_DIR/skills-index.md" << 'EOF'
 |------|-------------|
 EOF
 
-for skill_name in "unsafe-checker" "coding-guidelines"; do
+for skill_name in "unsafe-checker" "根 SKILL.md 代码风格"; do
     skill_dir="$ROOT_DIR/skills/$skill_name"
     if [ -f "$skill_dir/SKILL.md" ]; then
         desc=$(sed -n '/^description:/,/^[a-z]*:/p' "$skill_dir/SKILL.md" | head -2 | tail -1 | sed 's/^  //')

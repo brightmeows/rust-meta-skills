@@ -55,7 +55,7 @@
 | 查询类型 | 路由到 |
 |----------|--------|
 | P.UNS.*, G.UNS.*, FFI, unsafe | `unsafe-checker` skill |
-| P.*, G.*（其他） | `coding-guidelines` skill |
+| P.*, G.*（其他） | `根 SKILL.md 代码风格` skill |
 | --clippy <lint> | `clippy-researcher` agent |
 
 ## 相关命令

@@ -103,7 +103,7 @@ claude -p "tokio 最新版本"                # rust-learner
 
 - 根 SKILL.md 路由
 - rust-learner
-- coding-guidelines
+- 根 SKILL.md 代码风格
 - unsafe-checker
 
 ### 5. Agent 集成

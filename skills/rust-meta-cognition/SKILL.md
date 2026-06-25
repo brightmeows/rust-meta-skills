@@ -140,7 +140,7 @@ description: >-
 |------|--------|------|
 | 最新版本 / 最新动态 | **`rust-learner`** | 使用 agent |
 | API / 文档 / documentation | **`docs-researcher`** | 使用 agent |
-| 代码风格 / 命名 / clippy | **`coding-guidelines`** | 读取 skill |
+| 代码风格 / 命名 / clippy | **`根 SKILL.md 代码风格`** | 读取 skill |
 | unsafe 代码 / FFI | **`unsafe-checker`** | 读取 skill |
 | 代码审查 | **`os-checker`** | 见 [`router/integrations/os-checker.md`](router/integrations/os-checker.md) |
 
@@ -213,6 +213,110 @@ pedantic = "warn"
 
 ## 代码风格要点
 
+### 快速参考
+
+```
+命名：snake_case（函数/变量），CamelCase（类型），SCREAMING_SNAKE_CASE（常量）
+格式：rustfmt（直接使用）
+文档：/// 用于公开项，//! 用于模块文档
+Lint：#![warn(clippy::all)]
+```
+
+### 命名（Rust 特定）
+
+| 规则 | 指南 |
+|------|------|
+| 不用 `get_` 前缀 | `fn name()` 而非 `fn get_name()` |
+| 迭代器约定 | `iter()` / `iter_mut()` / `into_iter()` |
+| 转换命名 | `as_`（廉价借用）、`to_`（昂贵）、`into_`（转移所有权） |
+| 静态变量前缀 | `static` 用 `G_CONFIG`，`const` 不加前缀 |
+
+### 数据类型
+
+| 规则 | 指南 |
+|------|------|
+| 使用 newtype | `struct Email(String)` 表达领域语义 |
+| 优先切片模式 | `if let [first, .., last] = slice` |
+| 预分配容量 | `Vec::with_capacity()`、`String::with_capacity()` |
+| 避免滥用 `Vec` | 固定大小时用数组 |
+
+### 字符串
+
+| 规则 | 指南 |
+|------|------|
+| 优先字节迭代 | ASCII 场景下 `s.bytes()` 优于 `s.chars()` |
+| 使用 `Cow<str>` | 可能修改借用数据时 |
+| 使用 `format!` | 优于 `+` 拼接字符串 |
+| 避免嵌套迭代 | 字符串 `contains()` 是 O(n·m) |
+
+### 错误处理
+
+| 规则 | 指南 |
+|------|------|
+| 使用 `?` 传播 | 不用 `try!()` 宏 |
+| `expect()` 优于 `unwrap()` | 值有保证时 |
+| 不变量用断言 | 函数入口使用 `assert!` |
+
+### 内存
+
+| 规则 | 指南 |
+|------|------|
+| 生命周期命名有意义 | `'src`、`'ctx`，而非仅 `'a` |
+| `RefCell` 用 `try_borrow()` | 避免 panic |
+| 转换使用 shadowing | `let x = x.parse()?` |
+
+### 并发
+
+| 规则 | 指南 |
+|------|------|
+| 明确锁顺序 | 防止死锁 |
+| 原子操作用于基本类型 | `bool` / `usize` 不用 `Mutex` |
+| 谨慎选择内存序 | Relaxed / Acquire / Release / SeqCst |
+
+### 异步
+
+| 规则 | 指南 |
+|------|------|
+| CPU 密集型用同步 | 异步用于 I/O |
+| await 前释放锁 | 使用作用域 guard |
+
+### 宏
+
+| 规则 | 指南 |
+|------|------|
+| 除非必要否则避免 | 优先函数/泛型 |
+| 遵循 Rust 语法 | 宏输入应看起来像 Rust |
+
+### 已弃用 → 推荐替代
+
+| 已弃用 | 推荐 | 起始版本 |
+|--------|------|----------|
+| `lazy_static!` | `std::sync::OnceLock` | 1.70 |
+| `once_cell::Lazy` | `std::sync::LazyLock` | 1.80 |
+| `std::sync::mpsc` | `crossbeam::channel` | - |
+| `std::sync::Mutex` | `parking_lot::Mutex` | - |
+| `failure` / `error-chain` | `thiserror` / `anyhow` | - |
+| `try!()` | `?` operator | 2018 |
+
+### Clippy Lint 映射
+
+| Clippy Lint | 分类 | 修复 |
+|-------------|------|------|
+| `unwrap_used` | 错误 | 使用 `?` 或 `expect()` |
+| `needless_clone` | 性能 | 使用引用 |
+| `await_holding_lock` | 异步 | 在 await 前释放 guard |
+| `linkedlist` | 性能 | 使用 `Vec` / `VecDeque` |
+| `wildcard_imports` | 风格 | 显式导入 |
+| `missing_safety_doc` | 安全 | 添加 `# Safety` 文档 |
+| `undocumented_unsafe_blocks` | 安全 | 添加 `// SAFETY:` |
+| `transmute_ptr_to_ptr` | 安全 | 使用 `pointer::cast()` |
+| `large_stack_arrays` | 内存 | 使用 `Vec` 或 `Box` |
+| `too_many_arguments` | 设计 | 使用结构体参数 |
+
+unsafe 相关 lint 详见 [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md)。
+
+### 基础规范
+
 - `snake_case` 变量/函数；`PascalCase` 类型/trait；`SCREAMING_SNAKE_CASE` 常量
 - 行宽 ≤ 100 字符
 - 库代码用 `?` operator，避免 `unwrap()`（用 `expect` 带语义消息）
@@ -223,7 +327,7 @@ pedantic = "warn"
 unsafe { slice.get_unchecked(index) }
 ```
 
-> 完整规范（P 规则 / G 规则）见 [`skills/coding-guidelines/SKILL.md`](skills/coding-guidelines/SKILL.md)；
+> 完整 500+ 条规则见 <<https://rust-根> SKILL.md 代码风格.github.io/rust-根 SKILL.md 代码风格-zh/>。
 > unsafe 审查规则见 [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md)。
 
 ## 技能索引
@@ -231,7 +335,6 @@ unsafe { slice.get_unchecked(index) }
 ### 核心
 
 - [`rust-learner`](skills/rust-learner/SKILL.md) — 获取最新 Rust / crate 版本
-- [`coding-guidelines`](skills/coding-guidelines/SKILL.md) — 编码规范查询
 - [`unsafe-checker`](skills/unsafe-checker/SKILL.md) — unsafe 代码审查
 
 ### 第一层：语言机制（m01-m07）
@@ -293,6 +396,5 @@ unsafe { slice.get_unchecked(index) }
 | [`router/patterns/negotiation.md`](router/patterns/negotiation.md) | 协商协议补充细节 |
 | [`router/examples/workflow.md`](router/examples/workflow.md) | 路由工作流程示例 |
 | [`router/integrations/os-checker.md`](router/integrations/os-checker.md) | OS-Checker 集成 |
-| [`skills/coding-guidelines/SKILL.md`](skills/coding-guidelines/SKILL.md) | 编码规范（P / G 规则）|
 | [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md) | unsafe 审查规则 |
 | [`README.md`](README.md) | 人类文档（安装、特性、命令）|

@@ -179,14 +179,14 @@
 | `serde 文档` | rust-learner |
 | `crate info` | rust-learner |
 
-## 代码风格（coding-guidelines）
+## 代码风格（根 SKILL.md 代码风格）
 
 | 查询 | 期望的 Skill |
 |-------|----------------|
-| `Rust 命名规范` | coding-guidelines |
-| `clippy warning` | coding-guidelines |
-| `rustfmt 配置` | coding-guidelines |
-| `P.NAM.01` | coding-guidelines |
+| `Rust 命名规范` | 根 SKILL.md 代码风格 |
+| `clippy warning` | 根 SKILL.md 代码风格 |
+| `rustfmt 配置` | 根 SKILL.md 代码风格 |
+| `P.NAM.01` | 根 SKILL.md 代码风格 |
 
 ## 路由器（根 SKILL.md 路由）
 
@@ -233,7 +233,7 @@ claude -p "常见 Rust 错误"                # m15-anti-pattern
 # 核心 Skill
 claude -p "unsafe 代码怎么写"             # unsafe-checker
 claude -p "tokio 最新版本"                # rust-learner
-claude -p "Rust 命名规范"                 # coding-guidelines
+claude -p "Rust 命名规范"                 # 根 SKILL.md 代码风格
 
 # Layer 3：领域
 claude -p "axum web server"              # domain-web
