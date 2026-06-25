@@ -52,20 +52,20 @@ rm -rf ~/.claude/skills/{crate_name}*
 使用 AskUserQuestion 询问要移除哪些 crate：
 
 ```
-Which crate skills do you want to remove?
+你想移除哪些 crate skill？
 - tokio
 - serde
 - axum
-- All of the above
+- 全部移除
 ```
 
-### 3. Confirm Deletion
+### 3. 确认删除
 
-Before removing, confirm with user:
+确认后通知用户：
 
 ```
-This will remove skills for: tokio, serde
-Continue? (yes/no)
+将移除以下 skill：tokio, serde
+继续？（是/否）
 ```
 
 ### 4. Report Results

@@ -36,9 +36,9 @@ For each skill, extract referenced files from:
 ```markdown
 ## Documentation
 
-Refer to the local files for detailed documentation:
-- `./references/file1.md` - Description
-- `./references/file2.md` - Description
+请参考以下本地文件获取详细文档：
+- `./references/file1.md` - 说明
+- `./references/file2.md` - 说明
 ```
 
 同时检查“Expected reference files”章节（如果存在）。
@@ -96,9 +96,9 @@ Save as markdown."
 ```markdown
 ## Documentation
 
-Refer to the local files for detailed documentation:
-- `./references/sync.md` - Synchronization primitives
-- `./references/time.md` - Time utilities
+请参考以下本地文件获取详细文档：
+- `./references/sync.md` - 同步原语
+- `./references/time.md` - 时间工具
 ```
 
 ---

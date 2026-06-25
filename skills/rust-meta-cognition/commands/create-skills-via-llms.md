@@ -43,9 +43,9 @@ description: |
 >
 > Check for updates: https://crates.io/crates/{crate_name}
 
-You are an expert at the Rust `{crate_name}` crate. Help users by:
-- **Writing code**: Generate Rust code following the patterns below
-- **Answering questions**: Explain concepts, troubleshoot issues, reference documentation
+你是 Rust `{crate_name}` crate 的专家。通过以下方式帮助用户：
+- **编写代码**：按照下面的模式生成 Rust 代码
+- **回答问题**：解释概念、排查问题、引用文档
 
 ## Documentation
 

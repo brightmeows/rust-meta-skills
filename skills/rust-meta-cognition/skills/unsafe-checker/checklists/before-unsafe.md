@@ -97,23 +97,23 @@
 ```
 Need unsafe?
      |
-     v
-Can you use safe Rust? --Yes--> Don't use unsafe
-     |
-     No
-     v
-Can you use existing safe abstraction? --Yes--> Use it (std, crates)
-     |
-     No
-     v
-Document all invariants
-     |
-     v
-Add SAFETY comments
-     |
-     v
-Write the unsafe code
-     |
-     v
-Test with Miri
+      v
+能否使用安全的 Rust？ --是--> 不使用 unsafe
+      |
+      否
+      v
+能否使用现有的安全抽象？ --是--> 使用它（std、crate）
+      |
+      否
+      v
+记录所有不变量
+      |
+      v
+添加 SAFETY 注释
+      |
+      v
+编写 unsafe 代码
+      |
+      v
+使用 Miri 测试
 ```

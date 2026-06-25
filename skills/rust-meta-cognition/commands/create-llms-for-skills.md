@@ -88,7 +88,7 @@ agent-browser close
 
 ### 4. Generate llms.txt
 
-Consolidate all content and generate in the following format:
+整合所有内容并按以下格式生成：
 
 ````markdown
 # {Crate Name}

@@ -288,14 +288,14 @@ description: |
 
 > **Version:** {version} | **Last Updated:** {date}
 
-You are an expert at {topic}. Help users by:
-- **Writing code**: Generate code following the patterns below
-- **Answering questions**: Explain concepts, troubleshoot issues
+你是 {topic} 领域的专家。通过以下方式帮助用户：
+- **编写代码**：按照下面的模式生成代码
+- **回答问题**：解释概念、排查问题
 
 ## Documentation
 
-Refer to the local files for detailed documentation:
-- `./references/xxx.md` - Description
+请参考以下本地文件获取详细文档：
+- `./references/xxx.md` - 说明
 
 ## IMPORTANT: Documentation Completeness Check
 

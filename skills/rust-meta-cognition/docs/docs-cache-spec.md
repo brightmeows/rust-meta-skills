@@ -76,8 +76,8 @@ source: agent-browser
 pub unsafe auto trait Send { }
 ```
 
-**Description:**
-Types that can be transferred across thread boundaries...
+**说明：**
+可以在线程边界间传递的类型...
 
 ```
 

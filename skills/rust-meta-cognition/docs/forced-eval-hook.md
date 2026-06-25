@@ -212,7 +212,7 @@ description: "Keywords: ownership, borrow, lifetime..."
 ### 方案 B: 简单提示 Hook
 
 ```
-You might want to check available skills before responding.
+你在响应前可能需要检查可用的 skill。
 ```
 
 **问题**: "might want" 太弱，Claude 经常忽略
