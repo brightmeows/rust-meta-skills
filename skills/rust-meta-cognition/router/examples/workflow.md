@@ -5,81 +5,81 @@
 ## 示例 1：错误码 + 领域上下文
 
 ```
-User: "Why am I getting E0382 in my trading system?"
+用户：“为什么我的交易系统出现 E0382？”
 
-Analysis:
-1. Entry: Layer 1 (E0382 = ownership/move error)
-2. Load: m01-ownership skill
-3. Context: "trading system" → domain-fintech
+分析：
+1. 入口：Layer 1（E0382 = 所有权/移动错误）
+2. 加载：m01-ownership skill
+3. 上下文：“trading system”→ domain-fintech
 
-Trace UP ↑:
-- E0382 in trading context
-- Check domain-fintech: "immutable audit records"
-- Finding: Trading data should be shared, not moved
+向上追溯 ↑：
+- 交易上下文中的 E0382
+- 检查 domain-fintech：“不可变的审计记录”
+- 发现：交易数据应该共享，而非移动
 
-Response:
-"E0382 indicates a value was moved when still needed.
-In a trading system (domain-fintech), transaction records
-should be immutable and shareable for audit purposes.
+回答：
+“E0382 表示一个值在被需要时已被移动。
+在交易系统（domain-fintech）中，交易记录
+应为不可变且可共享的，以满足审计要求。
 
-Instead of cloning, consider:
-- Arc<TradeRecord> for shared immutable access
-- This aligns with financial audit requirements
+与其克隆，不如考虑：
+- Arc<TradeRecord> 用于共享不可变访问
+- 这符合金融审计要求
 
-See: m01-ownership (Trace Up section),
-     domain-fintech (Audit Requirements)"
+参见：m01-ownership（向上追溯章节），
+     domain-fintech（审计要求）”
 ```
 
 ## 示例 2：设计问题
 
 ```
-User: "How should I handle user authentication?"
+用户：“应该如何处理用户身份认证？”
 
-1. Entry: Layer 2 (design question)
-2. Trace UP to Layer 3: domain-web constraints
-3. Load: domain-web skill (security, stateless HTTP)
-4. Trace DOWN: m06-error-handling, m07-concurrency
-5. Answer: JWT with proper error types, async handlers
+1. 入口：Layer 2（设计问题）
+2. 向上追溯至 Layer 3：domain-web 约束
+3. 加载：domain-web skill（安全性、无状态 HTTP）
+4. 向下追溯：m06-error-handling, m07-concurrency
+5. 回答：JWT + 恰当的错误类型、异步处理器
 ```
 
 ## 示例 3：对比查询
 
 ```
-User: "Compare tokio and async-std"
+用户：“比较 tokio 和 async-std”
 
-1. Detect: "compare" → Enable negotiation
-2. Load both runtime knowledge sources
-3. Assess confidence for each
-4. Synthesize with disclosed gaps
-5. Answer: Structured comparison table
+1. 检测：“compare”→ 启用协商
+2. 加载两个运行时知识源
+3. 评估各自的置信度
+4. 综合结果并披露差距
+5. 回答：结构化对比表
 ```
 
 ## 示例 4：多层追踪
 
 ```
-User: "My web API reports Rc cannot be sent between threads"
+用户：“我的 Web API 报错 Rc cannot be sent between threads”
 
-1. Entry: Layer 1 (Send/Sync error)
-2. Load: m07-concurrency
-3. Detect: "web API" → domain-web
-4. Dual-skill loading:
-   - m07: Explain Send/Sync bounds
-   - domain-web: Web state management patterns
-5. Answer: Use Arc instead of Rc, or move to thread-local
+1. 入口：Layer 1（Send/Sync 错误）
+2. 加载：m07-concurrency
+3. 检测：“web API”→ domain-web
+4. 双重 skill 加载：
+   - m07：解释 Send/Sync 约束
+   - domain-web：Web 状态管理模式
+5. 回答：使用 Arc 代替 Rc，或移到线程本地
 ```
 
 ## 示例 5：意图分析请求
 
 ```
-User: "Analyze this question: How do I share state in actix-web?"
+用户：“分析这个问题：如何在 actix-web 中共享状态？”
 
-Analysis Steps:
-1. Extract Keywords: share, state, actix-web
-2. Identify Entry Layer: Layer 1 (sharing = concurrency) + Layer 3 (actix-web = web)
-3. Map to Skills: m07-concurrency, domain-web
-4. Report:
-   - Layer 1: Concurrency (state sharing mechanisms)
-   - Layer 3: Web domain (HTTP handler patterns)
-   - Suggested trace: L1 → L3
-5. Invoke: m07-concurrency first, then domain-web
+分析步骤：
+1. 提取关键词：share, state, actix-web
+2. 识别入口层级：Layer 1（共享 = 并发）+ Layer 3（actix-web = Web）
+3. 映射到 Skill：m07-concurrency, domain-web
+4. 报告：
+   - Layer 1：并发（状态共享机制）
+   - Layer 3：Web 领域（HTTP 处理器模式）
+   - 建议追溯路径：L1 → L3
+5. 调用：先 m07-concurrency，后 domain-web
 ```
