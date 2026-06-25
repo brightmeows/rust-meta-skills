@@ -17,7 +17,7 @@ argument-hint: [crate_name] [--check-only] [--remove-invalid]
 
 ## 说明
 
-### 1. Scan Skills Directory
+### 1. 扫描 Skills 目录
 
 ```bash
 # If crate_name provided
@@ -29,7 +29,7 @@ for dir in ~/.claude/skills/*/; do
 done
 ```
 
-### 2. Parse SKILL.md for References
+### 2. 解析 SKILL.md 中的引用
 
 For each skill, extract referenced files from:
 
@@ -43,7 +43,7 @@ Refer to the local files for detailed documentation:
 
 同时检查“Expected reference files”章节（如果存在）。
 
-### 3. Check File Existence
+### 3. 检查文件是否存在
 
 For each referenced file:
 
@@ -53,9 +53,9 @@ if [ ! -f "{skill_dir}/references/{filename}" ]; then
 fi
 ```
 
-### 4. Report Status
+### 4. 报告状态
 
-Output format:
+输出格式：
 
 ```
 === {crate_name} ===
@@ -69,13 +69,13 @@ references/:
 Action needed: 2 files missing
 ```
 
-### 5. Fix Missing Files
+### 5. 修复缺失文件
 
-**If --check-only**: Stop here, only report.
+**如果指定了 --check-only**：仅报告，不修复。
 
-**If --remove-invalid**: Update SKILL.md to remove invalid references.
+**如果指定了 --remove-invalid**：更新 SKILL.md，移除对不存在文件的引用。
 
-**Otherwise (default)**: Generate missing reference files using agent-browser:
+**否则（默认行为）**：使用 agent-browser 生成缺失的引用文件：
 
 ```bash
 # For each missing file
@@ -89,9 +89,9 @@ Save as markdown."
 # Save to references/{filename}
 ```
 
-### 6. Update SKILL.md
+### 6. 更新 SKILL.md
 
-After fixing, ensure SKILL.md Documentation section matches actual files:
+修复后，确保 SKILL.md 的 Documentation 章节与实际文件一致：
 
 ```markdown
 ## Documentation
@@ -163,9 +163,9 @@ Run `/fix-skill-docs tokio` to fix missing files.
 
 ---
 
-## Integration
+## 集成
 
-This command complements the skill creation workflow:
+此命令用于补充 skill 创建工作流：
 
 1. `/sync-crate-skills` - Create initial skills
 2. `/fix-skill-docs` - Verify and fix completeness
