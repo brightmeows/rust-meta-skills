@@ -1,6 +1,6 @@
 # 规则模板
 
-Use this template for all unsafe-checker rules.
+此模板用于所有 unsafe-checker 规则。
 
 ---
 
@@ -17,38 +17,38 @@ clippy: <clippy_lint_name> (if applicable)
 
 ## 概要
 
-One-sentence description of what this rule requires.
+一句话描述此规则的要求。
 
 ## 理由
 
-Why this rule matters for safety/soundness.
+为什么此规则对安全性/健全性重要。
 
 ## 错误示例
 
 ```rust
-// DON'T: Description of the anti-pattern
-<code that violates the rule>
+// DON'T：反模式说明
+<违反规则的代码>
 ```
 
 ## 正确示例
 
 ```rust
-// DO: Description of the correct pattern
-<code that follows the rule>
+// DO：正确模式说明
+<遵循规则的代码>
 ```
 
 ## 常见违反模式
 
-1. Violation pattern 1
-2. Violation pattern 2
+1. 违反模式 1
+2. 违反模式 2
 
 ## 检查清单
 
-- [ ] Check item 1
-- [ ] Check item 2
+- [ ] 检查项 1
+- [ ] 检查项 2
 
 ## 相关规则
 
-- `{other-rule-id}`: Brief description
+- `{other-rule-id}`：简要说明
 
 ```
