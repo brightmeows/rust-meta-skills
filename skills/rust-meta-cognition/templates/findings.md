@@ -16,10 +16,10 @@
 
 <!-- Constraints discovered from domain-* skills or domain analysis -->
 
-| Constraint | Source | Implication |
+| 约束 | 来源 | 影响 |
 |------------|--------|-------------|
-| <!-- constraint --> | <!-- domain-* skill or analysis --> | <!-- what this means for design --> |
-| <!-- constraint --> | <!-- domain-* skill or analysis --> | <!-- what this means for design --> |
+| <!-- 约束 --> | <!-- domain-* skill 或分析 --> | <!-- 这对设计意味着什么 --> |
+| <!-- 约束 --> | <!-- domain-* skill 或分析 --> | <!-- 这对设计意味着什么 --> |
 
 ### 已识别的领域规则
 
@@ -33,30 +33,30 @@
 
 ### 考虑的模式
 
-| Pattern | Appropriate? | Reason |
+| 模式 | 是否合适 | 理由 |
 |---------|--------------|--------|
-| <!-- pattern name --> | Yes / No / Maybe | <!-- why --> |
-| <!-- pattern name --> | Yes / No / Maybe | <!-- why --> |
-| <!-- pattern name --> | Yes / No / Maybe | <!-- why --> |
+| <!-- 模式名称 --> | 是 / 否 / 可能 | <!-- 理由 --> |
+| <!-- 模式名称 --> | 是 / 否 / 可能 | <!-- 理由 --> |
+| <!-- 模式名称 --> | 是 / 否 / 可能 | <!-- 理由 --> |
 
 ### 选定的模式
 
-- **Pattern**: <!-- chosen pattern -->
-- **Skill Source**: <!-- m09-m15 -->
-- **Rationale**: <!-- why this pattern fits the constraints -->
+- **模式**：<!-- 选定的模式 -->
+- **Skill 来源**：<!-- m09-m15 -->
+- **理由**：<!-- 为什么此模式符合约束 -->
 
 ---
 
 ## Layer 1：实现细节
 
-### Rust Mechanisms Involved
+### 涉及的 Rust 机制
 
-| Mechanism | How It Applies | Skill Reference |
+| 机制 | 如何应用 | Skill 参考 |
 |-----------|----------------|-----------------|
-| <!-- mechanism --> | <!-- application --> | <!-- m01-m07 --> |
-| <!-- mechanism --> | <!-- application --> | <!-- m01-m07 --> |
+| <!-- 机制 --> | <!-- 应用方式 --> | <!-- m01-m07 --> |
+| <!-- 机制 --> | <!-- 应用方式 --> | <!-- m01-m07 --> |
 
-### Key Code Patterns
+### 关键代码模式
 
 ```rust
 // Pattern 1: [description]
@@ -72,48 +72,48 @@
 
 ### 已查阅的 Skill
 
-| Skill | Section | Key Takeaway |
+| Skill | 章节 | 关键要点 |
 |-------|---------|--------------|
-| <!-- skill --> | <!-- section --> | <!-- takeaway --> |
-| <!-- skill --> | <!-- section --> | <!-- takeaway --> |
+| <!-- skill --> | <!-- 章节 --> | <!-- 要点 --> |
+| <!-- skill --> | <!-- 章节 --> | <!-- 要点 --> |
 
 ### 外部引用
 
-| Source | Link/Location | Relevant Info |
+| 来源 | 链接/位置 | 相关信息 |
 |--------|---------------|---------------|
-| <!-- source --> | <!-- link --> | <!-- info --> |
-| <!-- source --> | <!-- link --> | <!-- info --> |
+| <!-- 来源 --> | <!-- 链接 --> | <!-- 信息 --> |
+| <!-- 来源 --> | <!-- 链接 --> | <!-- 信息 --> |
 
 ---
 
 ## 已识别的权衡
 
-### Option A: <!-- name -->
+### 选项 A：<!-- 名称 -->
 
-| Aspect | Evaluation |
+| 方面 | 评价 |
 |--------|------------|
-| **Pros** | <!-- benefits --> |
-| **Cons** | <!-- drawbacks --> |
-| **Fits Domain?** | <!-- yes/no + why --> |
-| **Complexity** | <!-- low/medium/high --> |
+| **优点** | <!-- 好处 --> |
+| **缺点** | <!-- 弊端 --> |
+| **符合领域？** | <!-- 是/否 + 理由 --> |
+| **复杂度** | <!-- 低/中/高 --> |
 
-### Option B: <!-- name -->
+### 选项 B：<!-- 名称 -->
 
-| Aspect | Evaluation |
+| 方面 | 评价 |
 |--------|------------|
-| **Pros** | <!-- benefits --> |
-| **Cons** | <!-- drawbacks --> |
-| **Fits Domain?** | <!-- yes/no + why --> |
-| **Complexity** | <!-- low/medium/high --> |
+| **优点** | <!-- 好处 --> |
+| **缺点** | <!-- 弊端 --> |
+| **符合领域？** | <!-- 是/否 + 理由 --> |
+| **复杂度** | <!-- 低/中/高 --> |
 
-### Option C: <!-- name -->
+### 选项 C：<!-- 名称 -->
 
-| Aspect | Evaluation |
+| 方面 | 评价 |
 |--------|------------|
-| **Pros** | <!-- benefits --> |
-| **Cons** | <!-- drawbacks --> |
-| **Fits Domain?** | <!-- yes/no + why --> |
-| **Complexity** | <!-- low/medium/high --> |
+| **优点** | <!-- 好处 --> |
+| **缺点** | <!-- 弊端 --> |
+| **符合领域？** | <!-- 是/否 + 理由 --> |
+| **复杂度** | <!-- 低/中/高 --> |
 
 ---
 
@@ -138,9 +138,9 @@
 
 ## 开放问题
 
-- [ ] <!-- Question 1 -->
-- [ ] <!-- Question 2 -->
-- [ ] <!-- Question 3 -->
+- [ ] <!-- 问题 1 -->
+- [ ] <!-- 问题 2 -->
+- [ ] <!-- 问题 3 -->
 
 ---
 
