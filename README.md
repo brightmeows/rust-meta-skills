@@ -32,7 +32,7 @@ npx skills add https://codeberg.org/brightmeows/rust-meta-skills
 安装 main 分支最新版。锁定到指定 release tag：
 
 ```bash
-npx skills add https://codeberg.org/brightmeows/rust-meta-skills#v0.1.0
+npx skills add https://codeberg.org/brightmeows/rust-meta-skills#v0.1.1
 ```
 
 > 仓库根目录已配置 `.well-known/skills/index.json`，支持 `npx skills` 自动发现。

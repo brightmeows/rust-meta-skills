@@ -29,6 +29,13 @@
 - 勿启用 `.markdownlint.toml` 中禁用的规则（注释已说明原因）
 - 勿在未更新 digest 的情况下修改并提交 `SKILL.md`
 
+### 发布版本（`bump`）
+
+执行版本 bump 时：
+
+1. 更新 `README.md` 中 `npx skills add` 链接的 `#v0.1.x` 版本号
+2. 提交变更：`chore(release): bump vX.Y.Z → vA.B.C`
+
 ## 命令
 
 ```bash
