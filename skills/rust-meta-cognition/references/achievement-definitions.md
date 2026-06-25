@@ -28,148 +28,148 @@
 |----|------|------|-------------|-------------|
 | `first_blood` | 初试锋芒 | 🩸 | 修复 1 个 bug | 修复了第一个 bug |
 | `bug_hunter` | Bug 猎人 | 🐛 | 修复 10 个 bug | 逐步精通调试 |
-| `bug_slayer` | Bug Slayer | ⚔️ | Fix 50 bugs | Expert bug fixer |
-| `bug_terminator` | Bug Terminator | 🤖 | Fix 100 bugs | Legendary debugger |
+| `bug_slayer` | Bug 猎杀者 | ⚔️ | 修复 50 个 bug | Bug 修复专家 |
+| `bug_terminator` | Bug 终结者 | 🤖 | 修复 100 个 bug | 传说级调试者 |
 
-**Detection:** Commits/edits containing keywords: `fix`, `bug`, `修复`, `patch`, `resolve`
-
----
-
-## Testing 🧪
-
-| ID | Name | Icon | Requirement | Description |
-|----|------|------|-------------|-------------|
-| `test_curious` | Test Curious | 🧪 | Write 1 test | Wrote your first test |
-| `test_believer` | Test Believer | ✅ | Write 10 tests | Building a safety net |
-| `test_enthusiast` | Test Enthusiast | 🎯 | Write 50 tests | Testing is a habit now |
-| `tdd_master` | TDD Master | 🏆 | Write 100 tests | Master of test-driven development |
-
-**Detection:** Code containing: `#[test]`, `#[tokio::test]`, `assert!`, `assert_eq!`
+**检测条件：** 提交/编辑包含关键词：`fix`, `bug`, `修复`, `patch`, `resolve`
 
 ---
 
-## Consistency 🔥
+## 测试 🧪
 
-| ID | Name | Icon | Requirement | Description |
+| ID | 名称 | 图标 | 要求 | 描述 |
 |----|------|------|-------------|-------------|
-| `getting_started` | Getting Started | 🌱 | 3 day streak | Building momentum |
-| `week_warrior` | Week Warrior | 🔥 | 7 day streak | Full week of coding |
-| `monthly_master` | Monthly Master | 💪 | 30 day streak | Month-long dedication |
-| `unstoppable` | Unstoppable | 🚀 | 100 day streak | Legendary consistency |
+| `test_curious` | 测试好奇者 | 🧪 | 编写 1 个测试 | 编写了第一个测试 |
+| `test_believer` | 测试信徒 | ✅ | 编写 10 个测试 | 构建安全网 |
+| `test_enthusiast` | 测试爱好者 | 🎯 | 编写 50 个测试 | 测试已成为习惯 |
+| `tdd_master` | TDD 大师 | 🏆 | 编写 100 个测试 | TDD 大师 |
 
-**Detection:** Automatic daily tracking when using Claude Code
+**检测条件：** 代码包含：`#[test]`, `#[tokio::test]`, `assert!`, `assert_eq!`
+
+---
+
+## 持续 🔥
+
+| ID | 名称 | 图标 | 要求 | 描述 |
+|----|------|------|-------------|-------------|
+| `getting_started` | 初出茅庐 | 🌱 | 连续 3 天 | 建立势能 |
+| `week_warrior` | 周勇士 | 🔥 | 连续 7 天 | 满周编码 |
+| `monthly_master` | 月度大师 | 💪 | 连续 30 天 | 整月坚持 |
+| `unstoppable` | 势不可挡 | 🚀 | 连续 100 天 | 传说级坚持 |
+
+**检测条件：** 使用 Claude Code 时自动每日追踪
 
 ---
 
 ## Safety 🛡️
 
-| ID | Name | Icon | Requirement | Description |
+| ID | 名称 | 图标 | 要求 | 描述 |
 |----|------|------|-------------|-------------|
-| `safety_first` | Safety First | 🛡️ | 7 days no unsafe | A week of safe Rust |
-| `safe_rustacean` | Safe Rustacean | 🦀 | 30 days no unsafe | Embracing safe Rust |
-| `safety_champion` | Safety Champion | 👑 | 100 days no unsafe | Master of safe code |
+| `safety_first` | 安全第一 | 🛡️ | 7 天未用 unsafe | 安全 Rust 一周 |
+| `safe_rustacean` | 安全 Rustacean | 🦀 | 30 天未用 unsafe | 拥抱安全 Rust |
+| `safety_champion` | 安全冠军 | 👑 | 100 天未用 unsafe | 安全代码大师 |
 
-**Detection:** Absence of `unsafe {` in written code
+**检测条件：** 编写的代码中无 `unsafe {`
 
-**Note:** Using `unsafe` resets the counter to 0
+**注意：** 使用 `unsafe` 会将计数器重置为 0
 
 ---
 
-## Error Resolution 🔧
+## 错误解决 🔧
 
-| ID | Name | Icon | Requirement | Description |
+| ID | 名称 | 图标 | 要求 | 描述 |
 |----|------|------|-------------|-------------|
-| `error_whisperer` | Error Whisperer | 🔧 | Resolve 1 error | Fixed first compiler error |
-| `borrow_checker_friend` | Borrow Checker's Friend | 🤝 | Resolve 25 errors | Making peace with the borrow checker |
-| `compiler_whisperer` | Compiler Whisperer | 🧙 | Resolve 100 errors | The compiler speaks to you |
+| `error_whisperer` | 错误低语者 | 🔧 | 解决 1 个错误 | 修复了第一个编译错误 |
+| `borrow_checker_friend` | 借用检查器之友 | 🤝 | 解决 25 个错误 | 与借用检查器和解 |
+| `compiler_whisperer` | 编译器低语者 | 🧙 | 解决 100 个错误 | 编译器听命于你 |
 
-**Detection:** Questions/prompts containing: `E0XXX`, `error[`, `cannot`, `expected`, `mismatched`
+**检测条件：** 问题/提示包含：`E0XXX`, `error[`, `cannot`, `expected`, `mismatched`
 
 ---
 
 ## Code Review 👀
 
-| ID | Name | Icon | Requirement | Description |
+| ID | 名称 | 图标 | 要求 | 描述 |
 |----|------|------|-------------|-------------|
-| `code_reviewer` | Code Reviewer | 👀 | 1 review | First code review |
-| `quality_guardian` | Quality Guardian | 🛡️ | 10 reviews | Maintaining code quality |
+| `code_reviewer` | 代码审查者 | 👀 | 1 次审查 | 首次代码审查 |
+| `quality_guardian` | 质量守护者 | 🛡️ | 10 次审查 | 维护代码质量 |
 
-**Detection:** Running `cargo clippy`, `cargo fmt`, or using `/rust-review`
+**检测条件：** 运行 `cargo clippy`、`cargo fmt` 或使用 `/rust-review`
 
 ---
 
 ## Documentation 📝
 
-| ID | Name | Icon | Requirement | Description |
+| ID | 名称 | 图标 | 要求 | 描述 |
 |----|------|------|-------------|-------------|
-| `documenter` | Documenter | 📝 | Write 5 doc blocks | Starting to document |
-| `doc_master` | Documentation Master | 📚 | Write 25 doc blocks | Excellent documentation habits |
+| `documenter` | 文档撰写者 | 📝 | 编写 5 个文档块 | 开始记录文档 |
+| `doc_master` | 文档大师 | 📚 | 编写 25 个文档块 | 优秀的文档习惯 |
 
-**Detection:** Code containing `///` or `//!` doc comments (3+ lines per block)
+**检测条件：** 代码包含 `///` 或 `//!` 文档注释（每块 3 行以上）
 
 ---
 
 ## Refactoring 🧹
 
-| ID | Name | Icon | Requirement | Description |
+| ID | 名称 | 图标 | 要求 | 描述 |
 |----|------|------|-------------|-------------|
-| `code_cleaner` | Code Cleaner | 🧹 | 5 refactors | Improving code quality |
-| `architect` | Architect | 🏛️ | 25 refactors | Master of code structure |
+| `code_cleaner` | 代码清洁者 | 🧹 | 5 次重构 | 改进代码质量 |
+| `architect` | 架构师 | 🏛️ | 25 次重构 | 代码结构大师 |
 
-**Detection:** Commits/edits containing: `refactor`, `重构`, `clean`, `extract`, `rename`
+**检测条件：** 提交/编辑包含：`refactor`, `重构`, `clean`, `extract`, `rename`
 
 ---
 
 ## Learning 🎓
 
-| ID | Name | Icon | Requirement | Description |
+| ID | 名称 | 图标 | 要求 | 描述 |
 |----|------|------|-------------|-------------|
-| `curious_crab` | Curious Crab | ❓ | Ask 10 questions | Curious learner |
-| `knowledge_seeker` | Knowledge Seeker | 🎓 | Ask 50 questions | Dedicated to learning |
-| `rust_scholar` | Rust Scholar | 🎖️ | Ask 100 questions | Deep Rust knowledge |
+| `curious_crab` | 好奇之蟹 | ❓ | 提出 10 个问题 | 好奇的学习者 |
+| `knowledge_seeker` | 求知者 | 🎓 | 提出 50 个问题 | 致力于学习 |
+| `rust_scholar` | Rust 学者 | 🎖️ | 提出 100 个问题 | 深厚的 Rust 知识 |
 
-**Detection:** Questions containing Rust-related keywords: `rust`, `cargo`, `借用`, `所有权`, `lifetime`, `trait`, `async`, `tokio`
+**检测条件：** 问题包含 Rust 相关关键词：`rust`, `cargo`, `借用`, `所有权`, `lifetime`, `trait`, `async`, `tokio`
 
 ---
 
 ## Sessions 📅
 
-| ID | Name | Icon | Requirement | Description |
+| ID | 名称 | 图标 | 要求 | 描述 |
 |----|------|------|-------------|-------------|
-| `hello_rust` | Hello, Rust! | 👋 | 1 session | Welcome to Rust! |
-| `regular` | Regular | 📅 | 50 sessions | Regular coder |
-| `dedicated` | Dedicated | 💎 | 200 sessions | Truly dedicated |
+| `hello_rust` | Hello, Rust! | 👋 | 1 次会话 | 欢迎使用 Rust！ |
+| `regular` | 常客 | 📅 | 50 次会话 | 常规编码者 |
+| `dedicated` | 专注者 | 💎 | 200 次会话 | 真正专注 |
 
-**Detection:** Automatic session tracking
+**检测条件：** 自动会话追踪
 
 ---
 
-## Rarity Tiers
+## 稀有度等级
 
-| Tier | Color | Achievements | % of Users |
+| 等级 | 颜色 | 成就 | 用户占比 |
 |------|-------|--------------|------------|
-| Common | ⬜ White | First milestones (1-10) | ~80% |
-| Uncommon | 🟢 Green | Medium goals (10-50) | ~40% |
-| Rare | 🔵 Blue | High goals (50-100) | ~15% |
-| Epic | 🟣 Purple | Very high (100+) | ~5% |
-| Legendary | 🟡 Gold | Extreme (100+ days) | ~1% |
+| 普通 | ⬜ 白色 | 初始里程碑（1-10） | ~80% |
+| 罕见 | 🟢 绿色 | 中级目标（10-50） | ~40% |
+| 稀有 | 🔵 蓝色 | 高级目标（50-100） | ~15% |
+| 史诗 | 🟣 紫色 | 极高（100+） | ~5% |
+| 传说 | 🟡 金色 | 极限（100+ 天） | ~1% |
 
 ---
 
-## Progress Calculation
+## 进度计算
 
 ```
-Progress % = (current_value / target_value) * 100
+进度 % = (当前值 / 目标值) * 100
 
-Status:
-- ✅ Unlocked: 100%
-- ⬜ In Progress: >= 50%
-- 🔒 Locked: < 50%
+状态：
+- ✅ 已解锁：100%
+- ⬜ 进行中：>= 50%
+- 🔒 未解锁：< 50%
 ```
 
 ---
 
-## Data Schema
+## 数据结构
 
 ### stats.json
 
@@ -209,19 +209,19 @@ Status:
 
 ---
 
-## Future Achievement Ideas
+## 未来成就想法
 
-| ID | Name | Requirement | Notes |
+| ID | 名称 | 要求 | 备注 |
 |----|------|-------------|-------|
-| `night_owl` | Night Owl | Code after midnight 10 times | Time-based |
-| `early_bird` | Early Bird | Code before 7am 10 times | Time-based |
-| `weekend_warrior` | Weekend Warrior | Code 10 weekends | Time-based |
-| `polyglot` | Polyglot | Use 5 different crates | Ecosystem |
-| `open_source` | Open Source Contributor | Contribute to OSS | GitHub integration |
-| `zero_warnings` | Zero Warnings | Clean clippy 10 times | Quality |
-| `macro_master` | Macro Master | Write 5 macros | Advanced |
-| `async_expert` | Async Expert | 50 async functions | Specialization |
-| `performance_guru` | Performance Guru | 10 optimization PRs | Specialization |
+| `night_owl` | 夜猫子 | 在午夜后编码 10 次 | 基于时间 |
+| `early_bird` | 早鸟 | 在早上 7 点前编码 10 次 | 基于时间 |
+| `weekend_warrior` | 周末战士 | 编码 10 个周末 | 基于时间 |
+| `polyglot` | 多语言者 | 使用 5 个不同的 crate | 生态系统 |
+| `open_source` | 开源贡献者 | 贡献开源项目 | GitHub 集成 |
+| `zero_warnings` | 零警告 | 无警告运行 clippy 10 次 | 质量 |
+| `macro_master` | 宏大师 | 编写 5 个宏 | 高级 |
+| `async_expert` | 异步专家 | 50 个异步函数 | 专精 |
+| `performance_guru` | 性能大师 | 10 个优化 PR | 专精 |
 
 ---
 
