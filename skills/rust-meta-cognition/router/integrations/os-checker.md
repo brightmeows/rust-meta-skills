@@ -2,7 +2,7 @@
 
 > 代码审查和安全审计工具集成
 
-## Available Commands
+## 可用命令
 
 | Use Case | Command | Tools |
 |----------|---------|-------|
@@ -12,7 +12,7 @@
 | Concurrency audit | `/audit concurrency` | lockbud |
 | Full audit | `/audit full` | all os-checker tools |
 
-## When to Suggest OS-Checker
+## 何时建议使用 OS-Checker
 
 | User Intent | Suggest |
 |-------------|---------|
@@ -22,33 +22,33 @@
 | Deadlock/race concerns | `/audit concurrency` |
 | Pre-release check | `/audit full` |
 
-## Tool Descriptions
+## 工具说明
 
 ### clippy
 
-Standard Rust linter for code style and common mistakes.
+Rust 标准 linter，检查代码风格和常见错误。
 
 ### cargo audit
 
-Security vulnerability scanner for dependencies.
+依赖项安全漏洞扫描器。
 
 ### geiger
 
-Counts unsafe code usage in dependencies.
+统计依赖项中 unsafe 代码的使用情况。
 
 ### miri
 
-Interprets MIR to detect undefined behavior.
+解释 MIR 以检测未定义行为。
 
 ### rudra
 
-Memory safety bug detector.
+内存安全缺陷检测器。
 
 ### lockbud
 
-Deadlock and concurrency bug detector.
+死锁和并发缺陷检测器。
 
-## Integration Flow
+## 集成流程
 
 ```
 User: "Review my unsafe code"
