@@ -112,7 +112,7 @@ Bash("agent-browser close")
 3. ✅ 互动指标（点赞数、评论数）
 4. ✅ 发布日期/时间
 
-Display the report in markdown format:
+以 Markdown 格式显示报告：
 
 ```markdown
 # 🤖 AI {Time_Range} Report
@@ -300,7 +300,7 @@ mkdir -p "$save_dir"
 filename="${save_dir}/$(date +%Y%m%d)-ai-${time_range}.md"
 ```
 
-**Use the Write tool to save the report:**
+**使用 Write 工具保存报告：**
 
 ```
 Write("{save_dir}/{date}-ai-{time_range}.md", "{full_report_markdown}")
