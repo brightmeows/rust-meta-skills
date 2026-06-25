@@ -148,23 +148,27 @@ unsafe { slice.get_unchecked(index) }
 
 ### 第三层：领域约束（domain-*）
 
-- [`domain-fintech`](skills/domain-fintech/SKILL.md)
-- [`domain-web`](skills/domain-web/SKILL.md)
-- [`domain-cli`](skills/domain-cli/SKILL.md)
-- [`domain-embedded`](skills/domain-embedded/SKILL.md)
-- [`domain-cloud-native`](skills/domain-cloud-native/SKILL.md)
-- [`domain-iot`](skills/domain-iot/SKILL.md)
-- [`domain-ml`](skills/domain-ml/SKILL.md)
+| 技能 | 领域关键词 |
+|------|-----------|
+| [domain-fintech](skills/domain-fintech/SKILL.md) | 金融、交易、支付、decimal |
+| [domain-web](skills/domain-web/SKILL.md) | Web API、HTTP、REST、axum、actix |
+| [domain-cli](skills/domain-cli/SKILL.md) | 命令行、clap、terminal |
+| [domain-embedded](skills/domain-embedded/SKILL.md) | 嵌入式、no_std、MCU、firmware |
+| [domain-cloud-native](skills/domain-cloud-native/SKILL.md) | Kubernetes、gRPC、微服务、Docker |
+| [domain-iot](skills/domain-iot/SKILL.md) | 物联网、传感器、MQTT |
+| [domain-ml](skills/domain-ml/SKILL.md) | 机器学习、张量、推理、模型 |
 
 ### 工具与实验
 
-- [`rust-daily`](skills/rust-daily/SKILL.md)
-- [`rust-skill-creator`](skills/rust-skill-creator/SKILL.md)
-- [`core-actionbook`](skills/core-actionbook/SKILL.md)
-- [`core-agent-browser`](skills/core-agent-browser/SKILL.md)
-- [`core-dynamic-skills`](skills/core-dynamic-skills/SKILL.md)
-- [`core-fix-skill-docs`](skills/core-fix-skill-docs/SKILL.md)
-- [`meta-cognition-parallel`](skills/meta-cognition-parallel/SKILL.md)
+| 技能 | 用途 |
+|------|------|
+| [rust-daily](skills/rust-daily/SKILL.md) | Rust 每日 / 每周动态与新闻速览 |
+| [rust-skill-creator](skills/rust-skill-creator/SKILL.md) | 为 crate / 标准库文档创建动态 Skill |
+| [core-actionbook](skills/core-actionbook/SKILL.md) | 浏览器自动化预计算操作手册（MCP） |
+| [core-agent-browser](skills/core-agent-browser/SKILL.md) | 浏览器自动化 CLI 工作流支持 |
+| [core-dynamic-skills](skills/core-dynamic-skills/SKILL.md) | 基于项目依赖动态管理 crate Skill |
+| [core-fix-skill-docs](skills/core-fix-skill-docs/SKILL.md) | 检查并修复动态 Skill 文档引用 |
+| [meta-cognition-parallel](skills/meta-cognition-parallel/SKILL.md) | 三层认知维度并行分析（实验性） |
 
 ## 参考文件索引
 
