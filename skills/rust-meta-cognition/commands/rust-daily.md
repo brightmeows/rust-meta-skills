@@ -137,128 +137,128 @@ Bash("agent-browser close")
 以 Markdown 格式显示报告：
 
 ```markdown
-# 🦀 Rust {Time_Range} Report
+# 🦀 Rust {Time_Range} 报告
 
-**Period:** {start_date} - {end_date} | **Generated:** {now}
-**Sources:** {count} items from {source_count} sources
+**期间：** {start_date} - {end_date} | **生成时间：** {now}
+**来源：** 来自 {source_count} 个来源的 {count} 条内容
 
 ---
 
-## 📊 Quick Stats
+## 📊 快速统计
 
-| Metric | Value |
+| 指标 | 数值 |
 |--------|-------|
-| Total Posts | {count} |
-| Hot Discussions (>50 comments) | {hot_count} |
-| Official Announcements | {official_count} |
-| Top Topic | {top_topic} |
+| 帖子总数 | {count} |
+| 热门讨论（评论 >50） | {hot_count} |
+| 官方公告 | {official_count} |
+| 热门话题 | {top_topic} |
 
 ---
 
-## 🌐 Ecosystem Highlights
+## 🌐 生态亮点
 
 ### Reddit r/rust
 
 #### 1. {Post Title}
-- **Link:** https://reddit.com/r/rust/comments/{id}
-- **Score:** {upvotes} ⬆️ | **Comments:** {comments} 💬 | **Posted:** {time_ago}
-- **Author:** u/{username}
-- **Key Takeaway:** {1-2 sentence summary of why this matters}
-- **Tags:** `{tag1}` `{tag2}`
+- **链接：** https://reddit.com/r/rust/comments/{id}
+- **评分：** {upvotes} ⬆️ | **评论：** {comments} 💬 | **发布时间：** {time_ago}
+- **作者：** u/{username}
+- **要点：** {1-2 句说明为什么重要}
+- **标签：** `{tag1}` `{tag2}`
 
 #### 2. {Post Title}
-- **Link:** {real_url}
-- **Score:** {upvotes} ⬆️ | **Comments:** {comments} 💬 | **Posted:** {time_ago}
-- **Key Takeaway:** {summary}
+- **链接：** {real_url}
+- **评分：** {upvotes} ⬆️ | **评论：** {comments} 💬 | **发布时间：** {time_ago}
+- **要点：** {summary}
 
-{... more posts}
+{...更多帖子}
 
-### This Week in Rust #{issue_number}
-- **Link:** https://this-week-in-rust.org/blog/{date}/this-week-in-rust-{number}/
-- **Published:** {date}
+### 本周 Rust 第 #{issue_number} 期
+- **链接：** https://this-week-in-rust.org/blog/{date}/this-week-in-rust-{number}/
+- **发布时间：** {date}
 
-**Crate of the Week:** [{crate_name}]({crates.io_link})
-> {why it was selected}
+**本周 Crate：** [{crate_name}]({crates.io_link})
+> {入选理由}
 
-**Notable Updates:**
-| Item | Summary | Link |
+**值得关注的更新：**
+| 项目 | 摘要 | 链接 |
 |------|---------|------|
-| {title} | {key_takeaway} | [→]({url}) |
+| {title} | {要点} | [→]({url}) |
 
 ---
 
-## 📢 Official Announcements
+## 📢 官方公告
 
 ### Rust Blog
 
 #### {Post Title}
-- **Link:** https://blog.rust-lang.org/{path}
-- **Published:** {date}
-- **Key Takeaway:** {what this means for Rust developers}
-- **Action Required:** {yes/no - what users should do}
+- **链接：** https://blog.rust-lang.org/{path}
+- **发布时间：** {date}
+- **要点：** {这对 Rust 开发者意味着什么}
+- **需要操作：** {是/否 - 用户应该做什么}
 
 ### Inside Rust Blog
 
 #### {Post Title}
-- **Link:** https://blog.rust-lang.org/inside-rust/{path}
-- **Published:** {date}
-- **Key Takeaway:** {summary}
-- **Relevant Teams:** {compiler, lang, libs, etc.}
+- **链接：** https://blog.rust-lang.org/inside-rust/{path}
+- **发布时间：** {date}
+- **要点：** {summary}
+- **相关团队：** {compiler, lang, libs 等}
 
 ---
 
-## 🏛️ Rust Foundation
+## 🏛️ Rust 基金会
 
-### News & Announcements
+### 新闻与公告
 
 #### {Title}
-- **Link:** https://foundation.rust-lang.org/news/{path}
-- **Published:** {date}
-- **Key Takeaway:** {impact on Rust ecosystem}
+- **链接：** https://foundation.rust-lang.org/news/{path}
+- **发布时间：** {date}
+- **要点：** {对 Rust 生态的影响}
 
-### Upcoming Events
+### 即将举行的活动
 
-| Date | Event | Location | Link | Why Attend |
+| 日期 | 活动 | 地点 | 链接 | 参加理由 |
 |------|-------|----------|------|------------|
-| {date} | {name} | {location} | [Register]({url}) | {brief reason} |
+| {date} | {name} | {location} | [注册]({url}) | {简要理由} |
 
 ---
 
-## 🔥 Trending Topics
+## 🔥 热门话题
 
-Based on engagement and discussion volume:
+基于参与度和讨论量：
 
-1. **{Topic 1}** - {brief explanation}
-   - Related: [{post1}]({url}), [{post2}]({url})
+1. **{Topic 1}** - {简要说明}
+   - 相关：[{post1}]({url})、[{post2}]({url})
 
-2. **{Topic 2}** - {brief explanation}
-   - Related: [{post1}]({url})
-
----
-
-## 💡 AI Analysis
-
-**Key Themes This {Period}:**
-- {theme 1 with context}
-- {theme 2 with context}
-
-**What to Watch:**
-- {upcoming event or trend to monitor}
-
-**Community Sentiment:** {positive/neutral/mixed} - {brief explanation}
+2. **{Topic 2}** - {简要说明}
+   - 相关：[{post1}]({url})
 
 ---
 
-## 📚 Further Reading
+## 💡 AI 分析
 
-| Topic | Resource | Type |
+**本期 {Period} 关键主题：**
+- {含上下文的主题 1}
+- {含上下文的主题 2}
+
+**值得关注：**
+- {需要关注的事件或趋势}
+
+**社区情绪：** {积极/中性/复杂} - {简要说明}
+
+---
+
+## 📚 延伸阅读
+
+| 主题 | 资源 | 类型 |
 |-------|----------|------|
-| {topic} | [{title}]({url}) | Blog/Video/Doc |
+| {topic} | [{title}]({url}) | 博客/视频/文档 |
 
 ---
 
-📊 **Stats:** {total_posts} posts | {total_comments} comments | {sources_count} sources
-🔄 **Refresh:** `/rust-daily` | 💾 **Save:** `/rust-daily --save`
+📊 **统计：** {total_posts} 篇帖子 | {total_comments} 条评论 | {sources_count} 个来源
+🔄 **刷新：** `/rust-daily` | 💾 **保存：** `/rust-daily --save`
 ```
 
 ### 5. 保存报告（如果指定了 --save）
