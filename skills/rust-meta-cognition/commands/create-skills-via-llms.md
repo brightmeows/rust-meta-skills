@@ -22,9 +22,9 @@ argument-hint: <crate_name> <llms_path> [version] [description]
 
 ---
 
-## Skill Quality Standards
+## Skill 质量标准
 
-Each skill must include the following structure:
+每个 skill 必须包含以下结构：
 
 ### SKILL.md Structure
 
@@ -92,14 +92,14 @@ Refer to the local files for detailed documentation:
 3. ...
 ````
 
-### References Directory
+### References 目录
 
-Each skill's `references/` directory contains detailed documentation:
+每个技能的 `references/` 目录包含详细文档：
 
-- API reference documentation
-- Configuration options details
-- Advanced usage examples
-- Feature-specific configurations
+- API 参考文档
+- 配置选项详情
+- 高级用法示例
+- 特性特定配置
 
 ---
 
