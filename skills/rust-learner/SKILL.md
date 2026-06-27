@@ -26,17 +26,17 @@ allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 
 | 查询类型 | Agent 文件路径 |
 |------------|-----------------|
-| Crate 信息/版本 | `../../agents/crate-researcher.md` |
-| Rust 版本特性 | `../../agents/rust-changelog.md` |
-| 标准库文档 | `../../agents/std-docs-researcher.md` |
-| 第三方 crate 文档 | `../../agents/docs-researcher.md` |
-| Clippy lint | `../../agents/clippy-researcher.md` |
+| Crate 信息/版本 | `../../rust-meta-cognition/agents/crate-researcher.md` |
+| Rust 版本特性 | `../../rust-meta-cognition/agents/rust-changelog.md` |
+| 标准库文档 | `../../rust-meta-cognition/agents/std-docs-researcher.md` |
+| 第三方 crate 文档 | `../../rust-meta-cognition/agents/docs-researcher.md` |
+| Clippy lint | `../../rust-meta-cognition/agents/clippy-researcher.md` |
 
 ---
 
 ## Agent 模式（插件安装）
 
-**当 agent 文件存在于 `../../agents/` 时：**
+**当 agent 文件存在于 `../../rust-meta-cognition/agents/` 时：**
 
 ### 工作流程
 
@@ -49,11 +49,11 @@ allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 
 | 查询类型 | Agent 文件 | 来源 |
 |------------|------------|--------|
-| Rust 版本特性 | `../../agents/rust-changelog.md` | releases.rs |
-| Crate 信息/版本 | `../../agents/crate-researcher.md` | lib.rs, crates.io |
-| **标准库文档**（Send、Sync、Arc 等） | `../../agents/std-docs-researcher.md` | doc.rust-lang.org |
-| 第三方 crate 文档（tokio、serde 等） | `../../agents/docs-researcher.md` | docs.rs |
-| Clippy lints | `../../agents/clippy-researcher.md` | rust-clippy docs |
+| Rust 版本特性 | `../../rust-meta-cognition/agents/rust-changelog.md` | releases.rs |
+| Crate 信息/版本 | `../../rust-meta-cognition/agents/crate-researcher.md` | lib.rs, crates.io |
+| **标准库文档**（Send、Sync、Arc 等） | `../../rust-meta-cognition/agents/std-docs-researcher.md` | doc.rust-lang.org |
+| 第三方 crate 文档（tokio、serde 等） | `../../rust-meta-cognition/agents/docs-researcher.md` | docs.rs |
+| Clippy lints | `../../rust-meta-cognition/agents/clippy-researcher.md` | rust-clippy docs |
 
 ### Agent Mode Examples
 
@@ -63,7 +63,7 @@ allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 User: "tokio latest version"
 
 Claude：
-1. 读取 ../../agents/crate-researcher.md
+1. 读取 ../../rust-meta-cognition/agents/crate-researcher.md
 2. Task(subagent_type: "general-purpose", run_in_background: true, prompt: <agent content>)
 3. 等待 agent 完成
 4. 总结结果
@@ -75,7 +75,7 @@ Claude：
 User: "What's new in Rust 1.85?"
 
 Claude：
-1. 读取 ../../agents/rust-changelog.md
+1. 读取 ../../rust-meta-cognition/agents/rust-changelog.md
 2. Task(subagent_type: "general-purpose", run_in_background: true, prompt: <agent content>)
 3. 等待 agent 完成
 4. 总结特性

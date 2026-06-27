@@ -30,18 +30,18 @@ agent: Explore
 
 **关键：先检查 agent 文件可用性以确定执行模式。**
 
-尝试读取：`../../agents/rust-daily-reporter.md`
+尝试读取：`../../rust-meta-cognition/agents/rust-daily-reporter.md`
 
 ---
 
 ## Agent 模式（插件安装）
 
-**当 `../../agents/rust-daily-reporter.md` 存在时：**
+**当 `../../rust-meta-cognition/agents/rust-daily-reporter.md` 存在时：**
 
 ### 工作流
 
 ```
-1. 读取：../../agents/rust-daily-reporter.md
+1. 读取：../../rust-meta-cognition/agents/rust-daily-reporter.md
 2. Task(subagent_type: "general-purpose", run_in_background: false, prompt: <agent content>)
 3. 等待结果
 4. 格式化并呈现给用户

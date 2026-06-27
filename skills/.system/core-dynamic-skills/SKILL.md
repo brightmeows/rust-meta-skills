@@ -44,7 +44,7 @@ agent: general-purpose
 
 **关键：检查 agent 和命令基础设施是否可用。**
 
-尝试读取：`../../agents/` 目录
+尝试读取：`../../rust-meta-cognition/agents/` 目录
 检查 `/create-llms-for-skills` 和 `/create-skills-via-llms` 命令是否可用。
 
 ---

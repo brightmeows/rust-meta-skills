@@ -13,14 +13,14 @@
       "type": "skill-md",
       "description": "Rust 版本查询与 crate 信息获取。需要查询最新 Rust 版本、crate 文档或 API 参考时使用。 Keywords: Rust 版本, crate 信息, 文档查询, 最新版本, API 文档, docs.rs, crates.io, edition, cargo add, 新特性, latest version, what's new",
       "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/rust-learner/SKILL.md",
-      "digest": "sha256:6c6ec5c94e0e7269a05423518643c29d75200e54d4e9975bb77d8619a52ad07f"
+      "digest": "sha256:6bf60d1b262485d459d64711b0017d6124d1c5651752d32307c53cd64d7ba1b1"
     },
     {
       "name": "rust-daily",
       "type": "skill-md",
       "description": "Rust 每日/每周动态与新闻速览。需要了解 Rust 社区动态、TWIR 或博客更新时使用。 Keywords: Rust 日报, Rust 周报, Rust 新闻, rust news, rust weekly, TWIR, rust blog, Rust 动态",
       "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/rust-daily/SKILL.md",
-      "digest": "sha256:47d8d380e22bf45b4f55e06ed576ade64c9dcc156e299dbb61df8363c2cbfa9c"
+      "digest": "sha256:8060e15d3eae388d7158a1eb935eace3daa641ec7190f3efa074e01b7213aada"
     },
     {
       "name": "rust-skill-creator",
@@ -90,7 +90,7 @@
       "type": "skill-md",
       "description": "内部：动态 crate 技能管理。仅在 /sync-crate-skills、/clean-crate-skills、 /update-crate-skill 命令调用时使用。",
       "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/.system/core-dynamic-skills/SKILL.md",
-      "digest": "sha256:f76460febd538366df101c33ff862438f027ddd7f572322cf006305a4dd20c60"
+      "digest": "sha256:8b66458e40d5ce728b6399c4a63c4f555fd957df515ca0695927421877f4bb3a"
     },
     {
       "name": "core-fix-skill-docs",
