@@ -1,10 +1,11 @@
 ---
 name: rust-meta-cognition
 description: >-
-  Rust 元认知技能集入口与主路由，通过三层认知模型追溯 Rust 问题根源。
-  CRITICAL: 在 Rust 编译错误、设计权衡、最佳实践比较、代码风格审查或项目默认设置决策时使用。
-  Keywords: Rust 元认知, 编译错误, E0382, E0597, E0277, borrow error,
-  比较, compare, vs, 最佳实践, ownership, borrow, lifetime, async, concurrency
+  Rust 问题路由入口：将编译错误、设计约束或领域需求分派到三层认知模型的对应子技能。
+  CRITICAL: 遇到 Rust 编译错误（E0382/E0597/E0277 等）、设计权衡、最佳实践比较、代码风格审查或项目默认设置时使用。
+  不用于纯 Rust 语法学习或 general 编程概念咨询。
+  Keywords: Rust 路由, 编译错误, 所有权, 借用, 生命周期, E0382, E0597, E0277, E0502, E0499, E0308, E0433,
+  borrow error, 架构方案, 最佳实践, 代码风格, ownership, borrow, lifetime, async, concurrency
 ---
 
 # Rust 元认知技能集
