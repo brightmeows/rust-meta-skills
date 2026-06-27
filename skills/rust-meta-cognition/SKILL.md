@@ -85,6 +85,7 @@ description: >-
 | 类型状态、phantom、newtype | `m05-type-driven` |
 | Result、Error、panic、?、anyhow、thiserror | `m06-error-handling` |
 | Send、Sync、thread、async、channel | `m07-concurrency` |
+| test、测试、assert、单元测试、集成测试 | `m08-testing` |
 | unsafe、FFI、extern、raw pointer、transmute | **`unsafe-checker`** |
 
 ## 第 2 层 Skill（设计选择）
@@ -139,6 +140,7 @@ description: >-
 | API / 文档 / documentation | **`docs-researcher`** | 使用 agent |
 | 代码风格 / 命名 / clippy | **`根 SKILL.md 代码风格`** | 读取 skill |
 | unsafe 代码 / FFI | **`unsafe-checker`** | 读取 skill |
+| 测试 / 测试策略 / 断言 / 快照 | **`m08-testing`** | 读取 skill |
 | 代码审查 | **`os-checker`** | 见 [`router/integrations/os-checker.md`](router/integrations/os-checker.md) |
 
 ## 优先级顺序
@@ -334,7 +336,7 @@ unsafe { slice.get_unchecked(index) }
 - [`rust-learner`](skills/rust-learner/SKILL.md) — 获取最新 Rust / crate 版本
 - [`unsafe-checker`](skills/unsafe-checker/SKILL.md) — unsafe 代码审查
 
-### 第一层：语言机制（m01-m07）
+### 第一层：语言机制（m01-m08）
 
 | 技能 | 核心问题 |
 |------|----------|
@@ -345,6 +347,7 @@ unsafe { slice.get_unchecked(index) }
 | [m05-type-driven](skills/m05-type-driven/SKILL.md) | 类型如何防止非法状态？ |
 | [m06-error-handling](skills/m06-error-handling/SKILL.md) | 预期失败还是程序缺陷？ |
 | [m07-concurrency](skills/m07-concurrency/SKILL.md) | CPU 密集型还是 I/O 密集型？ |
+| [m08-testing](skills/m08-testing/SKILL.md) | 这个行为的正确性如何验证？ |
 
 ### 第二层：设计选择（m09-m15）
 
