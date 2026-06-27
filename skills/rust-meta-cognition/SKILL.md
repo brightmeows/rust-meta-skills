@@ -76,41 +76,41 @@ description: >-
 
 ## 第 1 层 Skill（语言机制）
 
-| 模式 | 路由到 |
-|------|--------|
-| move、borrow、lifetime、E0382、E0597 | `m01-ownership` |
-| Box、Rc、Arc、RefCell、Cell | `m02-resource` |
-| mut、内部可变性、E0499、E0502、E0596 | `m03-mutability` |
-| generic、trait、inline、单态化 | `m04-zero-cost` |
-| 类型状态、phantom、newtype | `m05-type-driven` |
-| Result、Error、panic、?、anyhow、thiserror | `m06-error-handling` |
-| Send、Sync、thread、async、channel | `m07-concurrency` |
-| test、测试、assert、单元测试、集成测试 | `m08-testing` |
-| unsafe、FFI、extern、raw pointer、transmute | **`unsafe-checker`** |
+| 技能 | 核心问题 | 路由模式 |
+|------|----------|---------|
+| [m01-ownership](skills/m01-ownership/SKILL.md) | 谁拥有这份数据？ | move、borrow、lifetime、E0382、E0597 |
+| [m02-resource](skills/m02-resource/SKILL.md) | 哪种所有权模式合适？ | Box、Rc、Arc、RefCell、Cell |
+| [m03-mutability](skills/m03-mutability/SKILL.md) | 为什么必须改变？ | mut、内部可变性、E0499、E0502、E0596 |
+| [m04-zero-cost](skills/m04-zero-cost/SKILL.md) | 编译期还是运行期多态？ | generic、trait、inline、单态化 |
+| [m05-type-driven](skills/m05-type-driven/SKILL.md) | 类型如何防止非法状态？ | 类型状态、phantom、newtype |
+| [m06-error-handling](skills/m06-error-handling/SKILL.md) | 预期失败还是程序缺陷？ | Result、Error、panic、?、anyhow、thiserror |
+| [m07-concurrency](skills/m07-concurrency/SKILL.md) | CPU 密集型还是 I/O 密集型？ | Send、Sync、thread、async、channel |
+| [m08-testing](skills/m08-testing/SKILL.md) | 这个行为的正确性如何验证？ | test、测试、assert、单元测试、集成测试 |
+| **`unsafe-checker`** | unsafe 代码审查 | unsafe、FFI、extern、raw pointer、transmute |
 
 ## 第 2 层 Skill（设计选择）
 
-| 模式 | 路由到 |
-|------|--------|
-| 领域模型、业务逻辑 | `m09-domain` |
-| 性能、优化、基准测试 | `m10-performance` |
-| 集成、互操作、绑定 | `m11-ecosystem` |
-| 资源生命周期、RAII、Drop | `m12-lifecycle` |
-| 领域错误、恢复策略 | `m13-domain-error` |
-| 心智模型、如何思考 | `m14-mental-model` |
-| 反模式、常见错误、陷阱 | `m15-anti-pattern` |
+| 技能 | 核心问题 | 路由模式 |
+|------|----------|---------|
+| [m09-domain](skills/m09-domain/SKILL.md) | 这个概念扮演什么角色？ | 领域模型、业务逻辑 |
+| [m10-performance](skills/m10-performance/SKILL.md) | 瓶颈在哪里？ | 性能、优化、基准测试 |
+| [m11-ecosystem](skills/m11-ecosystem/SKILL.md) | 该用哪个 crate？ | 集成、互操作、绑定 |
+| [m12-lifecycle](skills/m12-lifecycle/SKILL.md) | 何时创建 / 使用 / 清理？ | 资源生命周期、RAII、Drop |
+| [m13-domain-error](skills/m13-domain-error/SKILL.md) | 谁来处理这个错误？ | 领域错误、恢复策略 |
+| [m14-mental-model](skills/m14-mental-model/SKILL.md) | 如何理解这个问题？ | 心智模型、如何思考 |
+| [m15-anti-pattern](skills/m15-anti-pattern/SKILL.md) | 是否隐藏了设计问题？ | 反模式、常见错误、陷阱 |
 
 ## 第 3 层 Skill（领域约束）
 
-| 领域关键词 | 路由到 |
-|-----------|--------|
-| fintech、trading、decimal、currency | `domain-fintech` |
-| ml、tensor、model、inference | `domain-ml` |
-| kubernetes、docker、grpc、microservice | `domain-cloud-native` |
-| embedded、sensor、mqtt、iot | `domain-iot` |
-| web server、HTTP、REST、axum、actix | `domain-web` |
-| CLI、command line、clap、terminal | `domain-cli` |
-| no_std、microcontroller、firmware | `domain-embedded` |
+| 技能 | 用途 | 领域关键词 |
+|------|------|-----------|
+| [domain-fintech](skills/domain-fintech/SKILL.md) | 金融科技设计约束 | fintech、trading、decimal、currency |
+| [domain-web](skills/domain-web/SKILL.md) | Web 服务架构指导 | web server、HTTP、REST、axum、actix |
+| [domain-cli](skills/domain-cli/SKILL.md) | CLI 工具架构指导 | CLI、command line、clap、terminal |
+| [domain-embedded](skills/domain-embedded/SKILL.md) | 嵌入式与 no_std 架构 | no_std、microcontroller、firmware |
+| [domain-cloud-native](skills/domain-cloud-native/SKILL.md) | 云原生设计约束 | kubernetes、docker、grpc、microservice |
+| [domain-iot](skills/domain-iot/SKILL.md) | 物联网设计约束 | embedded、sensor、mqtt、iot |
+| [domain-ml](skills/domain-ml/SKILL.md) | 机器学习设计约束 | ml、tensor、model、inference |
 
 ## 错误码路由
 
@@ -431,50 +431,6 @@ unsafe { slice.get_unchecked(index) }
 
 > 完整 500+ 条规则见 <<https://rust-根> SKILL.md 代码风格.github.io/rust-根 SKILL.md 代码风格-zh/>。
 > unsafe 审查规则见 [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md)。
-
-## 技能索引
-
-### 核心
-
-- [`rust-learner`](skills/rust-learner/SKILL.md) — 获取最新 Rust / crate 版本
-- [`unsafe-checker`](skills/unsafe-checker/SKILL.md) — unsafe 代码审查
-
-### 第一层：语言机制（m01-m08）
-
-| 技能 | 核心问题 |
-|------|----------|
-| [m01-ownership](skills/m01-ownership/SKILL.md) | 谁拥有这份数据？ |
-| [m02-resource](skills/m02-resource/SKILL.md) | 哪种所有权模式合适？ |
-| [m03-mutability](skills/m03-mutability/SKILL.md) | 为什么必须改变？ |
-| [m04-zero-cost](skills/m04-zero-cost/SKILL.md) | 编译期还是运行期多态？ |
-| [m05-type-driven](skills/m05-type-driven/SKILL.md) | 类型如何防止非法状态？ |
-| [m06-error-handling](skills/m06-error-handling/SKILL.md) | 预期失败还是程序缺陷？ |
-| [m07-concurrency](skills/m07-concurrency/SKILL.md) | CPU 密集型还是 I/O 密集型？ |
-| [m08-testing](skills/m08-testing/SKILL.md) | 这个行为的正确性如何验证？ |
-
-### 第二层：设计选择（m09-m15）
-
-| 技能 | 核心问题 |
-|------|----------|
-| [m09-domain](skills/m09-domain/SKILL.md) | 这个概念扮演什么角色？ |
-| [m10-performance](skills/m10-performance/SKILL.md) | 瓶颈在哪里？ |
-| [m11-ecosystem](skills/m11-ecosystem/SKILL.md) | 该用哪个 crate？ |
-| [m12-lifecycle](skills/m12-lifecycle/SKILL.md) | 何时创建 / 使用 / 清理？ |
-| [m13-domain-error](skills/m13-domain-error/SKILL.md) | 谁来处理这个错误？ |
-| [m14-mental-model](skills/m14-mental-model/SKILL.md) | 如何理解这个问题？ |
-| [m15-anti-pattern](skills/m15-anti-pattern/SKILL.md) | 是否隐藏了设计问题？ |
-
-### 第三层：领域约束（domain-*）
-
-| 技能 | 领域关键词 |
-|------|-----------|
-| [domain-fintech](skills/domain-fintech/SKILL.md) | 金融、交易、支付、decimal |
-| [domain-web](skills/domain-web/SKILL.md) | Web API、HTTP、REST、axum、actix |
-| [domain-cli](skills/domain-cli/SKILL.md) | 命令行、clap、terminal |
-| [domain-embedded](skills/domain-embedded/SKILL.md) | 嵌入式、no_std、MCU、firmware |
-| [domain-cloud-native](skills/domain-cloud-native/SKILL.md) | Kubernetes、gRPC、微服务、Docker |
-| [domain-iot](skills/domain-iot/SKILL.md) | 物联网、传感器、MQTT |
-| [domain-ml](skills/domain-ml/SKILL.md) | 机器学习、张量、推理、模型 |
 
 ### 工具与实验
 

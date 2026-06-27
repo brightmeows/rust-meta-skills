@@ -6,7 +6,7 @@
       "type": "skill-md",
       "description": "Rust 元认知技能集入口与主路由，通过三层认知模型追溯 Rust 问题根源。 CRITICAL: 在 Rust 编译错误、设计权衡、最佳实践比较、代码风格审查或项目默认设置决策时使用。 Keywords: Rust 元认知, 编译错误, E0382, E0597, E0277, borrow error, 比较, compare, vs, 最佳实践, ownership, borrow, lifetime, async, concurrency",
       "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/rust-meta-cognition/SKILL.md",
-      "digest": "sha256:1b48de1a067afbc116e643ffd04ccc327c8a5042ec2d8eefea8e5162ef1eaf9b"
+      "digest": "sha256:33fbd6029df1b29843590affd1c95625f45bc4a4f5262ad8d291554081af61ad"
     }
   ]
 }
