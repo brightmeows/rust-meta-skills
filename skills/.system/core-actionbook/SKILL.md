@@ -3,6 +3,8 @@ name: core-actionbook
 description: >-
   内部：Actionbook MCP 选择器支持。仅在 rust-skills 工作流显式请求
   actionbook 选择器时使用。
+metadata:
+  internal: true
 user-invocable: false
 disable-model-invocation: true
 ---

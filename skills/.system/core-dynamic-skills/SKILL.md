@@ -3,6 +3,8 @@ name: core-dynamic-skills
 description: >-
   内部：动态 crate 技能管理。仅在 /sync-crate-skills、/clean-crate-skills、
   /update-crate-skill 命令调用时使用。
+metadata:
+  internal: true
 disable-model-invocation: true
 context: fork
 agent: general-purpose
