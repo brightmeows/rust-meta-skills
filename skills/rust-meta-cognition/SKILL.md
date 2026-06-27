@@ -24,7 +24,11 @@ description: >-
 
 1. 按路由算法确定子技能
 2. **完整读取对应子技能的 SKILL.md**（路径：`skills/<技能名>/SKILL.md`）
-3. 确认已理解子技能内容后，再按追溯流程输出
+3. **读取认知层元文件**，理解三层模型和推理框架：
+   - `_meta/layer-definitions.md`
+   - `_meta/reasoning-framework.md`
+4. 如为比较/最佳实践场景，额外读取 `_meta/negotiation-protocol.md`
+5. 确认已理解内容后，再按追溯流程输出
 
 对于任何具体的 Rust 问题，按以下流程处理：
 
