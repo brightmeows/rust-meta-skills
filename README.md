@@ -56,25 +56,39 @@ rust-meta-skills/
 ├── README.md                               # 本文档
 ├── .pre-commit-config.yaml                 # pre-commit 钩子
 ├── .markdownlint.toml                      # Markdown lint 配置
+├── .well-known/agent-skills/index.json     # skill 发现索引
 │
-└── skills/rust-meta-cognition/             # 技能集根目录
-    ├── SKILL.md                            # 技能集入口
-    ├── agents/                             # 8 个后台 Agent
-    ├── commands/                           # 命令定义
-    ├── docs/                               # 架构/功能/Hook 文档
-    ├── examples/                           # 使用示例
-    ├── hooks/                              # Hook 脚本
-    ├── index/                              # 索引文件
-    ├── references/                         # 参考资料
-    ├── scripts/                            # 工具脚本
-    ├── templates/                          # 模板
-    ├── tests/                              # 测试（场景/验证/压力测试）
-    │   ├── trigger-checklist.md            # 全量触发测试清单
-    │   ├── trigger-test.sh                 # 触发测试脚本
-    │   ├── scenarios/                      # 按 skill 分类的测试场景
-    │   ├── pressure-scenarios/             # 边界情况测试
-    │   └── validation/                     # 验证脚本
-    └── _meta/                              # 元数据
+├── skills/                                 # 所有技能
+│   ├── rust-meta-cognition/                # 核心：三层认知模型技能集
+│   │   ├── SKILL.md                        # 技能集入口（路由 + 设置）
+│   │   ├── agents/                         # 8 个后台 Agent
+│   │   ├── commands/                       # 命令定义
+│   │   ├── docs/                           # 架构/功能/Hook 文档
+│   │   ├── examples/                       # 使用示例
+│   │   ├── hooks/                          # Hook 脚本
+│   │   ├── index/                          # 索引文件
+│   │   ├── references/                     # 参考资料
+│   │   ├── scripts/                        # 工具脚本
+│   │   ├── templates/                      # 模板
+│   │   ├── tests/                          # 测试
+│   │   ├── _meta/                          # 元数据
+│   │   ├── l1-mechanisms/                  # Layer 1：语言机制（9 个技能）
+│   │   ├── l2-design/                      # Layer 2：设计选择（7 个技能）
+│   │   ├── l3-domains/                     # Layer 3：领域约束（7 个技能）
+│   │   └── experimental/                   # 实验性技能
+│   │
+│   ├── rust-learner/                       # 独立工具技能
+│   ├── rust-daily/                         # （9 个，可独立安装）
+│   ├── rust-skill-creator/
+│   ├── rust-call-graph/
+│   ├── rust-code-navigator/
+│   ├── rust-deps-visualizer/
+│   ├── rust-refactor-helper/
+│   ├── rust-symbol-analyzer/
+│   ├── rust-trait-explorer/
+│   │
+│   ├── .system/                            # 内部基础设施（默认隐藏）
+│   └── .experimental/                      # 预留：未来独立实验性技能
 ```
 
 ## 元认知框架
