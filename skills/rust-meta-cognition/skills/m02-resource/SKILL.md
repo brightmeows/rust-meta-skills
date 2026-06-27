@@ -98,14 +98,64 @@ user-invocable: false
 
 ## 快速参考
 
-| 类型 | 所有权模型 | 线程安全 | 使用场景 |
-|------|-----------|-------------|----------|
-| `Box<T>` | 单一 | 是 | 堆分配、递归类型 |
-| `Rc<T>` | 共享 | 否 | 单线程共享所有权 |
-| `Arc<T>` | 共享 | 是 | 多线程共享所有权 |
-| `Weak<T>` | 弱引用 | 同 Rc/Arc | 打破循环引用 |
-| `Cell<T>` | 单一 | 否 | 内部可变性（Copy 类型） |
-| `RefCell<T>` | 单一 | 否 | 内部可变性（运行时检查） |
+### 指针对比表
+
+| 类型 | 所有权模型 | Send | Sync | 主要用途 |
+|------|-----------|------|------|----------|
+| `Box<T>` | 单一所有者 | 是¹ | 是¹ | 堆分配、递归类型 |
+| `Rc<T>` | 共享（引用计数） | 否 | 否 | 单线程共享所有权 |
+| `Arc<T>` | 共享（原子计数） | 是¹ | 是¹ | 多线程共享所有权 |
+| `Weak<T>` | 弱引用 | 同 Rc/Arc | 同 Rc/Arc | 打破循环引用 |
+| `Cell<T>` | 内部可变性（Copy） | 是¹ | 否 | 单线程内部可变，Copy 类型 |
+| `RefCell<T>` | 内部可变性（运行时） | 是¹ | 否 | 单线程内部可变，运行时检查 |
+| `Mutex<T>` | 互斥锁 | 是¹ | 是¹ | 多线程互斥可变 |
+| `RwLock<T>` | 读写锁 | 是¹ | 是¹ | 多线程读多写少 |
+| `OnceCell<T>` | 一次性初始化 | 是¹ | 否 | 单线程惰性初始化 |
+| `OnceLock<T>` | 一次性初始化 | 是¹ | 是¹ | 多线程单次初始化（替代 `lazy_static!`） |
+| `LazyCell<T>` | 惰性初始化 | 是¹ | 否 | 单线程复杂惰性初始化 |
+| `LazyLock<T>` | 惰性初始化 | 是¹ | 是¹ | 多线程复杂惰性初始化（替代 `once_cell::Lazy`） |
+| `*const T` / `*mut T` | 裸指针 | 否 | 否 | FFI、原始内存操作 |
+
+> ¹ 当 `T: Send` / `T: Sync` 时条件满足。
+
+### Send + Sync 追踪速查
+
+| 类型 | Send | Sync | 原因 |
+|------|------|------|------|
+| `&T` | 是 | 是 | 共享引用可安全跨线程 |
+| `&mut T` | 是² | 否 | 独占引用可转移但不共享 |
+| `Rc<T>` | 否 | 否 | 非原子引用计数 |
+| `Arc<T>` | 是³ | 是³ | 原子引用计数 |
+| `Box<T>` | 是³ | 是³ | 堆分配所有权转移 |
+| `RefCell<T>` | 是³ | 否 | 运行时检查非线程安全 |
+| `Mutex<T>` | 是³ | 是³ | 加锁保证线程安全 |
+| `Cell<T>` | 是³ | 否 | 无同步的 set/get |
+
+> ² 仅当 T 可安全在线程间转移。³ 当 T: Send / Sync 时满足。
+
+### 现代标准库替代
+
+| 已废弃 / 第三方 | 替代 | 起始版本 |
+|-----------------|------|----------|
+| `lazy_static!` | `std::sync::OnceLock` / `LazyLock` | 1.70 / 1.80 |
+| `once_cell::sync::OnceCell` | `std::sync::OnceLock` | 1.70 |
+| `once_cell::sync::Lazy` | `std::sync::LazyLock` | 1.80 |
+| `once_cell::unsync::OnceCell` | `std::cell::OnceCell` | 1.70 |
+| `once_cell::unsync::Lazy` | `std::cell::LazyCell` | 1.80 |
+
+```rust
+// OnceLock — 多线程单次初始化
+static CONFIG: OnceLock<HashMap<String, String>> = OnceLock::new();
+
+// LazyLock — 多线程惰性初始化
+static REGEX: LazyLock<Regex> = LazyLock::new(|| {
+    Regex::new(r"^\d{3}-\d{4}$").unwrap()
+});
+
+// OnceCell — 单线程单次初始化
+let cell = OnceCell::new();
+cell.set(42).unwrap();
+```
 
 ## 决策流程图
 

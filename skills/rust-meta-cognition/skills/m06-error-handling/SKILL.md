@@ -128,7 +128,72 @@ user-invocable: false
 用 ? → 需要上下文？
 ├─ 是 → .context("消息")
 └─ 否 → 普通 ?
+
+### Option/Result 模式匹配选择
+
+| 场景 | 模式 | 示例 |
+|---------|---------|---------|
+| 需要匹配内部值做分支 | `match` | `match result { Ok(South) => …, Err(e) => … }` |
+| 需要转换嵌套类型 | `match` | `match self { Ok(t) => Ok(Some(t)), Err(E::Empty) => Ok(None), … }` |
+| Err 时需要返回但不需要 Err 值 | `let-else` | `let Ok(json) = from_str(&s) else { return Err(E::Invalid) }` |
+| 需要 break/continue 跳出循环 | `let-else` | `let Some(x) = iter.next() else { break }` |
+| else 分支需要额外计算 | `if-let-else` | `if let Some(x) = self.next() { … } else { fallback() }` |
+| Result ↔ Option 转换 | `.ok()` / `.ok_or()` | `result.ok()` 或 `option.ok_or(E::Missing)` |
+| 检查/日志 + 传递错误 | `.inspect_err()` | `result.inspect_err(\|e\| error!("{e}"))?` |
+| 转换错误类型 | `.map_err()` | `result.map_err(\|e\| MyError::from(e))?` |
+
+### `_else` 变体指南
+
+| 变体 | 行为 | 何时用 |
+|---------|---------|---------|
+| `ok_or(value)` | Err 时返回预计算值 | Err 值是简单常量 |
+| `ok_or_else(\|\| expr)` | Err 时惰性求值 | Err 值需要计算/分配 |
+| `map_or(default, fn)` | Ok 时映射，否则返回默认 | 简单默认值 |
+| `map_or_else(\|err\| err_fn, \|ok\| ok_fn)` | 两边都处理 | 需要处理 Err 分支 |
+| `unwrap_or(default)` | None/Err 时返回默认 | 有合适的默认值 |
+| `unwrap_or_else(\|\| expr)` | 惰性默认值 | 默认值需要计算 |
+| `unwrap_or_default()` | 类型默认值 | 类型实现了 Default |
+| `inspect_err(\|e\| …)` | 检查但不消费 Err | 日志/监控场景 |
+
+```rust
+// ✅ _else 变体避免提前分配
+x.ok_or_else(|| MyError::new(format!("value: {x}")));
+x.unwrap_or_else(|| Vec::new());
+
+// ❌ 非 _else 变体会立即求值
+x.ok_or(MyError::new(format!("value: {x}")));   // 即使 Ok 也分配
+x.unwrap_or(Vec::new());                         // 即使可用也分配
 ```
+
+### 自定义错误 Struct
+
+当错误类型只有一种变体时，用 struct 而非 enum：
+
+```rust
+#[derive(Debug, thiserror::Error, PartialEq)]
+#[error("请求失败：code={code}, msg={message}")]
+struct HttpError {
+    code: u16,
+    message: String,
+}
+```
+
+### 异步错误约束
+
+在 async 上下文中，错误类型必须满足 `Send + Sync + 'static`：
+
+```rust
+// tokio::spawn 要求 Future: Send
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
+    tokio::spawn(async {
+        // 内部错误必须满足 Send
+    });
+    Ok(())
+}
+```
+
+> 库代码中避免 `Box<dyn std::error::Error>`，使用 `thiserror` 生成的具体类型以获得类型安全。
 
 ## 常见错误
 

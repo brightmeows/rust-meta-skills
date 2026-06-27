@@ -103,6 +103,53 @@ E0382（值被移动）
 | `Arc<T>` | 共享（多线程） | 原子引用计数 | 多线程共享 |
 | `Cow<T>` | 写时复制 | 修改时分配 | 可能修改 |
 
+### Clone/Copy 指导原则
+
+**何时用 Clone：**
+
+| 场景 | 说明 | 示例 |
+|---------|---------|---------|
+| 需要保留原值不可变快照 | 修改后与原值对比 | `let snapshot = config.clone()` |
+| Rc/Arc 共享 | 引用计数指针要求 Clone | `let shared = Arc::clone(&data)` |
+| Builder 链式调用 | 消费 self 并返回新值 | `fn with_x(mut self, x: T) -> Self` |
+| API 要求所有权 | 底层接口需要 owned 数据 | 无法避免时使用 |
+| 缓存结果 | 返回内部缓存副本 | `fn get_config(&self) -> Config` |
+
+**避免 Clone 的场景：**
+
+- 循环内自动克隆 `.map(|x| x.clone())` → 改用 `.cloned()` 或 `.copied()`
+- 大型数据结构（`Vec<T>`、`HashMap<K,V>`）的克隆
+- 用 Clone 逃避借用检查器 → 正确设计所有权
+- 函数参数位置的克隆 → 改为接受引用
+
+**Copy 类型设计指南：**
+
+类型适合 `Copy` 的条件：
+
+- 所有字段都是 `Copy` 的
+- 结构体大小 ≤ 24 字节（约 3 个 word）
+- 表示“纯数据对象”，无堆分配（无 `Vec`、`String`）
+- 栈数组虽可 Copy，但大数组需注意栈溢出
+
+```rust
+// ✅ 适合 Copy
+#[derive(Debug, Copy, Clone)]
+struct Point { x: f32, y: f32, z: f32 }
+
+// ❌ 不适合 Copy
+#[derive(Debug, Clone)]
+struct Bad { age: i32, name: String }
+```
+
+| 原始类型 | 大小 |
+|----------|------|
+| `i8`/`u8`/`bool` | 1 字节 |
+| `i16`/`u16` | 2 字节 |
+| `i32`/`u32`/`f32`/`char` | 4 字节 |
+| `i64`/`u64`/`f64` | 8 字节 |
+| `i128`/`u128` | 16 字节 |
+| `isize`/`usize` | 平台位数 |
+
 ## 错误码参考
 
 | 错误 | 原因 | 快速修复 |

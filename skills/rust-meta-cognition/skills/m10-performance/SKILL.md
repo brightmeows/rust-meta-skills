@@ -94,9 +94,30 @@ user-invocable: false
 |------|---------|
 | `cargo bench` | 微基准测试 |
 | `criterion` | 统计基准测试 |
-| `perf` / `flamegraph` | CPU 性能分析 |
+| `perf` / `cargo flamegraph` | CPU 性能分析 |
 | `heaptrack` | 分配追踪 |
 | `valgrind` / `cachegrind` | 缓存分析 |
+
+### 火焰图速查
+
+```bash
+# 安装
+cargo install flamegraph
+
+# 分析二进制
+cargo flamegraph --bin my_bin
+
+# 分析基准测试
+cargo flamegraph --bench some_bench -- --bench
+
+# 分析单元测试
+cargo flamegraph --unit-test -- test_name
+
+# 始终用 --release 模式
+cargo flamegraph  # 默认 --release
+```
+
+> 火焰图 y 轴为调用栈深度，宽度为 CPU 占用时间。厚栈 = 热点。
 
 ## 优化优先级
 
@@ -117,6 +138,44 @@ user-invocable: false
 | 批量操作 | 多次小操作 | 收集后统一处理 |
 | SmallVec | 通常很小 | `smallvec::SmallVec<[T; N]>` |
 | 内联缓冲区 | 固定大小数据 | 用数组代替 Vec |
+| `Cow<T>` | 可能修改的借用数据 | `Cow<'_, str>` 避免不必要的分配 |
+| 避免中间 Collect | 链式处理时 | 直接传递迭代器而非 `Vec` |
+| `#[inline]` | 仅基准测试证明有效时 | Rust 编译器已自动内联 |
+
+### `Cow<'_, T>` 使用模式
+
+```rust
+use std::borrow::Cow;
+
+// 可能修改时避免分配
+fn process_name(name: Cow<'_, str>) {
+    let _ = name.to_uppercase();
+}
+
+// 调用方可选择借用或拥有
+process_name(Cow::Borrowed("hello"));  // 零分配
+process_name(Cow::Owned(format!("hello {name}")));  // 需要时分配
+```
+
+### 避免中间收集
+
+```rust
+// ❌ 中间 Vec 分配
+let doubled: Vec<_> = items.iter().map(|x| x * 2).collect();
+process(doubled);
+
+// ✅ 直接传递迭代器
+fn process(items: impl Iterator<Item = i32>) { ... }
+process(items.iter().map(|x| x * 2));
+```
+
+### `#[inline]` 纪律
+
+- ❌ 不要随意添加 `#[inline]` — 编译器已能自动决策
+- ✅ 仅在基准测试证明有收益时使用
+- `#[inline]` 增加编译时间和二进制体积
+- 跨 crate 边界的热路径可考虑 `#[inline]`
+- 小函数（getter/setter）通常自动内联，无需标注
 
 ## 常见错误
 
