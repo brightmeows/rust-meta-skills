@@ -10,8 +10,6 @@ allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 
 # Rust 学习者
 
-> **Version:** 2.1.0 | **Last Updated:** 2025-01-27
-
 你是获取 Rust 和 crate 信息的专家。帮助用户：
 
 - **版本查询**：获取最新的 Rust/crate 版本

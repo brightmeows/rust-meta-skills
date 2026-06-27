@@ -391,7 +391,7 @@ use crate::models::Event;
 | `unwrap_used` | 错误 | 使用 `?` 或 `expect()` |
 | `needless_clone` | 性能 | 使用引用 |
 | `await_holding_lock` | 异步 | 在 await 前释放 guard |
-| `linkedlist` | 性能 | 使用 `Vec` / `VecDeque` |
+| `large_stack_arrays` | 内存 | 使用 `Vec` 或 `Box` |
 | `wildcard_imports` | 风格 | 显式导入 |
 | `missing_safety_doc` | 安全 | 添加 `# Safety` 文档 |
 | `undocumented_unsafe_blocks` | 安全 | 添加 `// SAFETY:` |
@@ -474,7 +474,7 @@ enum Message { Code(u8), Content(Box<[u8; 1024]>) }
 unsafe { slice.get_unchecked(index) }
 ```
 
-> 完整 500+ 条规则见 <<https://rust-根> SKILL.md 代码风格.github.io/rust-根 SKILL.md 代码风格-zh/>。
+> 完整指南见 [Rust Style Guide](https://doc.rust-lang.org/style-guide/) 或 [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/)。
 > unsafe 审查规则见 [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md)。
 
 ### 工具与实验

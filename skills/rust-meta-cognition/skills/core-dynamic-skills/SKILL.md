@@ -4,14 +4,11 @@ description: >-
   内部：动态 crate 技能管理。仅在 /sync-crate-skills、/clean-crate-skills、
   /update-crate-skill 命令调用时使用。
 disable-model-invocation: true
-argument-hint: "[--force] | <crate_name>"
 context: fork
 agent: general-purpose
 ---
 
 # 动态 Skill 管理器
-
-> **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 
 根据项目依赖按需生成 crate 特定 Skill 的编排器。
 

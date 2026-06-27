@@ -12,9 +12,7 @@ agent: general-purpose
 
 # Rust Skill 创建器
 
-> **Version:** 2.1.0 | **Last Updated:** 2025-01-27
->
-> 为 Rust crate 和标准库文档创建动态 Skill。
+为 Rust crate 和标准库文档创建动态 Skill。
 
 ## 使用时机
 

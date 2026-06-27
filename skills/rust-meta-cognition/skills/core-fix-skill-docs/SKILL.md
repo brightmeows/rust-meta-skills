@@ -3,14 +3,11 @@ name: core-fix-skill-docs
 description: >-
   内部：技能文档引用检查与修复。仅在 /fix-skill-docs 命令调用时使用。
 disable-model-invocation: true
-argument-hint: "[crate_name] [--check-only]"
 context: fork
 agent: general-purpose
 ---
 
 # 修复 Skill 文档
-
-> **Version:** 2.1.0 | **Last Updated:** 2025-01-27
 
 检查和修复动态 Skill 中缺失的引用文件。
 
