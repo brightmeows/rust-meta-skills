@@ -23,6 +23,7 @@
 
 - 需修改 `.markdownlint.toml` 配置时先确认
 - 需修改技能集整体架构（如再次合并/拆分 skill）时先确认
+- 需修改 `.well-known/agent-skills/index.json` 中工具/内部技能的条目时先确认
 
 ### Never
 
@@ -53,6 +54,25 @@ pre-commit run check-well-known-digest       # 校验 index.json digest 与 SKIL
 # 修改 SKILL.md 后更新 digest
 sha256sum skills/rust-meta-cognition/SKILL.md
 ```
+
+## 技能放置规则
+
+新增技能时按类型放入对应位置：
+
+| 技能类型 | 放置目录 | 示例 |
+|---------|---------|------|
+| L1 语言机制 | `skills/rust-meta-cognition/l1-mechanisms/` | `m01-ownership/` |
+| L2 设计选择 | `skills/rust-meta-cognition/l2-design/` | `m09-domain/` |
+| L3 领域约束 | `skills/rust-meta-cognition/l3-domains/` | `domain-web/` |
+| 独立工具 | `skills/<name>/` | `skills/rust-learner/` |
+| 内部基础设施 | `skills/.system/<name>/` | `skills/.system/core-actionbook/` |
+| 实验性 | `skills/rust-meta-cognition/experimental/` | `meta-cognition-parallel/` |
+
+规则：
+
+- 独立工具技能不应引用 `rust-meta-cognition/` 内部路径；如需引用 `agents/`，使用 `../../rust-meta-cognition/agents/` 相对路径
+- 内部基础设施技能必须加 `disable-model-invocation: true` 防止代理自动激活（不可用 `metadata.internal: true`，否则 npx skills 不会安装，会导致依赖技能路径断链）
+- 三层模型子技能必须由根 SKILL.md 的路由表引用，而非独立注册到 `index.json`
 
 ## 技能依赖链
 
