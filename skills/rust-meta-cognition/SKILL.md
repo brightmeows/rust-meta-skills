@@ -92,7 +92,7 @@ flowchart TD
    查功能路由表 → 按指定操作处理
 
 ⑦ 兜底
-   以上均不匹配 → 读取 skills/m14-mental-model/SKILL.md
+   以上均不匹配 → 读取 l2-design/m14-mental-model/SKILL.md
 ```
 
 ### 关键词冲突解决
@@ -132,39 +132,39 @@ flowchart TD
 
 | 技能 | 核心问题 | 路由模式 |
 |------|----------|---------|
-| [m01-ownership](skills/m01-ownership/SKILL.md) | 谁拥有这份数据？ | move、borrow、lifetime、E0382、E0597 |
-| [m02-resource](skills/m02-resource/SKILL.md) | 哪种所有权模式合适？ | Box、Rc、Arc、RefCell、Cell |
-| [m03-mutability](skills/m03-mutability/SKILL.md) | 为什么必须改变？ | mut、内部可变性、E0499、E0502、E0596 |
-| [m04-zero-cost](skills/m04-zero-cost/SKILL.md) | 编译期还是运行期多态？ | generic、trait、inline、单态化 |
-| [m05-type-driven](skills/m05-type-driven/SKILL.md) | 类型如何防止非法状态？ | 类型状态、phantom、newtype |
-| [m06-error-handling](skills/m06-error-handling/SKILL.md) | 预期失败还是程序缺陷？ | Result、Error、panic、?、anyhow、thiserror |
-| [m07-concurrency](skills/m07-concurrency/SKILL.md) | CPU 密集型还是 I/O 密集型？ | Send、Sync、thread、async、channel |
-| [m08-testing](skills/m08-testing/SKILL.md) | 这个行为的正确性如何验证？ | test、测试、assert、单元测试、集成测试 |
+| [m01-ownership](l1-mechanisms/m01-ownership/SKILL.md) | 谁拥有这份数据？ | move、borrow、lifetime、E0382、E0597 |
+| [m02-resource](l1-mechanisms/m02-resource/SKILL.md) | 哪种所有权模式合适？ | Box、Rc、Arc、RefCell、Cell |
+| [m03-mutability](l1-mechanisms/m03-mutability/SKILL.md) | 为什么必须改变？ | mut、内部可变性、E0499、E0502、E0596 |
+| [m04-zero-cost](l1-mechanisms/m04-zero-cost/SKILL.md) | 编译期还是运行期多态？ | generic、trait、inline、单态化 |
+| [m05-type-driven](l1-mechanisms/m05-type-driven/SKILL.md) | 类型如何防止非法状态？ | 类型状态、phantom、newtype |
+| [m06-error-handling](l1-mechanisms/m06-error-handling/SKILL.md) | 预期失败还是程序缺陷？ | Result、Error、panic、?、anyhow、thiserror |
+| [m07-concurrency](l1-mechanisms/m07-concurrency/SKILL.md) | CPU 密集型还是 I/O 密集型？ | Send、Sync、thread、async、channel |
+| [m08-testing](l1-mechanisms/m08-testing/SKILL.md) | 这个行为的正确性如何验证？ | test、测试、assert、单元测试、集成测试 |
 | **`unsafe-checker`** | unsafe 代码审查 | unsafe、FFI、extern、raw pointer、transmute |
 
 ### 第 2 层 Skill（设计选择）
 
 | 技能 | 核心问题 | 路由模式 |
 |------|----------|---------|
-| [m09-domain](skills/m09-domain/SKILL.md) | 这个概念扮演什么角色？ | 领域模型、业务逻辑 |
-| [m10-performance](skills/m10-performance/SKILL.md) | 瓶颈在哪里？ | 性能、优化、基准测试 |
-| [m11-ecosystem](skills/m11-ecosystem/SKILL.md) | 该用哪个 crate？ | 集成、互操作、绑定 |
-| [m12-lifecycle](skills/m12-lifecycle/SKILL.md) | 何时创建 / 使用 / 清理？ | 资源生命周期、RAII、Drop |
-| [m13-domain-error](skills/m13-domain-error/SKILL.md) | 谁来处理这个错误？ | 领域错误、恢复策略 |
-| [m14-mental-model](skills/m14-mental-model/SKILL.md) | 如何理解这个问题？ | 心智模型、如何思考 |
-| [m15-anti-pattern](skills/m15-anti-pattern/SKILL.md) | 是否隐藏了设计问题？ | 反模式、常见错误、陷阱 |
+| [m09-domain](l2-design/m09-domain/SKILL.md) | 这个概念扮演什么角色？ | 领域模型、业务逻辑 |
+| [m10-performance](l2-design/m10-performance/SKILL.md) | 瓶颈在哪里？ | 性能、优化、基准测试 |
+| [m11-ecosystem](l2-design/m11-ecosystem/SKILL.md) | 该用哪个 crate？ | 集成、互操作、绑定 |
+| [m12-lifecycle](l2-design/m12-lifecycle/SKILL.md) | 何时创建 / 使用 / 清理？ | 资源生命周期、RAII、Drop |
+| [m13-domain-error](l2-design/m13-domain-error/SKILL.md) | 谁来处理这个错误？ | 领域错误、恢复策略 |
+| [m14-mental-model](l2-design/m14-mental-model/SKILL.md) | 如何理解这个问题？ | 心智模型、如何思考 |
+| [m15-anti-pattern](l2-design/m15-anti-pattern/SKILL.md) | 是否隐藏了设计问题？ | 反模式、常见错误、陷阱 |
 
 ### 第 3 层 Skill（领域约束）
 
 | 技能 | 用途 | 领域关键词 |
 |------|------|-----------|
-| [domain-fintech](skills/domain-fintech/SKILL.md) | 金融科技设计约束 | fintech、trading、decimal、currency |
-| [domain-web](skills/domain-web/SKILL.md) | Web 服务架构指导 | web server、HTTP、REST、axum、actix |
-| [domain-cli](skills/domain-cli/SKILL.md) | CLI 工具架构指导 | CLI、command line、clap、terminal |
-| [domain-embedded](skills/domain-embedded/SKILL.md) | 嵌入式与 no_std 架构 | no_std、microcontroller、firmware |
-| [domain-cloud-native](skills/domain-cloud-native/SKILL.md) | 云原生设计约束 | kubernetes、docker、grpc、microservice |
-| [domain-iot](skills/domain-iot/SKILL.md) | 物联网设计约束 | embedded、sensor、mqtt、iot |
-| [domain-ml](skills/domain-ml/SKILL.md) | 机器学习设计约束 | ml、tensor、model、inference |
+| [domain-fintech](l3-domains/domain-fintech/SKILL.md) | 金融科技设计约束 | fintech、trading、decimal、currency |
+| [domain-web](l3-domains/domain-web/SKILL.md) | Web 服务架构指导 | web server、HTTP、REST、axum、actix |
+| [domain-cli](l3-domains/domain-cli/SKILL.md) | CLI 工具架构指导 | CLI、command line、clap、terminal |
+| [domain-embedded](l3-domains/domain-embedded/SKILL.md) | 嵌入式与 no_std 架构 | no_std、microcontroller、firmware |
+| [domain-cloud-native](l3-domains/domain-cloud-native/SKILL.md) | 云原生设计约束 | kubernetes、docker、grpc、microservice |
+| [domain-iot](l3-domains/domain-iot/SKILL.md) | 物联网设计约束 | embedded、sensor、mqtt、iot |
+| [domain-ml](l3-domains/domain-ml/SKILL.md) | 机器学习设计约束 | ml、tensor、model、inference |
 
 ### 错误码路由
 
@@ -224,7 +224,7 @@ flowchart TD
 | [`router/patterns/negotiation.md`](router/patterns/negotiation.md) | 协商协议补充细节 |
 | [`router/examples/workflow.md`](router/examples/workflow.md) | 路由工作流程示例 |
 | [`router/integrations/os-checker.md`](router/integrations/os-checker.md) | OS-Checker 集成 |
-| [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md) | unsafe 审查规则 |
+| [`l1-mechanisms/unsafe-checker/SKILL.md`](l1-mechanisms/unsafe-checker/SKILL.md) | unsafe 审查规则 |
 
 ## 响应规范
 
@@ -371,16 +371,16 @@ unsafe { slice.get_unchecked(index) }
 ```
 
 > 完整指南见 [Rust Style Guide](https://doc.rust-lang.org/style-guide/) 或 [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/)。
-> unsafe 审查规则见 [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md)。
+> unsafe 审查规则见 [`l1-mechanisms/unsafe-checker/SKILL.md`](l1-mechanisms/unsafe-checker/SKILL.md)。
 
 ### 工具与实验
 
 | 技能 | 用途 |
 |------|------|
-| [rust-daily](skills/rust-daily/SKILL.md) | Rust 每日 / 每周动态与新闻速览 |
-| [rust-skill-creator](skills/rust-skill-creator/SKILL.md) | 为 crate / 标准库文档创建动态 Skill |
-| [core-actionbook](skills/core-actionbook/SKILL.md) | 浏览器自动化预计算操作手册（MCP） |
-| [core-agent-browser](skills/core-agent-browser/SKILL.md) | 浏览器自动化 CLI 工作流支持 |
-| [core-dynamic-skills](skills/core-dynamic-skills/SKILL.md) | 基于项目依赖动态管理 crate Skill |
-| [core-fix-skill-docs](skills/core-fix-skill-docs/SKILL.md) | 检查并修复动态 Skill 文档引用 |
-| [meta-cognition-parallel](skills/meta-cognition-parallel/SKILL.md) | 三层认知维度并行分析（实验性） |
+| [rust-daily](../rust-daily/SKILL.md) | Rust 每日 / 每周动态与新闻速览 |
+| [rust-skill-creator](../rust-skill-creator/SKILL.md) | 为 crate / 标准库文档创建动态 Skill |
+| [core-actionbook](../.system/core-actionbook/SKILL.md) | 浏览器自动化预计算操作手册（MCP） |
+| [core-agent-browser](../.system/core-agent-browser/SKILL.md) | 浏览器自动化 CLI 工作流支持 |
+| [core-dynamic-skills](../.system/core-dynamic-skills/SKILL.md) | 基于项目依赖动态管理 crate Skill |
+| [core-fix-skill-docs](../.system/core-fix-skill-docs/SKILL.md) | 检查并修复动态 Skill 文档引用 |
+| [meta-cognition-parallel](experimental/meta-cognition-parallel/SKILL.md) | 三层认知维度并行分析（实验性） |
