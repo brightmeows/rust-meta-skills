@@ -58,19 +58,20 @@ rust-meta-skills/
 ├── .markdownlint.toml                      # Markdown lint 配置
 ├── .well-known/agent-skills/index.json     # skill 发现索引
 │
+├── docs/                                   # 架构/功能/Hook 文档
+├── tests/                                  # 测试
+├── scripts/                                # 工具脚本
+├── templates/                              # 模板
+├── examples/                               # 使用示例
+├── cache/                                  # 缓存
+├── references/                             # 参考资料
+│
 ├── skills/                                 # 所有技能
 │   ├── rust-meta-cognition/                # 核心：三层认知模型技能集
 │   │   ├── SKILL.md                        # 技能集入口（路由 + 设置）
 │   │   ├── agents/                         # 8 个后台 Agent
 │   │   ├── commands/                       # 命令定义
-│   │   ├── docs/                           # 架构/功能/Hook 文档
-│   │   ├── examples/                       # 使用示例
-│   │   ├── hooks/                          # Hook 脚本
 │   │   ├── index/                          # 索引文件
-│   │   ├── references/                     # 参考资料
-│   │   ├── scripts/                        # 工具脚本
-│   │   ├── templates/                      # 模板
-│   │   ├── tests/                          # 测试
 │   │   ├── _meta/                          # 元数据
 │   │   ├── l1-mechanisms/                  # Layer 1：语言机制（9 个技能）
 │   │   ├── l2-design/                      # Layer 2：设计选择（7 个技能）
@@ -176,10 +177,10 @@ Layer 1: 语言机制 (HOW - 怎么做)
 
 ```bash
 # 验证脚本
-./skills/rust-meta-cognition/tests/validation/validate-skills.sh
+./tests/validation/validate-skills.sh
 
 # 触发测试
-./skills/rust-meta-cognition/tests/trigger-test.sh
+./tests/trigger-test.sh
 
 # 手工测试清单
 # 使用 tests/trigger-checklist.md 中的查询验证技能触发
@@ -187,9 +188,9 @@ Layer 1: 语言机制 (HOW - 怎么做)
 
 ## 文档
 
-- [架构设计](./skills/rust-meta-cognition/docs/architecture.md)
-- [功能概览](./skills/rust-meta-cognition/docs/functional-overview.md)
-- [元认知示例：E0382](./skills/rust-meta-cognition/docs/meta-cognition-example-e0382.md)
+- [架构设计](./docs/architecture.md)
+- [功能概览](./docs/functional-overview.md)
+- [元认知示例：E0382](./docs/meta-cognition-example-e0382.md)
 
 ## 基于项目
 

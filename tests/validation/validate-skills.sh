@@ -6,6 +6,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/../.." && pwd)"
+SKILL_DIR="$ROOT_DIR/skills/rust-meta-cognition"
 
 echo "======================================"
 echo "Rust Skills Validation"
@@ -39,17 +40,17 @@ FAILED=0
 echo "Checking directory structure..."
 
 dirs=(
-    "skills/m01-ownership"
-    "skills/m06-error-handling"
-    "skills/m07-concurrency"
-    "skills/m10-performance"
-    "skills/m14-mental-model"
-    "skills/m15-anti-pattern"
-    "skills/unsafe-checker"
-    "router"
+    "skills/rust-meta-cognition/l1-mechanisms/m01-ownership"
+    "skills/rust-meta-cognition/l1-mechanisms/m06-error-handling"
+    "skills/rust-meta-cognition/l1-mechanisms/m07-concurrency"
+    "skills/rust-meta-cognition/l2-design/m10-performance"
+    "skills/rust-meta-cognition/l2-design/m14-mental-model"
+    "skills/rust-meta-cognition/l2-design/m15-anti-pattern"
+    "skills/rust-meta-cognition/l1-mechanisms/unsafe-checker"
+    "skills/rust-meta-cognition/router"
     "skills/rust-learner"
-    "agents"
-    "commands"
+    "skills/rust-meta-cognition/agents"
+    "skills/rust-meta-cognition/commands"
     "cache"
     "tests"
 )
@@ -70,11 +71,11 @@ echo ""
 echo "Checking SKILL.md files..."
 
 skill_files=(
-    "skills/m01-ownership/SKILL.md"
-    "skills/m06-error-handling/SKILL.md"
-    "skills/m07-concurrency/SKILL.md"
-    "skills/unsafe-checker/SKILL.md"
-    "SKILL.md"
+    "skills/rust-meta-cognition/l1-mechanisms/m01-ownership/SKILL.md"
+    "skills/rust-meta-cognition/l1-mechanisms/m06-error-handling/SKILL.md"
+    "skills/rust-meta-cognition/l1-mechanisms/m07-concurrency/SKILL.md"
+    "skills/rust-meta-cognition/l1-mechanisms/unsafe-checker/SKILL.md"
+    "skills/rust-meta-cognition/SKILL.md"
     "skills/rust-learner/SKILL.md"
 )
 
@@ -99,10 +100,10 @@ echo ""
 echo "Checking agent files..."
 
 agent_files=(
-    "agents/crate-researcher.md"
-    "agents/rust-changelog.md"
-    "agents/docs-researcher.md"
-    "agents/clippy-researcher.md"
+    "skills/rust-meta-cognition/agents/crate-researcher.md"
+    "skills/rust-meta-cognition/agents/rust-changelog.md"
+    "skills/rust-meta-cognition/agents/docs-researcher.md"
+    "skills/rust-meta-cognition/agents/clippy-researcher.md"
 )
 
 for file in "${agent_files[@]}"; do
@@ -125,9 +126,9 @@ echo ""
 echo "Checking command files..."
 
 command_files=(
-    "commands/guideline.md"
-    "commands/unsafe-check.md"
-    "commands/unsafe-review.md"
+    "skills/rust-meta-cognition/commands/guideline.md"
+    "skills/rust-meta-cognition/commands/unsafe-check.md"
+    "skills/rust-meta-cognition/commands/unsafe-review.md"
 )
 
 for file in "${command_files[@]}"; do
@@ -145,7 +146,7 @@ echo ""
 # =====================================
 echo "Checking unsafe-checker rules..."
 
-rule_count=$(find "$ROOT_DIR/skills/unsafe-checker/rules" -name "*.md" ! -name "_*" 2>/dev/null | wc -l)
+rule_count=$(find "$ROOT_DIR/skills/rust-meta-cognition/l1-mechanisms/unsafe-checker/rules" -name "*.md" ! -name "_*" 2>/dev/null | wc -l)
 if [ "$rule_count" -ge 40 ]; then
     pass "unsafe-checker has $rule_count rules (expected 40+)"
 else
@@ -153,15 +154,15 @@ else
 fi
 
 # Check checklists
-if [ -d "$ROOT_DIR/skills/unsafe-checker/checklists" ]; then
-    checklist_count=$(find "$ROOT_DIR/skills/unsafe-checker/checklists" -name "*.md" | wc -l)
+if [ -d "$ROOT_DIR/skills/rust-meta-cognition/l1-mechanisms/unsafe-checker/checklists" ]; then
+    checklist_count=$(find "$ROOT_DIR/skills/rust-meta-cognition/l1-mechanisms/unsafe-checker/checklists" -name "*.md" | wc -l)
     if [ "$checklist_count" -ge 2 ]; then
         pass "unsafe-checker has $checklist_count checklists"
     else
         warn "unsafe-checker has few checklists"
     fi
 else
-    fail "unsafe-checker checklists missing"
+    fail "unsafe-checker checklists missing at skills/rust-meta-cognition/l1-mechanisms/unsafe-checker/checklists"
 fi
 
 echo ""
@@ -172,14 +173,14 @@ echo ""
 echo "Checking deep dive content..."
 
 deep_content=(
-    "skills/m01-ownership/patterns/common-errors.md"
-    "skills/m01-ownership/patterns/lifetime-patterns.md"
-    "skills/m01-ownership/comparison.md"
-    "skills/m07-concurrency/patterns/common-errors.md"
-    "skills/m07-concurrency/patterns/async-patterns.md"
-    "skills/m10-performance/patterns/optimization-guide.md"
-    "skills/m14-mental-model/patterns/thinking-in-rust.md"
-    "skills/m15-anti-pattern/patterns/common-mistakes.md"
+    "skills/rust-meta-cognition/l1-mechanisms/m01-ownership/patterns/common-errors.md"
+    "skills/rust-meta-cognition/l1-mechanisms/m01-ownership/patterns/lifetime-patterns.md"
+    "skills/rust-meta-cognition/l1-mechanisms/m01-ownership/comparison.md"
+    "skills/rust-meta-cognition/l1-mechanisms/m07-concurrency/patterns/common-errors.md"
+    "skills/rust-meta-cognition/l1-mechanisms/m07-concurrency/patterns/async-patterns.md"
+    "skills/rust-meta-cognition/l2-design/m10-performance/patterns/optimization-guide.md"
+    "skills/rust-meta-cognition/l2-design/m14-mental-model/patterns/thinking-in-rust.md"
+    "skills/rust-meta-cognition/l2-design/m15-anti-pattern/patterns/common-mistakes.md"
 )
 
 for file in "${deep_content[@]}"; do

@@ -47,8 +47,8 @@ pre-commit run markdownlint
 pre-commit run check-well-known-digest       # 校验 index.json digest 与 SKILL.md 一致
 
 # 手动验证
-./skills/rust-meta-cognition/tests/validation/validate-skills.sh
-./skills/rust-meta-cognition/tests/trigger-test.sh
+./tests/validation/validate-skills.sh
+./tests/trigger-test.sh
 
 # 修改 SKILL.md 后更新 digest
 sha256sum skills/rust-meta-cognition/SKILL.md

@@ -6,7 +6,8 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-INDEX_DIR="$ROOT_DIR/index"
+SKILL_DIR="$ROOT_DIR/skills/rust-meta-cognition"
+INDEX_DIR="$SKILL_DIR/index"
 
 mkdir -p "$INDEX_DIR"
 
@@ -99,7 +100,7 @@ Auto-generated index of all agents.
 |-------|-------|-------|---------|
 EOF
 
-for agent_file in "$ROOT_DIR"/agents/*.md; do
+for agent_file in "$SKILL_DIR"/agents/*.md; do
     agent_name=$(basename "$agent_file" .md)
     model=$(grep "^model:" "$agent_file" | cut -d: -f2 | tr -d ' ')
     tools=$(sed -n '/^tools:/,/^[a-z]*:/p' "$agent_file" | grep "^  -" | wc -l | tr -d ' ')
@@ -148,7 +149,7 @@ Available slash commands.
 |---------|-------|-------------|
 EOF
 
-for cmd_file in "$ROOT_DIR"/commands/*.md; do
+for cmd_file in "$SKILL_DIR"/commands/*.md; do
     cmd_name=$(basename "$cmd_file" .md)
     # Extract usage from file
     usage=$(grep -A1 "^## Usage" "$cmd_file" | tail -1 | sed 's/```//' | tr -d '\n')

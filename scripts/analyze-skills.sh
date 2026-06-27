@@ -6,6 +6,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+SKILL_DIR="$ROOT_DIR/skills/rust-meta-cognition"
 
 echo "======================================"
 echo "Rust Skills Analysis"
@@ -18,14 +19,14 @@ echo ""
 echo "## Skill Statistics"
 echo ""
 
-meta_count=$(find "$ROOT_DIR/skills" -maxdepth 1 -type d -name "m[0-9]*" | wc -l | tr -d ' ')
-echo "Meta-Question Skills: $meta_count"
+meta_count=$(find "$SKILL_DIR/l1-mechanisms" -maxdepth 1 -type d -name "m[0-9]*" | wc -l | tr -d ' ')
+echo "Meta-Question Skills (L1): $meta_count"
 
-core_count=$(find "$ROOT_DIR/skills/core" -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
-echo "Core Skills: $((core_count - 1))"
+design_count=$(find "$SKILL_DIR/l2-design" -maxdepth 1 -type d -name "m[0-9]*" | wc -l | tr -d ' ')
+echo "Design Skills (L2): $design_count"
 
-domain_count=$(find "$ROOT_DIR/skills/domains" -maxdepth 1 -type d 2>/dev/null | wc -l | tr -d ' ')
-echo "Domain Skills: $((domain_count - 1))"
+domain_count=$(find "$SKILL_DIR/l3-domains" -maxdepth 1 -type d -name "domain-*" | wc -l | tr -d ' ')
+echo "Domain Skills (L3): $domain_count"
 
 echo ""
 
@@ -44,7 +45,7 @@ total_lines=$(find "$ROOT_DIR" -name "*.md" -type f -exec wc -l {} + | tail -1 |
 echo "Total Lines of Content: $total_lines"
 
 # Unsafe rules
-unsafe_rules=$(find "$ROOT_DIR/skills/unsafe-checker/rules" -name "*.md" ! -name "_*" 2>/dev/null | wc -l | tr -d ' ')
+unsafe_rules=$(find "$SKILL_DIR/l1-mechanisms/unsafe-checker/rules" -name "*.md" ! -name "_*" 2>/dev/null | wc -l | tr -d ' ')
 echo "Unsafe Checker Rules: $unsafe_rules"
 
 # Templates
@@ -59,11 +60,11 @@ echo ""
 echo "## Agent Statistics"
 echo ""
 
-agent_count=$(find "$ROOT_DIR/agents" -name "*.md" -type f | wc -l | tr -d ' ')
+agent_count=$(find "$SKILL_DIR/agents" -name "*.md" -type f | wc -l | tr -d ' ')
 echo "Total Agents: $agent_count"
 
 echo "Agents:"
-for agent in "$ROOT_DIR"/agents/*.md; do
+for agent in "$SKILL_DIR"/agents/*.md; do
     name=$(basename "$agent" .md)
     model=$(grep "^model:" "$agent" | cut -d: -f2 | tr -d ' ')
     echo "  - $name (${model:-default})"
@@ -78,22 +79,26 @@ echo "## Deep Dive Content"
 echo ""
 
 echo "Skills with patterns/ directory:"
-for skill_dir in "$ROOT_DIR"/skills/m*/; do
-    if [ -d "$skill_dir/patterns" ]; then
-        skill_name=$(basename "$skill_dir")
-        pattern_count=$(find "$skill_dir/patterns" -name "*.md" | wc -l | tr -d ' ')
-        echo "  - $skill_name: $pattern_count files"
-    fi
+for layer_dir in "$SKILL_DIR/l1-mechanisms" "$SKILL_DIR/l2-design"; do
+    for skill_dir in "$layer_dir"/*/; do
+        if [ -d "$skill_dir/patterns" ]; then
+            skill_name=$(basename "$skill_dir")
+            pattern_count=$(find "$skill_dir/patterns" -name "*.md" | wc -l | tr -d ' ')
+            echo "  - $skill_name: $pattern_count files"
+        fi
+    done
 done
 
 echo ""
 echo "Skills with examples/ directory:"
-for skill_dir in "$ROOT_DIR"/skills/m*/; do
-    if [ -d "$skill_dir/examples" ]; then
-        skill_name=$(basename "$skill_dir")
-        example_count=$(find "$skill_dir/examples" -name "*.md" | wc -l | tr -d ' ')
-        echo "  - $skill_name: $example_count files"
-    fi
+for layer_dir in "$SKILL_DIR/l1-mechanisms" "$SKILL_DIR/l2-design"; do
+    for skill_dir in "$layer_dir"/*/; do
+        if [ -d "$skill_dir/examples" ]; then
+            skill_name=$(basename "$skill_dir")
+            example_count=$(find "$skill_dir/examples" -name "*.md" | wc -l | tr -d ' ')
+            echo "  - $skill_name: $example_count files"
+        fi
+    done
 done
 
 echo ""

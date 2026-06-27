@@ -6,6 +6,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+SKILL_DIR="$ROOT_DIR/skills/rust-meta-cognition"
 
 echo "======================================"
 echo "Rust Skills Quality Check"
@@ -66,7 +67,7 @@ echo ""
 # =====================================
 echo "Checking agent tool declarations..."
 
-for agent_file in "$ROOT_DIR"/agents/*.md; do
+for agent_file in "$SKILL_DIR"/agents/*.md; do
     agent_name=$(basename "$agent_file" .md)
 
     if ! grep -q "^tools:" "$agent_file"; then
@@ -137,8 +138,8 @@ echo "Checking required directories..."
 
 required_dirs=(
     "skills"
-    "agents"
-    "commands"
+    "skills/rust-meta-cognition/agents"
+    "skills/rust-meta-cognition/commands"
     "cache"
     "tests"
     "templates"
@@ -171,7 +172,7 @@ if [ -f "$metadata_file" ]; then
     fi
 
     expected_unsafe=$(grep '"unsafe_rules"' "$metadata_file" | grep -oE '[0-9]+')
-    actual_unsafe=$(find "$ROOT_DIR/skills/unsafe-checker/rules" -name "*.md" ! -name "_*" 2>/dev/null | wc -l | tr -d '[:space:]')
+    actual_unsafe=$(find "$SKILL_DIR/l1-mechanisms/unsafe-checker/rules" -name "*.md" ! -name "_*" 2>/dev/null | wc -l | tr -d '[:space:]')
 
     if [ "$expected_unsafe" = "$actual_unsafe" ]; then
         pass "Unsafe rules count: $actual_unsafe"
