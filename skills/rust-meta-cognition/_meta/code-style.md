@@ -1,7 +1,7 @@
 # Rust 代码风格参考
 
 > 辅助参考。完整指南见 [Rust Style Guide](https://doc.rust-lang.org/style-guide/) 或 [Rust API Guidelines](https://rust-lang.github.io/api-guidelines/)。
-> unsafe 审查规则见 [`../skills/unsafe-checker/SKILL.md`](../skills/unsafe-checker/SKILL.md)。
+> unsafe 审查规则见 [`../l1-mechanisms/unsafe-checker/SKILL.md`](../l1-mechanisms/unsafe-checker/SKILL.md)。
 
 ## 数据类型
 

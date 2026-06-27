@@ -189,7 +189,7 @@ Cross-Layer Synthesis (主上下文)
 
 ### 相关文件
 
-- `skills/meta-cognition-parallel/SKILL.md` - 协调 Skill
+- `experimental/meta-cognition-parallel/SKILL.md` - 协调 Skill
 - `agents/layer1-analyzer.md` - 语言机制分析 (m01-m07)
 - `agents/layer2-analyzer.md` - 设计选择分析 (m09-m15)
 - `agents/layer3-analyzer.md` - 领域约束分析 (domain-*)

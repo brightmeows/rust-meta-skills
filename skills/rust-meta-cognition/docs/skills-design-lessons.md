@@ -122,34 +122,36 @@ description: "CRITICAL: Use for [purpose]. Triggers on: keyword1, keyword2, keyw
 
 ## 目录结构
 
-### 要求扁平结构
+### 按认知层分组
+
+```
+rust-meta-cognition/
+├── SKILL.md                      # 路由器 + 设置
+├── l1-mechanisms/                # Layer 1：语言机制
+│   ├── m01-ownership/SKILL.md
+│   ├── m02-resource/SKILL.md
+│   └── ...
+├── l2-design/                    # Layer 2：设计选择
+│   ├── m09-domain/SKILL.md
+│   ├── m10-performance/SKILL.md
+│   └── ...
+├── l3-domains/                   # Layer 3：领域约束
+│   ├── domain-fintech/SKILL.md
+│   ├── domain-web/SKILL.md
+│   └── ...
+└── experimental/                 # 实验性
+    └── meta-cognition-parallel/SKILL.md
+```
+
+**不在三层模型中的技能放 `skills/` 顶层：**
 
 ```
 skills/
-├── m01-ownership/SKILL.md     # Layer 1
-├── m02-resource/SKILL.md
-├── ...
-├── m09-domain/SKILL.md        # Layer 2
-├── m10-performance/SKILL.md
-├── ...
-├── domain-fintech/SKILL.md    # Layer 3
-├── domain-web/SKILL.md
-├── ...
-├── core-actionbook/SKILL.md   # 工具类
-├── 根 SKILL.md/SKILL.md       # 路由器
-└── 根 SKILL.md 代码风格/SKILL.md # 编码规范
-```
-
-**不要嵌套 skill：**
-
-```
-# 错误
-skills/domains/fintech/SKILL.md
-skills/core/actionbook/SKILL.md
-
-# 正确
-skills/domain-fintech/SKILL.md
-skills/core-actionbook/SKILL.md
+├── rust-meta-cognition/          # 主技能
+├── rust-learner/                 # 独立工具
+├── ...tools...
+├── .system/                      # 内部基础设施
+└── .experimental/                # 实验性工具（预留）
 ```
 
 ### 命名约定
@@ -367,9 +369,9 @@ name: core-actionbook
 | 文件 | 目的 |
 |------|---------|
 | `router/SKILL.md` | 主路由逻辑 |
-| `skills/m0x-*/SKILL.md` | Layer 1 Skill |
-| `skills/m1x-*/SKILL.md` | Layer 2 Skill |
-| `skills/domain-*/SKILL.md` | Layer 3 Skill |
+| `l1-mechanisms/m0x-*/SKILL.md` | Layer 1 Skill |
+| `l2-design/m1x-*/SKILL.md` | Layer 2 Skill |
+| `l3-domains/domain-*/SKILL.md` | Layer 3 Skill |
 | `.claude/hooks/rust-skill-eval-hook.sh` | Hook 脚本 |
 | `hooks/hooks.json` | 插件 Hook 配置 |
 | `.claude-plugin/plugin.json` | 插件清单 |
@@ -423,7 +425,7 @@ python tests/hook-matcher-test.py
 | 三层模型 | L1（机制）↔ L2（设计）↔ L3（领域） |
 | 强制追溯 | Hook 强制输出格式 |
 | 领域检测 | 关键词 → 双 Skill 加载 |
-| 扁平结构 | `skills/domain-web/` 而非 `skills/domains/web/` |
+| 按层分组 | `l3-domains/domain-web/` 而非 `skills/domains/web/` |
 | 关键词覆盖 | 英文 + 中文 + 错误码 |
 | 示例驱动 | Hook 和 Skill 中的正确与错误示例 |
 

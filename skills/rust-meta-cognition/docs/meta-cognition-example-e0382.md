@@ -182,5 +182,5 @@ E0382 → 问"谁应该拥有数据?" → 发现是审计记录 →
 ## 参考
 
 - `_meta/reasoning-framework.md` - 完整追溯框架
-- `skills/m01-ownership/SKILL.md` - 所有权技能
-- `skills/domain-fintech/SKILL.md` - 金融领域约束
+- `l1-mechanisms/m01-ownership/SKILL.md` - 所有权技能
+- `l3-domains/domain-fintech/SKILL.md` - 金融领域约束
