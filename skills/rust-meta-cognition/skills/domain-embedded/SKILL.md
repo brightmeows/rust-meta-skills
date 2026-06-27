@@ -11,10 +11,11 @@ user-invocable: false
 
 # 嵌入式领域
 
-## Project Context（自动注入）
-
-**目标配置：**
-!`cat .cargo/config.toml 2>/dev/null || echo "No .cargo/config.toml found"`
+> 提示：如需查看当前项目的 .cargo/config.toml 配置，手动执行：
+>
+> ```bash
+> cat .cargo/config.toml 2>/dev/null || echo "(未找到 .cargo/config.toml)"
+> ```
 
 ---
 

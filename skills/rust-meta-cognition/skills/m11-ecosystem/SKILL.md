@@ -10,9 +10,11 @@ user-invocable: false
 
 # 生态集成
 
-## Current Dependencies（自动注入）
-
-!`grep -A 100 '^\[dependencies\]' Cargo.toml 2>/dev/null | head -30 || echo "No Cargo.toml found"`
+> 提示：如需查看当前项目的 Cargo.toml 依赖，手动执行：
+>
+> ```bash
+> grep -A 30 '^\[dependencies\]' Cargo.toml 2>/dev/null || echo "(非 Rust 项目或未找到 Cargo.toml)"
+> ```
 
 ---
 
