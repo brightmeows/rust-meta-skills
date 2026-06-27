@@ -1,28 +1,6 @@
 # 触发关键词索引
 
-关键词到 Skill 的完整映射。
-
----
-
-## 错误码 → Skill
-
-| 错误码 | 描述 | 路由到 |
-|--------|------|--------|
-| E0382 | 使用了已移动的值 | m01-ownership |
-| E0597 | 生命周期太短 | m01-ownership |
-| E0506 | 不能对借用值赋值 | m01-ownership |
-| E0507 | 不能移出借用值 | m01-ownership |
-| E0515 | 返回局部引用 | m01-ownership |
-| E0716 | 临时值被丢弃 | m01-ownership |
-| E0106 | 缺少生命周期标注 | m01-ownership |
-| E0596 | 不能借用为可变 | m03-mutability |
-| E0499 | 多次可变借用 | m03-mutability |
-| E0502 | 借用冲突 | m03-mutability |
-| E0277 | Trait 约束未满足 | m04-zero-cost / m07-concurrency |
-| E0308 | 类型不匹配 | m04-zero-cost |
-| E0599 | 未找到方法 | m04-zero-cost |
-| E0038 | Trait 非对象安全 | m04-zero-cost |
-| E0433 | 找不到 crate/模块 | m11-ecosystem |
+> 错误码路由见 [`../SKILL.md`](../SKILL.md) 错误码路由表。
 
 ---
 
@@ -69,8 +47,8 @@
 
 ## 中文关键词 → Skill
 
-| 中文关键词 | Route To |
-|------------|----------|
+| 中文关键词 | 路由到 |
+|------------|--------|
 | 所有权, 借用, 生命周期 | m01-ownership |
 | 智能指针 | m02-resource |
 | 可变性, 内部可变性 | m03-mutability |
@@ -124,19 +102,19 @@
 
 | 文档 | 用途 |
 |------|------|
-| [skills-index.md](./skills-index.md) | 包含描述的完整技能目录 |
-| [meta-questions.md](./meta-questions.md) | 元问题类别定义 |
-| [domain-extensions.md](./domain-extensions.md) | 领域特定代码范围 |
+| [`skills-index.md`](./skills-index.md) | Skill 数量统计和交叉引用 |
+| [`meta-questions.md`](./meta-questions.md) | 元问题类别定义 |
+| [`domain-extensions.md`](./domain-extensions.md) | 领域特定代码范围 |
 
 ### 框架
 
 | 文件 | 用途 |
 |------|------|
-| [../_meta/reasoning-framework.md](../_meta/reasoning-framework.md) | 如何追溯认知层级 |
-| [../_meta/negotiation-protocol.md](../_meta/negotiation-protocol.md) | 何时触发协商 |
+| [`../_meta/reasoning-framework.md`](../_meta/reasoning-framework.md) | 如何追溯认知层级 |
+| [`../_meta/negotiation-protocol.md`](../_meta/negotiation-protocol.md) | 何时触发协商 |
 
 ### 路由器
 
 | 文件 | 用途 |
 |------|------|
-| [../SKILL.md](../SKILL.md) | 实现这些路由规则 |
+| [`../SKILL.md`](../SKILL.md) | 实现这些路由规则 |
