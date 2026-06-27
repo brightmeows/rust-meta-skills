@@ -2,8 +2,6 @@
 name: core-agent-browser
 description: >-
   内部：浏览器自动化（agent-browser）CLI 工作流支持。仅在需要浏览器自动化时使用。
-metadata:
-  internal: true
 user-invocable: false
 disable-model-invocation: true
 ---

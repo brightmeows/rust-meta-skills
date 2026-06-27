@@ -2,8 +2,7 @@
 name: core-fix-skill-docs
 description: >-
   内部：技能文档引用检查与修复。仅在 /fix-skill-docs 命令调用时使用。
-metadata:
-  internal: true
+
 disable-model-invocation: true
 context: fork
 agent: general-purpose
