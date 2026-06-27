@@ -213,6 +213,19 @@ flowchart TD
 > [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md)；
 > 协商流程示例见 [`router/examples/workflow.md`](router/examples/workflow.md)。
 
+## 元文件索引
+
+| 文件 | 用途 |
+|------|------|
+| [`_meta/layer-definitions.md`](_meta/layer-definitions.md) | 三层认知模型详细定义 |
+| [`_meta/reasoning-framework.md`](_meta/reasoning-framework.md) | 推理框架与追踪示例 |
+| [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md) | 协商协议完整规范 |
+| [`_meta/externalization.md`](_meta/externalization.md) | 外部化认知（`_reasoning/` 文件模式）|
+| [`router/patterns/negotiation.md`](router/patterns/negotiation.md) | 协商协议补充细节 |
+| [`router/examples/workflow.md`](router/examples/workflow.md) | 路由工作流程示例 |
+| [`router/integrations/os-checker.md`](router/integrations/os-checker.md) | OS-Checker 集成 |
+| [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md) | unsafe 审查规则 |
+
 ## 响应规范
 
 ### 默认输出模板
@@ -371,17 +384,3 @@ unsafe { slice.get_unchecked(index) }
 | [core-dynamic-skills](skills/core-dynamic-skills/SKILL.md) | 基于项目依赖动态管理 crate Skill |
 | [core-fix-skill-docs](skills/core-fix-skill-docs/SKILL.md) | 检查并修复动态 Skill 文档引用 |
 | [meta-cognition-parallel](skills/meta-cognition-parallel/SKILL.md) | 三层认知维度并行分析（实验性） |
-
-## 元文件索引
-
-| 文件 | 用途 |
-|------|------|
-| [`_meta/layer-definitions.md`](_meta/layer-definitions.md) | 三层认知模型详细定义 |
-| [`_meta/reasoning-framework.md`](_meta/reasoning-framework.md) | 推理框架与追踪示例 |
-| [`_meta/negotiation-protocol.md`](_meta/negotiation-protocol.md) | 协商协议完整规范 |
-| [`_meta/externalization.md`](_meta/externalization.md) | 外部化认知（`_reasoning/` 文件模式）|
-| [`router/patterns/negotiation.md`](router/patterns/negotiation.md) | 协商协议补充细节 |
-| [`router/examples/workflow.md`](router/examples/workflow.md) | 路由工作流程示例 |
-| [`router/integrations/os-checker.md`](router/integrations/os-checker.md) | OS-Checker 集成 |
-| [`skills/unsafe-checker/SKILL.md`](skills/unsafe-checker/SKILL.md) | unsafe 审查规则 |
-| [`../../README.md`](../../README.md) | 人类文档（安装、特性、命令）|
