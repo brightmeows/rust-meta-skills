@@ -70,6 +70,34 @@
       "description": "Trait 实现探索：发现 trait 实现关系并理解多态设计。触发词：/trait-impl, trait 实现, find implementations, 谁实现了, who implements",
       "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/rust-trait-explorer/SKILL.md",
       "digest": "sha256:0b04bffa051722d15a881479f24398a4050b3c0b3d46842a90da2a8feda7cb68"
+    },
+    {
+      "name": "core-actionbook",
+      "type": "skill-md",
+      "description": "内部：Actionbook MCP 选择器支持。仅在 rust-skills 工作流显式请求 actionbook 选择器时使用。",
+      "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/.system/core-actionbook/SKILL.md",
+      "digest": "sha256:edffd3d8f73c4f21b39b42a9fe433a5b2caffbc3ff7c28bbb4283ceda439162b"
+    },
+    {
+      "name": "core-agent-browser",
+      "type": "skill-md",
+      "description": "内部：浏览器自动化（agent-browser）CLI 工作流支持。仅在需要浏览器自动化时使用。",
+      "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/.system/core-agent-browser/SKILL.md",
+      "digest": "sha256:c8cbb230956b04392567807e9046ffffcbee86a9e5c9bac22f0a84f7351aeb13"
+    },
+    {
+      "name": "core-dynamic-skills",
+      "type": "skill-md",
+      "description": "内部：动态 crate 技能管理。仅在 /sync-crate-skills、/clean-crate-skills、 /update-crate-skill 命令调用时使用。",
+      "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/.system/core-dynamic-skills/SKILL.md",
+      "digest": "sha256:f76460febd538366df101c33ff862438f027ddd7f572322cf006305a4dd20c60"
+    },
+    {
+      "name": "core-fix-skill-docs",
+      "type": "skill-md",
+      "description": "内部：技能文档引用检查与修复。仅在 /fix-skill-docs 命令调用时使用。",
+      "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/.system/core-fix-skill-docs/SKILL.md",
+      "digest": "sha256:a6d1ea7a5747987789f6ac8136bfbc5c37da711019ba0868c6ed817478e680d8"
     }
   ]
 }
