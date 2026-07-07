@@ -26,11 +26,11 @@
 |------|--------|----------|
 | E0382 | **Layer 1** (语言机制) | 向上追溯 ↑ |
 
-**初始 Skill**: m01-ownership
+**初始 Skill**: mechanism-ownership
 
 ---
 
-### Step 2: Layer 1 分析 (m01-ownership)
+### Step 2: Layer 1 分析 (mechanism-ownership)
 
 **核心问题**: 谁应该拥有这个数据？
 
@@ -71,8 +71,8 @@ Rust: 使用 Arc<T> 共享，事件溯源模式
 
 ```
 "需要不可变的交易记录"
-    ↓ m09-domain: 建模为 Value Objects
-    ↓ m01-ownership: 使用 Arc 共享不可变数据
+    ↓ design-domain: 建模为 Value Objects
+    ↓ mechanism-ownership: 使用 Arc 共享不可变数据
 ```
 
 **设计决策**: 交易记录是 **Value Objects**，应该被 **不可变共享**，而不是移动或重复克隆。
@@ -172,9 +172,9 @@ E0382 → 问"谁应该拥有数据?" → 发现是审计记录 →
 
 | Skill | 作用 |
 |-------|------|
-| m01-ownership | Layer 1 入口，所有权机制 |
-| m02-resource | Arc/Rc 智能指针选择 |
-| m09-domain | Value Object vs Entity 建模 |
+| mechanism-ownership | Layer 1 入口，所有权机制 |
+| mechanism-resource | Arc/Rc 智能指针选择 |
+| design-domain | Value Object vs Entity 建模 |
 | domain-fintech | 金融领域约束 |
 
 ---
@@ -182,5 +182,5 @@ E0382 → 问"谁应该拥有数据?" → 发现是审计记录 →
 ## 参考
 
 - `_meta/reasoning-framework.md` - 完整追溯框架
-- `l1-mechanisms/m01-ownership/SKILL.md` - 所有权技能
+- `l1-mechanisms/mechanism-ownership/SKILL.md` - 所有权技能
 - `l3-domains/domain-fintech/SKILL.md` - 金融领域约束

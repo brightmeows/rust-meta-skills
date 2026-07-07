@@ -56,16 +56,16 @@ user-invocable: false
 
 ```
 “需要共享应用状态”
-    ↓ m07-concurrency：用 Arc 线程安全共享
-    ↓ m02-resource：可变状态用 Arc<RwLock<T>>
+    ↓ mechanism-concurrency：用 Arc 线程安全共享
+    ↓ mechanism-resource：可变状态用 Arc<RwLock<T>>
 
 “需要请求验证”
-    ↓ m05-type-driven：验证过的提取器
-    ↓ m06-error-handling：错误用 IntoResponse
+    ↓ mechanism-type-driven：验证过的提取器
+    ↓ mechanism-error-handling：错误用 IntoResponse
 
 “需要中间件栈”
-    ↓ m12-lifecycle：Tower 层
-    ↓ m04-zero-cost：基于 trait 的组合
+    ↓ design-lifecycle：Tower 层
+    ↓ mechanism-zero-cost：基于 trait 的组合
 ```
 
 ## 框架对比
@@ -120,7 +120,7 @@ user-invocable: false
 
 | 场景 | 参考 |
 |------|-----|
-| 异步模式 | m07-concurrency |
-| 状态管理 | m02-resource |
-| 错误处理 | m06-error-handling |
-| 中间件设计 | m12-lifecycle |
+| 异步模式 | mechanism-concurrency |
+| 状态管理 | mechanism-resource |
+| 错误处理 | mechanism-error-handling |
+| 中间件设计 | design-lifecycle |

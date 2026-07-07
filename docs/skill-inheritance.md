@@ -274,7 +274,7 @@ EOF
 # 使用方案 B
 rust-skills/
 ├── .claude/hooks/rust-skill-eval-hook.sh  # 注入 edition 2024 等规则
-└── skills/m01-ownership/SKILL.md          # 不需要符号链接
+└── skills/mechanism-ownership/SKILL.md          # 不需要符号链接
 ```
 
 ### 案例 3: 通用代码风格

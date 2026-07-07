@@ -186,7 +186,7 @@
 **提示词：** “如何在 tokio 中使用 async/await？”
 **验证清单：**
 
-- [ ] m07-concurrency 技能内容
+- [ ] mechanism-concurrency 技能内容
 - [ ] 代理提供的 tokio 特定信息
 - [ ] 组合成连贯的回复
 

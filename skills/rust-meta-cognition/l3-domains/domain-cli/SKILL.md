@@ -56,15 +56,15 @@ user-invocable: false
 
 ```
 “需要参数解析”
-    ↓ m05-type-driven：参数用派生结构体
+    ↓ mechanism-type-driven：参数用派生结构体
     ↓ clap：#[derive(Parser)]
 
 “需要配置分层”
-    ↓ m09-domain：配置作为领域对象
+    ↓ design-domain：配置作为领域对象
     ↓ figment/config：分层数据源
 
 “需要进度显示”
-    ↓ m12-lifecycle：进度条作为 RAII
+    ↓ design-lifecycle：进度条作为 RAII
     ↓ indicatif：ProgressBar
 ```
 
@@ -111,7 +111,7 @@ user-invocable: false
 
 | 场景 | 参考 |
 |------|-----|
-| 错误处理 | m06-error-handling |
-| 类型驱动参数 | m05-type-driven |
-| 进度生命周期 | m12-lifecycle |
-| 异步 CLI | m07-concurrency |
+| 错误处理 | mechanism-error-handling |
+| 类型驱动参数 | mechanism-type-driven |
+| 进度生命周期 | design-lifecycle |
+| 异步 CLI | mechanism-concurrency |

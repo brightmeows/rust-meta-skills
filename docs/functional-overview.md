@@ -42,13 +42,13 @@
 
 | Skill | 元问题 | 识别信号 |
 |-------|--------|----------|
-| **m01-ownership** | 谁应该拥有这个数据？ | E0382, E0597, move, borrow |
-| **m02-resource** | 需要什么所有权模型？ | Box, Rc, Arc, 智能指针 |
-| **m03-mutability** | 可变性边界在哪里？ | E0499, E0502, mut, Cell |
-| **m04-zero-cost** | 编译器能优化什么？ | E0277, generic, trait |
-| **m05-type-driven** | 类型如何编码约束？ | newtype, PhantomData |
-| **m06-error-handling** | 失败是预期还是异常？ | Result, Error, panic |
-| **m07-concurrency** | 如何保证编译期安全？ | Send, Sync, async |
+| **mechanism-ownership** | 谁应该拥有这个数据？ | E0382, E0597, move, borrow |
+| **mechanism-resource** | 需要什么所有权模型？ | Box, Rc, Arc, 智能指针 |
+| **mechanism-mutability** | 可变性边界在哪里？ | E0499, E0502, mut, Cell |
+| **mechanism-zero-cost** | 编译器能优化什么？ | E0277, generic, trait |
+| **mechanism-type-driven** | 类型如何编码约束？ | newtype, PhantomData |
+| **mechanism-error-handling** | 失败是预期还是异常？ | Result, Error, panic |
+| **mechanism-concurrency** | 如何保证编译期安全？ | Send, Sync, async |
 
 #### Layer 2: 设计选择 (WHAT)
 
@@ -56,13 +56,13 @@
 
 | Skill | 元问题 |
 |-------|--------|
-| **m09-domain** | 领域规则如何变成类型？ |
-| **m10-performance** | 性能瓶颈在哪里？ |
-| **m11-ecosystem** | 如何与现有系统集成？ |
-| **m12-lifecycle** | 资源生命周期模式？ |
-| **m13-domain-error** | 失败恢复策略？ |
-| **m14-mental-model** | 正确的心智模型？ |
-| **m15-anti-pattern** | 常见认知陷阱？ |
+| **design-domain** | 领域规则如何变成类型？ |
+| **design-performance** | 性能瓶颈在哪里？ |
+| **design-ecosystem** | 如何与现有系统集成？ |
+| **design-lifecycle** | 资源生命周期模式？ |
+| **design-domain-error** | 失败恢复策略？ |
+| **design-mental-model** | 正确的心智模型？ |
+| **design-anti-pattern** | 常见认知陷阱？ |
 
 #### Layer 3: 领域约束 (WHY)
 

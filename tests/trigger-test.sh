@@ -97,9 +97,9 @@ echo ""
 if [ -n "$SINGLE_TEST" ]; then
     test_hook "$SINGLE_TEST" "any-skill"
 else
-    test_hook "E0382 错误怎么解决" "m01-ownership"
-    test_hook "Arc 和 Rc 什么区别" "m02-resource"
-    test_hook "async await 怎么用" "m07-concurrency"
+    test_hook "E0382 错误怎么解决" "mechanism-ownership"
+    test_hook "Arc 和 Rc 什么区别" "mechanism-resource"
+    test_hook "async await 怎么用" "mechanism-concurrency"
     test_hook "unsafe 代码怎么写安全" "unsafe-checker"
 fi
 

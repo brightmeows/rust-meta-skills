@@ -41,9 +41,9 @@ Skill = 路由逻辑
 
 ```
 根 SKILL.md:
-  "E0382" → Layer 1 入口 → m01-ownership
+  "E0382" → Layer 1 入口 → mechanism-ownership
   "Web API" → Layer 3 上下文 → domain-web
-  "如何设计" → Layer 2 问题 → m09-domain
+  "如何设计" → Layer 2 问题 → design-domain
 ```
 
 **不是**：“这是 E0382 的含义”
@@ -119,9 +119,9 @@ Skill = 路由逻辑
 **目的**：为语言机制提供思维框架。
 
 ```
-m01-ownership：“谁应该拥有这个？”
-m02-resource：“需要什么所有权模型？”
-m07-concurrency：“是 CPU 密集型还是 I/O 密集型？”
+mechanism-ownership：“谁应该拥有这个？”
+mechanism-resource：“需要什么所有权模型？”
+mechanism-concurrency：“是 CPU 密集型还是 I/O 密集型？”
 ```
 
 这些不是“所有权教程”，而是**所有权推理协议**。
@@ -131,9 +131,9 @@ m07-concurrency：“是 CPU 密集型还是 I/O 密集型？”
 **目的**：提供设计决策框架。
 
 ```
-m09-domain：“领域规则如何成为类型？”
-m10-performance：“瓶颈在哪里？”
-m15-anti-pattern：“需要避免哪些认知陷阱？”
+design-domain：“领域规则如何成为类型？”
+design-performance：“瓶颈在哪里？”
+design-anti-pattern：“需要避免哪些认知陷阱？”
 ```
 
 这些不是“设计模式目录”，而是**设计思维协议**。
@@ -186,11 +186,11 @@ Claude 的思考：
 
 Skill 引导的思考：
   → 根 SKILL.md：检测到“Web API” → 加载 domain-web
-  → 根 SKILL.md：检测到“Send”错误 → 加载 m07-concurrency
-  → m07-concurrency：“不要只修复，要向上追溯”
+  → 根 SKILL.md：检测到“Send”错误 → 加载 mechanism-concurrency
+  → mechanism-concurrency：“不要只修复，要向上追溯”
   → domain-web：“处理器在任意线程上运行”（约束）
   → domain-web：“状态中的 Rc”是常见错误（验证）
-  → m07-concurrency：“多线程 + 共享 → Arc”（决策树）
+  → mechanism-concurrency：“多线程 + 共享 → Arc”（决策树）
   → 答案：Arc + State 提取器（领域最佳实践）
 ```
 
@@ -290,7 +290,7 @@ impl Skill {
 ```
 输入：E0382 + “Web API” 上下文
 过程：
-  1. 路由到 m01-ownership + domain-web
+  1. 路由到 mechanism-ownership + domain-web
   2. 问“谁应该拥有这个？”
   3. 检查领域约束“线程安全状态”
   4. 通过框架决策“共享 + 多线程 → Arc”

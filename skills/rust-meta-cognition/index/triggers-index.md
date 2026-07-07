@@ -10,26 +10,26 @@
 
 | 关键词 | 路由到 |
 |--------|--------|
-| ownership, borrow, lifetime, move, moved value | m01-ownership |
-| Box, Rc, Arc, RefCell, Cell, smart pointer | m02-resource |
-| mut, mutable, interior mutability | m03-mutability |
-| generic, trait, inline, monomorphization | m04-zero-cost |
-| type state, phantom, newtype, PhantomData | m05-type-driven |
-| Result, Option, Error, panic, ?, anyhow, thiserror | m06-error-handling |
-| Send, Sync, thread, async, await, channel, tokio | m07-concurrency |
+| ownership, borrow, lifetime, move, moved value | mechanism-ownership |
+| Box, Rc, Arc, RefCell, Cell, smart pointer | mechanism-resource |
+| mut, mutable, interior mutability | mechanism-mutability |
+| generic, trait, inline, monomorphization | mechanism-zero-cost |
+| type state, phantom, newtype, PhantomData | mechanism-type-driven |
+| Result, Option, Error, panic, ?, anyhow, thiserror | mechanism-error-handling |
+| Send, Sync, thread, async, await, channel, tokio | mechanism-concurrency |
 | unsafe, FFI, extern, raw pointer, transmute | unsafe-checker |
 
 ### Layer 2：设计选择
 
 | 关键词 | 路由到 |
 |--------|--------|
-| domain model, DDD, business logic | m09-domain |
-| performance, optimization, benchmark, profiling | m10-performance |
-| crate, dependency, interop, ecosystem | m11-ecosystem |
-| RAII, Drop, resource lifecycle | m12-lifecycle |
-| domain error, retry, circuit breaker, recovery | m13-domain-error |
-| mental model, how to think, learning Rust | m14-mental-model |
-| anti-pattern, common mistake, pitfall, code smell | m15-anti-pattern |
+| domain model, DDD, business logic | design-domain |
+| performance, optimization, benchmark, profiling | design-performance |
+| crate, dependency, interop, ecosystem | design-ecosystem |
+| RAII, Drop, resource lifecycle | design-lifecycle |
+| domain error, retry, circuit breaker, recovery | design-domain-error |
+| mental model, how to think, learning Rust | design-mental-model |
+| anti-pattern, common mistake, pitfall, code smell | design-anti-pattern |
 
 ### Layer 3：领域约束
 
@@ -49,21 +49,21 @@
 
 | 中文关键词 | 路由到 |
 |------------|--------|
-| 所有权, 借用, 生命周期 | m01-ownership |
-| 智能指针 | m02-resource |
-| 可变性, 内部可变性 | m03-mutability |
-| 泛型, 特征, 零成本抽象 | m04-zero-cost |
-| 类型状态, 新类型 | m05-type-driven |
-| 错误处理, 结果类型 | m06-error-handling |
-| 并发, 异步, 线程安全 | m07-concurrency |
+| 所有权, 借用, 生命周期 | mechanism-ownership |
+| 智能指针 | mechanism-resource |
+| 可变性, 内部可变性 | mechanism-mutability |
+| 泛型, 特征, 零成本抽象 | mechanism-zero-cost |
+| 类型状态, 新类型 | mechanism-type-driven |
+| 错误处理, 结果类型 | mechanism-error-handling |
+| 并发, 异步, 线程安全 | mechanism-concurrency |
 | 不安全, FFI | unsafe-checker |
-| 领域模型 | m09-domain |
-| 性能优化, 基准测试 | m10-performance |
-| 生态系统, 依赖 | m11-ecosystem |
-| 资源生命周期, RAII | m12-lifecycle |
-| 领域错误 | m13-domain-error |
-| 心智模型, 如何思考 | m14-mental-model |
-| 反模式, 常见错误 | m15-anti-pattern |
+| 领域模型 | design-domain |
+| 性能优化, 基准测试 | design-performance |
+| 生态系统, 依赖 | design-ecosystem |
+| 资源生命周期, RAII | design-lifecycle |
+| 领域错误 | design-domain-error |
+| 心智模型, 如何思考 | design-mental-model |
+| 反模式, 常见错误 | design-anti-pattern |
 
 ---
 

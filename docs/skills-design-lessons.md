@@ -128,12 +128,12 @@ description: "CRITICAL: Use for [purpose]. Triggers on: keyword1, keyword2, keyw
 rust-meta-cognition/
 ├── SKILL.md                      # 路由器 + 设置
 ├── l1-mechanisms/                # Layer 1：语言机制
-│   ├── m01-ownership/SKILL.md
-│   ├── m02-resource/SKILL.md
+│   ├── mechanism-ownership/SKILL.md
+│   ├── mechanism-resource/SKILL.md
 │   └── ...
 ├── l2-design/                    # Layer 2：设计选择
-│   ├── m09-domain/SKILL.md
-│   ├── m10-performance/SKILL.md
+│   ├── design-domain/SKILL.md
+│   ├── design-performance/SKILL.md
 │   └── ...
 ├── l3-domains/                   # Layer 3：领域约束
 │   ├── domain-fintech/SKILL.md
@@ -158,8 +158,8 @@ skills/
 
 | 类别 | 前缀 | 示例 |
 |----------|--------|---------|
-| Layer 1（机制） | `m0x-` | m01-ownership, m07-concurrency |
-| Layer 2（设计） | `m1x-` | m09-domain, m15-anti-pattern |
+| Layer 1（机制） | `m0x-` | mechanism-ownership, mechanism-concurrency |
+| Layer 2（设计） | `m1x-` | design-domain, design-anti-pattern |
 | Layer 3（领域） | `domain-` | domain-web, domain-fintech |
 | 核心工具 | `core-` | core-actionbook, core-dynamic-skills |
 | 其他 | 描述性名称 | 根 SKILL.md, 根 SKILL.md 代码风格 |
@@ -226,7 +226,7 @@ skills/
 问题：“Web API 配置错误：Rc 无法被发送”
 
 加载：
-1. m07-concurrency（L1 - Send/Sync 机制）
+1. mechanism-concurrency（L1 - Send/Sync 机制）
 2. domain-web（L3 - Web 状态管理约束）
 
 答案必须引用两个层级。
@@ -400,7 +400,7 @@ name: core-actionbook
 
 期望结果：
 1. Hook 触发
-2. 加载 m07-concurrency 和 domain-web
+2. 加载 mechanism-concurrency 和 domain-web
 3. 输出包含推理链
 4. 引用 domain-web 约束
 5. 推荐 Arc + State 提取器（而不仅仅是“使用 Arc”）

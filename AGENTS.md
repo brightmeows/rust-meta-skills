@@ -61,8 +61,8 @@ sha256sum skills/rust-meta-cognition/SKILL.md
 
 | 技能类型 | 放置目录 | 示例 |
 |---------|---------|------|
-| L1 语言机制 | `skills/rust-meta-cognition/l1-mechanisms/` | `m01-ownership/` |
-| L2 设计选择 | `skills/rust-meta-cognition/l2-design/` | `m09-domain/` |
+| L1 语言机制 | `skills/rust-meta-cognition/l1-mechanisms/` | `mechanism-ownership/` |
+| L2 设计选择 | `skills/rust-meta-cognition/l2-design/` | `design-domain/` |
 | L3 领域约束 | `skills/rust-meta-cognition/l3-domains/` | `domain-web/` |
 | 独立工具 | `skills/<name>/` | `skills/rust-learner/` |
 | 内部基础设施 | `skills/.system/<name>/` | `skills/.system/core-actionbook/` |

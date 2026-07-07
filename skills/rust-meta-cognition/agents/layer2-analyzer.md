@@ -17,13 +17,13 @@
 
 | 方面 | 参考技能 |
 |------|----------|
-| 领域建模 | m09-domain |
-| 性能模式 | m10-performance |
-| 生态/Crate 选择 | m11-ecosystem |
-| 资源生命周期 | m12-lifecycle |
-| 错误策略 | m13-domain-error |
-| 心智模型 | m14-mental-model |
-| 反模式 | m15-anti-pattern |
+| 领域建模 | design-domain |
+| 性能模式 | design-performance |
+| 生态/Crate 选择 | design-ecosystem |
+| 资源生命周期 | design-lifecycle |
+| 错误策略 | design-domain-error |
+| 心智模型 | design-mental-model |
+| 反模式 | design-anti-pattern |
 
 ## 任务
 

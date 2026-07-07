@@ -165,8 +165,8 @@ Cross-Layer Synthesis (主上下文)
 **传统方式（主上下文）:**
 
 ```
-├── 读取 m01-ownership    +1,200 tokens
-├── 读取 m02-resource     +1,000 tokens
+├── 读取 mechanism-ownership    +1,200 tokens
+├── 读取 mechanism-resource     +1,000 tokens
 ├── 读取 domain-fintech   +1,500 tokens
 ├── 中间推理              +2,500 tokens
 └── 最终回答              +1,800 tokens

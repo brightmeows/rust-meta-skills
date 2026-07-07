@@ -68,16 +68,16 @@ user-invocable: false
 
 ```
 “需要与 no_std 兼容的数据结构”
-    ↓ m02-resource：heapless 集合
+    ↓ mechanism-resource：heapless 集合
     ↓ 静态大小：heapless::Vec<T, N>
 
 “需要中断安全的状态”
-    ↓ m03-mutability：Mutex<RefCell<Option<T>>>
-    ↓ m07-concurrency：临界区
+    ↓ mechanism-mutability：Mutex<RefCell<Option<T>>>
+    ↓ mechanism-concurrency：临界区
 
 “需要外设所有权”
-    ↓ m01-ownership：单例模式
-    ↓ m12-lifecycle：硬件 RAII
+    ↓ mechanism-ownership：单例模式
+    ↓ design-lifecycle：硬件 RAII
 ```
 
 ## 层栈
@@ -139,7 +139,7 @@ user-invocable: false
 
 | 场景 | 参考 |
 |------|-----|
-| 静态内存 | m02-resource |
-| 内部可变性 | m03-mutability |
-| 中断模式 | m07-concurrency |
+| 静态内存 | mechanism-resource |
+| 内部可变性 | mechanism-mutability |
+| 中断模式 | mechanism-concurrency |
 | 硬件 Unsafe | unsafe-checker |

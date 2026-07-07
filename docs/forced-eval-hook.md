@@ -73,10 +73,10 @@ Claude 非常专注于目标，会直接用它认为最好的方式处理问题�
 │                                                              │
 │  执行:                                                       │
 │  1. 评估每个 skill                                           │
-│     m01-ownership: YES - E0382 是所有权错误                  │
-│     m02-resource: NO - 不涉及智能指针                        │
+│     mechanism-ownership: YES - E0382 是所有权错误                  │
+│     mechanism-resource: NO - 不涉及智能指针                        │
 │     ...                                                      │
-│  2. 调用 Skill(m01-ownership)                                │
+│  2. 调用 Skill(mechanism-ownership)                                │
 │  3. 使用 skill 内容回答问题                                   │
 └─────────────────────────────────────────────────────────────┘
 ```
@@ -128,8 +128,8 @@ CRITICAL: Before proceeding with this Rust-related request, you MUST:
 1. EVALUATE each available rust-skill against this prompt:
 
    OWNERSHIP & MEMORY:
-   - m01-ownership: ownership, borrow, lifetime, E0382, E0597
-   - m02-resource: Box, Rc, Arc, RefCell, smart pointer
+   - mechanism-ownership: ownership, borrow, lifetime, E0382, E0597
+   - mechanism-resource: Box, Rc, Arc, RefCell, smart pointer
    ...
 
 2. For EACH potentially relevant skill, state: "[skill-name]: YES/NO - [brief reason]"

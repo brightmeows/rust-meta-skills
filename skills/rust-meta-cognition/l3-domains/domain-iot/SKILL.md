@@ -54,15 +54,15 @@ user-invocable: false
 
 ```
 “需要离线优先设计”
-    ↓ m12-lifecycle：带持久化的本地缓冲区
-    ↓ m13-domain-error：退避重试
+    ↓ design-lifecycle：带持久化的本地缓冲区
+    ↓ design-domain-error：退避重试
 
 “需要能效”
     ↓ domain-embedded：no_std 模式
-    ↓ m10-performance：最小分配
+    ↓ design-performance：最小分配
 
 “需要可靠消息传递”
-    ↓ m07-concurrency：带超时的异步
+    ↓ mechanism-concurrency：带超时的异步
     ↓ MQTT：QoS 级别
 ```
 
@@ -118,6 +118,6 @@ user-invocable: false
 | 场景 | 参考 |
 |------|-----|
 | 嵌入式模式 | domain-embedded |
-| 异步模式 | m07-concurrency |
-| 错误恢复 | m13-domain-error |
-| 性能 | m10-performance |
+| 异步模式 | mechanism-concurrency |
+| 错误恢复 | design-domain-error |
+| 性能 | design-performance |

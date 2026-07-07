@@ -17,13 +17,13 @@
 
 | 方面 | 参考 Skills |
 |--------|---------------------|
-| 所有权与借用 | m01-ownership |
-| 智能指针 | m02-resource |
-| 可变性 | m03-mutability |
-| 泛型与 Trait | m04-zero-cost |
-| 类型系统 | m05-type-driven |
-| 错误处理 | m06-error-handling |
-| 并发原语 | m07-concurrency |
+| 所有权与借用 | mechanism-ownership |
+| 智能指针 | mechanism-resource |
+| 可变性 | mechanism-mutability |
+| 泛型与 Trait | mechanism-zero-cost |
+| 类型系统 | mechanism-type-driven |
+| 错误处理 | mechanism-error-handling |
+| 并发原语 | mechanism-concurrency |
 
 ## 任务
 

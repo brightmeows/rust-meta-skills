@@ -20,9 +20,9 @@ tests/
 │   └── agents.md           # Agent 集成测试
 │
 ├── pressure-scenarios/     # 边界情况测试
-│   ├── m01-ownership/
-│   ├── m06-error-handling/
-│   └── m07-concurrency/
+│   ├── mechanism-ownership/
+│   ├── mechanism-error-handling/
+│   └── mechanism-concurrency/
 │
 └── validation/             # 验证脚本
     └── validate-skills.sh
@@ -40,16 +40,16 @@ tests/
 
 ```bash
 # Layer 1：语言机制
-claude -p "E0382 错误怎么解决"           # m01-ownership
-claude -p "E0499 multiple mutable borrows" # m03-mutability
-claude -p "newtype pattern"              # m05-type-driven
-claude -p "Send Sync trait"              # m07-concurrency
+claude -p "E0382 错误怎么解决"           # mechanism-ownership
+claude -p "E0499 multiple mutable borrows" # mechanism-mutability
+claude -p "newtype pattern"              # mechanism-type-driven
+claude -p "Send Sync trait"              # mechanism-concurrency
 
 # Layer 2：设计选择
-claude -p "DDD in Rust"                  # m09-domain
-claude -p "benchmark 怎么写"              # m10-performance
-claude -p "RAII pattern"                 # m12-lifecycle
-claude -p "常见 Rust 错误"                # m15-anti-pattern
+claude -p "DDD in Rust"                  # design-domain
+claude -p "benchmark 怎么写"              # design-performance
+claude -p "RAII pattern"                 # design-lifecycle
+claude -p "常见 Rust 错误"                # design-anti-pattern
 
 # Layer 3：领域约束
 claude -p "axum web server"              # domain-web

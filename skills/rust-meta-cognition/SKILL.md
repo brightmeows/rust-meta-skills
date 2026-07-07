@@ -92,7 +92,7 @@ flowchart TD
    查功能路由表 → 按指定操作处理
 
 ⑦ 兜底
-   以上均不匹配 → 读取 l2-design/m14-mental-model/SKILL.md
+   以上均不匹配 → 读取 l2-design/design-mental-model/SKILL.md
 ```
 
 ### 关键词冲突解决
@@ -111,10 +111,10 @@ flowchart TD
 |----------|--------|------|----------|
 | E0xxx 错误 | 第 1 层 | 向上追溯 ↑ | 见下方错误码路由 |
 | 编译错误 | 第 1 层 | 向上追溯 ↑ | 见下方错误码路由 |
-| “怎么设计……” | 第 2 层 | 检查 L3，然后向下 ↓ | `m09-domain` |
+| “怎么设计……” | 第 2 层 | 检查 L3，然后向下 ↓ | `design-domain` |
 | “构建 [领域] 应用” | 第 3 层 | 向下追溯 ↓ | `domain-*` |
 | “最佳实践……” | 第 2 层 | 双向 | `m09-m15` |
-| 性能问题 | 第 1 → 2 层 | 向上再向下 | `m10-performance` |
+| 性能问题 | 第 1 → 2 层 | 向上再向下 | `design-performance` |
 
 ### 双层 Skill 加载
 
@@ -122,37 +122,37 @@ flowchart TD
 
 | 领域关键词 | L1 技能 | L3 技能 |
 |-----------|---------|---------|
-| Web API、HTTP、axum、handler | `m07-concurrency` | **`domain-web`** |
-| 交易、支付、trading、payment | `m01-ownership` | **`domain-fintech`** |
-| CLI、terminal、clap | `m07-concurrency` | **`domain-cli`** |
-| kubernetes、grpc、microservice | `m07-concurrency` | **`domain-cloud-native`** |
-| embedded、no_std、MCU | `m02-resource` | **`domain-embedded`** |
+| Web API、HTTP、axum、handler | `mechanism-concurrency` | **`domain-web`** |
+| 交易、支付、trading、payment | `mechanism-ownership` | **`domain-fintech`** |
+| CLI、terminal、clap | `mechanism-concurrency` | **`domain-cli`** |
+| kubernetes、grpc、microservice | `mechanism-concurrency` | **`domain-cloud-native`** |
+| embedded、no_std、MCU | `mechanism-resource` | **`domain-embedded`** |
 
 ### 第 1 层 Skill（语言机制）
 
 | 技能 | 核心问题 | 路由模式 |
 |------|----------|---------|
-| [m01-ownership](l1-mechanisms/m01-ownership/SKILL.md) | 谁拥有这份数据？ | move、borrow、lifetime、E0382、E0597 |
-| [m02-resource](l1-mechanisms/m02-resource/SKILL.md) | 哪种所有权模式合适？ | Box、Rc、Arc、RefCell、Cell |
-| [m03-mutability](l1-mechanisms/m03-mutability/SKILL.md) | 为什么必须改变？ | mut、内部可变性、E0499、E0502、E0596 |
-| [m04-zero-cost](l1-mechanisms/m04-zero-cost/SKILL.md) | 编译期还是运行期多态？ | generic、trait、inline、单态化 |
-| [m05-type-driven](l1-mechanisms/m05-type-driven/SKILL.md) | 类型如何防止非法状态？ | 类型状态、phantom、newtype |
-| [m06-error-handling](l1-mechanisms/m06-error-handling/SKILL.md) | 预期失败还是程序缺陷？ | Result、Error、panic、?、anyhow、thiserror |
-| [m07-concurrency](l1-mechanisms/m07-concurrency/SKILL.md) | CPU 密集型还是 I/O 密集型？ | Send、Sync、thread、async、channel |
-| [m08-testing](l1-mechanisms/m08-testing/SKILL.md) | 这个行为的正确性如何验证？ | test、测试、assert、单元测试、集成测试 |
+| [mechanism-ownership](l1-mechanisms/mechanism-ownership/SKILL.md) | 谁拥有这份数据？ | move、borrow、lifetime、E0382、E0597 |
+| [mechanism-resource](l1-mechanisms/mechanism-resource/SKILL.md) | 哪种所有权模式合适？ | Box、Rc、Arc、RefCell、Cell |
+| [mechanism-mutability](l1-mechanisms/mechanism-mutability/SKILL.md) | 为什么必须改变？ | mut、内部可变性、E0499、E0502、E0596 |
+| [mechanism-zero-cost](l1-mechanisms/mechanism-zero-cost/SKILL.md) | 编译期还是运行期多态？ | generic、trait、inline、单态化 |
+| [mechanism-type-driven](l1-mechanisms/mechanism-type-driven/SKILL.md) | 类型如何防止非法状态？ | 类型状态、phantom、newtype |
+| [mechanism-error-handling](l1-mechanisms/mechanism-error-handling/SKILL.md) | 预期失败还是程序缺陷？ | Result、Error、panic、?、anyhow、thiserror |
+| [mechanism-concurrency](l1-mechanisms/mechanism-concurrency/SKILL.md) | CPU 密集型还是 I/O 密集型？ | Send、Sync、thread、async、channel |
+| [mechanism-testing](l1-mechanisms/mechanism-testing/SKILL.md) | 这个行为的正确性如何验证？ | test、测试、assert、单元测试、集成测试 |
 | **`unsafe-checker`** | unsafe 代码审查 | unsafe、FFI、extern、raw pointer、transmute |
 
 ### 第 2 层 Skill（设计选择）
 
 | 技能 | 核心问题 | 路由模式 |
 |------|----------|---------|
-| [m09-domain](l2-design/m09-domain/SKILL.md) | 这个概念扮演什么角色？ | 领域模型、业务逻辑 |
-| [m10-performance](l2-design/m10-performance/SKILL.md) | 瓶颈在哪里？ | 性能、优化、基准测试 |
-| [m11-ecosystem](l2-design/m11-ecosystem/SKILL.md) | 该用哪个 crate？ | 集成、互操作、绑定 |
-| [m12-lifecycle](l2-design/m12-lifecycle/SKILL.md) | 何时创建 / 使用 / 清理？ | 资源生命周期、RAII、Drop |
-| [m13-domain-error](l2-design/m13-domain-error/SKILL.md) | 谁来处理这个错误？ | 领域错误、恢复策略 |
-| [m14-mental-model](l2-design/m14-mental-model/SKILL.md) | 如何理解这个问题？ | 心智模型、如何思考 |
-| [m15-anti-pattern](l2-design/m15-anti-pattern/SKILL.md) | 是否隐藏了设计问题？ | 反模式、常见错误、陷阱 |
+| [design-domain](l2-design/design-domain/SKILL.md) | 这个概念扮演什么角色？ | 领域模型、业务逻辑 |
+| [design-performance](l2-design/design-performance/SKILL.md) | 瓶颈在哪里？ | 性能、优化、基准测试 |
+| [design-ecosystem](l2-design/design-ecosystem/SKILL.md) | 该用哪个 crate？ | 集成、互操作、绑定 |
+| [design-lifecycle](l2-design/design-lifecycle/SKILL.md) | 何时创建 / 使用 / 清理？ | 资源生命周期、RAII、Drop |
+| [design-domain-error](l2-design/design-domain-error/SKILL.md) | 谁来处理这个错误？ | 领域错误、恢复策略 |
+| [design-mental-model](l2-design/design-mental-model/SKILL.md) | 如何理解这个问题？ | 心智模型、如何思考 |
+| [design-anti-pattern](l2-design/design-anti-pattern/SKILL.md) | 是否隐藏了设计问题？ | 反模式、常见错误、陷阱 |
 
 ### 第 3 层 Skill（领域约束）
 
@@ -170,21 +170,21 @@ flowchart TD
 
 | 错误码 | 路由到 | 常见原因 |
 |--------|--------|----------|
-| E0382 | `m01-ownership` | 使用了移动的值 |
-| E0597 | `m01-ownership` | 生命周期太短 |
-| E0506 | `m01-ownership` | 不能给借用的变量赋值 |
-| E0507 | `m01-ownership` | 不能移出借用内容 |
-| E0515 | `m01-ownership` | 返回局部引用 |
-| E0716 | `m01-ownership` | 临时值被丢弃 |
-| E0106 | `m01-ownership` | 缺少生命周期标注 |
-| E0596 | `m03-mutability` | 不能借用为可变 |
-| E0499 | `m03-mutability` | 多个可变借用 |
-| E0502 | `m03-mutability` | 借用冲突 |
+| E0382 | `mechanism-ownership` | 使用了移动的值 |
+| E0597 | `mechanism-ownership` | 生命周期太短 |
+| E0506 | `mechanism-ownership` | 不能给借用的变量赋值 |
+| E0507 | `mechanism-ownership` | 不能移出借用内容 |
+| E0515 | `mechanism-ownership` | 返回局部引用 |
+| E0716 | `mechanism-ownership` | 临时值被丢弃 |
+| E0106 | `mechanism-ownership` | 缺少生命周期标注 |
+| E0596 | `mechanism-mutability` | 不能借用为可变 |
+| E0499 | `mechanism-mutability` | 多个可变借用 |
+| E0502 | `mechanism-mutability` | 借用冲突 |
 | E0277 | `m04` / `m07` | Trait 约束未满足 |
-| E0308 | `m04-zero-cost` | 类型不匹配 |
-| E0599 | `m04-zero-cost` | 未找到方法 |
-| E0038 | `m04-zero-cost` | Trait 不是 object-safe |
-| E0433 | `m11-ecosystem` | 找不到 crate/模块 |
+| E0308 | `mechanism-zero-cost` | 类型不匹配 |
+| E0599 | `mechanism-zero-cost` | 未找到方法 |
+| E0038 | `mechanism-zero-cost` | Trait 不是 object-safe |
+| E0433 | `design-ecosystem` | 找不到 crate/模块 |
 
 ### 功能路由表
 
@@ -194,7 +194,7 @@ flowchart TD
 | API / 文档 / documentation | **`docs-researcher`** | 使用 agent |
 | 代码风格 / 命名 / clippy | **`根 SKILL.md 代码风格`** | 读取 skill |
 | unsafe 代码 / FFI | **`unsafe-checker`** | 读取 skill |
-| 测试 / 测试策略 / 断言 / 快照 | **`m08-testing`** | 读取 skill |
+| 测试 / 测试策略 / 断言 / 快照 | **`mechanism-testing`** | 读取 skill |
 | 代码审查 | **`os-checker`** | 见 [`router/integrations/os-checker.md`](router/integrations/os-checker.md) |
 
 ### 协商协议触发

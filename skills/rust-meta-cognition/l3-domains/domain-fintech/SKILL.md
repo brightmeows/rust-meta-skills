@@ -55,16 +55,16 @@ user-invocable: false
 
 ```
 “需要不可变的交易记录”
-    ↓ m09-domain：建模为值对象
-    ↓ m01-ownership：共享不可变数据用 Arc
+    ↓ design-domain：建模为值对象
+    ↓ mechanism-ownership：共享不可变数据用 Arc
 
 “需要精确的十进制运算”
-    ↓ m05-type-driven：用 Newtype 包装 Currency/Amount
+    ↓ mechanism-type-driven：用 Newtype 包装 Currency/Amount
     ↓ rust_decimal：使用 Decimal 类型
 
 “需要事务边界”
-    ↓ m12-lifecycle：事务范围用 RAII
-    ↓ m09-domain：聚合边界
+    ↓ design-lifecycle：事务范围用 RAII
+    ↓ design-domain：聚合边界
 ```
 
 ## 主要 Crates
@@ -108,7 +108,7 @@ user-invocable: false
 
 | 场景 | 参考 |
 |------|-----|
-| 值对象设计 | m09-domain |
-| 不可变的所有权 | m01-ownership |
-| Arc 共享 | m02-resource |
-| 错误处理 | m13-domain-error |
+| 值对象设计 | design-domain |
+| 不可变的所有权 | mechanism-ownership |
+| Arc 共享 | mechanism-resource |
+| 错误处理 | design-domain-error |

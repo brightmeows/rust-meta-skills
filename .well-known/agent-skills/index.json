@@ -6,7 +6,7 @@
       "type": "skill-md",
       "description": "Rust 问题路由入口：将编译错误、设计约束或领域需求分派到三层认知模型的对应子技能。 CRITICAL: 遇到 Rust 编译错误（E0382/E0597/E0277 等）、设计权衡、最佳实践比较、代码风格审查或项目默认设置时使用。 不用于纯 Rust 语法学习或 general 编程概念咨询。 Keywords: Rust 路由, 编译错误, 所有权, 借用, 生命周期, E0382, E0597, E0277, E0502, E0499, E0308, E0433, borrow error, 架构方案, 最佳实践, 代码风格, ownership, borrow, lifetime, async, concurrency",
       "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/rust-meta-cognition/SKILL.md",
-      "digest": "sha256:31ccd2faa7bef485594869d3dff9ab90c3369444726fd353788a7c9e53dfbfaf"
+      "digest": "sha256:0633c6cc05b1c31d84c78419b2a2edf884b5c074f88e0db376762a0053da74f2"
     },
     {
       "name": "rust-learner",
@@ -48,7 +48,7 @@
       "type": "skill-md",
       "description": "依赖树可视化：生成 Rust 项目依赖结构的 ASCII 艺术图。触发词：/deps-viz, 依赖图, 依赖可视化, dependency graph, visualize deps",
       "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/rust-deps-visualizer/SKILL.md",
-      "digest": "sha256:58efd8c194cdf5852c7063a34662805fba3b0fd028962392823ca9938b6255ab"
+      "digest": "sha256:b7e081788fcc6d942c512b870655f2d02a4519ce21a2481f9e8ac97cbe472852"
     },
     {
       "name": "rust-refactor-helper",

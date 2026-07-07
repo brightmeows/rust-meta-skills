@@ -147,7 +147,7 @@ purpose: 错误驱动的 skill 加载
 trigger: 问题中的模式关键词
 patterns: repository, factory, builder, state machine
 actions:
-  - 加载 m09-domain skill
+  - 加载 design-domain skill
   - 加载相关的 m0x 用于实现
   - 设置 Layer 2 焦点
 purpose: 模式感知的推理
@@ -228,24 +228,24 @@ hook:
 
 ## Skill 特定 Hook
 
-### 用于 m01-ownership
+### 用于 mechanism-ownership
 
 ```yaml
 hooks:
   - trigger: E0382, E0597, E0506, E0507, E0515, E0716, E0106
     actions:
-      - Load m01-ownership
+      - Load mechanism-ownership
       - Ask: "什么设计导致了这种所有权模式？"
       - 向上追溯到 Layer 2/3
 ```
 
-### 用于 m07-concurrency
+### 用于 mechanism-concurrency
 
 ```yaml
 hooks:
   - trigger: 带有 Send/Sync 的 E0277
     actions:
-      - Load m07-concurrency
+      - Load mechanism-concurrency
       - 检查异步上下文
       - 审查线程安全要求
 ```
@@ -274,7 +274,7 @@ hook:
   actions:
     - 暂停
     - 问："clone 是正确解决方案吗？"
-    - 加载 m01-ownership
+    - 加载 mechanism-ownership
     - 先追溯到 Layer 2
 purpose: 防止表面级别的修复
 ```
@@ -288,7 +288,7 @@ hook:
   actions:
     - 暂停
     - 问："应该传播这个错误吗？"
-    - 加载 m06-error-handling
+    - 加载 mechanism-error-handling
     - 考虑 ?、expect() 或正确处理
 purpose: 防止容易 panic 的代码
 ```
@@ -301,7 +301,7 @@ hook:
   actions:
     - 暂停
     - 问："可变的共享状态是必要的吗？"
-    - 加载 m07-concurrency
+    - 加载 mechanism-concurrency
     - 考虑消息传递替代方案
 purpose: 防止并发反模式
 ```

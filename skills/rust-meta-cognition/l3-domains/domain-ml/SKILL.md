@@ -56,15 +56,15 @@ user-invocable: false
 
 ```
 “需要高效数据管道”
-    ↓ m10-performance：流式、批处理
+    ↓ design-performance：流式、批处理
     ↓ polars：惰性求值
 
 “需要 GPU 推理”
-    ↓ m07-concurrency：异步数据加载
+    ↓ mechanism-concurrency：异步数据加载
     ↓ candle/tch-rs：CUDA 后端
 
 “需要模型加载”
-    ↓ m12-lifecycle：惰性初始化、缓存
+    ↓ design-lifecycle：惰性初始化、缓存
     ↓ tract：ONNX 运行时
 ```
 
@@ -119,7 +119,7 @@ user-invocable: false
 
 | 场景 | 参考 |
 |------|-----|
-| 性能 | m10-performance |
-| 惰性初始化 | m12-lifecycle |
-| 异步模式 | m07-concurrency |
-| 内存效率 | m01-ownership |
+| 性能 | design-performance |
+| 惰性初始化 | design-lifecycle |
+| 异步模式 | mechanism-concurrency |
+| 内存效率 | mechanism-ownership |

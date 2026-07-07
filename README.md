@@ -119,7 +119,7 @@ Layer 1: 语言机制 (HOW - 怎么做)
 | E0xxx 错误 | Layer 1 | 向上追溯 ↑ | m01-m07 |
 | "如何设计…" | Layer 2 | 双向追溯 | m09-m15 |
 | "[领域]应用开发" | Layer 3 | 向下追溯 ↓ | domain-* |
-| 性能问题 | Layer 1→2 | 先上后下 | m10-performance |
+| 性能问题 | Layer 1→2 | 先上后下 | design-performance |
 
 ## 技能一览
 
@@ -127,25 +127,25 @@ Layer 1: 语言机制 (HOW - 怎么做)
 
 | Skill | 核心问题 | 触发信号 |
 |-------|----------|----------|
-| m01-ownership | 谁应该拥有这个数据？ | E0382, E0597, move, borrow |
-| m02-resource | 需要什么所有权模式？ | Box, Rc, Arc, RefCell |
-| m03-mutability | 为什么这个数据需要改变？ | mut, Cell, E0596, E0499 |
-| m04-zero-cost | 编译时还是运行时多态？ | generic, trait, E0277 |
-| m05-type-driven | 类型如何防止无效状态？ | newtype, PhantomData |
-| m06-error-handling | 预期失败还是 bug？ | Result, Error, panic, ? |
-| m07-concurrency | CPU 密集还是 I/O 密集？ | async, Send, Sync, thread |
+| mechanism-ownership | 谁应该拥有这个数据？ | E0382, E0597, move, borrow |
+| mechanism-resource | 需要什么所有权模式？ | Box, Rc, Arc, RefCell |
+| mechanism-mutability | 为什么这个数据需要改变？ | mut, Cell, E0596, E0499 |
+| mechanism-zero-cost | 编译时还是运行时多态？ | generic, trait, E0277 |
+| mechanism-type-driven | 类型如何防止无效状态？ | newtype, PhantomData |
+| mechanism-error-handling | 预期失败还是 bug？ | Result, Error, panic, ? |
+| mechanism-concurrency | CPU 密集还是 I/O 密集？ | async, Send, Sync, thread |
 
 ### Layer 2：设计选择（m09-m15）
 
 | Skill | 核心问题 | 触发信号 |
 |-------|----------|----------|
-| m09-domain | 这个概念的领域角色是什么？ | DDD, entity, value object |
-| m10-performance | 瓶颈在哪里？ | benchmark, profiling |
-| m11-ecosystem | 哪个 crate 适合这个任务？ | crate 选择, 依赖 |
-| m12-lifecycle | 何时创建、使用、清理？ | RAII, Drop, lazy init |
-| m13-domain-error | 谁处理这个错误？ | retry, circuit breaker |
-| m14-mental-model | 如何正确思考这个概念？ | 学习 Rust, 为什么 |
-| m15-anti-pattern | 这个模式隐藏了设计问题吗？ | code smell, 常见错误 |
+| design-domain | 这个概念的领域角色是什么？ | DDD, entity, value object |
+| design-performance | 瓶颈在哪里？ | benchmark, profiling |
+| design-ecosystem | 哪个 crate 适合这个任务？ | crate 选择, 依赖 |
+| design-lifecycle | 何时创建、使用、清理？ | RAII, Drop, lazy init |
+| design-domain-error | 谁处理这个错误？ | retry, circuit breaker |
+| design-mental-model | 如何正确思考这个概念？ | 学习 Rust, 为什么 |
+| design-anti-pattern | 这个模式隐藏了设计问题吗？ | code smell, 常见错误 |
 
 ### Layer 3：领域约束（domain-*）
 

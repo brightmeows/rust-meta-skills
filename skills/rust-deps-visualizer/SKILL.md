@@ -113,6 +113,6 @@ my-project v0.1.0
 
 | 场景 | 参考 |
 |------|-----|
-| Crate 选择建议 | m11-ecosystem |
-| 工作空间管理 | m11-ecosystem |
-| 特性标志决策 | m11-ecosystem |
+| Crate 选择建议 | design-ecosystem |
+| 工作空间管理 | design-ecosystem |
+| 特性标志决策 | design-ecosystem |

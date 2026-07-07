@@ -31,22 +31,22 @@
 │ └── domain-ml: 张量运算、推理优化                    │
 ├─────────────────────────────────────────────────────┤
 │ Layer 2: 设计选择 (WHAT)                             │
-│ ├── m09-domain: DDD、实体 vs 值对象                  │
-│ ├── m10-performance: 基准测试、优化                  │
-│ ├── m11-ecosystem: Crate 选择、集成                  │
-│ ├── m12-lifecycle: RAII、Drop、资源模式              │
-│ ├── m13-domain-error: 重试、熔断器                   │
-│ ├── m14-mental-model: 学习、心智模型                 │
-│ └── m15-anti-pattern: 代码异味、陷阱                 │
+│ ├── design-domain: DDD、实体 vs 值对象                  │
+│ ├── design-performance: 基准测试、优化                  │
+│ ├── design-ecosystem: Crate 选择、集成                  │
+│ ├── design-lifecycle: RAII、Drop、资源模式              │
+│ ├── design-domain-error: 重试、熔断器                   │
+│ ├── design-mental-model: 学习、心智模型                 │
+│ └── design-anti-pattern: 代码异味、陷阱                 │
 ├─────────────────────────────────────────────────────┤
 │ Layer 1: 语言机制 (HOW)                              │
-│ ├── m01-ownership: 所有权、借用、生命周期            │
-│ ├── m02-resource: Box、Rc、Arc、智能指针             │
-│ ├── m03-mutability: mut、Cell、RefCell、内部可变性   │
-│ ├── m04-zero-cost: 泛型、trait、分发                 │
-│ ├── m05-type-driven: Newtype、PhantomData、状态      │
-│ ├── m06-error-handling: Result、Error、panic         │
-│ └── m07-concurrency: Send、Sync、async、channel      │
+│ ├── mechanism-ownership: 所有权、借用、生命周期            │
+│ ├── mechanism-resource: Box、Rc、Arc、智能指针             │
+│ ├── mechanism-mutability: mut、Cell、RefCell、内部可变性   │
+│ ├── mechanism-zero-cost: 泛型、trait、分发                 │
+│ ├── mechanism-type-driven: Newtype、PhantomData、状态      │
+│ ├── mechanism-error-handling: Result、Error、panic         │
+│ └── mechanism-concurrency: Send、Sync、async、channel      │
 └─────────────────────────────────────────────────────┘
 ```
 
@@ -96,25 +96,25 @@
 
 | Skill | 核心问题 | 触发条件 |
 |-------|----------|----------|
-| **m01-ownership** | 谁应该拥有这个数据？ | E0382, E0597, E0506, E0507, E0515, E0716, move, borrow, lifetime |
-| **m02-resource** | 需要什么所有权模型？ | Box, Rc, Arc, Weak, RefCell, Cell, 智能指针 |
-| **m03-mutability** | 不可变性边界在哪里？ | E0596, E0499, E0502, mut, 内部可变性 |
-| **m04-zero-cost** | 编译器能优化什么？ | E0277, E0308, E0599, generic, trait, 单态化 |
-| **m05-type-driven** | 类型如何编码约束？ | PhantomData, newtype, 类型状态, 建造者模式 |
-| **m06-error-handling** | 失败是预期还是异常？ | Result, Option, Error, panic, anyhow, thiserror |
-| **m07-concurrency** | 如何在编译期保证安全？ | Send, Sync, thread, async, await, Mutex, channel |
+| **mechanism-ownership** | 谁应该拥有这个数据？ | E0382, E0597, E0506, E0507, E0515, E0716, move, borrow, lifetime |
+| **mechanism-resource** | 需要什么所有权模型？ | Box, Rc, Arc, Weak, RefCell, Cell, 智能指针 |
+| **mechanism-mutability** | 不可变性边界在哪里？ | E0596, E0499, E0502, mut, 内部可变性 |
+| **mechanism-zero-cost** | 编译器能优化什么？ | E0277, E0308, E0599, generic, trait, 单态化 |
+| **mechanism-type-driven** | 类型如何编码约束？ | PhantomData, newtype, 类型状态, 建造者模式 |
+| **mechanism-error-handling** | 失败是预期还是异常？ | Result, Option, Error, panic, anyhow, thiserror |
+| **mechanism-concurrency** | 如何在编译期保证安全？ | Send, Sync, thread, async, await, Mutex, channel |
 
 ### Layer 2: 设计选择 (7 个)
 
 | Skill | 核心问题 | 关注点 |
 |-------|----------|--------|
-| **m09-domain** | 领域规则如何变成类型？ | DDD, 实体, 值对象, 聚合, 仓储 |
-| **m10-performance** | 性能瓶颈在哪里？ | 基准测试, 性能分析, flamegraph, criterion |
-| **m11-ecosystem** | 如何与现有系统集成？ | Crate 选择, FFI, PyO3, WASM, feature flags |
-| **m12-lifecycle** | 领域资源模式是什么？ | RAII, Drop, 连接池, OnceCell |
-| **m13-domain-error** | 失败恢复策略是什么？ | 重试, 熔断器, 优雅降级 |
-| **m14-mental-model** | 正确的心智模型是什么？ | 学习 Rust, 可视化内存, 类比 |
-| **m15-anti-pattern** | 常见认知陷阱有哪些？ | 代码异味, 新手错误, 惯用写法 |
+| **design-domain** | 领域规则如何变成类型？ | DDD, 实体, 值对象, 聚合, 仓储 |
+| **design-performance** | 性能瓶颈在哪里？ | 基准测试, 性能分析, flamegraph, criterion |
+| **design-ecosystem** | 如何与现有系统集成？ | Crate 选择, FFI, PyO3, WASM, feature flags |
+| **design-lifecycle** | 领域资源模式是什么？ | RAII, Drop, 连接池, OnceCell |
+| **design-domain-error** | 失败恢复策略是什么？ | 重试, 熔断器, 优雅降级 |
+| **design-mental-model** | 正确的心智模型是什么？ | 学习 Rust, 可视化内存, 类比 |
+| **design-anti-pattern** | 常见认知陷阱有哪些？ | 代码异味, 新手错误, 惯用写法 |
 
 ### Layer 3: 领域约束 (7 个)
 

@@ -144,7 +144,7 @@
 查询：“我的交易系统中的 E0382”
 分析：错误码 + 领域上下文
 操作：
-  - 调度 m01-ownership（标准——错误已定义）
+  - 调度 mechanism-ownership（标准——错误已定义）
   - 调度 domain-fintech（negotiation: true——领域上下文）
 综合：将错误解释与领域合适的修复方案结合
 ```

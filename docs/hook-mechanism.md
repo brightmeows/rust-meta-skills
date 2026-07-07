@@ -265,13 +265,13 @@ EOF
 问题: "Web API 报错 Send not satisfied"
 
 传统方式 (只加载 L1):
-  → 检测 "Send" → 加载 m07-concurrency
+  → 检测 "Send" → 加载 mechanism-concurrency
   → 输出: "用 Arc"
   → 缺失: Web 领域上下文
 
 强制双加载:
   → 检测 "Web API" → 标记领域 = domain-web
-  → 检测 "Send" → 标记机制 = m07-concurrency
+  → 检测 "Send" → 标记机制 = mechanism-concurrency
   → 同时加载两个 Skills
   → 输出: 符合 Web 最佳实践的方案
 ```
@@ -417,7 +417,7 @@ for case in test_cases:
 ⏺ Skill(根 SKILL.md)
   ⎿ Successfully loaded skill
 
-⏺ Skill(m07-concurrency)
+⏺ Skill(mechanism-concurrency)
   ⎿ Successfully loaded skill
 
 ⏺ Skill(domain-web)

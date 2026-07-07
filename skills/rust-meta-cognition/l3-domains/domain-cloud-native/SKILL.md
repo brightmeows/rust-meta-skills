@@ -56,16 +56,16 @@ user-invocable: false
 
 ```
 “需要分布式追踪”
-    ↓ m12-lifecycle：Span 生命周期
+    ↓ design-lifecycle：Span 生命周期
     ↓ tracing + opentelemetry
 
 “需要优雅关闭”
-    ↓ m07-concurrency：信号处理
-    ↓ m12-lifecycle：连接排空
+    ↓ mechanism-concurrency：信号处理
+    ↓ design-lifecycle：连接排空
 
 “需要健康检查”
     ↓ domain-web：HTTP 端点
-    ↓ m06-error-handling：健康状态
+    ↓ mechanism-error-handling：健康状态
 ```
 
 ## 主要 Crates
@@ -112,7 +112,7 @@ user-invocable: false
 
 | 场景 | 参考 |
 |------|-----|
-| 异步模式 | m07-concurrency |
+| 异步模式 | mechanism-concurrency |
 | HTTP 端点 | domain-web |
-| 错误处理 | m13-domain-error |
-| 资源生命周期 | m12-lifecycle |
+| 错误处理 | design-domain-error |
+| 资源生命周期 | design-lifecycle |

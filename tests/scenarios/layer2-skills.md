@@ -2,14 +2,14 @@
 
 > Layer 2：设计选择
 
-## m05-type-driven
+## mechanism-type-driven
 
 | Query | Expected Skill | Expected Elements |
 |-------|----------------|-------------------|
-| `newtype pattern` | m05-type-driven | wrapper, type safety |
-| `PhantomData 用法` | m05-type-driven | marker, lifetime |
-| `type state pattern` | m05-type-driven | state machine, compile-time |
-| `零大小类型 ZST` | m05-type-driven | zero-sized, marker |
+| `newtype pattern` | mechanism-type-driven | wrapper, type safety |
+| `PhantomData 用法` | mechanism-type-driven | marker, lifetime |
+| `type state pattern` | mechanism-type-driven | state machine, compile-time |
+| `零大小类型 ZST` | mechanism-type-driven | zero-sized, marker |
 
 ### Test Commands
 
@@ -20,14 +20,14 @@ claude -p "PhantomData 用法"
 
 ---
 
-## m09-domain
+## design-domain
 
 | Query | Expected Skill | Expected Elements |
 |-------|----------------|-------------------|
-| `DDD in Rust` | m09-domain | aggregate, entity |
-| `domain model 设计` | m09-domain | value object, repository |
-| `领域建模` | m09-domain | bounded context |
-| `aggregate root` | m09-domain | invariant, consistency |
+| `DDD in Rust` | design-domain | aggregate, entity |
+| `domain model 设计` | design-domain | value object, repository |
+| `领域建模` | design-domain | bounded context |
+| `aggregate root` | design-domain | invariant, consistency |
 
 ### Test Commands
 
@@ -38,14 +38,14 @@ claude -p "领域建模"
 
 ---
 
-## m10-performance
+## design-performance
 
 | Query | Expected Skill | Expected Elements |
 |-------|----------------|-------------------|
-| `Rust 性能优化` | m10-performance | profiling, bottleneck |
-| `benchmark 怎么写` | m10-performance | criterion, bench |
-| `criterion 用法` | m10-performance | black_box, throughput |
-| `零拷贝 zero copy` | m10-performance | Cow, bytes |
+| `Rust 性能优化` | design-performance | profiling, bottleneck |
+| `benchmark 怎么写` | design-performance | criterion, bench |
+| `criterion 用法` | design-performance | black_box, throughput |
+| `零拷贝 zero copy` | design-performance | Cow, bytes |
 
 ### Test Commands
 
@@ -56,14 +56,14 @@ claude -p "benchmark 怎么写"
 
 ---
 
-## m11-ecosystem
+## design-ecosystem
 
 | Query | Expected Skill | Expected Elements |
 |-------|----------------|-------------------|
-| `推荐什么 crate` | m11-ecosystem | crates.io, popularity |
-| `依赖选择` | m11-ecosystem | maintenance, features |
-| `Cargo.toml 依赖管理` | m11-ecosystem | version, workspace |
-| `feature flags 用法` | m11-ecosystem | optional, cfg |
+| `推荐什么 crate` | design-ecosystem | crates.io, popularity |
+| `依赖选择` | design-ecosystem | maintenance, features |
+| `Cargo.toml 依赖管理` | design-ecosystem | version, workspace |
+| `feature flags 用法` | design-ecosystem | optional, cfg |
 
 ### Test Commands
 
@@ -74,14 +74,14 @@ claude -p "feature flags 用法"
 
 ---
 
-## m12-lifecycle
+## design-lifecycle
 
 | Query | Expected Skill | Expected Elements |
 |-------|----------------|-------------------|
-| `RAII pattern` | m12-lifecycle | Drop, scope |
-| `Drop trait 实现` | m12-lifecycle | destructor, cleanup |
-| `资源释放顺序` | m12-lifecycle | drop order, field |
-| `scopeguard 用法` | m12-lifecycle | defer, guard |
+| `RAII pattern` | design-lifecycle | Drop, scope |
+| `Drop trait 实现` | design-lifecycle | destructor, cleanup |
+| `资源释放顺序` | design-lifecycle | drop order, field |
+| `scopeguard 用法` | design-lifecycle | defer, guard |
 
 ### Test Commands
 
@@ -92,14 +92,14 @@ claude -p "Drop trait 实现"
 
 ---
 
-## m13-domain-error
+## design-domain-error
 
 | Query | Expected Skill | Expected Elements |
 |-------|----------------|-------------------|
-| `retry 策略` | m13-domain-error | backoff, exponential |
-| `circuit breaker 实现` | m13-domain-error | state, threshold |
-| `错误恢复模式` | m13-domain-error | fallback, graceful |
-| `错误分类处理` | m13-domain-error | transient, permanent |
+| `retry 策略` | design-domain-error | backoff, exponential |
+| `circuit breaker 实现` | design-domain-error | state, threshold |
+| `错误恢复模式` | design-domain-error | fallback, graceful |
+| `错误分类处理` | design-domain-error | transient, permanent |
 
 ### Test Commands
 
@@ -110,14 +110,14 @@ claude -p "circuit breaker 实现"
 
 ---
 
-## m14-mental-model
+## design-mental-model
 
 | Query | Expected Skill | Expected Elements |
 |-------|----------------|-------------------|
-| `怎么学 Rust` | m14-mental-model | ownership, mindset |
-| `Rust 思维方式` | m14-mental-model | borrow checker, mental model |
-| `从 Java 转 Rust` | m14-mental-model | comparison, transition |
-| `为什么 Rust 这样设计` | m14-mental-model | rationale, philosophy |
+| `怎么学 Rust` | design-mental-model | ownership, mindset |
+| `Rust 思维方式` | design-mental-model | borrow checker, mental model |
+| `从 Java 转 Rust` | design-mental-model | comparison, transition |
+| `为什么 Rust 这样设计` | design-mental-model | rationale, philosophy |
 
 ### Test Commands
 
@@ -128,14 +128,14 @@ claude -p "Rust 思维方式"
 
 ---
 
-## m15-anti-pattern
+## design-anti-pattern
 
 | Query | Expected Skill | Expected Elements |
 |-------|----------------|-------------------|
-| `常见 Rust 错误` | m15-anti-pattern | pitfall, mistake |
-| `code smell Rust` | m15-anti-pattern | refactor, improve |
-| `Rust 反模式` | m15-anti-pattern | avoid, better |
-| `clone 滥用` | m15-anti-pattern | unnecessary, performance |
+| `常见 Rust 错误` | design-anti-pattern | pitfall, mistake |
+| `code smell Rust` | design-anti-pattern | refactor, improve |
+| `Rust 反模式` | design-anti-pattern | avoid, better |
+| `clone 滥用` | design-anti-pattern | unnecessary, performance |
 
 ### Test Commands
 

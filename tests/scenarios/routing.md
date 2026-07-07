@@ -5,7 +5,7 @@
 ### Test 1：所有权路由
 
 **提示词：** “E0382 use of moved value”
-**预期路由：** m01-ownership
+**预期路由：** mechanism-ownership
 **验证清单：**
 
 - [ ] 正确触发技能
@@ -14,7 +14,7 @@
 ### Test 2：错误处理路由
 
 **提示词：** “何时使用 Result vs panic？”
-**预期路由：** m06-error-handling
+**预期路由：** mechanism-error-handling
 **验证清单：**
 
 - [ ] 正确触发技能
@@ -23,7 +23,7 @@
 ### Test 3：并发路由
 
 **提示词：** “为什么 Rc 不是 Send？”
-**预期路由：** m07-concurrency
+**预期路由：** mechanism-concurrency
 **验证清单：**
 
 - [ ] 正确触发技能
@@ -32,7 +32,7 @@
 ### Test 4：性能路由
 
 **提示词：** “如何分析 Rust 代码性能？”
-**预期路由：** m10-performance
+**预期路由：** design-performance
 **验证清单：**
 
 - [ ] 正确触发技能
@@ -41,7 +41,7 @@
 ### Test 5：反模式路由
 
 **提示词：** “到处使用 .clone() 不好吗？”
-**预期路由：** m15-anti-pattern
+**预期路由：** design-anti-pattern
 **验证清单：**
 
 - [ ] 正确触发技能
@@ -125,7 +125,7 @@
 ### Test 13：所有权 + 并发
 
 **提示词：** “为什么不能在多线程中使用 Rc？”
-**预期路由：** m07-concurrency（主要），m01-ownership（相关）
+**预期路由：** mechanism-concurrency（主要），mechanism-ownership（相关）
 **验证清单：**
 
 - [ ] Send/Sync 解释
@@ -134,7 +134,7 @@
 ### Test 14：错误 + 领域
 
 **提示词：** “异步 Web 服务器中的错误处理”
-**预期路由：** m06-error-handling, m07-concurrency
+**预期路由：** mechanism-error-handling, mechanism-concurrency
 **验证清单：**
 
 - [ ] 异步错误模式
@@ -147,12 +147,12 @@
 ### Test 15：E0382 → m01
 
 **提示词：** “E0382”
-**预期路由：** m01-ownership
+**预期路由：** mechanism-ownership
 
 ### Test 16：E0277 → m04 或 m07
 
 **提示词：** “E0277 trait bound not satisfied”
-**预期路由：** m04-zero-cost 或 m07-concurrency
+**预期路由：** mechanism-zero-cost 或 mechanism-concurrency
 **验证清单：**
 
 - [ ] 取决于上下文（Send/Sync → m07）
@@ -160,7 +160,7 @@
 ### Test 17：E0596 → m03
 
 **提示词：** “E0596 cannot borrow as mutable”
-**预期路由：** m03-mutability
+**预期路由：** mechanism-mutability
 
 ---
 
@@ -169,7 +169,7 @@
 ### Test 18：中文所有权查询
 
 **提示词：** “所有权是什么？”
-**预期路由：** m01-ownership
+**预期路由：** mechanism-ownership
 **验证清单：**
 
 - [ ] 正确触发技能
@@ -186,7 +186,7 @@
 ### Test 20：中文错误查询
 
 **提示词：** “借用检查器报错怎么办？”
-**预期路由：** m01-ownership
+**预期路由：** mechanism-ownership
 **验证清单：**
 
 - [ ] 提供借用检查器帮助

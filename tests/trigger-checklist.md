@@ -12,149 +12,149 @@
 
 ## Layer 1：语言机制
 
-## 所有权（m01-ownership）
+## 所有权（mechanism-ownership）
 
 | 查询 | 期望的 Skill |
 |-------|----------------|
-| `E0382 错误怎么解决` | m01-ownership |
-| `value moved after use` | m01-ownership |
-| `borrowed value does not live long enough` | m01-ownership |
-| `怎么解决借用错误` | m01-ownership |
-| `lifetime annotation` | m01-ownership |
-| `E0597 lifetime too short` | m01-ownership |
+| `E0382 错误怎么解决` | mechanism-ownership |
+| `value moved after use` | mechanism-ownership |
+| `borrowed value does not live long enough` | mechanism-ownership |
+| `怎么解决借用错误` | mechanism-ownership |
+| `lifetime annotation` | mechanism-ownership |
+| `E0597 lifetime too short` | mechanism-ownership |
 
-## 资源（m02-resource）
-
-| 查询 | 期望的 Skill |
-|-------|----------------|
-| `Arc 和 Rc 区别` | m02-resource |
-| `Box vs Rc vs Arc` | m02-resource |
-| `smart pointer 选择` | m02-resource |
-| `shared ownership` | m02-resource |
-
-## 可变性（m03-mutability）
+## 资源（mechanism-resource）
 
 | 查询 | 期望的 Skill |
 |-------|----------------|
-| `E0499 multiple mutable borrows` | m03-mutability |
-| `E0502 borrow conflict` | m03-mutability |
-| `E0596 cannot borrow as mutable` | m03-mutability |
-| `Cell vs RefCell` | m03-mutability |
-| `interior mutability` | m03-mutability |
+| `Arc 和 Rc 区别` | mechanism-resource |
+| `Box vs Rc vs Arc` | mechanism-resource |
+| `smart pointer 选择` | mechanism-resource |
+| `shared ownership` | mechanism-resource |
 
-## 零成本抽象（m04-zero-cost）
-
-| 查询 | 期望的 Skill |
-|-------|----------------|
-| `E0277 trait bound not satisfied` | m04-zero-cost |
-| `generic vs trait object` | m04-zero-cost |
-| `monomorphization` | m04-zero-cost |
-| `E0308 type mismatch` | m04-zero-cost |
-| `E0282 type annotations needed` | m04-zero-cost |
-
-## 类型驱动（m05-type-driven）
+## 可变性（mechanism-mutability）
 
 | 查询 | 期望的 Skill |
 |-------|----------------|
-| `newtype pattern` | m05-type-driven |
-| `PhantomData 用法` | m05-type-driven |
-| `type state pattern` | m05-type-driven |
-| `零大小类型 ZST` | m05-type-driven |
-| `marker trait` | m05-type-driven |
+| `E0499 multiple mutable borrows` | mechanism-mutability |
+| `E0502 borrow conflict` | mechanism-mutability |
+| `E0596 cannot borrow as mutable` | mechanism-mutability |
+| `Cell vs RefCell` | mechanism-mutability |
+| `interior mutability` | mechanism-mutability |
 
-## 错误处理（m06-error-handling）
-
-| 查询 | 期望的 Skill |
-|-------|----------------|
-| `什么时候用 panic` | m06-error-handling |
-| `Result vs Option` | m06-error-handling |
-| `thiserror 怎么用` | m06-error-handling |
-| `anyhow vs eyre` | m06-error-handling |
-| `error propagation` | m06-error-handling |
-
-## 并发（m07-concurrency）
+## 零成本抽象（mechanism-zero-cost）
 
 | 查询 | 期望的 Skill |
 |-------|----------------|
-| `cannot be sent between threads` | m07-concurrency |
-| `async await 怎么用` | m07-concurrency |
-| `Send Sync trait` | m07-concurrency |
-| `deadlock 怎么避免` | m07-concurrency |
-| `如何在线程间共享数据` | m07-concurrency |
+| `E0277 trait bound not satisfied` | mechanism-zero-cost |
+| `generic vs trait object` | mechanism-zero-cost |
+| `monomorphization` | mechanism-zero-cost |
+| `E0308 type mismatch` | mechanism-zero-cost |
+| `E0282 type annotations needed` | mechanism-zero-cost |
+
+## 类型驱动（mechanism-type-driven）
+
+| 查询 | 期望的 Skill |
+|-------|----------------|
+| `newtype pattern` | mechanism-type-driven |
+| `PhantomData 用法` | mechanism-type-driven |
+| `type state pattern` | mechanism-type-driven |
+| `零大小类型 ZST` | mechanism-type-driven |
+| `marker trait` | mechanism-type-driven |
+
+## 错误处理（mechanism-error-handling）
+
+| 查询 | 期望的 Skill |
+|-------|----------------|
+| `什么时候用 panic` | mechanism-error-handling |
+| `Result vs Option` | mechanism-error-handling |
+| `thiserror 怎么用` | mechanism-error-handling |
+| `anyhow vs eyre` | mechanism-error-handling |
+| `error propagation` | mechanism-error-handling |
+
+## 并发（mechanism-concurrency）
+
+| 查询 | 期望的 Skill |
+|-------|----------------|
+| `cannot be sent between threads` | mechanism-concurrency |
+| `async await 怎么用` | mechanism-concurrency |
+| `Send Sync trait` | mechanism-concurrency |
+| `deadlock 怎么避免` | mechanism-concurrency |
+| `如何在线程间共享数据` | mechanism-concurrency |
 
 ---
 
 ## Layer 2：设计选择
 
-## 领域建模（m09-domain）
+## 领域建模（design-domain）
 
 | 查询 | 期望的 Skill |
 |-------|----------------|
-| `DDD in Rust` | m09-domain |
-| `domain model 设计` | m09-domain |
-| `aggregate root` | m09-domain |
-| `value object vs entity` | m09-domain |
-| `领域建模` | m09-domain |
+| `DDD in Rust` | design-domain |
+| `domain model 设计` | design-domain |
+| `aggregate root` | design-domain |
+| `value object vs entity` | design-domain |
+| `领域建模` | design-domain |
 
-## 性能（m10-performance）
-
-| 查询 | 期望的 Skill |
-|-------|----------------|
-| `Rust 性能优化` | m10-performance |
-| `benchmark 怎么写` | m10-performance |
-| `criterion 用法` | m10-performance |
-| `cache locality` | m10-performance |
-| `零拷贝 zero copy` | m10-performance |
-
-## 生态（m11-ecosystem）
+## 性能（design-performance）
 
 | 查询 | 期望的 Skill |
 |-------|----------------|
-| `推荐什么 crate` | m11-ecosystem |
-| `依赖选择` | m11-ecosystem |
-| `crate 对比` | m11-ecosystem |
-| `Cargo.toml 依赖管理` | m11-ecosystem |
-| `feature flags 用法` | m11-ecosystem |
+| `Rust 性能优化` | design-performance |
+| `benchmark 怎么写` | design-performance |
+| `criterion 用法` | design-performance |
+| `cache locality` | design-performance |
+| `零拷贝 zero copy` | design-performance |
 
-## 生命周期管理（m12-lifecycle）
-
-| 查询 | 期望的 Skill |
-|-------|----------------|
-| `RAII pattern` | m12-lifecycle |
-| `Drop trait 实现` | m12-lifecycle |
-| `资源释放顺序` | m12-lifecycle |
-| `scopeguard 用法` | m12-lifecycle |
-| `析构函数` | m12-lifecycle |
-
-## 领域错误（m13-domain-error）
+## 生态（design-ecosystem）
 
 | 查询 | 期望的 Skill |
 |-------|----------------|
-| `retry 策略` | m13-domain-error |
-| `circuit breaker 实现` | m13-domain-error |
-| `错误恢复模式` | m13-domain-error |
-| `backoff 重试` | m13-domain-error |
-| `错误分类处理` | m13-domain-error |
+| `推荐什么 crate` | design-ecosystem |
+| `依赖选择` | design-ecosystem |
+| `crate 对比` | design-ecosystem |
+| `Cargo.toml 依赖管理` | design-ecosystem |
+| `feature flags 用法` | design-ecosystem |
 
-## 心智模型（m14-mental-model）
-
-| 查询 | 期望的 Skill |
-|-------|----------------|
-| `怎么学 Rust` | m14-mental-model |
-| `Rust 思维方式` | m14-mental-model |
-| `从 Java 转 Rust` | m14-mental-model |
-| `所有权心智模型` | m14-mental-model |
-| `为什么 Rust 这样设计` | m14-mental-model |
-
-## 反模式（m15-anti-pattern）
+## 生命周期管理（design-lifecycle）
 
 | 查询 | 期望的 Skill |
 |-------|----------------|
-| `常见 Rust 错误` | m15-anti-pattern |
-| `code smell Rust` | m15-anti-pattern |
-| `Rust 反模式` | m15-anti-pattern |
-| `不要这样写 Rust` | m15-anti-pattern |
-| `clone 滥用` | m15-anti-pattern |
+| `RAII pattern` | design-lifecycle |
+| `Drop trait 实现` | design-lifecycle |
+| `资源释放顺序` | design-lifecycle |
+| `scopeguard 用法` | design-lifecycle |
+| `析构函数` | design-lifecycle |
+
+## 领域错误（design-domain-error）
+
+| 查询 | 期望的 Skill |
+|-------|----------------|
+| `retry 策略` | design-domain-error |
+| `circuit breaker 实现` | design-domain-error |
+| `错误恢复模式` | design-domain-error |
+| `backoff 重试` | design-domain-error |
+| `错误分类处理` | design-domain-error |
+
+## 心智模型（design-mental-model）
+
+| 查询 | 期望的 Skill |
+|-------|----------------|
+| `怎么学 Rust` | design-mental-model |
+| `Rust 思维方式` | design-mental-model |
+| `从 Java 转 Rust` | design-mental-model |
+| `所有权心智模型` | design-mental-model |
+| `为什么 Rust 这样设计` | design-mental-model |
+
+## 反模式（design-anti-pattern）
+
+| 查询 | 期望的 Skill |
+|-------|----------------|
+| `常见 Rust 错误` | design-anti-pattern |
+| `code smell Rust` | design-anti-pattern |
+| `Rust 反模式` | design-anti-pattern |
+| `不要这样写 Rust` | design-anti-pattern |
+| `clone 滥用` | design-anti-pattern |
 
 ---
 
@@ -216,19 +216,19 @@
 
 ```bash
 # Layer 1：语言机制
-claude -p "E0382 错误怎么解决"             # m01-ownership
-claude -p "E0499 multiple mutable borrows" # m03-mutability
-claude -p "newtype pattern"              # m05-type-driven
-claude -p "Send Sync trait"              # m07-concurrency
+claude -p "E0382 错误怎么解决"             # mechanism-ownership
+claude -p "E0499 multiple mutable borrows" # mechanism-mutability
+claude -p "newtype pattern"              # mechanism-type-driven
+claude -p "Send Sync trait"              # mechanism-concurrency
 
 # Layer 2：设计选择
-claude -p "DDD in Rust"                  # m09-domain
-claude -p "benchmark 怎么写"              # m10-performance
-claude -p "推荐什么 crate"                # m11-ecosystem
-claude -p "RAII pattern"                 # m12-lifecycle
-claude -p "circuit breaker 实现"          # m13-domain-error
-claude -p "怎么学 Rust"                   # m14-mental-model
-claude -p "常见 Rust 错误"                # m15-anti-pattern
+claude -p "DDD in Rust"                  # design-domain
+claude -p "benchmark 怎么写"              # design-performance
+claude -p "推荐什么 crate"                # design-ecosystem
+claude -p "RAII pattern"                 # design-lifecycle
+claude -p "circuit breaker 实现"          # design-domain-error
+claude -p "怎么学 Rust"                   # design-mental-model
+claude -p "常见 Rust 错误"                # design-anti-pattern
 
 # 核心 Skill
 claude -p "unsafe 代码怎么写"             # unsafe-checker

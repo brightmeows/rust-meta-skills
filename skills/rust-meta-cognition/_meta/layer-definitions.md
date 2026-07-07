@@ -56,13 +56,13 @@
 ### 相关 Skill
 
 ```
-m01-ownership    → 所有权、借用、生命周期
-m02-resource     → 智能指针、RAII
-m03-mutability   → 内部可变性、Cell/RefCell
-m04-zero-cost    → 泛型、trait、单态化
-m05-type-driven  → 类型状态、newtype、PhantomData
-m06-error-handling → Result、Option、错误模式
-m07-concurrency  → 异步、线程、Send/Sync
+mechanism-ownership    → 所有权、借用、生命周期
+mechanism-resource     → 智能指针、RAII
+mechanism-mutability   → 内部可变性、Cell/RefCell
+mechanism-zero-cost    → 泛型、trait、单态化
+mechanism-type-driven  → 类型状态、newtype、PhantomData
+mechanism-error-handling → Result、Option、错误模式
+mechanism-concurrency  → 异步、线程、Send/Sync
 ```
 
 ### 关键问题
@@ -103,13 +103,13 @@ m07-concurrency  → 异步、线程、Send/Sync
 ### 相关 Skill
 
 ```
-m09-domain       → DDD、领域建模
-m10-performance  → 优化模式
-m11-ecosystem    → Crate 集成
-m12-lifecycle    → 资源生命周期、RAII 模式
-m13-domain-error → 领域错误处理
-m14-mental-model → 如何用 Rust 思考
-m15-anti-pattern → 需避免的常见错误
+design-domain       → DDD、领域建模
+design-performance  → 优化模式
+design-ecosystem    → Crate 集成
+design-lifecycle    → 资源生命周期、RAII 模式
+design-domain-error → 领域错误处理
+design-mental-model → 如何用 Rust 思考
+design-anti-pattern → 需避免的常见错误
 ```
 
 ### 关键问题
@@ -209,8 +209,8 @@ Layer 3 ←→ Layer 2 ←→ Layer 1
 | “什么模式...” | L2 | 向下 ↓ | m09-m15 |
 | “最佳实践...” | L2 | 双向 ↕ | m09-m15 |
 | “构建 [领域]...” | L3 | 向下 ↓ | domain-* |
-| “为什么在 Rust 中...” | L2 | 向上 ↑ | m14-mental-model |
-| 性能问题 | L1 | 向上 ↑ | m10-performance |
+| “为什么在 Rust 中...” | L2 | 向上 ↑ | design-mental-model |
+| 性能问题 | L1 | 向上 ↑ | design-performance |
 | 设计评审 | L2 | 双向 ↕ | m09-m15 |
 
 ---

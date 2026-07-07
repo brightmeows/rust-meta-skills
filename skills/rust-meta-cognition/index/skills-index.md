@@ -8,7 +8,7 @@
 
 | 类别 | 数量 |
 |------|------|
-| 语言机制（L1） | 9（含 `unsafe-checker`、`m08-testing`） |
+| 语言机制（L1） | 9（含 `unsafe-checker`、`mechanism-testing`） |
 | 设计选择（L2） | 7 |
 | 领域约束（L3） | 7 |
 | 独立工具 | 9 |

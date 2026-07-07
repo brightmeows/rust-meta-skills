@@ -9,7 +9,7 @@
 
 分析：
 1. 入口：Layer 1（E0382 = 所有权/移动错误）
-2. 加载：m01-ownership skill
+2. 加载：mechanism-ownership skill
 3. 上下文：“trading system”→ domain-fintech
 
 向上追溯 ↑：
@@ -26,7 +26,7 @@
 - Arc<TradeRecord> 用于共享不可变访问
 - 这符合金融审计要求
 
-参见：m01-ownership（向上追溯章节），
+参见：mechanism-ownership（向上追溯章节），
      domain-fintech（审计要求）”
 ```
 
@@ -38,7 +38,7 @@
 1. 入口：Layer 2（设计问题）
 2. 向上追溯至 Layer 3：domain-web 约束
 3. 加载：domain-web skill（安全性、无状态 HTTP）
-4. 向下追溯：m06-error-handling, m07-concurrency
+4. 向下追溯：mechanism-error-handling, mechanism-concurrency
 5. 回答：JWT + 恰当的错误类型、异步处理器
 ```
 
@@ -60,7 +60,7 @@
 用户：“我的 Web API 报错 Rc cannot be sent between threads”
 
 1. 入口：Layer 1（Send/Sync 错误）
-2. 加载：m07-concurrency
+2. 加载：mechanism-concurrency
 3. 检测：“web API”→ domain-web
 4. 双重 skill 加载：
    - m07：解释 Send/Sync 约束
@@ -76,10 +76,10 @@
 分析步骤：
 1. 提取关键词：share, state, actix-web
 2. 识别入口层级：Layer 1（共享 = 并发）+ Layer 3（actix-web = Web）
-3. 映射到 Skill：m07-concurrency, domain-web
+3. 映射到 Skill：mechanism-concurrency, domain-web
 4. 报告：
    - Layer 1：并发（状态共享机制）
    - Layer 3：Web 领域（HTTP 处理器模式）
    - 建议追溯路径：L1 → L3
-5. 调用：先 m07-concurrency，后 domain-web
+5. 调用：先 mechanism-concurrency，后 domain-web
 ```

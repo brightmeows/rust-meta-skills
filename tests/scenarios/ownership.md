@@ -5,7 +5,7 @@
 ### 测试 1：错误码触发
 
 **提示词：** "Why am I getting E0382 error?"
-**期望 Skill：** m01-ownership
+**期望 Skill：** mechanism-ownership
 **期望的响应要素：**
 
 - [ ] 解释”use of moved value"
@@ -15,7 +15,7 @@
 ### 测试 2：症状触发
 
 **提示词：** "Value moved here after borrow"
-**期望 Skill：** m01-ownership
+**期望 Skill：** mechanism-ownership
 **期望的响应要素：**
 
 - [ ] 借用检查器解释
@@ -25,7 +25,7 @@
 ### 测试 3：概念触发
 
 **提示词：** "How does ownership work in Rust?"
-**期望 Skill：** m01-ownership
+**期望 Skill：** mechanism-ownership
 **期望的响应要素：**
 
 - [ ] 所有权规则（3 条规则）
@@ -142,7 +142,7 @@ impl<'a> Excerpt<'a> {
 
 **提示词：**“什么时候应该使用 RefCell vs Mutex？”
 
-**期望 Skill：** m01-ownership（或 m02-resource）
+**期望 Skill：** mechanism-ownership（或 mechanism-resource）
 **期望的响应要素：**
 
 - [ ] RefCell 用于单线程

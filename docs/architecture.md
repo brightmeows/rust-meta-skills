@@ -83,21 +83,21 @@ rust-skills/
 │   ├── 根 SKILL.md/             # 入口路由
 │   │   └── SKILL.md
 │   │
-│   ├── m01-ownership/           # Layer 1: 语言机制
-│   ├── m02-resource/
-│   ├── m03-mutability/
-│   ├── m04-zero-cost/
-│   ├── m05-type-driven/
-│   ├── m06-error-handling/
-│   ├── m07-concurrency/
+│   ├── mechanism-ownership/           # Layer 1: 语言机制
+│   ├── mechanism-resource/
+│   ├── mechanism-mutability/
+│   ├── mechanism-zero-cost/
+│   ├── mechanism-type-driven/
+│   ├── mechanism-error-handling/
+│   ├── mechanism-concurrency/
 │   │
-│   ├── m09-domain/              # Layer 2: 设计选择
-│   ├── m10-performance/
-│   ├── m11-ecosystem/
-│   ├── m12-lifecycle/
-│   ├── m13-domain-error/
-│   ├── m14-mental-model/
-│   ├── m15-anti-pattern/
+│   ├── design-domain/              # Layer 2: 设计选择
+│   ├── design-performance/
+│   ├── design-ecosystem/
+│   ├── design-lifecycle/
+│   ├── design-domain-error/
+│   ├── design-mental-model/
+│   ├── design-anti-pattern/
 │   │
 │   ├── domain-fintech/          # Layer 3: 领域约束
 │   ├── domain-web/
@@ -304,13 +304,13 @@ Skills (知识框架)          Agents (信息获取)
         │
         ▼
 4. Router (根 SKILL.md)
-   识别: L1 = m07-concurrency
+   识别: L1 = mechanism-concurrency
          L3 = domain-web
    决策: 双技能加载
         │
         ▼
 5. Skill 加载
-   Skill(m07-concurrency) → Send/Sync 机制
+   Skill(mechanism-concurrency) → Send/Sync 机制
    Skill(domain-web) → Web 领域约束
         │
         ▼
@@ -365,7 +365,7 @@ description: "CRITICAL: Use for errors"
 skills/
 ├── domain-web/
 ├── domain-fintech/
-└── m01-ownership/
+└── mechanism-ownership/
 
 # 差 - 嵌套结构 (不会被识别)
 skills/
@@ -382,13 +382,13 @@ skills/
 // 好 - 领域关键词检测 + 强制双技能加载
 {
   "matcher": "(?i)(Web API|HTTP|axum).*?(Send|Sync|thread)",
-  "action": "Load domain-web AND m07-concurrency"
+  "action": "Load domain-web AND mechanism-concurrency"
 }
 
 // 差 - 只匹配错误码
 {
   "matcher": "E0277",
-  "action": "Load m07-concurrency"
+  "action": "Load mechanism-concurrency"
 }
 ```
 

@@ -78,7 +78,7 @@
 3. **测试边界情况**
 
    ```markdown
-   ## 边界情况：m01-ownership
+   ## 边界情况：mechanism-ownership
 
    - “为什么我不能用这个变量？” → 应触发
    - “借用检查器错了”→ 应触发并解释
@@ -183,14 +183,14 @@ Notes:
 
 ```
 tests/pressure-scenarios/
-├── m01-ownership/
+├── mechanism-ownership/
 │   ├── e0382-moved-value.md
 │   ├── e0597-lifetime-short.md
 │   └── borrow-conflict.md
-├── m06-error-handling/
+├── mechanism-error-handling/
 │   ├── when-to-unwrap.md
 │   └── error-propagation.md
-└── m07-concurrency/
+└── mechanism-concurrency/
     ├── send-sync-bounds.md
     └── async-lifetime.md
 ```
