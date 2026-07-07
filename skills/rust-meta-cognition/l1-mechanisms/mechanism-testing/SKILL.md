@@ -198,6 +198,23 @@ cargo insta review   # 审查变更
 - 提交快照到 git
 - 不用于：稳定数值逻辑（用 `assert_eq!`）、关键路径逻辑（用精确单元测试）
 
+### `core::range::Range` Copy 类型（Rust 1.96+）
+
+Rust 1.96 稳定了新的 `core::range::Range`（及 `RangeFrom`、`RangeInclusive`）类型——它们实现 `IntoIterator` 而非 `Iterator`，因此可以 `Copy`。
+
+```rust
+// 旧：Range<usize> 不可 Copy，断言时需 clone
+let range = 0..10;
+assert_eq!(range.clone().count(), 10);
+
+// 新：core::range::Range 可 Copy
+use core::range::Range;
+let range: Range<usize> = 0..10;  // 或从现有 range 转换
+// range 可被多次使用而无需 clone
+```
+
+使用 `impl RangeBounds` 的 API 同时兼容新旧两种 range 类型。
+
 ---
 
 ## 决策指南

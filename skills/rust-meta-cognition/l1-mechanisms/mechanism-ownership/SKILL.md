@@ -150,6 +150,39 @@ struct Bad { age: i32, name: String }
 | `i128`/`u128` | 16 字节 |
 | `isize`/`usize` | 平台位数 |
 
+### 2024 Edition：RPIT 生命周期捕获规则变更
+
+Rust 2024 edition 改变了 RPIT（return-position `impl Trait`）的生命周期捕获规则：
+**默认捕获所有在域中的泛型生命周期参数**。迁移到 2024 时，以下模式可能新增编译错误：
+
+```rust
+// 旧（2021）：'a 未被捕获，编译通过
+// 新（2024）：'a 被捕获，因生命周期冲突而编译失败
+fn parse<'a>(s: &'a str) -> impl Display {
+    s.to_string()
+}
+```
+
+**解决方案**：使用 `use<..>` 语法精确指定捕获参数：
+
+```rust
+// 精确指定只捕获 'a
+fn parse<'a>(s: &'a str) -> impl use<'a> Display {
+    s.to_string()
+}
+
+// 不捕获任何生命周期
+fn process<'a>(data: &'a [u8]) -> impl use<> Display {
+    data.len()
+}
+```
+
+| 场景 | 说明 |
+|------|------|
+| 迁移到 2024 edition 后新增 lifetime 错误 | 检查 RPIT 返回类型是否意外捕获了生命周期 |
+| 函数返回 `impl Trait` 且有多生命周期参数 | 使用 `use<..>` 精确指定捕获范围 |
+| 旧代码使用 `Captures` trick | 移除 trick，改用 `use<..>` |
+
 ## 错误码参考
 
 | 错误 | 原因 | 快速修复 |

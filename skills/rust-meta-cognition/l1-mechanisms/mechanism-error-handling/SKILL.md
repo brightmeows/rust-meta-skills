@@ -138,6 +138,7 @@ user-invocable: false
 | Err 时需要返回但不需要 Err 值 | `let-else` | `let Ok(json) = from_str(&s) else { return Err(E::Invalid) }` |
 | 需要 break/continue 跳出循环 | `let-else` | `let Some(x) = iter.next() else { break }` |
 | else 分支需要额外计算 | `if-let-else` | `if let Some(x) = self.next() { … } else { fallback() }` |
+| match 臂中条件匹配 | `if let` 守卫（1.95+） | `match val { Some(x) if let Ok(y) = process(x) => { … }, _ => {} }` |
 | Result ↔ Option 转换 | `.ok()` / `.ok_or()` | `result.ok()` 或 `option.ok_or(E::Missing)` |
 | 检查/日志 + 传递错误 | `.inspect_err()` | `result.inspect_err(\|e\| error!("{e}"))?` |
 | 转换错误类型 | `.map_err()` | `result.map_err(\|e\| MyError::from(e))?` |

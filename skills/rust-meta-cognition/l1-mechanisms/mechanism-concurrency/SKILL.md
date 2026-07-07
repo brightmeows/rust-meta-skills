@@ -137,6 +137,49 @@ user-invocable: false
 | `mpsc::channel` | 是 | 可选 | 消息传递 |
 | `Arc<Mutex<T>>` | 是 | 是 | 跨线程共享可变数据 |
 
+## Async 闭包（Rust 1.85+）
+
+Rust 1.85 随 2024 edition 稳定了 async 闭包语法 `async || {}` 与 `AsyncFn`/`AsyncFnMut`/`AsyncFnOnce` trait 族。
+
+### 旧 vs 新
+
+```rust
+// 旧：闭包返回 async block，跨 await 借用困难
+let fetch = |url: &str| {
+    let url = url.to_owned(); // 被迫 clone
+    async move { reqwest::get(&url).await }
+};
+
+// 新：async 闭包直接借用捕获
+let fetch = async |url: &str| {
+    reqwest::get(url).await  // 直接借用，无需 clone
+};
+```
+
+### 泛型约束
+
+```rust
+// 旧：Fn() -> impl Future<Output = T>
+async fn retry_old<F, Fut>(f: F) -> Result<T, E>
+where
+    F: Fn() -> Fut,
+    Fut: Future<Output = Result<T, E>>,
+
+// 新：AsyncFn 直接表达
+async fn retry_new<F>(f: F) -> Result<T, E>
+where
+    F: AsyncFn() -> Result<T, E>,
+```
+
+### 何时使用
+
+| 场景 | 推荐 | 理由 |
+|---------|----------|-------|
+| 需要返回 Future 的回调 | async 闭包 | borrow 语义正确，无需 clone |
+| 高阶异步函数（中间件、retry）| `AsyncFn` bound | 签名更清晰 |
+| 已有 `Fn() -> impl Future` | 逐步迁移 | 两者兼容，可按需切换 |
+| 需要 `dyn` 分发 | 先用 `Box<dyn Fn() -> Pin<Box<dyn Future>>>` | async 闭包暂不支持 fn pointer |
+
 ## 决策流程图
 
 ```
