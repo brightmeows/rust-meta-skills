@@ -115,6 +115,49 @@ repos:
         language: system
         pass_filenames: false
 
+      - id: check-plugin-skills-list
+        name: Check marketplace.json skills list
+        description: 验证 .claude-plugin/marketplace.json 的 skills 数组与实际技能目录一致（跳过 .system/）
+        entry: bash
+        args:
+          - -c
+          - |
+            set -euo pipefail
+            errors=0
+            echo "=== marketplace.json skills 数组 vs SKILL.md 目录 ==="
+            # 从 marketplace.json 提取所有 skill 路径的 basename
+            plugin_skills=$(jq -r '.plugins[].skills[]' .claude-plugin/marketplace.json | xargs -I{} basename {} | sort -u)
+            # 文件系统实际技能名（仅一层深度，排除 .system/）
+            fs_skills=$(find skills -maxdepth 2 -name SKILL.md -type f -not -path "skills/.system/*" -printf '%h\n' | xargs -I{} basename {} | sort -u)
+
+            # Forward: 文件系统中有但 marketplace.json 中无
+            missing_in_manifest=$(comm -23 <(echo "$fs_skills") <(echo "$plugin_skills"))
+            if [ -n "$missing_in_manifest" ]; then
+              while IFS= read -r name; do
+                path=$(find skills -path "*/$name/SKILL.md" -type f -not -path "skills/.system/*" | head -1)
+                echo "  ERROR: $path 存在但未列入 marketplace.json"
+                errors=$((errors + 1))
+              done <<< "$missing_in_manifest"
+            fi
+
+            # Reverse: marketplace.json 中有但文件系统中无
+            missing_on_fs=$(comm -13 <(echo "$fs_skills") <(echo "$plugin_skills"))
+            if [ -n "$missing_on_fs" ]; then
+              while IFS= read -r name; do
+                echo "  ERROR: marketplace.json 中 '$name' 无对应的 SKILL.md 文件"
+                errors=$((errors + 1))
+              done <<< "$missing_on_fs"
+            fi
+
+            if [ "$errors" -gt 0 ]; then
+              echo "FAILED: ${errors} 个错误"
+              echo "修复：编辑 .claude-plugin/marketplace.json 的 skills 数组，使其与 skills/ 下目录一致"
+              exit 1
+            fi
+            echo "OK: marketplace.json skills 数组与技能目录一致"
+        language: system
+        pass_filenames: false
+
       - id: check-skill-md-format
         name: Check SKILL.md format
         description: 验证所有 SKILL.md frontmatter 字段格式与 body 行数合规

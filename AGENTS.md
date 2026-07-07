@@ -46,6 +46,7 @@ pre-commit run --all-files
 # 单独任务
 pre-commit run markdownlint
 pre-commit run check-well-known-digest       # 校验 index.json digest 与 SKILL.md 一致
+pre-commit run check-plugin-skills-list      # 校验 marketplace.json skills 与实际目录一致
 
 # 手动验证
 ./tests/validation/validate-skills.sh
