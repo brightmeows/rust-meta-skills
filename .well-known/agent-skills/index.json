@@ -6,7 +6,7 @@
       "type": "skill-md",
       "description": "Rust 问题路由入口：将编译错误、设计约束或领域需求分派到三层认知模型的对应子技能。 CRITICAL: 遇到 Rust 编译错误（E0382/E0597/E0277 等）、设计权衡、最佳实践比较、代码风格审查或项目默认设置时使用。 不用于纯 Rust 语法学习或 general 编程概念咨询。 Keywords: Rust 路由, 编译错误, 所有权, 借用, 生命周期, E0382, E0597, E0277, E0502, E0499, E0308, E0433, borrow error, 架构方案, 最佳实践, 代码风格, ownership, borrow, lifetime, async, concurrency",
       "url": "https://codeberg.org/brightmeows/rust-meta-skills/raw/branch/main/skills/rust-meta-cognition/SKILL.md",
-      "digest": "sha256:0633c6cc05b1c31d84c78419b2a2edf884b5c074f88e0db376762a0053da74f2"
+      "digest": "sha256:abf13f405e1b49d6b6bea2e3589a3acf1a1666a4fda1695f3fdb3a09e6f57b0e"
     },
     {
       "name": "rust-learner",

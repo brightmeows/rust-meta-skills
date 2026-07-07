@@ -131,6 +131,8 @@ mod parser {
 | `assert_eq!` | 相等 | `assert_eq!(result, expected)` |
 | `assert_ne!` | 不等 | `assert_ne!(result, 0)` |
 | `matches!` | 模式匹配 | `assert!(matches!(err, MyError::X(_)))` |
+| `assert_matches!` | 模式匹配 + 内置诊断 | `assert_matches!(result, Ok(x) if x > 0)` |
+| `debug_assert_matches!` | 仅 debug 的模式匹配断言 | `debug_assert_matches!(val, Some(_))` |
 
 ### 测试属性
 

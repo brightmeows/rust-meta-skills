@@ -142,6 +142,8 @@ user-invocable: false
 | `once_cell::sync::Lazy` | `std::sync::LazyLock` | 1.80 |
 | `once_cell::unsync::OnceCell` | `std::cell::OnceCell` | 1.70 |
 | `once_cell::unsync::Lazy` | `std::cell::LazyCell` | 1.80 |
+| — | `From<T> for LazyCell<T, F>` | 1.96 |
+| — | `From<T> for LazyLock<T, F>` | 1.96 |
 
 ```rust
 // OnceLock — 多线程单次初始化

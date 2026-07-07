@@ -271,7 +271,7 @@ flowchart TD
 ```toml
 [package]
 edition = "2024"       # 最新稳定版，不用 2021 或更早
-rust-version = "1.85"  # 明确 MSRV
+rust-version = "1.96"  # 明确 MSRV
 
 [lints.rust]
 unsafe_code = "warn"
@@ -320,7 +320,8 @@ use super::schema::{Context, Payload};
 use crate::models::Event;
 ```
 
-> 截至 Rust 1.88，需使用 nightly 执行 rustfmt 以正确排序：`cargo +nightly fmt`
+> 截至 Rust 1.96，`group_imports` 与 `imports_granularity` 仍未稳定（tracking: #4991, #5083），
+> 需使用 nightly 执行 rustfmt：`cargo +nightly fmt`
 
 ### 命名（Rust 特定）
 
