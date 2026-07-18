@@ -1,9 +1,9 @@
 ---
 name: mechanism-resource
 description: >-
-  智能指针选型与资源管理模式指导。CRITICAL: 需要选择 Box/Rc/Arc/RefCell 或管理资源生命周期时使用。
-  Keywords: 智能指针, 资源管理, 引用计数, 堆分配, Box, Rc, Arc, RefCell, Cell,
-  RAII, Drop, smart pointer, heap allocation, reference counting
+  智能指针选型与资源管理。CRITICAL: 需要选择 Box/Rc/Arc/RefCell 或管理资源生命周期时使用。
+  Keywords: 智能指针, 资源管理, 引用计数, 堆分配, 内存池, Box, Rc, Arc, RefCell, Cell,
+  Cow, RAII, Drop, smart pointer, heap allocation, reference counting, pool
 user-invocable: false
 ---
 

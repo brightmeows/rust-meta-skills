@@ -1,10 +1,9 @@
 ---
 name: domain-cli
 description: >-
-  CLI 工具 Rust 架构指导：命令行领域约束到设计决策的映射。构建命令行工具
-  或终端交互应用时使用。
-  Keywords: 命令行, CLI, 终端, 参数解析, clap, TUI, ratatui, crossterm,
-  进度条, 彩色输出, shell completion, command line, terminal
+  CLI 工具领域 Rust 设计约束与最佳实践。构建命令行工具或终端交互应用时使用。
+  Keywords: 命令行, CLI, 终端, 参数解析, 进度条, 彩色输出, clap, TUI, ratatui,
+  crossterm, shell completion, argument parsing, command line, terminal
 user-invocable: false
 ---
 

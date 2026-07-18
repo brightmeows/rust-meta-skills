@@ -2,8 +2,8 @@
 name: rust-daily
 description: >-
   Rust 每日/每周动态与新闻速览。需要了解 Rust 社区动态、TWIR 或博客更新时使用。
-  Keywords: Rust 日报, Rust 周报, Rust 新闻, rust news, rust weekly, TWIR,
-  rust blog, Rust 动态
+  触发词：/daily, Rust 日报, Rust 周报, Rust 新闻, Rust 动态, rust news, rust weekly,
+  TWIR, rust blog
 argument-hint: "[today|week|month]"
 context: fork
 agent: Explore

@@ -1,9 +1,10 @@
 ---
 name: mechanism-testing
 description: >-
-  自动化测试策略与 Rust 测试框架使用指导。CRITICAL: 需要编写测试、选择测试工具或设计测试策略时使用。
-  Keywords: 测试, 单元测试, 集成测试, 文档测试, 快照测试, 参数化测试, test, unit test,
-  integration test, doc test, insta, rstest, snapshot, assert, should_panic, nextest
+  自动化测试策略与 Rust 测试框架使用。CRITICAL: 需要编写测试、选择测试工具或设计测试策略时使用。
+  Keywords: 测试, 单元测试, 集成测试, 文档测试, 快照测试, 参数化测试, 属性测试, mock,
+  test, unit test, integration test, doc test, snapshot, assert, should_panic,
+  insta, rstest, proptest, mockall, nextest
 user-invocable: false
 ---
 

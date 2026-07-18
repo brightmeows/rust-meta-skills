@@ -1,9 +1,9 @@
 ---
 name: mechanism-concurrency
 description: >-
-  并发与异步编程指导。CRITICAL: 需要选择并发原语、处理 Send/Sync 约束、或使用 async/await 时使用。
-  Keywords: 并发, 异步, 线程, Send, Sync, tokio, async, await, Future, Mutex,
-  RwLock, channel, E0277, deadlock, 死锁, concurrency, thread
+  并发与异步编程。CRITICAL: 需要选择并发原语、处理 Send/Sync 约束、或使用 async/await 时使用。
+  Keywords: 并发, 异步, 线程, 死锁, 异步运行时, Send, Sync, tokio, async, await,
+  Future, Mutex, RwLock, channel, runtime, concurrency, thread, async-std, smol, E0277
 user-invocable: false
 ---
 

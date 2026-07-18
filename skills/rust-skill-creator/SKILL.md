@@ -1,10 +1,9 @@
 ---
 name: rust-skill-creator
 description: >-
-  Rust crate 与标准库的动态技能生成。需要为特定 crate（tokio/serde/axum）
-  创建技能时使用。
-  Keywords: 创建技能, crate 技能, 动态技能, create skill, skill for tokio,
-  skill creator, rust skill, 从文档创建, skill for serde
+  Rust crate 与标准库的动态技能生成。需要为特定 crate（tokio/serde/axum）创建技能时使用。
+  触发词：/create-skill, 创建 crate 技能, 动态技能, 从文档创建, skill creator,
+  skill for tokio, skill for serde, create skill, rust skill
 argument-hint: "<crate_name|std::module>"
 context: fork
 agent: general-purpose

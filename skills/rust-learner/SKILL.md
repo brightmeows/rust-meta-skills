@@ -1,10 +1,9 @@
 ---
 name: rust-learner
 description: >-
-  Rust 版本查询与 crate 信息获取。需要查询最新 Rust 版本、crate 文档或
-  API 参考时使用。
-  Keywords: Rust 版本, crate 信息, 文档查询, 最新版本, API 文档, docs.rs,
-  crates.io, edition, cargo add, 新特性, latest version, what's new
+  Rust 版本查询与 crate 信息获取。需要查询最新 Rust 版本、crate 文档或 API 参考时使用。
+  触发词：/lookup, Rust 版本查询, crate 信息, 文档查询, 最新版本, API 文档, 新特性,
+  docs.rs, crates.io, edition, cargo add, latest version, what's new
 allowed-tools: ["Task", "Read", "Glob", "mcp__actionbook__*", "Bash"]
 ---
 

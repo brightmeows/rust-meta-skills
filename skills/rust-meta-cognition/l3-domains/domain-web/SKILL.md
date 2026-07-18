@@ -1,10 +1,9 @@
 ---
 name: domain-web
 description: >-
-  Web 服务 Rust 架构指导：HTTP 领域约束到设计决策的映射。构建 HTTP 服务、
-  REST API 或 WebSocket 应用时使用。
-  Keywords: Web 服务, HTTP, REST, API, WebSocket, axum, actix, tower, hyper,
-  中间件, JWT, 认证, 路由, web server, middleware, handler, extractor
+  Web 服务领域 Rust 设计约束与最佳实践。构建 HTTP 服务、REST API 或 WebSocket 应用时使用。
+  Keywords: Web 服务, 中间件, 认证, 路由, HTTP, REST, API, WebSocket, JWT, axum,
+  actix, tower, hyper, web server, middleware, handler, extractor
 user-invocable: false
 ---
 

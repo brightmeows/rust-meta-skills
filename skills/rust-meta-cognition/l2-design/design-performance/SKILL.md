@@ -2,8 +2,8 @@
 name: design-performance
 description: >-
   性能优化方法论：瓶颈定位与优化决策。需要基准测试、性能分析或优化 Rust 程序时使用。
-  Keywords: 性能优化, 基准测试, 性能分析, performance, optimization, benchmark,
-  profiling, criterion, flamegraph, SIMD, allocation, 慢, slow
+  Keywords: 性能优化, 基准测试, 性能分析, 慢, performance, optimization, benchmark,
+  profiling, criterion, flamegraph, SIMD, allocation, slow
 user-invocable: false
 ---
 
