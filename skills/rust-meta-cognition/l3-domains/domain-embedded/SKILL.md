@@ -1,7 +1,8 @@
 ---
 name: domain-embedded
 description: >-
-  嵌入式与 no_std 领域 Rust 设计约束与最佳实践。开发单片机固件或裸机系统时使用。
+  嵌入式与 no_std 领域 Rust 设计约束（内存约束、HAL 抽象、中断安全）。开发单片机固件
+  或裸机系统时使用。
   Keywords: 嵌入式, 单片机, 固件, 裸机, no_std, embedded, MCU, ARM, RISC-V, HAL,
   RTIC, embassy, cortex-m, esp32, stm32, GPIO, SPI, I2C
 globs: ["**/Cargo.toml", "**/.cargo/config.toml"]

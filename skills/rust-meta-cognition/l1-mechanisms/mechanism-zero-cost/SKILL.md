@@ -1,7 +1,8 @@
 ---
 name: mechanism-zero-cost
 description: >-
-  泛型与零成本抽象决策。CRITICAL: 需要选择编译时/运行时多态、或遇到 trait 约束错误时使用。
+  泛型、trait 与静态/动态分发的语言机制参考。CRITICAL: 在编译时多态（泛型）与运行时多态
+  （dyn trait）之间选择，或遇到 E0277/E0308/E0599 等 trait 约束错误时使用。
   Keywords: 泛型, 特征, 零成本抽象, 单态化, generic, trait, impl, dyn, where,
   static dispatch, dynamic dispatch, impl Trait, E0277, E0308, E0599
 user-invocable: false

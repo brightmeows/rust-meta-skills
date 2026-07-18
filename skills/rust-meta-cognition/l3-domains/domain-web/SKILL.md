@@ -1,7 +1,8 @@
 ---
 name: domain-web
 description: >-
-  Web 服务领域 Rust 设计约束与最佳实践。构建 HTTP 服务、REST API 或 WebSocket 应用时使用。
+  Web 服务领域 Rust 设计约束（中间件、异步处理、错误转换）。构建 HTTP 服务、REST API
+  或 WebSocket 应用时使用。
   Keywords: Web 服务, 中间件, 认证, 路由, HTTP, REST, API, WebSocket, JWT, axum,
   actix, tower, hyper, web server, middleware, handler, extractor
 user-invocable: false

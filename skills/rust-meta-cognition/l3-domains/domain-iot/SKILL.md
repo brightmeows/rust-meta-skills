@@ -1,7 +1,8 @@
 ---
 name: domain-iot
 description: >-
-  物联网领域 Rust 设计约束与最佳实践。构建 IoT 设备固件、边缘计算或传感器网络时使用。
+  物联网领域 Rust 设计约束（低功耗、协议互操作、边缘计算）。构建 IoT 设备固件、
+  边缘计算或传感器网络时使用。
   Keywords: 物联网, IoT, 传感器, 边缘计算, MQTT, 智能家居, edge computing,
   telemetry, gateway, Internet of Things
 user-invocable: false

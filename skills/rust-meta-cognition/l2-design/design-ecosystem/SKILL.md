@@ -1,8 +1,8 @@
 ---
 name: design-ecosystem
 description: >-
-  Crate 生态集成与依赖管理指导。需要选择 crate、配置依赖、处理 FFI/PyO3/WASM
-  集成时使用。
+  Crate 选择、依赖配置与跨语言集成的设计权衡参考。需要选择 crate、配置 Cargo.toml，
+  或处理 FFI/PyO3/WASM 集成时使用。
   Keywords: 依赖管理, crate 选择, 特性标志, 工作空间, cargo, dependency, feature flag,
   workspace, PyO3, WebAssembly, bindgen, E0425, E0433
 user-invocable: false

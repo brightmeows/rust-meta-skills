@@ -1,8 +1,8 @@
 ---
 name: unsafe-checker
 description: >-
-  Unsafe Rust 代码审查与 FFI 绑定安全指导。CRITICAL: 遇到 unsafe 代码块、
-  裸指针操作或 FFI 调用时使用。
+  unsafe 代码、裸指针与 FFI 的安全性约束参考。CRITICAL: 遇到 unsafe 块、裸指针操作、FFI 调用、
+  transmute，或需要编写 SAFETY 注释时使用。
   Keywords: 不安全代码, 裸指针, 未定义行为, 内存布局, unsafe, FFI, raw pointer,
   transmute, MaybeUninit, SAFETY, soundness, CString, bindgen, memory layout
 globs: ["**/*.rs"]

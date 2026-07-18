@@ -1,8 +1,8 @@
 ---
 name: design-mental-model
 description: >-
-  Rust 心智模型构建：为抽象概念建立直观理解。学习 Rust 概念、感到困惑、
-  或需要类比解释时使用。
+  Rust 抽象概念的心智模型与类比解释参考。学习 Rust、对所有权/借用/生命周期感到困惑，
+  或需要 ELI5/类比解释时使用。
   Keywords: 心智模型, Rust 入门, 学习 Rust, 如何理解, mental model, borrow checker,
   analogy, ELI5, coming from Java, coming from Python
 user-invocable: false

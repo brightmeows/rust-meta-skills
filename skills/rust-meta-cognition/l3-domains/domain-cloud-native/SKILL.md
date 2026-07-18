@@ -1,7 +1,8 @@
 ---
 name: domain-cloud-native
 description: >-
-  云原生领域 Rust 设计约束与最佳实践。构建微服务、gRPC 服务或容器化部署时使用。
+  云原生领域 Rust 设计约束（可观测性、服务网格、容器化）。构建微服务、gRPC 服务
+  或容器化部署时使用。
   Keywords: 云原生, 微服务, 容器, gRPC, tonic, kubernetes, k8s, 可观测性,
   tracing, metrics, cloud native, microservice
 user-invocable: false

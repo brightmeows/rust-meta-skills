@@ -1,7 +1,8 @@
 ---
 name: mechanism-type-driven
 description: >-
-  类型驱动设计与编译期验证模式。CRITICAL: 希望通过类型系统让非法状态不可表示时使用。
+  类型状态、newtype 与编译期不变量的语言机制参考。CRITICAL: 希望通过类型系统让非法状态
+  不可表示，或需要 PhantomData/sealed trait/类型状态模式时使用。
   Keywords: 类型驱动设计, 类型状态, 新类型模式, 编译期验证, type state, PhantomData,
   newtype, marker trait, sealed trait, ZST, builder pattern
 user-invocable: false

@@ -1,7 +1,8 @@
 ---
 name: design-domain-error
 description: >-
-  领域错误分类与恢复策略设计。需要设计错误层级、重试策略或熔断降级机制时使用。
+  错误分类、恢复策略与降级机制的设计权衡参考。需要设计错误层级、重试策略，
+  或实现熔断器/优雅降级时使用。
   Keywords: 领域错误, 错误分类, 恢复策略, 重试, 熔断器, 优雅降级, domain error,
   retry, fallback, circuit breaker, transient vs permanent
 user-invocable: false

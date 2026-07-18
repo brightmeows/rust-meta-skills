@@ -1,7 +1,8 @@
 ---
 name: mechanism-ownership
 description: >-
-  所有权与借用规则诊断与修复。CRITICAL: 遇到所有权/借用/生命周期错误时使用。
+  所有权、借用与生命周期的语言机制参考。CRITICAL: 遇到 E0382/E0597/E0106 等所有权、借用、
+  生命周期错误，或返回局部引用、临时值被丢弃时使用。
   Keywords: 所有权, 借用, 生命周期, ownership, borrow, lifetime, E0382, E0597,
   E0106, E0506, E0507, value moved, cannot borrow, move, clone, Copy
 user-invocable: false

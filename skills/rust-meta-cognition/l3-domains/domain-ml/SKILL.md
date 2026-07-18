@@ -1,7 +1,8 @@
 ---
 name: domain-ml
 description: >-
-  机器学习领域 Rust 设计约束与最佳实践。构建模型推理服务或 AI 应用时使用。
+  机器学习领域 Rust 设计约束（张量计算、模型推理、GPU 加速）。构建模型推理服务
+  或 AI 应用时使用。
   Keywords: 机器学习, ML, AI, 模型推理, tensor, tch-rs, burn, candle, ndarray,
   inference, prediction, machine learning, deep learning
 user-invocable: false

@@ -1,7 +1,8 @@
 ---
 name: design-lifecycle
 description: >-
-  资源生命周期设计与 RAII 模式。需要管理连接池、惰性初始化或资源清理策略时使用。
+  资源生命周期、RAII 与惰性初始化的设计权衡参考。需要管理连接池、OnceCell/OnceLock，
+  或定义 Drop 实现时使用。
   Keywords: 资源生命周期, RAII, Drop, 连接池, 惰性初始化, OnceCell, OnceLock,
   connection pool, cleanup, lazy initialization, scope guard
 user-invocable: false

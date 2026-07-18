@@ -1,8 +1,8 @@
 ---
 name: design-domain
 description: >-
-  领域建模与 DDD 模式在 Rust 中的落地。需要设计领域模型、定义实体/值对象、
-  或封装业务规则时使用。
+  Rust 领域建模的实体/值对象/聚合设计权衡参考。需要设计领域模型、封装业务规则，
+  或落地 DDD 模式时使用。
   Keywords: 领域模型, 领域驱动设计, 领域建模, 实体, 值对象, 聚合, 业务规则, DDD,
   entity, value object, aggregate, repository
 user-invocable: false
