@@ -92,9 +92,9 @@
 
 | 冲突 | 解决方案 |
 |------|----------|
-| m11 中的 unsafe 与 unsafe-checker | unsafe-checker（更具体） |
-| m06 与 m13 中的错误 | m06 用于通用，m13 用于领域特定 |
-| m01 与 m12 中的 RAII | m12 用于设计，m01 用于实现 |
+| mechanism-zero-cost 中的 unsafe 与 unsafe-checker | unsafe-checker（更具体） |
+| mechanism-error-handling 与 design-domain-error 中的错误 | mechanism-error-handling 用于通用，design-domain-error 用于领域特定 |
+| mechanism-ownership 与 design-lifecycle 中的 RAII | design-lifecycle 用于设计，mechanism-ownership 用于实现 |
 
 ---
 

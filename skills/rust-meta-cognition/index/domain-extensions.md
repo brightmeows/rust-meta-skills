@@ -21,7 +21,7 @@
 
 ### 相关元问题
 
-- m01, m06, m07, m10
+- mechanism-ownership, mechanism-error-handling, mechanism-concurrency, design-performance
 
 ---
 
@@ -42,7 +42,7 @@
 
 ### 相关元问题
 
-- m04, m07, m10, m11
+- mechanism-zero-cost, mechanism-concurrency, design-performance, design-ecosystem
 
 ---
 
@@ -63,7 +63,7 @@
 
 ### 相关元问题
 
-- m06, m07, m10, m12
+- mechanism-error-handling, mechanism-concurrency, design-performance, design-lifecycle
 
 ---
 
@@ -84,7 +84,7 @@
 
 ### 相关元问题
 
-- m01, m07, unsafe-checker, m10
+- mechanism-ownership, mechanism-concurrency, unsafe-checker, design-performance
 
 ### 相关技术类别
 

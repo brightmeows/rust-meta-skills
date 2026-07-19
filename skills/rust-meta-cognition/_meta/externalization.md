@@ -276,8 +276,8 @@ LLM 上下文窗口有限。长对话会丢失早期信息。
 
 | 情况 | 读取 Skill |
 |-----------|-----------|
-| Layer 1 错误 | 该错误的 m01-m07 skill |
-| 设计问题 | 该模式的 m09-m15 skill |
+| Layer 1 错误 | 该错误的 mechanism-* skill |
+| 设计问题 | 该模式的 design-* skill |
 | 领域上下文 | 该领域的 domain-* skill |
 | 编写修复前 | 相关 skill |
 

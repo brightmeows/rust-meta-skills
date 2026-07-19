@@ -57,8 +57,8 @@ flowchart TD
 问题按三个认知层级追溯：
 
 - **Layer 3 领域约束（WHY）**：业务规则、监管要求、SLA → `domain-*`
-- **Layer 2 设计选择（WHAT）**：架构模式、DDD、权衡决策 → `m09-m15`
-- **Layer 1 语言机制（HOW）**：所有权、借用、生命周期、trait、并发 → `m01-m07`
+- **Layer 2 设计选择（WHAT）**：架构模式、DDD、权衡决策 → `design-*`
+- **Layer 1 语言机制（HOW）**：所有权、借用、生命周期、trait、并发 → `mechanism-*`
 
 > 详细定义见 [`_meta/layer-definitions.md`](_meta/layer-definitions.md)；
 > 推理框架与追踪示例见 [`_meta/reasoning-framework.md`](_meta/reasoning-framework.md)。
@@ -99,11 +99,11 @@ flowchart TD
 
 | 关键词 | 解决 |
 |--------|------|
-| `unsafe` | **`unsafe-checker`**（比 `m11` 更具体） |
-| `error` | 通用用 **`m06`**，领域特定用 **`m13`** |
-| `RAII` | 设计用 **`m12`**，实现用 **`m01`** |
-| `crate` | 版本用 **`rust-learner`**，集成用 **`m11`** |
-| `tokio` | API 用 **`tokio-*`**，概念用 **`m07`** |
+| `unsafe` | **`unsafe-checker`**（比 `mechanism-zero-cost` 更具体） |
+| `error` | 通用用 **`mechanism-error-handling`**，领域特定用 **`design-domain-error`** |
+| `RAII` | 设计用 **`design-lifecycle`**，实现用 **`mechanism-ownership`** |
+| `crate` | 版本用 **`rust-learner`**，集成用 **`design-ecosystem`** |
+| `tokio` | API 用 **`tokio-*`**，概念用 **`mechanism-concurrency`** |
 
 ### 按入口点路由
 
@@ -113,7 +113,7 @@ flowchart TD
 | 编译错误 | 第 1 层 | 向上追溯 ↑ | 见下方错误码路由 |
 | “怎么设计……” | 第 2 层 | 检查 L3，然后向下 ↓ | `design-domain` |
 | “构建 [领域] 应用” | 第 3 层 | 向下追溯 ↓ | `domain-*` |
-| “最佳实践……” | 第 2 层 | 双向 | `m09-m15` |
+| “最佳实践……” | 第 2 层 | 双向 | `design-*` |
 | 性能问题 | 第 1 → 2 层 | 向上再向下 | `design-performance` |
 
 ### 双层 Skill 加载
@@ -180,7 +180,7 @@ flowchart TD
 | E0596 | `mechanism-mutability` | 不能借用为可变 |
 | E0499 | `mechanism-mutability` | 多个可变借用 |
 | E0502 | `mechanism-mutability` | 借用冲突 |
-| E0277 | `m04` / `m07` | Trait 约束未满足 |
+| E0277 | `mechanism-zero-cost` / `mechanism-concurrency` | Trait 约束未满足 |
 | E0308 | `mechanism-zero-cost` | 类型不匹配 |
 | E0599 | `mechanism-zero-cost` | 未找到方法 |
 | E0038 | `mechanism-zero-cost` | Trait 不是 object-safe |

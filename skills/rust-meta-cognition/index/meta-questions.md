@@ -26,7 +26,7 @@ m[XX][YYY][ZZZZZ]
 | **06** | 错误处理哲学 | “失败是可预期的还是异常情况？” | Result, panic, recovery |
 | **07** | 并发正确性 | “如何在编译期保证并发安全？” | Send, Sync, thread safety |
 
-> **注：** m08（安全边界）已合并到 **unsafe-checker** skill 中。
+> **注：** 08 安全边界已合并到 **unsafe-checker** skill 中。
 
 ## 领域架构元问题（09-13）
 
@@ -53,30 +53,30 @@ m[XX][YYY][ZZZZZ]
 
 **编译器错误**
 
-- E0382（值被移动）→ m01
-- E0597（生命周期）→ m01
-- E0277（Send/Sync）→ m07
-- E0596（可变性）→ m03
+- E0382（值被移动）→ mechanism-ownership
+- E0597（生命周期）→ mechanism-ownership
+- E0277（Send/Sync）→ mechanism-concurrency
+- E0596（可变性）→ mechanism-mutability
 
 **设计问题**
 
-- “哪个智能指针？” → m02
-- “泛型 vs trait 对象？” → m04
-- “错误处理策略？” → m06
-- “线程安全？” → m07
+- “哪个智能指针？” → mechanism-resource
+- “泛型 vs trait 对象？” → mechanism-zero-cost
+- “错误处理策略？” → mechanism-error-handling
+- “线程安全？” → mechanism-concurrency
 - “FFI 设计？” → unsafe-checker
 
 **学习**
 
-- “如何思考 X？” → m14
-- “常见错误？” → m15
+- “如何思考 X？” → design-mental-model
+- “常见错误？” → design-anti-pattern
 
 ### 按领域
 
-- Web 开发 → m06, m07, m11
-- 系统编程 → m01, m07, unsafe-checker
-- 嵌入式 → m01, unsafe-checker, m10
-- 数据处理 → m04, m10, m11
+- Web 开发 → mechanism-error-handling, mechanism-concurrency, design-ecosystem
+- 系统编程 → mechanism-ownership, mechanism-concurrency, unsafe-checker
+- 嵌入式 → mechanism-ownership, unsafe-checker, design-performance
+- 数据处理 → mechanism-zero-cost, design-performance, design-ecosystem
 
 ---
 
