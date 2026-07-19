@@ -1,11 +1,10 @@
 ---
 name: mechanism-testing
 description: >-
-  Rust 测试类型（unit/integration/doc）与框架的语言机制参考。CRITICAL: 编写测试、选择
-  测试工具（insta/rstest/proptest/mockall/nextest），或设计测试策略时使用。
+  Rust 测试类型（unit/integration/doc）与框架的语言机制参考。CRITICAL: 编写测试或选择
+  测试工具时使用。
   Keywords: 测试, 单元测试, 集成测试, 文档测试, 快照测试, 参数化测试, 属性测试, mock,
-  test, unit test, integration test, doc test, snapshot, assert, should_panic,
-  insta, rstest, proptest, mockall, nextest
+  assert, should_panic, insta, rstest, proptest, mockall, nextest
 user-invocable: false
 ---
 

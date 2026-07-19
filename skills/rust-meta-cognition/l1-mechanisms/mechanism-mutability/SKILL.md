@@ -1,10 +1,10 @@
 ---
 name: mechanism-mutability
 description: >-
-  可变性与内部可变性的语言机制参考。CRITICAL: 遇到 E0596/E0499/E0502 等可变借用冲突，
-  或需要 Cell/RefCell/Mutex 实现内部可变性时使用。
-  Keywords: 可变性, 借用冲突, 内部可变性, mutability, &mut, E0596, E0499, E0502,
-  Cell, RefCell, Mutex, RwLock, cannot borrow as mutable
+  可变性与内部可变性的语言机制参考。CRITICAL: 遇到 E0596/E0499/E0502 借用冲突，或需要
+  Cell/RefCell/Mutex 时使用。
+  Keywords: 可变性, 借用冲突, 内部可变性, mutability, &mut, Cell, RefCell, Mutex,
+  RwLock, E0596, E0499, E0502
 user-invocable: false
 ---
 

@@ -1,10 +1,10 @@
 ---
 name: mechanism-error-handling
 description: >-
-  panic、Result 与错误传播的语言机制参考。CRITICAL: 遇到 unwrap/expect 滥用、需要决定
-  panic vs Result、设计自定义错误类型，或在 anyhow/thiserror 之间选择时使用。
+  panic、Result 与错误传播的语言机制参考。CRITICAL: 决定 panic vs Result、设计错误类型，
+  或在 anyhow/thiserror 之间选择时使用。
   Keywords: 错误处理, Result, Option, panic, anyhow, thiserror, 自定义错误,
-  error handling, unwrap, expect, 什么时候用 panic
+  error handling, unwrap, expect
 user-invocable: false
 ---
 

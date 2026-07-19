@@ -2,9 +2,9 @@
 name: mechanism-resource
 description: >-
   智能指针、引用计数与堆分配的语言机制参考。CRITICAL: 在 Box/Rc/Arc/RefCell 之间选择，
-  或管理资源生命周期（RAII/Drop）时使用。
+  或管理资源生命周期时使用。
   Keywords: 智能指针, 资源管理, 引用计数, 堆分配, 内存池, Box, Rc, Arc, RefCell, Cell,
-  Cow, RAII, Drop, smart pointer, heap allocation, reference counting, pool
+  Cow, RAII, Drop, pool
 user-invocable: false
 ---
 

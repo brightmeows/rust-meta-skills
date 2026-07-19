@@ -1,10 +1,10 @@
 ---
 name: mechanism-concurrency
 description: >-
-  线程、async/await 与 Send/Sync 约束的语言机制参考。CRITICAL: 在同步/异步之间选择、
-  遇到 Send/Sync 编译错误、死锁，或使用 tokio/Mutex/channel 时使用。
-  Keywords: 并发, 异步, 线程, 死锁, 异步运行时, Send, Sync, tokio, async, await,
-  Future, Mutex, RwLock, channel, runtime, concurrency, thread, async-std, smol, E0277
+  线程、async/await 与 Send/Sync 约束的语言机制参考。CRITICAL: 选择同步/异步、遇到
+  Send/Sync 错误或死锁时使用。
+  Keywords: 并发, 异步, 线程, 死锁, Send, Sync, tokio, async, await, Future, Mutex,
+  RwLock, channel, E0277
 user-invocable: false
 ---
 
