@@ -1,69 +1,9 @@
 # 触发关键词索引
 
 > 错误码路由见 [`../SKILL.md`](../SKILL.md) 错误码路由表。
-
----
-
-## 关键词 → Skill
-
-### Layer 1：语言机制
-
-| 关键词 | 路由到 |
-|--------|--------|
-| ownership, borrow, lifetime, move, moved value | mechanism-ownership |
-| Box, Rc, Arc, RefCell, Cell, smart pointer | mechanism-resource |
-| mut, mutable, interior mutability | mechanism-mutability |
-| generic, trait, inline, monomorphization | mechanism-zero-cost |
-| type state, phantom, newtype, PhantomData | mechanism-type-driven |
-| Result, Option, Error, panic, ?, anyhow, thiserror | mechanism-error-handling |
-| Send, Sync, thread, async, await, channel, tokio | mechanism-concurrency |
-| unsafe, FFI, extern, raw pointer, transmute | unsafe-checker |
-
-### Layer 2：设计选择
-
-| 关键词 | 路由到 |
-|--------|--------|
-| domain model, DDD, business logic | design-domain |
-| performance, optimization, benchmark, profiling | design-performance |
-| crate, dependency, interop, ecosystem | design-ecosystem |
-| RAII, Drop, resource lifecycle | design-lifecycle |
-| domain error, retry, circuit breaker, recovery | design-domain-error |
-| mental model, how to think, learning Rust | design-mental-model |
-| anti-pattern, common mistake, pitfall, code smell | design-anti-pattern |
-
-### Layer 3：领域约束
-
-| 关键词 | 路由到 |
-|--------|--------|
-| fintech, trading, decimal, currency, payment | domain-fintech |
-| web, HTTP, REST, axum, actix, handler | domain-web |
-| CLI, command line, clap, terminal | domain-cli |
-| kubernetes, docker, grpc, microservice | domain-cloud-native |
-| embedded, no_std, microcontroller, firmware | domain-embedded |
-| ML, tensor, model, inference, ndarray | domain-ml |
-| IoT, sensor, mqtt, edge | domain-iot |
-
----
-
-## 中文关键词 → Skill
-
-| 中文关键词 | 路由到 |
-|------------|--------|
-| 所有权, 借用, 生命周期 | mechanism-ownership |
-| 智能指针 | mechanism-resource |
-| 可变性, 内部可变性 | mechanism-mutability |
-| 泛型, 特征, 零成本抽象 | mechanism-zero-cost |
-| 类型状态, 新类型 | mechanism-type-driven |
-| 错误处理, 结果类型 | mechanism-error-handling |
-| 并发, 异步, 线程安全 | mechanism-concurrency |
-| 不安全, FFI | unsafe-checker |
-| 领域模型 | design-domain |
-| 性能优化, 基准测试 | design-performance |
-| 生态系统, 依赖 | design-ecosystem |
-| 资源生命周期, RAII | design-lifecycle |
-| 领域错误 | design-domain-error |
-| 心智模型, 如何思考 | design-mental-model |
-| 反模式, 常见错误 | design-anti-pattern |
+>
+> 关键词到技能的反向映射由各 SKILL.md frontmatter `Keywords` 字段提供，本文件仅承载
+> 增值内容：查询模式识别、优先级规则、冲突解决。
 
 ---
 
@@ -84,9 +24,9 @@
 当多个技能匹配时，使用此优先级：
 
 1. **错误码**优先级最高（直接映射）
-2. **领域关键词** + 错误→同时加载领域技能和错误技能
-3. **比较查询**→启用协商，加载多个技能
-4. **通用关键词**→路由到最具体的技能
+2. **领域关键词** + 错误 → 同时加载领域技能和错误技能
+3. **比较查询** → 启用协商，加载多个技能
+4. **通用关键词** → 路由到最具体的技能
 
 ### 冲突解决
 
