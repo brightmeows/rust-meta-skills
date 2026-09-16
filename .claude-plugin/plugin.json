@@ -1,8 +1,8 @@
 {
   "name": "rust-meta-skills",
   "description": "Rust 元认知技能包——三层认知模型驱动领域正确的 Rust 方案",
-  "homepage": "https://codeberg.org/brightmeows/rust-meta-skills",
-  "repository": "https://codeberg.org/brightmeows/rust-meta-skills",
+  "homepage": "https://github.com/brightmeows/rust-meta-skills",
+  "repository": "https://github.com/brightmeows/rust-meta-skills",
   "license": "MIT",
   "keywords": [
     "rust",
