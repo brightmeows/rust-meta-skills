@@ -21,32 +21,15 @@
 
 ## 安装方式
 
-### npx skills（推荐）
-
 通过 [Agent Skills](https://agentskills.io) 标准直接安装：
 
 ```bash
-npx skills add https://github.com/brightmeows/rust-meta-skills.git
+npx skills add brightmeows/rust-meta-skills
 ```
 
-拉取 `main` 分支，始终最新。锁定到指定 release tag：
-
-```bash
-npx skills add https://github.com/brightmeows/rust-meta-skills.git#v0.1.4
-```
+拉取 `main` 分支，始终最新。
 
 > 仓库根目录已配置 `.well-known/agent-skills/index.json`，支持 `npx skills` 自动发现。
-
-### 手动引用
-
-克隆仓库后，在 AI 助手配置中引用技能文件：
-
-```bash
-git clone https://github.com/brightmeows/rust-meta-skills.git
-```
-
-- OpenCode：技能存放于 `skills/rust-meta-cognition/`，由 OpenCode 自动发现并加载
-- Claude Code：将 `skills/rust-meta-cognition/` 加入 skills 路径，或手动加载 `SKILL.md`
 
 ## 目录结构
 
