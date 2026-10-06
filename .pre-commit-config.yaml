@@ -17,28 +17,43 @@ repos:
 
       - id: check-well-known-list
         name: Check well-known list
-        description: 验证根 SKILL.md 与 index.json 条目一致
+        description: 验证 skills/ 下 SKILL.md 目录与 index.json 条目一致
         entry: bash
         args:
           - -c
           - |
             set -euo pipefail
             errors=0
-            echo "=== 根 SKILL.md vs index.json ==="
-            root_skill_name=$(basename "$(dirname skills/rust-meta-cognition/SKILL.md)")
             index_names=$(jq -r '.skills[].name' .well-known/agent-skills/index.json | sort -u)
-            if ! echo "$index_names" | grep -qx "$root_skill_name"; then
-              echo "  ERROR: 根 skill '$root_skill_name' 在 index.json 中无对应条目"
-              errors=$((errors + 1))
+            fs_names=$(find skills -name SKILL.md -type f -printf '%h\n' | xargs -I{} basename {} | sort -u)
+            echo "=== SKILL.md 目录 vs index.json ==="
+
+            # Forward: 文件系统中有但 index.json 中无
+            missing_in_index=$(comm -23 <(echo "$fs_names") <(echo "$index_names"))
+            if [ -n "$missing_in_index" ]; then
+              while IFS= read -r name; do
+                path=$(find skills -path "*/$name/SKILL.md" -type f | head -1)
+                echo "  ERROR: $path 的 name='$name' 在 index.json 中无对应条目"
+                errors=$((errors + 1))
+              done <<< "$missing_in_index"
             fi
+
+            # Reverse: index.json 中有但文件系统中无
+            missing_on_fs=$(comm -13 <(echo "$fs_names") <(echo "$index_names"))
+            if [ -n "$missing_on_fs" ]; then
+              while IFS= read -r name; do
+                echo "  ERROR: index.json 中 '$name' 无对应的 SKILL.md 文件"
+                errors=$((errors + 1))
+              done <<< "$missing_on_fs"
+            fi
+
             if [ "$errors" -gt 0 ]; then
               echo "FAILED: ${errors} 个错误"
               exit 1
             fi
-            echo "OK: 根技能已在 index.json 中注册"
+            echo "OK: 技能列表一致"
         language: system
         pass_filenames: false
-
       - id: check-well-known-digest
         name: Check well-known digest
         description: 验证 index.json 中的 SHA256 digest 与根 SKILL.md 匹配
