@@ -4,100 +4,16 @@
     {
       "name": "rust-meta-cognition",
       "type": "skill-md",
-      "description": "Rust 问题的三层认知路由入口。CRITICAL: 遇到 Rust 编译错误（E0382/E0597/E0277 等） 或设计权衡时使用。不用于纯语法学习。 Keywords: 所有权, 借用, 生命周期, 最佳实践, ownership, borrow, lifetime, async, concurrency",
+      "description": "Rust 问题的三层认知路由入口。CRITICAL: 遇到 Rust 编译错误（E0382/E0597/E0277 等） 或设计权衡时使用。不用于纯语法学习。Keywords: 所有权, 借用, 生命周期, 最佳实践, ownership, borrow, lifetime, async, concurrency",
       "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-meta-cognition/SKILL.md",
-      "digest": "sha256:f6e9d7637ac2ca4a4fd592c539d675f6d02cafb646f1582c782eb564a7c1a9d7"
+      "digest": "sha256:92eb9ecd090a3fbc2797070e1ab4fee7ea0ad328c15e7b1a1db5bdfd63205d08"
     },
     {
-      "name": "rust-learner",
+      "name": "querying-clippy-lints",
       "type": "skill-md",
-      "description": "Rust 版本查询与 crate 信息获取。需要查询最新 Rust 版本、crate 文档或 API 参考时使用。 触发词：/lookup, Rust 版本查询, crate 信息, 文档查询, 最新版本, API 文档, 新特性, docs.rs, crates.io, edition, cargo add, latest version, what's new",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-learner/SKILL.md",
-      "digest": "sha256:009bf41da0d97faecb7ac0ad78c22642666ed87c8e5092b41da819a9338e46c9"
-    },
-    {
-      "name": "rust-daily",
-      "type": "skill-md",
-      "description": "Rust 每日/每周动态与新闻速览。需要了解 Rust 社区动态、TWIR 或博客更新时使用。 触发词：/daily, Rust 日报, Rust 周报, Rust 新闻, Rust 动态, rust news, rust weekly, TWIR, rust blog",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-daily/SKILL.md",
-      "digest": "sha256:824a44f8958bd4f28d084b87023fa2c002e01c62ef036ccfb231b8a9123b9b95"
-    },
-    {
-      "name": "rust-skill-creator",
-      "type": "skill-md",
-      "description": "Rust crate 与标准库的动态技能生成。需要为特定 crate（tokio/serde/axum）创建技能时使用。 触发词：/create-skill, 创建 crate 技能, 动态技能, 从文档创建, skill creator, skill for tokio, skill for serde, create skill, rust skill",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-skill-creator/SKILL.md",
-      "digest": "sha256:a19147b86f4051557ff998a8088c86761d757abc81d215104d2010d28eda6994"
-    },
-    {
-      "name": "rust-call-graph",
-      "type": "skill-md",
-      "description": "函数调用图可视化：使用 LSP 调用层级分析函数调用关系。触发词：/call-graph, 调用图, 调用关系, call hierarchy, 谁调用了, what calls",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-call-graph/SKILL.md",
-      "digest": "sha256:c3a433ccd86b74830cad57bcbdb54f084addd8c39ac9b5d6e1f03e851f923950"
-    },
-    {
-      "name": "rust-code-navigator",
-      "type": "skill-md",
-      "description": "代码导航：基于 LSP 的符号跳转与引用查找。触发词：/navigate, 跳转定义, 查找引用, go to definition, find references, 定义在哪",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-code-navigator/SKILL.md",
-      "digest": "sha256:03fc3f9af837433fe3e6c45f30fa5dea1b11ed06e6c1d35fa6c9d6f817b522e6"
-    },
-    {
-      "name": "rust-deps-visualizer",
-      "type": "skill-md",
-      "description": "依赖树可视化：生成 Rust 项目依赖结构的 ASCII 艺术图。触发词：/deps-viz, 依赖图, 依赖可视化, dependency graph, visualize deps",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-deps-visualizer/SKILL.md",
-      "digest": "sha256:b7e081788fcc6d942c512b870655f2d02a4519ce21a2481f9e8ac97cbe472852"
-    },
-    {
-      "name": "rust-refactor-helper",
-      "type": "skill-md",
-      "description": "安全重构助手：基于 LSP 的符号重命名、函数提取等重构操作。触发词：/refactor, 重构, 重命名, 提取函数, 安全重构, rename symbol",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-refactor-helper/SKILL.md",
-      "digest": "sha256:424e5ca6f03323189d10f40e48245de77a0162a15b76bdcb5186d42ee6caa074"
-    },
-    {
-      "name": "rust-symbol-analyzer",
-      "type": "skill-md",
-      "description": "项目结构分析：基于 LSP 符号浏览代码结构（struct/trait/fn 一览）。触发词：/symbols, 符号分析, 项目结构, 列出 struct/trait, 有哪些 struct",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-symbol-analyzer/SKILL.md",
-      "digest": "sha256:bade96ef40eaf01b4e9251944c2a93fd0a3c6e3a645f3e003cfcd62e1053df8a"
-    },
-    {
-      "name": "rust-trait-explorer",
-      "type": "skill-md",
-      "description": "Trait 实现探索：发现 trait 实现关系并理解多态设计。触发词：/trait-impl, trait 实现, find implementations, 谁实现了, who implements",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/rust-trait-explorer/SKILL.md",
-      "digest": "sha256:0b04bffa051722d15a881479f24398a4050b3c0b3d46842a90da2a8feda7cb68"
-    },
-    {
-      "name": "core-actionbook",
-      "type": "skill-md",
-      "description": "内部：Actionbook MCP 选择器支持。仅在 rust-skills 工作流显式请求 actionbook 选择器时使用。",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/.system/core-actionbook/SKILL.md",
-      "digest": "sha256:edffd3d8f73c4f21b39b42a9fe433a5b2caffbc3ff7c28bbb4283ceda439162b"
-    },
-    {
-      "name": "core-agent-browser",
-      "type": "skill-md",
-      "description": "内部：浏览器自动化（agent-browser）CLI 工作流支持。仅在需要浏览器自动化时使用。",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/.system/core-agent-browser/SKILL.md",
-      "digest": "sha256:c8cbb230956b04392567807e9046ffffcbee86a9e5c9bac22f0a84f7351aeb13"
-    },
-    {
-      "name": "core-dynamic-skills",
-      "type": "skill-md",
-      "description": "内部：动态 crate 技能管理。仅在 /sync-crate-skills、/clean-crate-skills、 /update-crate-skill 命令调用时使用。",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/.system/core-dynamic-skills/SKILL.md",
-      "digest": "sha256:8b66458e40d5ce728b6399c4a63c4f555fd957df515ca0695927421877f4bb3a"
-    },
-    {
-      "name": "core-fix-skill-docs",
-      "type": "skill-md",
-      "description": "内部：技能文档引用检查与修复。仅在 /fix-skill-docs 命令调用时使用。",
-      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/.system/core-fix-skill-docs/SKILL.md",
-      "digest": "sha256:a6d1ea7a5747987789f6ac8136bfbc5c37da711019ba0868c6ed817478e680d8"
+      "description": "当用户查询 Clippy lint 的含义、分组、级别、适用性或版本时使用；顺带提及 lint 名而任务与 lint 信息无关时不加载。",
+      "url": "https://raw.githubusercontent.com/brightmeows/rust-meta-skills/main/skills/querying-clippy-lints/SKILL.md",
+      "digest": "sha256:b7c4faa1a62083c4902924547a7b7363fe8975d03fde408294961b17e7ca87c5"
     }
   ]
 }

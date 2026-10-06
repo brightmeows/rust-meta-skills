@@ -1,25 +1,11 @@
 {
   "plugins": [
     {
-      "name": "rust-tools",
+      "name": "rust-meta-skills",
       "source": "./",
       "skills": [
-        "./skills/rust-call-graph",
-        "./skills/rust-code-navigator",
-        "./skills/rust-daily",
-        "./skills/rust-deps-visualizer",
-        "./skills/rust-learner",
-        "./skills/rust-refactor-helper",
-        "./skills/rust-skill-creator",
-        "./skills/rust-symbol-analyzer",
-        "./skills/rust-trait-explorer"
-      ]
-    },
-    {
-      "name": "rust-meta-cognition",
-      "source": "./",
-      "skills": [
-        "./skills/rust-meta-cognition"
+        "./skills/rust-meta-cognition",
+        "./skills/querying-clippy-lints"
       ]
     }
   ]

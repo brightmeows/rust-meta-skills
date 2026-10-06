@@ -1,184 +1,56 @@
 # rust-meta-skills
 
-> Rust 元认知技能包——三层认知模型驱动领域正确的 Rust 方案
+> 个人维护的 Rust 代理技能集——两个自包含技能，无附属文件
 
-## 什么是 rust-meta-skills？
+## 技能
 
-**rust-meta-skills** 是一套面向 AI 编码助手的 Rust 元认知技能包。它不给出表面答案，而是通过三层认知模型追溯问题根源，输出**领域正确的架构方案**。
+### rust-meta-cognition
 
-```
-用户: "我的交易系统报 E0382"
+Rust 问题的三层认知路由：语言机制（L1）→ 设计选择（L2）→ 领域约束（L3）。
+遇到编译错误或设计权衡时不给表面修复，沿三层追溯根源，结论要求权威出处
+（官方文档、编译器输出、用户确认），并附带项目默认设置与代码风格硬约定。
 
-助手（使用元认知技能）:
-├── Layer 1: E0382 = 所有权错误 → 为什么需要这个数据？
-│       ↑
-├── Layer 3: 交易记录是不可变审计数据 → 应该共享而非复制
-│       ↓
-├── Layer 2: 使用 Arc<TradeRecord> 作为共享不可变值
-│       ↓
-└── 建议: 重新设计为 Arc<T>，而非 clone()
-```
+### querying-clippy-lints
 
-## 安装方式
+Clippy lint 信息的查询事实：官方页面的版本子路径结构、抓取后的文本形态、
+四种文本检索模式、分组与默认级别对应表、源码直链的定位方式。
 
-通过 [Agent Skills](https://agentskills.io) 标准直接安装：
+两份技能均为单文件（`skills/<name>/SKILL.md`），事实经过实页验证，无脚本、无子技能文件。
+
+## 安装
 
 ```bash
 npx skills add brightmeows/rust-meta-skills
 ```
 
-拉取 `main` 分支，始终最新。
+仓库根目录配置了 `.well-known/agent-skills/index.json`，支持 `npx skills` 自动发现。
+也可直接复制 `skills/` 下的技能目录到任意代理的技能目录。
 
-> 仓库根目录已配置 `.well-known/agent-skills/index.json`，支持 `npx skills` 自动发现。
-
-## 目录结构
+## 结构
 
 ```
 rust-meta-skills/
-├── AGENTS.md                               # 代理配置（提交约定、工具链）
-├── README.md                               # 本文档
-├── .pre-commit-config.yaml                 # pre-commit 钩子
-├── .markdownlint.toml                      # Markdown lint 配置
-├── .well-known/agent-skills/index.json     # skill 发现索引
-│
-├── docs/                                   # 架构/功能/Hook 文档
-├── tests/                                  # 测试
-├── scripts/                                # 工具脚本
-├── templates/                              # 模板
-├── examples/                               # 使用示例
-├── cache/                                  # 缓存
-├── references/                             # 参考资料
-│
-├── skills/                                 # 所有技能
-│   ├── rust-meta-cognition/                # 核心：三层认知模型技能集
-│   │   ├── SKILL.md                        # 技能集入口（路由 + 设置）
-│   │   ├── agents/                         # 8 个后台 Agent
-│   │   ├── commands/                       # 命令定义
-│   │   ├── index/                          # 索引文件
-│   │   ├── _meta/                          # 元数据
-│   │   ├── l1-mechanisms/                  # Layer 1：语言机制（9 个技能）
-│   │   ├── l2-design/                      # Layer 2：设计选择（7 个技能）
-│   │   ├── l3-domains/                     # Layer 3：领域约束（7 个技能）
-│   │   └── experimental/                   # 实验性技能
-│   │
-│   ├── rust-learner/                       # 独立工具技能
-│   ├── rust-daily/                         # （9 个，可独立安装）
-│   ├── rust-skill-creator/
-│   ├── rust-call-graph/
-│   ├── rust-code-navigator/
-│   ├── rust-deps-visualizer/
-│   ├── rust-refactor-helper/
-│   ├── rust-symbol-analyzer/
-│   ├── rust-trait-explorer/
-│   │
-│   ├── .system/                            # 内部基础设施（默认隐藏）
-│   └── .experimental/                      # 预留：未来独立实验性技能
+├── AGENTS.md                                # 代理维护指南
+├── skills/
+│   ├── rust-meta-cognition/SKILL.md
+│   └── querying-clippy-lints/SKILL.md
+├── .well-known/agent-skills/index.json      # skill 发现索引（digest 校验）
+├── .claude-plugin/                          # Claude 插件清单
+├── .markdownlint.toml                       # Markdown lint 配置
+└── .pre-commit-config.yaml                  # 一致性校验钩子
 ```
 
-## 元认知框架
+## 维护
 
-### 核心理念
-
-**不直接回答问题，先追溯认知层次。**
-
-```
-Layer 3: 领域约束 (WHY - 为什么)
-├── 领域规则决定设计选择
-└── 例：金融系统要求数据不可变、可审计
-
-Layer 2: 设计选择 (WHAT - 是什么)
-├── 设计模式和架构决策
-└── 例：使用 Arc<T> 共享不可变数据
-
-Layer 1: 语言机制 (HOW - 怎么做)
-├── Rust 语言特性和编译器规则
-└── 例：E0382 是所有权设计问题的表现
-```
-
-### 路由规则
-
-| 用户信号 | 入口层 | 追溯方向 | 首选 Skill |
-|---|---|---|---|
-| E0xxx 错误 | Layer 1 | 向上追溯 ↑ | m01-m07 |
-| "如何设计…" | Layer 2 | 双向追溯 | m09-m15 |
-| "[领域]应用开发" | Layer 3 | 向下追溯 ↓ | domain-* |
-| 性能问题 | Layer 1→2 | 先上后下 | design-performance |
-
-## 技能一览
-
-### Layer 1：语言机制（m01-m07）
-
-| Skill | 核心问题 | 触发信号 |
-|-------|----------|----------|
-| mechanism-ownership | 谁应该拥有这个数据？ | E0382, E0597, move, borrow |
-| mechanism-resource | 需要什么所有权模式？ | Box, Rc, Arc, RefCell |
-| mechanism-mutability | 为什么这个数据需要改变？ | mut, Cell, E0596, E0499 |
-| mechanism-zero-cost | 编译时还是运行时多态？ | generic, trait, E0277 |
-| mechanism-type-driven | 类型如何防止无效状态？ | newtype, PhantomData |
-| mechanism-error-handling | 预期失败还是 bug？ | Result, Error, panic, ? |
-| mechanism-concurrency | CPU 密集还是 I/O 密集？ | async, Send, Sync, thread |
-
-### Layer 2：设计选择（m09-m15）
-
-| Skill | 核心问题 | 触发信号 |
-|-------|----------|----------|
-| design-domain | 这个概念的领域角色是什么？ | DDD, entity, value object |
-| design-performance | 瓶颈在哪里？ | benchmark, profiling |
-| design-ecosystem | 哪个 crate 适合这个任务？ | crate 选择, 依赖 |
-| design-lifecycle | 何时创建、使用、清理？ | RAII, Drop, lazy init |
-| design-domain-error | 谁处理这个错误？ | retry, circuit breaker |
-| design-mental-model | 如何正确思考这个概念？ | 学习 Rust, 为什么 |
-| design-anti-pattern | 这个模式隐藏了设计问题吗？ | code smell, 常见错误 |
-
-### Layer 3：领域约束（domain-*）
-
-| Skill | 领域 | 核心约束 |
-|-------|------|----------|
-| domain-fintech | 金融科技 | 审计追踪, 精度, 一致性 |
-| domain-ml | 机器学习 | 内存效率, GPU 加速 |
-| domain-cloud-native | 云原生 | 12-Factor, 可观测性, 优雅关闭 |
-| domain-iot | 物联网 | 离线优先, 功耗管理, 安全 |
-| domain-web | Web 服务 | 无状态, 延迟 SLA, 并发 |
-| domain-cli | 命令行 | 用户体验, 配置优先级, 退出码 |
-| domain-embedded | 嵌入式 | 无堆, no_std, 实时性 |
-
-### 核心技能
-
-| 技能 | 用途 |
-|------|------|
-| `rust-meta-cognition` | 技能集主入口——路由、三层模型、默认设置、代码风格 |
-| `rust-learner` | 获取最新 Rust / crate 版本信息 |
-| `unsafe-checker` | Unsafe 代码安全检查 |
-
-## 使用方式
-
-### 在编码助手中使用
-
-本技能包可被任何支持 skills 机制的 AI 编码助手加载。编码助手通过识别用户问题中的触发词自动加载对应子技能。
-
-### 运行测试
+修改 `SKILL.md` 后必须重算并同步 `.well-known/agent-skills/index.json` 中的
+`digest`（sha256），否则 `check-well-known-digest` 钩子会拒绝提交。详见 [AGENTS.md](AGENTS.md)。
 
 ```bash
-# 验证脚本
-./tests/validation/validate-skills.sh
-
-# 触发测试
-./tests/trigger-test.sh
-
-# 手工测试清单
-# 使用 tests/trigger-checklist.md 中的查询验证技能触发
+pre-commit run --all-files
 ```
 
-## 文档
+## 历史
 
-- [架构设计](./docs/architecture.md)
-- [功能概览](./docs/functional-overview.md)
-- [元认知示例：E0382](./docs/meta-cognition-example-e0382.md)
-
-## 基于项目
-
-本项目基于 [actionbook/rust-skills](https://github.com/actionbook/rust-skills)（MIT 许可证）进行定制和扩展，在原项目的三层认知模型框架和技能架构基础上发展。使用时须遵守原项目许可证条款。
-
-## 许可证
-
-MIT
+本仓库前身是基于 [actionbook/rust-skills](https://github.com/actionbook/rust-skills)
+翻译并重组的多技能包（10 个技能、150+ 文件）；2026-10 精简为当前的单一文件形态，
+历史内容在 git 历史中可查。
